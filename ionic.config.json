@@ -1,6 +1,8 @@
 {
   "name": "QuickSignDocument",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "e919ffd2"
 }
