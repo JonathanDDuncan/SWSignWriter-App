@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: 'quicksigndoc',
     loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
-  }
+  },  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' }
+
 ];
 
 @NgModule({
