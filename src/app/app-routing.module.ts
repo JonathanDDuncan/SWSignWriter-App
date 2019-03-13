@@ -15,7 +15,10 @@ const routes: Routes = [
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },
-  { path: 'document', loadChildren: './document/document.module#DocumentPageModule' }
+  {
+    path: 'quicksigndoc',
+    loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
+  }
 ];
 
 @NgModule({

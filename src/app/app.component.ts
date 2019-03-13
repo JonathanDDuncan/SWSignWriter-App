@@ -22,7 +22,7 @@ export class AppComponent {
     },
     {
       title: 'Document',
-      url: '/document',
+      url: '/quicksigndoc/view',
       icon: 'document'
     }
   ];
