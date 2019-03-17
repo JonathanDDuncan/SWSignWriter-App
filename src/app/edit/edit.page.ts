@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Storage } from '@ionic/storage';
+import * as convert from 'xml-js';
+import { ReadVarExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-edit',
@@ -8,7 +11,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class EditPage implements OnInit {
   public elements: SafeHtml[];
-  constructor(private sanitizer: DomSanitizer) {}
+  private reader = new FileReader();
+  constructor(private storage: Storage, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     console.log('ssw', ssw);
@@ -24,9 +28,82 @@ export class EditPage implements OnInit {
         )
       );
     });
+
+    this.reader.onload = () => {
+      const xml: string | ArrayBuffer = this.reader.result as string;
+      this.readwrite(xml);
+    };
   }
 
   sanitize(content: string) {
     return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+  readwrite(xml: string) {
+    // const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    // < !DOCTYPE spml SYSTEM "http://www.signpuddle.net/spml_1.6.dtd" >
+    //   <spml root="SignWriter Studio™" uuid="4e2a11e8-72f2-42d8-ba69-6d8b1cd04007" type="sgn" puddle="2000" cdt="1552856591" mdt="1552856591">
+    //     <term><![CDATA[Exported from SignWriter Studio™, puddle 2000]]></term>
+    //     <entry id="4" uuid="9e6dabff-2b0a-47c1-9c00-eb8719b175c6" cdt="1493135576" mdt="1493135576">
+    //       <term>M512x583S16d10495x418S1f720491x442S1dc20488x461S10120496x495S14a20496x529S17610496x548S20320496x568</term>
+    //       <term><![CDATA[caldeos]]></term>
+    //     </entry>
+    //     <entry id="5" uuid="36f28b1f-6e67-41db-8efe-8115be16ee5e" cdt="1489670972" mdt="1489670992">
+    //       <term>M552x540S14c57486x513S14c59449x509S1f757522x480S1f759480x466S26507512x499S26517475x492S22103472x459S22103543x499</term>
+    //       <term><![CDATA[mantener]]></term>
+    //     </entry></spml>`;
+
+    const result = this.convertspml(xml);
+
+    // set a key/value
+    this.storage.set('name1', result).then(val1 =>
+      // Or to get a key/value pair
+      this.storage.get('name1').then(val => {
+        console.log('Your name is', val);
+      })
+    );
+  }
+
+  convertspml(xml: string) {
+    const result2: any = convert.xml2js(xml, { compact: false });
+    const result: any = { entries: [] };
+
+    result.puddleInfo = result2.elements[1].attributes;
+    const elements: [any] = result2.elements[1].elements;
+
+    elements.forEach(element => {
+      if (element && element.name === 'entry') {
+        const newEntry: any = {
+          attributes: element.attributes,
+          glosses: []
+        };
+        if (element && element.elements) {
+          element.elements.forEach(entryelement => {
+            if (entryelement && entryelement.elements) {
+              entryelement.elements.forEach(node => {
+                if (node.type === 'text') {
+                  newEntry.fsw = node.text;
+                } else if ((node.type = 'cdata')) {
+                  newEntry.glosses.push(node.cdata);
+                }
+              });
+            }
+          });
+        }
+        result.entries.push(newEntry);
+      }
+    });
+
+    console.log(result2);
+    console.log(result);
+    return result;
+  }
+
+  openFile(event) {
+    const input = event.target;
+    for (let index = 0; index < input.files.length; index++) {
+      this.reader.readAsText(input.files[index]);
+    }
+    return this.reader;
   }
 }

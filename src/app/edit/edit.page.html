@@ -7,6 +7,17 @@
 <ion-content padding>
   <!-- Textarea in an item with a placeholder -->
   <ion-item>
+    <button (click)="readwrite($event)" type="button">Button</button>
+  </ion-item>
+  <ion-item>
+    <input
+      type="file"
+      accept="text/plain"
+      multiple
+      (change)="openFile($event)"
+    />
+  </ion-item>
+  <ion-item>
     <ion-textarea placeholder="Enter words to search here..."></ion-textarea>
   </ion-item>
   <!-- List of Input Items -->
