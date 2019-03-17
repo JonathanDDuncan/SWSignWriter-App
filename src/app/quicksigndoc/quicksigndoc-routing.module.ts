@@ -17,11 +17,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
+        path: 'edit',
         children: [
           {
             path: '',
-            loadChildren: '../document/document.module#DocumentPageModule'
+            loadChildren: '../edit/edit.module#EditPageModule'
           }
         ]
       },

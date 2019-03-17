@@ -5,13 +5,18 @@
 </ion-header>
 
 <ion-content padding>
-  EDIT <br />
-  EDIT<br />
-  EDIT<br />
-  EDIT<br />
-  EDIT <br />
-  EDIT <br />
-  EDIT<br />
-  EDIT<br />
-  EDIT
+  <!-- Textarea in an item with a placeholder -->
+  <ion-item>
+    <ion-textarea placeholder="Enter words to search here..."></ion-textarea>
+  </ion-item>
+  <!-- List of Input Items -->
+  <ion-list>
+    <ion-radio-group>
+      <ion-item *ngFor="let item of elements">
+        <span style="padding:10px;" [innerHTML]="item"></span>
+        <ion-label>Radio</ion-label>
+        <ion-radio slot="start"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
 </ion-content>
