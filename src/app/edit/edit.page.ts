@@ -1,18 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 import * as convert from 'xml-js';
-import { ReadVarExpr } from '@angular/compiler';
+import { fromEvent } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss']
 })
-export class EditPage implements OnInit {
+export class EditPage implements OnInit, AfterViewInit {
   public elements: SafeHtml[];
   private reader = new FileReader();
+  private entrylist: any[];
   constructor(private storage: Storage, private sanitizer: DomSanitizer) {}
+
+  @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
 
   ngOnInit() {
     console.log('ssw', ssw);
@@ -33,35 +44,119 @@ export class EditPage implements OnInit {
       const xml: string | ArrayBuffer = this.reader.result as string;
       this.readwrite(xml);
     };
+    this.makelist();
   }
-
+  ngAfterViewInit() {
+    fromEvent(this.emailRef.nativeElement, 'keyup')
+      .pipe(
+        // get value
+        map((evt: any) => evt.target.value),
+        // text length must be > 2 chars
+        //.filter(res => res.length > 2)
+        // emit after 1s of silence
+        debounceTime(100),
+        // emit only if data changes since the last emit
+        distinctUntilChanged()
+      )
+      // subscription
+      .subscribe((text: string) => {
+        const result = this.search(text);
+        console.log(result);
+        this.showResult(result);
+      });
+  }
   sanitize(content: string) {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
-  readwrite(xml: string) {
-    // const xml = `<?xml version="1.0" encoding="UTF-8"?>
-    // < !DOCTYPE spml SYSTEM "http://www.signpuddle.net/spml_1.6.dtd" >
-    //   <spml root="SignWriter Studio™" uuid="4e2a11e8-72f2-42d8-ba69-6d8b1cd04007" type="sgn" puddle="2000" cdt="1552856591" mdt="1552856591">
-    //     <term><![CDATA[Exported from SignWriter Studio™, puddle 2000]]></term>
-    //     <entry id="4" uuid="9e6dabff-2b0a-47c1-9c00-eb8719b175c6" cdt="1493135576" mdt="1493135576">
-    //       <term>M512x583S16d10495x418S1f720491x442S1dc20488x461S10120496x495S14a20496x529S17610496x548S20320496x568</term>
-    //       <term><![CDATA[caldeos]]></term>
-    //     </entry>
-    //     <entry id="5" uuid="36f28b1f-6e67-41db-8efe-8115be16ee5e" cdt="1489670972" mdt="1489670992">
-    //       <term>M552x540S14c57486x513S14c59449x509S1f757522x480S1f759480x466S26507512x499S26517475x492S22103472x459S22103543x499</term>
-    //       <term><![CDATA[mantener]]></term>
-    //     </entry></spml>`;
+  search(text: string) {
+    const max = 25;
+    const result = [];
+    let count = 0;
+    const searchtext = text.trim().toLocaleLowerCase();
+    for (let i = 0; i < this.entrylist.length; i++) {
+      const entry = this.entrylist[i];
 
+      if (searchtext.length > 2) {
+        if (
+          entry.gloss
+            .trim()
+            .toLocaleLowerCase()
+            .includes(searchtext)
+        ) {
+          result.push(entry);
+          count++;
+        }
+      } else if (searchtext.length > 0) {
+        if (entry.gloss.trim().toLocaleLowerCase() === searchtext) {
+          result.push(entry);
+          count++;
+        }
+      }
+      // limit to max entries
+      if (count >= 25) {
+        break;
+      }
+    }
+
+    return this.arrayUnique(result);
+  }
+
+  arrayUnique(arr: any[]) {
+    const existingkeys = [];
+    const keep = [];
+    arr.forEach(element => {
+      if (!existingkeys.includes(element.uuid)) {
+        existingkeys.push(element.uuid);
+        keep.push(element);
+      }
+    });
+    return keep;
+  }
+
+  showResult(result) {
+    this.elements = [];
+    result.forEach(entry => {
+      this.elements.push(
+        this.sanitize(
+          '<div style="min-width:100px;">' +
+            ssw.svg(entry.fsw) +
+            '</div>' +
+            '<span">' +
+            entry.gloss +
+            '</span>'
+        )
+      );
+    });
+  }
+
+  makelist() {
+    const list = [];
+    this.storage.get('puddle').then(puddle => {
+      puddle.entries.forEach(entry => {
+        entry.glosses.forEach(gloss => {
+          list.push({
+            gloss: gloss,
+            uuid: entry.attributes.uuid,
+            fsw: entry.fsw
+          });
+        });
+      });
+      this.entrylist = list;
+    });
+  }
+
+  readwrite(xml: string) {
     const result = this.convertspml(xml);
 
     // set a key/value
-    this.storage.set('name1', result).then(val1 =>
+    this.storage.set('puddle', result).then(val1 =>
       // Or to get a key/value pair
-      this.storage.get('name1').then(val => {
+      this.storage.get('puddle').then(val => {
         console.log('Your name is', val);
       })
     );
+    this.makelist();
   }
 
   convertspml(xml: string) {
@@ -93,9 +188,6 @@ export class EditPage implements OnInit {
         result.entries.push(newEntry);
       }
     });
-
-    console.log(result2);
-    console.log(result);
     return result;
   }
 

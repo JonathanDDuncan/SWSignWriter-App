@@ -7,7 +7,10 @@
 <ion-content padding>
   <!-- Textarea in an item with a placeholder -->
   <ion-item>
-    <button (click)="readwrite($event)" type="button">Button</button>
+    <button (click)="readwrite($event)" type="button">Load File</button>
+  </ion-item>
+  <ion-item>
+    <button (click)="search($event)" type="button">Search</button>
   </ion-item>
   <ion-item>
     <input
@@ -18,14 +21,17 @@
     />
   </ion-item>
   <ion-item>
-    <ion-textarea placeholder="Enter words to search here..."></ion-textarea>
+    <ion-textarea
+      #emailRef
+      placeholder="Enter words to search here..."
+    ></ion-textarea>
   </ion-item>
   <!-- List of Input Items -->
   <ion-list>
     <ion-radio-group>
       <ion-item *ngFor="let item of elements">
         <span style="padding:10px;" [innerHTML]="item"></span>
-        <ion-label>Radio</ion-label>
+        <ion-label> </ion-label>
         <ion-radio slot="start"></ion-radio>
       </ion-item>
     </ion-radio-group>
