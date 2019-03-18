@@ -14,6 +14,11 @@ export class AppComponent {
       title: 'Document',
       url: '/quicksigndoc/view',
       icon: 'document'
+    },
+    {
+      title: 'Settings',
+      url: '/settings',
+      icon: 'settings'
     }
   ];
 
