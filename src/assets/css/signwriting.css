@@ -1,27 +1,21 @@
 @font-face {
   font-family: 'SuttonSignWritingLine';
   src: local('SuttonSignWritingLine'),
-    url('https://cdn.rawgit.com/Slevinski/SuttonSignWriting/master/assets/SuttonSignWritingLine.ttf')
-      format('truetype');
+    url('../fonts/SuttonSignWritingLine.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'SuttonSignWritingFill';
   src: local('SuttonSignWritingFill'),
-    url('https://cdn.rawgit.com/Slevinski/SuttonSignWriting/master/assets/SuttonSignWritingFill.ttf')
-      format('truetype');
+    url('../fonts/SuttonSignWritingFill.ttf') format('truetype');
 }
-@font-face {
-  font-family: 'SuttonSignWritingOneD';
-  src: local('SuttonSignWritingOneD'),
-    url('https://cdn.rawgit.com/Slevinski/SuttonSignWriting/master/assets/SuttonSignWritingOneD.ttf')
-      format('truetype');
-}
+
 @font-face {
   font-family: 'SuttonSignWritingNull';
   src: local('SuttonSignWritingNull'),
-    url('https://cdn.rawgit.com/Slevinski/SuttonSignWriting/master/assets/SuttonSignWritingNull.ttf')
-      format('truetype');
+    url('../fonts/SuttonSignWritingNull.ttf') format('truetype');
 }
+
 div.signtext {
   -webkit-writing-mode: vertical-lr;
   writing-mode: vertical-lr;
@@ -34,9 +28,11 @@ span.outside {
   border-left: 1px solid blue;
   vertical-align: top;
 }
+
 span.middle {
   vertical-align: bottom;
 }
+
 span.inside {
   border-left: 1px dashed red;
 }
