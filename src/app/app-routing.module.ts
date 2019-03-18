@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'quicksigndoc/view',
     pathMatch: 'full'
   },
   {
@@ -18,8 +18,8 @@ const routes: Routes = [
   {
     path: 'quicksigndoc',
     loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
-  },  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' }
-
+  },
+  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' }
 ];
 
 @NgModule({
