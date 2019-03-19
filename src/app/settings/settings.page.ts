@@ -150,7 +150,7 @@ export class SettingsPage implements OnInit {
               if (node.type === 'text') {
                 newEntry.fsw = node.text;
               } else if ((node.type = 'cdata')) {
-                newEntry.glosses.push(node.cdata);
+                newEntry.glosses.push(node.cdata.trim());
               }
             }
           );

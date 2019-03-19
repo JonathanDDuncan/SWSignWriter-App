@@ -9,6 +9,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 
 import { fromEvent } from 'rxjs';
+import * as nfs from 'normalize-for-search';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -68,22 +69,17 @@ export class EditPage implements OnInit, AfterViewInit {
     const max = 25;
     const result = [];
     let count = 0;
-    const searchtext = text.trim().toLocaleLowerCase();
+    const searchtext = nfs(text.trim());
     for (let i = 0; i < this.entrylist.length; i++) {
       const entry = this.entrylist[i];
 
       if (searchtext.length > 2) {
-        if (
-          entry.gloss
-            .trim()
-            .toLocaleLowerCase()
-            .includes(searchtext)
-        ) {
+        if (nfs(entry.index).includes(searchtext)) {
           result.push(entry);
           count++;
         }
       } else if (searchtext.length > 0) {
-        if (entry.gloss.trim().toLocaleLowerCase() === searchtext) {
+        if (entry.index === searchtext) {
           result.push(entry);
           count++;
         }
@@ -133,6 +129,7 @@ export class EditPage implements OnInit, AfterViewInit {
           puddleentries.entries.forEach(entry => {
             entry.glosses.forEach(gloss => {
               list.push({
+                index: nfs(gloss),
                 gloss: gloss,
                 key: entry.key,
                 fsw: entry.fsw
