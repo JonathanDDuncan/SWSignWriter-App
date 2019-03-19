@@ -127,16 +127,21 @@ export class EditPage implements OnInit, AfterViewInit {
 
   makelist() {
     const list = [];
-    this.storage.get('puddle').then(puddle => {
-      puddle.entries.forEach(entry => {
-        entry.glosses.forEach(gloss => {
-          list.push({
-            gloss: gloss,
-            uuid: entry.attributes.uuid,
-            fsw: entry.fsw
+    this.storage.get('puddles').then(puddles => {
+      puddles.forEach(puddle => {
+        this.storage.get(puddle).then(puddleentries => {
+          puddleentries.entries.forEach(entry => {
+            entry.glosses.forEach(gloss => {
+              list.push({
+                gloss: gloss,
+                uuid: entry.attributes.uuid,
+                fsw: entry.fsw
+              });
+            });
           });
         });
       });
+
       this.entrylist = list;
     });
   }
