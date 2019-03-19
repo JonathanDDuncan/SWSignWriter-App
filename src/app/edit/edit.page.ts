@@ -9,7 +9,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 
 import { fromEvent } from 'rxjs';
-import * as nfs from 'normalize-for-search';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -69,12 +68,12 @@ export class EditPage implements OnInit, AfterViewInit {
     const max = 25;
     const result = [];
     let count = 0;
-    const searchtext = nfs(text.trim());
+    const searchtext = this.normalizeForSearch(text.trim());
     for (let i = 0; i < this.entrylist.length; i++) {
       const entry = this.entrylist[i];
 
       if (searchtext.length > 2) {
-        if (nfs(entry.index).includes(searchtext)) {
+        if (entry.index.includes(searchtext)) {
           result.push(entry);
           count++;
         }
@@ -129,7 +128,7 @@ export class EditPage implements OnInit, AfterViewInit {
           puddleentries.entries.forEach(entry => {
             entry.glosses.forEach(gloss => {
               list.push({
-                index: nfs(gloss),
+                index: this.normalizeForSearch(gloss),
                 gloss: gloss,
                 key: entry.key,
                 fsw: entry.fsw
@@ -149,5 +148,82 @@ export class EditPage implements OnInit, AfterViewInit {
       console.log('Your name is', val);
       this.makelist();
     });
+  }
+  // Excerpted from https://github.com/ikr/normalize-for-search/blob/master/src/normalize.js added ñ
+  normalizeForSearch(s) {
+    function filter(c) {
+      switch (c) {
+        case 'æ':
+        case 'ä':
+          return 'ae';
+
+        case 'å':
+          return 'aa';
+
+        case 'á':
+        case 'à':
+        case 'ã':
+        case 'â':
+          return 'a';
+
+        case 'ç':
+        case 'č':
+          return 'c';
+
+        case 'é':
+        case 'ê':
+        case 'è':
+        case 'ë':
+        case 'ē':
+          return 'e';
+
+        case 'î':
+        case 'ï':
+        case 'í':
+          return 'i';
+
+        case 'œ':
+        case 'ö':
+          return 'oe';
+
+        case 'ñ':
+          return 'n';
+
+        case 'ó':
+        case 'õ':
+        case 'ô':
+          return 'o';
+
+        case 'ś':
+        case 'š':
+          return 's';
+
+        case 'ü':
+          return 'ue';
+
+        case 'ù':
+        case 'ú':
+        case 'ŭ':
+          return 'u';
+
+        case 'ß':
+          return 'ss';
+
+        case 'ё':
+          return 'е';
+
+        default:
+          return c;
+      }
+    }
+
+    let normalized = '',
+      i,
+      l;
+    s = s.toLowerCase();
+    for (i = 0, l = s.length; i < l; i = i + 1) {
+      normalized = normalized + filter(s.charAt(i));
+    }
+    return normalized;
   }
 }
