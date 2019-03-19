@@ -78,46 +78,75 @@ export class SettingsPage implements OnInit {
 
   convertspml(xml: string) {
     const spmljs: any = convert.xml2js(xml, { compact: false });
-
+    const puddleInfo = spmljs.elements[1].attributes;
     const result = {
-      puddleInfo: spmljs.elements[1].attributes,
-      entries: this.createEntries(spmljs)
+      puddleInfo: puddleInfo,
+      entries: this.createEntries(spmljs, puddleInfo.puddle)
     };
     return result;
   }
 
-  private createEntries(spmljs: any) {
+  private createEntries(spmljs: any, puddle: number) {
     const entries = [];
     const elements: [any] = spmljs.elements[1].elements;
     // iterate over spmljs.elements[1].elements
     elements.forEach(element => {
       if (element && element.name === 'entry') {
-        entries.push(this.createEntry(element));
+        const entry = this.createEntry(element, puddle);
+        if ((entry.fsw && entry.fsw !== '') || entry.glosses.length === 0) {
+          entries.push(entry);
+        } else {
+          console.log('Bad spml entry');
+          console.log(element);
+          console.log(entry);
+        }
       }
     });
     return entries;
   }
 
-  private createEntry(element: { attributes: any; elements?: any }) {
-    const newEntry: { attributes?: any; glosses: any; fsw?: any } = {
+  private createEntry(
+    element: { attributes: any; elements?: any },
+    puddle: number
+  ) {
+    const newEntry: any = {
       attributes: element.attributes,
       glosses: []
     };
+    newEntry.key = newEntry.attributes.uuid;
+    if (!newEntry.key) {
+      newEntry.key = puddle + '_' + newEntry.attributes.id;
+    }
+
     this.addFswGlosses(element, newEntry);
     return newEntry;
   }
 
   private addFswGlosses(
     element: { attributes?: any; elements?: any },
-    newEntry: { attributes?: any; glosses: any; fsw?: any }
+    newEntry: {
+      key: string;
+      attributes?: any;
+      glosses: string[];
+      fsw: string;
+    }
   ) {
     // iterate over spmljs.elements[1].elements[].elements
     if (element && element.elements) {
       element.elements.forEach(entryelement => {
         // iterate over spmljs.elements[1].elements[].elements[].elements
-        if (entryelement && entryelement.elements) {
+        if (
+          entryelement &&
+          (entryelement.name === 'term' || entryelement.name === 'text') &&
+          entryelement.elements
+        ) {
           entryelement.elements.forEach(
-            (node: { type: string; text: string; cdata: string }) => {
+            (node: {
+              type: string;
+              name: string;
+              text: string;
+              cdata: string;
+            }) => {
               if (node.type === 'text') {
                 newEntry.fsw = node.text;
               } else if ((node.type = 'cdata')) {

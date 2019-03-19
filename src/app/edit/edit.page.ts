@@ -89,7 +89,7 @@ export class EditPage implements OnInit, AfterViewInit {
         }
       }
       // limit to max entries
-      if (count >= 25) {
+      if (count >= max) {
         break;
       }
     }
@@ -101,8 +101,8 @@ export class EditPage implements OnInit, AfterViewInit {
     const existingkeys = [];
     const keep = [];
     arr.forEach(element => {
-      if (!existingkeys.includes(element.uuid)) {
-        existingkeys.push(element.uuid);
+      if (!existingkeys.includes(element.key)) {
+        existingkeys.push(element.key);
         keep.push(element);
       }
     });
@@ -134,7 +134,7 @@ export class EditPage implements OnInit, AfterViewInit {
             entry.glosses.forEach(gloss => {
               list.push({
                 gloss: gloss,
-                uuid: entry.attributes.uuid,
+                key: entry.key,
                 fsw: entry.fsw
               });
             });
