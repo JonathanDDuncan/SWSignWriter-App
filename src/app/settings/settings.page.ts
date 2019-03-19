@@ -77,34 +77,56 @@ export class SettingsPage implements OnInit {
   }
 
   convertspml(xml: string) {
-    const result2: any = convert.xml2js(xml, { compact: false });
-    const result: any = { entries: [] };
+    const spmljs: any = convert.xml2js(xml, { compact: false });
 
-    result.puddleInfo = result2.elements[1].attributes;
-    const elements: [any] = result2.elements[1].elements;
+    const result = {
+      puddleInfo: spmljs.elements[1].attributes,
+      entries: this.createEntries(spmljs)
+    };
+    return result;
+  }
 
+  private createEntries(spmljs: any) {
+    const entries = [];
+    const elements: [any] = spmljs.elements[1].elements;
+    // iterate over spmljs.elements[1].elements
     elements.forEach(element => {
       if (element && element.name === 'entry') {
-        const newEntry: any = {
-          attributes: element.attributes,
-          glosses: []
-        };
-        if (element && element.elements) {
-          element.elements.forEach(entryelement => {
-            if (entryelement && entryelement.elements) {
-              entryelement.elements.forEach(node => {
-                if (node.type === 'text') {
-                  newEntry.fsw = node.text;
-                } else if ((node.type = 'cdata')) {
-                  newEntry.glosses.push(node.cdata);
-                }
-              });
-            }
-          });
-        }
-        result.entries.push(newEntry);
+        entries.push(this.createEntry(element));
       }
     });
-    return result;
+    return entries;
+  }
+
+  private createEntry(element: { attributes: any; elements?: any }) {
+    const newEntry: { attributes?: any; glosses: any; fsw?: any } = {
+      attributes: element.attributes,
+      glosses: []
+    };
+    this.addFswGlosses(element, newEntry);
+    return newEntry;
+  }
+
+  private addFswGlosses(
+    element: { attributes?: any; elements?: any },
+    newEntry: { attributes?: any; glosses: any; fsw?: any }
+  ) {
+    // iterate over spmljs.elements[1].elements[].elements
+    if (element && element.elements) {
+      element.elements.forEach(entryelement => {
+        // iterate over spmljs.elements[1].elements[].elements[].elements
+        if (entryelement && entryelement.elements) {
+          entryelement.elements.forEach(
+            (node: { type: string; text: string; cdata: string }) => {
+              if (node.type === 'text') {
+                newEntry.fsw = node.text;
+              } else if ((node.type = 'cdata')) {
+                newEntry.glosses.push(node.cdata);
+              }
+            }
+          );
+        }
+      });
+    }
   }
 }
