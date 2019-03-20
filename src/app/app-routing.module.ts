@@ -19,7 +19,8 @@ const routes: Routes = [
     path: 'quicksigndoc',
     loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
   },
-  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' }
+  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
+  { path: 'choose-sign', loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule' }
 
 ];
 
