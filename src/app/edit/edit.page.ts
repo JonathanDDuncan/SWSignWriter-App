@@ -1,33 +1,25 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 
-import { fromEvent } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
+import * as uuid from 'uuid';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss']
 })
-export class EditPage implements OnInit, AfterViewInit {
-  public elements: SafeHtml[];
+export class EditPage implements OnInit {
+  public elements: { sign: SafeHtml; key: string }[];
 
   private entrylist: any[];
+
   constructor(
     private storage: Storage,
     private sanitizer: DomSanitizer,
     public modalController: ModalController
   ) {}
-
-  @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
 
   ngOnInit() {
     console.log('ssw', ssw);
@@ -36,102 +28,78 @@ export class EditPage implements OnInit, AfterViewInit {
     );
     this.elements = [];
 
-    strs.forEach(element => {
-      this.elements.push(
-        this.sanitize(
-          '<div style="min-width:100px;">' + ssw.svg(element) + '</div>'
-        )
-      );
+    const strwithuuid = strs.map(fsw => ({ fsw: fsw, uuid: uuid.v4() }));
+    strwithuuid.forEach(entry => {
+      this.elements.push({
+        sign: this.sanitize(
+          '<div style="min-width:100px;">' +
+            ssw.svg(entry.fsw) +
+            '</div>' +
+            '<span">' +
+            ' ' +
+            '</span>'
+        ),
+        key: entry.uuid
+      });
     });
 
     this.makelist();
   }
-  ngAfterViewInit() {
-    fromEvent(this.emailRef.nativeElement, 'keyup')
-      .pipe(
-        // get value
-        map((evt: any) => evt.target.value),
-        // text length must be > 2 chars
-        // .filter(res => res.length > 2)
-        // emit after 1s of silence
-        debounceTime(100),
-        // emit only if data changes since the last emit
-        distinctUntilChanged()
-      )
-      // subscription
-      .subscribe((text: string) => {
-        const result = this.search(text);
-        console.log(result);
-        this.showResult(result);
-      });
-  }
 
-  async presentModal() {
+  async search($event, key) {
     const modal = await this.modalController.create({
       component: ChooseSignPage,
-      componentProps: { value: 123 }
+      componentProps: {
+        entrylist: this.entrylist,
+        searchword: 'b'
+      }
     });
-    return await modal.present();
+    const result = await modal.present();
+    const { data } = await modal.onDidDismiss();
+
+    console.log(data);
+
+    // Replace existing item in list
+    this.elements = this.replaceElement(this.elements, key, data);
+
+    return result;
+  }
+
+  replaceElement(elements, key, data) {
+    const toChange = elements.find(elem => elem.key === key);
+    const changeWith = this.entrylist.find(entry => entry.key === data.result);
+
+    if (toChange && changeWith) {
+      const toChangeindex = elements.indexOf(toChange);
+
+      if (toChangeindex >= 0) {
+        elements[toChangeindex] = {
+          sign: this.sanitize(
+            '<div style="min-width:100px;">' +
+              ssw.svg(changeWith.fsw) +
+              '</div>' +
+              '<span">' +
+              ' ' +
+              '</span>'
+          ),
+          key: changeWith.key,
+          gloss: changeWith.gloss
+        };
+      }
+    }
+    return elements;
   }
 
   sanitize(content: string) {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
-  search(text: string) {
-    const max = 25;
-    const result = [];
-    let count = 0;
-    const searchtext = this.normalizeForSearch(text.trim());
-    for (let i = 0; i < this.entrylist.length; i++) {
-      const entry = this.entrylist[i];
-
-      if (searchtext.length > 2) {
-        if (entry.index.includes(searchtext)) {
-          result.push(entry);
-          count++;
-        }
-      } else if (searchtext.length > 0) {
-        if (entry.index === searchtext) {
-          result.push(entry);
-          count++;
-        }
-      }
-      // limit to max entries
-      if (count >= max) {
-        break;
-      }
-    }
-
-    return this.arrayUnique(result);
-  }
-
-  arrayUnique(arr: any[]) {
-    const existingkeys = [];
-    const keep = [];
-    arr.forEach(element => {
-      if (!existingkeys.includes(element.key)) {
-        existingkeys.push(element.key);
-        keep.push(element);
-      }
+  find(arr, test, ctx) {
+    let result = null;
+    arr.some(function(el, i) {
+      return test.call(ctx, el, i, arr) ? ((result = el), true) : false;
     });
-    return keep;
-  }
-
-  showResult(result) {
-    this.elements = [];
-    result.forEach(entry => {
-      this.elements.push(
-        this.sanitize(
-          '<div style="min-width:100px;">' +
-            ssw.svg(entry.fsw) +
-            '</div>' +
-            '<span">' +
-            entry.gloss +
-            '</span>'
-        )
-      );
-    });
+    return result;
   }
 
   makelist() {

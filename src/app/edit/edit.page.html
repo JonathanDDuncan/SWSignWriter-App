@@ -5,35 +5,17 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- Textarea in an item with a placeholder -->
-  <ion-item>
-    <button (click)="presentModal()" type="button">presentModal</button>
-  </ion-item>
-  <ion-item>
-    <button (click)="search($event)" type="button">Search</button>
-  </ion-item>
-  <!-- <ion-item>
-    <input
-      type="file"
-      accept="text/plain"
-      multiple
-      (change)="openFile($event)"
-    />
-  </ion-item> -->
-  <ion-item>
-    <ion-textarea
-      #emailRef
-      placeholder="Enter words to search here..."
-    ></ion-textarea>
-  </ion-item>
-  <!-- List of Input Items -->
+  <!-- List of Items -->
   <ion-list>
-    <ion-radio-group>
-      <ion-item *ngFor="let item of elements">
-        <span style="padding:10px;" [innerHTML]="item"></span>
+    <ion-item *ngFor="let item of elements">
+      <button
+        style="margin:10px;"
+        (click)="search($event, item.key)"
+        type="button"
+      >
+        <span style="padding:10px;" [innerHTML]="item.sign"></span>
         <ion-label> </ion-label>
-        <ion-radio slot="start"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
+      </button>
+    </ion-item>
   </ion-list>
 </ion-content>

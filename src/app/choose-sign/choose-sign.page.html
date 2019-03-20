@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>chooseSign</ion-title>
+    <ion-item>
+      <ion-textarea
+        #emailRef
+        placeholder="Enter words to search here..."
+      ></ion-textarea>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-item *ngFor="let item of elements">
+    <span style="padding:10px;" [innerHTML]="item.sign"></span>
+    <ion-label> </ion-label>
+    <ion-radio
+      value="item.key"
+      (ionSelect)="radioChecked(item.key)"
+      slot="start"
+    ></ion-radio>
+  </ion-item>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col> </ion-col>
+        <ion-col>
+          <ion-button (click)="accept()" color="primary">Accept</ion-button>
+        </ion-col>
+        <ion-col> </ion-col>
+        <ion-col>
+          <ion-button (click)="cancel()" color="secondary">Cancel</ion-button>
+        </ion-col>
+        <ion-col> </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
