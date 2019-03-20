@@ -9,7 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
-
+import { ChooseSignPageModule } from './choose-sign/choose-sign.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,7 +19,8 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicStorageModule.forRoot({
       name: '__quicksigndocumentdb'
     }),
-    AppRoutingModule
+    AppRoutingModule,
+    ChooseSignPageModule
   ],
   providers: [
     StatusBar,

@@ -10,7 +10,8 @@ import { Storage } from '@ionic/storage';
 
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
+import { ModalController } from '@ionic/angular';
+import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
@@ -20,7 +21,11 @@ export class EditPage implements OnInit, AfterViewInit {
   public elements: SafeHtml[];
 
   private entrylist: any[];
-  constructor(private storage: Storage, private sanitizer: DomSanitizer) {}
+  constructor(
+    private storage: Storage,
+    private sanitizer: DomSanitizer,
+    public modalController: ModalController
+  ) {}
 
   @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
 
@@ -60,6 +65,15 @@ export class EditPage implements OnInit, AfterViewInit {
         this.showResult(result);
       });
   }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ChooseSignPage,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
   sanitize(content: string) {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }

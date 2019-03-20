@@ -7,19 +7,19 @@
 <ion-content padding>
   <!-- Textarea in an item with a placeholder -->
   <ion-item>
-    <button (click)="readwrite($event)" type="button">Load File</button>
+    <button (click)="presentModal()" type="button">presentModal</button>
   </ion-item>
   <ion-item>
     <button (click)="search($event)" type="button">Search</button>
   </ion-item>
-  <ion-item>
+  <!-- <ion-item>
     <input
       type="file"
       accept="text/plain"
       multiple
       (change)="openFile($event)"
     />
-  </ion-item>
+  </ion-item> -->
   <ion-item>
     <ion-textarea
       #emailRef
