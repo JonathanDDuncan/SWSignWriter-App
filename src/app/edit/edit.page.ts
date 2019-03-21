@@ -1,5 +1,4 @@
 import {
-  Input,
   Component,
   OnInit,
   ElementRef,
@@ -14,11 +13,6 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import * as uuid from 'uuid';
-@Component({
-  selector: 'app-edit',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss']
-})
 interface EditResult {
   sign: SafeHtml;
   key: string;
@@ -26,6 +20,11 @@ interface EditResult {
   gloss: string;
 }
 
+@Component({
+  selector: 'app-edit',
+  templateUrl: './edit.page.html',
+  styleUrls: ['./edit.page.scss']
+})
 export class EditPage implements OnInit, AfterViewInit {
   public elements: EditResult[];
   @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
@@ -84,14 +83,31 @@ export class EditPage implements OnInit, AfterViewInit {
       const founds: EditResult[] = this.search(text1);
       let found: EditResult;
       if (founds.length > 0) {
-        found = founds[0];
+        found = this.findmatchingresult(founds, text1);
       }
       if (found) {
         found.sign = this.sanitizeSvg(found.fsw);
+        found.gloss = text1;
       }
 
       return found;
     });
+  }
+
+  findmatchingresult(founds: any[] | EditResult[], text1: string) {
+    const foundexact = founds.find(item => item.gloss === text1);
+    if (!foundexact) {
+      return foundexact;
+    }
+    const foundsimilar = founds.find(
+      item => item.index === this.normalizeForSearch(text1)
+    );
+    if (foundsimilar) {
+      return foundsimilar;
+    }
+
+    const first = founds[0];
+    return first;
   }
 
   showResult(result) {
@@ -181,7 +197,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   private sanitizeSvg(fsw: string) {
     return this.sanitize(
-      '<div style="min-width:100px;">' +
+      '<div style="min-width:100px; padding:5px;">' +
         ssw.svg(fsw) +
         '</div>' +
         '<span">' +
@@ -192,14 +208,6 @@ export class EditPage implements OnInit, AfterViewInit {
 
   sanitize(content: string) {
     return this.sanitizer.bypassSecurityTrustHtml(content);
-  }
-
-  find(arr, test, ctx) {
-    let result = null;
-    arr.some(function(el, i) {
-      return test.call(ctx, el, i, arr) ? ((result = el), true) : false;
-    });
-    return result;
   }
 
   makelist() {
