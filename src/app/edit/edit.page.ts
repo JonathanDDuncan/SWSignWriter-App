@@ -19,13 +19,15 @@ import * as uuid from 'uuid';
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss']
 })
+interface EditResult {
+  sign: SafeHtml;
+  key: string;
+  fsw: string;
+  gloss: string;
+}
+
 export class EditPage implements OnInit, AfterViewInit {
-  public elements: {
-    sign: SafeHtml;
-    key: string;
-    fsw: string;
-    gloss: string;
-  }[];
+  public elements: EditResult[];
   @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
   private entrylist: any[];
 
@@ -79,18 +81,8 @@ export class EditPage implements OnInit, AfterViewInit {
     const texts = text.split(' ');
 
     return texts.map(text1 => {
-      const founds: {
-        fsw: string;
-        key: string;
-        gloss: string;
-        sign: SafeHtml;
-      }[] = this.search(text1);
-      let found: {
-        fsw: string;
-        key: string;
-        gloss: string;
-        sign: SafeHtml;
-      };
+      const founds: EditResult[] = this.search(text1);
+      let found: EditResult;
       if (founds.length > 0) {
         found = founds[0];
       }
@@ -106,9 +98,7 @@ export class EditPage implements OnInit, AfterViewInit {
     this.elements = result;
   }
 
-  search(
-    text: string
-  ): { fsw: string; key: string; gloss: string; sign: SafeHtml }[] {
+  search(text: string): EditResult[] {
     const max = 25;
     const result = [];
     let count = 0;
@@ -136,9 +126,7 @@ export class EditPage implements OnInit, AfterViewInit {
     return this.arrayUnique(result);
   }
 
-  arrayUnique(
-    arr: { fsw: string; key: string; gloss: string; sign: SafeHtml }[]
-  ): { fsw: string; key: string; gloss: string; sign: SafeHtml }[] {
+  arrayUnique(arr: EditResult[]): EditResult[] {
     const existingkeys = [];
     const keep: {
       fsw: string;
