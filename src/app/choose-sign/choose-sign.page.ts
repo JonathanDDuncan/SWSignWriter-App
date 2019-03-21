@@ -69,7 +69,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
     });
   }
 
-  radioChecked(key) {
+  radioChecked(key: string) {
     this.selectedkey = key;
     console.log(this.selectedkey);
   }

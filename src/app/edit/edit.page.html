@@ -9,12 +9,12 @@
   <ion-list>
     <ion-item *ngFor="let item of elements">
       <button
-        style="margin:10px;"
+        style="margin:10px;padding:5px;"
         (click)="search($event, item.key)"
         type="button"
       >
-        <span style="padding:10px;" [innerHTML]="item.sign"></span>
-        <ion-label> </ion-label>
+        <span style="padding:5px;" [innerHTML]="item.sign"></span>
+        <ion-label>{{ item.gloss }} </ion-label>
       </button>
     </ion-item>
   </ion-list>

@@ -11,7 +11,7 @@ import * as uuid from 'uuid';
   styleUrls: ['./edit.page.scss']
 })
 export class EditPage implements OnInit {
-  public elements: { sign: SafeHtml; key: string }[];
+  public elements: { sign: SafeHtml; key: string; gloss: string }[];
 
   private entrylist: any[];
 
@@ -39,7 +39,8 @@ export class EditPage implements OnInit {
             ' ' +
             '</span>'
         ),
-        key: entry.uuid
+        key: entry.uuid,
+        gloss: ''
       });
     });
 
