@@ -11,7 +11,12 @@ import * as uuid from 'uuid';
   styleUrls: ['./edit.page.scss']
 })
 export class EditPage implements OnInit {
-  public elements: { sign: SafeHtml; key: string; gloss: string }[];
+  public elements: {
+    sign: SafeHtml;
+    key: string;
+    fsw: string;
+    gloss: string;
+  }[];
 
   private entrylist: any[];
 
@@ -31,15 +36,9 @@ export class EditPage implements OnInit {
     const strwithuuid = strs.map(fsw => ({ fsw: fsw, uuid: uuid.v4() }));
     strwithuuid.forEach(entry => {
       this.elements.push({
-        sign: this.sanitize(
-          '<div style="min-width:100px;">' +
-            ssw.svg(entry.fsw) +
-            '</div>' +
-            '<span">' +
-            ' ' +
-            '</span>'
-        ),
+        sign: this.sanitizeSvg(entry.fsw),
         key: entry.uuid,
+        fsw: entry.fsw,
         gloss: ''
       });
     });
@@ -75,20 +74,24 @@ export class EditPage implements OnInit {
 
       if (toChangeindex >= 0) {
         elements[toChangeindex] = {
-          sign: this.sanitize(
-            '<div style="min-width:100px;">' +
-              ssw.svg(changeWith.fsw) +
-              '</div>' +
-              '<span">' +
-              ' ' +
-              '</span>'
-          ),
+          sign: this.sanitizeSvg(changeWith.fsw),
           key: changeWith.key,
           gloss: changeWith.gloss
         };
       }
     }
     return elements;
+  }
+
+  private sanitizeSvg(fsw: string) {
+    return this.sanitize(
+      '<div style="min-width:100px;">' +
+        ssw.svg(fsw) +
+        '</div>' +
+        '<span">' +
+        ' ' +
+        '</span>'
+    );
   }
 
   sanitize(content: string) {
