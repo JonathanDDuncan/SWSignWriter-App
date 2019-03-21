@@ -36,6 +36,10 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
     this.elements = [];
     console.log(this.entrys);
     console.log(this.searchword);
+    this.emailRef.nativeElement.value = this.searchword;
+    const result = this.search(this.searchword);
+    console.log(result);
+    this.showResult(result);
   }
 
   ngAfterViewInit() {

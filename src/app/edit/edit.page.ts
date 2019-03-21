@@ -96,14 +96,22 @@ export class EditPage implements OnInit, AfterViewInit {
 
   findmatchingresult(founds: any[] | EditResult[], text1: string) {
     const foundexact = founds.find(item => item.gloss === text1);
-    if (!foundexact) {
+    if (foundexact) {
       return foundexact;
     }
+
     const foundsimilar = founds.find(
       item => item.index === this.normalizeForSearch(text1)
     );
     if (foundsimilar) {
       return foundsimilar;
+    }
+
+    const foundsubstring = founds.find(item =>
+      item.index.includes(this.normalizeForSearch(text1))
+    );
+    if (foundsubstring) {
+      return foundsubstring;
     }
 
     const first = founds[0];
@@ -159,11 +167,12 @@ export class EditPage implements OnInit, AfterViewInit {
     return keep;
   }
   async replace($event, key) {
+    const clickedEntry = this.entrylist.find(entry => entry.key === key);
     const modal = await this.modalController.create({
       component: ChooseSignPage,
       componentProps: {
         entrylist: this.entrylist,
-        searchword: 'b'
+        searchword: clickedEntry.gloss
       }
     });
     const result = await modal.present();
