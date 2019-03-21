@@ -8,6 +8,16 @@ import {
 import * as convert from 'xml-js';
 import { Storage } from '@ionic/storage';
 
+interface Entry {
+  key: string;
+  attributes?: any;
+  glosses: string[];
+  fsw: string;
+}
+
+// tslint:disable-next-line:no-empty-interface
+interface PuddleInfo {}
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -78,16 +88,16 @@ export class SettingsPage implements OnInit {
 
   convertspml(xml: string) {
     const spmljs: any = convert.xml2js(xml, { compact: false });
-    const puddleInfo = spmljs.elements[1].attributes;
-    const result = {
+    const puddleInfo: PuddleInfo = spmljs.elements[1].attributes;
+    const result: { puddleInfo: PuddleInfo; entries: Entry[] } = {
       puddleInfo: puddleInfo,
       entries: this.createEntries(spmljs, puddleInfo.puddle)
     };
     return result;
   }
 
-  private createEntries(spmljs: any, puddle: number) {
-    const entries = [];
+  private createEntries(spmljs: any, puddle: number): Entry[] {
+    const entries: Entry[] = [];
     const elements: [any] = spmljs.elements[1].elements;
     // iterate over spmljs.elements[1].elements
     elements.forEach(element => {
@@ -108,7 +118,7 @@ export class SettingsPage implements OnInit {
   private createEntry(
     element: { attributes: any; elements?: any },
     puddle: number
-  ) {
+  ): Entry {
     const newEntry: any = {
       attributes: element.attributes,
       glosses: []
@@ -124,12 +134,7 @@ export class SettingsPage implements OnInit {
 
   private addFswGlosses(
     element: { attributes?: any; elements?: any },
-    newEntry: {
-      key: string;
-      attributes?: any;
-      glosses: string[];
-      fsw: string;
-    }
+    newEntry: Entry
   ) {
     // iterate over spmljs.elements[1].elements[].elements
     if (element && element.elements) {
