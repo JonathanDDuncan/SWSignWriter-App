@@ -1,7 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Input,
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 
+import { fromEvent } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import * as uuid from 'uuid';
@@ -10,14 +19,14 @@ import * as uuid from 'uuid';
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss']
 })
-export class EditPage implements OnInit {
+export class EditPage implements OnInit, AfterViewInit {
   public elements: {
     sign: SafeHtml;
     key: string;
     fsw: string;
     gloss: string;
   }[];
-
+  @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
   private entrylist: any[];
 
   constructor(
@@ -46,7 +55,106 @@ export class EditPage implements OnInit {
     this.makelist();
   }
 
-  async search($event, key) {
+  ngAfterViewInit() {
+    fromEvent(this.emailRef.nativeElement, 'keyup')
+      .pipe(
+        // get value
+        map((evt: any) => evt.target.value),
+        // text length must be > 2 chars
+        // .filter(res => res.length > 2)
+        // emit after 1s of silence
+        debounceTime(100),
+        // emit only if data changes since the last emit
+        distinctUntilChanged()
+      )
+      // subscription
+      .subscribe((text: string) => {
+        const result = this.searchFrase(text);
+        console.log(result);
+        this.showResult(result);
+      });
+  }
+
+  searchFrase(text: string) {
+    const texts = text.split(' ');
+
+    return texts.map(text1 => {
+      const founds: {
+        fsw: string;
+        key: string;
+        gloss: string;
+        sign: SafeHtml;
+      }[] = this.search(text1);
+      let found: {
+        fsw: string;
+        key: string;
+        gloss: string;
+        sign: SafeHtml;
+      };
+      if (founds.length > 0) {
+        found = founds[0];
+      }
+      if (found) {
+        found.sign = this.sanitizeSvg(found.fsw);
+      }
+
+      return found;
+    });
+  }
+
+  showResult(result) {
+    this.elements = result;
+  }
+
+  search(
+    text: string
+  ): { fsw: string; key: string; gloss: string; sign: SafeHtml }[] {
+    const max = 25;
+    const result = [];
+    let count = 0;
+    const searchtext = this.normalizeForSearch(text.trim());
+    for (let i = 0; i < this.entrylist.length; i++) {
+      const entry = this.entrylist[i];
+
+      if (searchtext.length > 2) {
+        if (entry.index.includes(searchtext)) {
+          result.push(entry);
+          count++;
+        }
+      } else if (searchtext.length > 0) {
+        if (entry.index === searchtext) {
+          result.push(entry);
+          count++;
+        }
+      }
+      // limit to max entries
+      if (count >= max) {
+        break;
+      }
+    }
+
+    return this.arrayUnique(result);
+  }
+
+  arrayUnique(
+    arr: { fsw: string; key: string; gloss: string; sign: SafeHtml }[]
+  ): { fsw: string; key: string; gloss: string; sign: SafeHtml }[] {
+    const existingkeys = [];
+    const keep: {
+      fsw: string;
+      key: string;
+      gloss: string;
+      sign: SafeHtml;
+    }[] = [];
+    arr.forEach(element => {
+      if (!existingkeys.includes(element.key)) {
+        existingkeys.push(element.key);
+        keep.push(element);
+      }
+    });
+    return keep;
+  }
+  async replace($event, key) {
     const modal = await this.modalController.create({
       component: ChooseSignPage,
       componentProps: {

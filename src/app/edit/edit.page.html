@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Edit</ion-title>
+    <ion-item>
+      <ion-textarea
+        #emailRef
+        placeholder="Enter words to search here..."
+      ></ion-textarea>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +16,7 @@
     <ion-item *ngFor="let item of elements">
       <button
         style="margin:10px;padding:5px;"
-        (click)="search($event, item.key)"
+        (click)="replace($event, item.key)"
         type="button"
       >
         <span style="padding:5px;" [innerHTML]="item.sign"></span>
