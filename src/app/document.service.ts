@@ -50,4 +50,12 @@ export class DocumentService {
   cloneObject(obj) {
     return Object.assign({}, obj);
   }
+
+  getFSW(): string {
+    let fsw = '';
+    this.document.signs.forEach(sign => {
+      fsw += sign.fsw + ' ';
+    });
+    return fsw;
+  }
 }

@@ -168,7 +168,8 @@ export class EditPage implements OnInit, AfterViewInit {
         signs[toChangeindex] = {
           sign: ssw.svg(changeWith.fsw),
           key: changeWith.key,
-          gloss: changeWith.gloss
+          gloss: changeWith.gloss,
+          fsw: changeWith.fsw
         };
       }
     }
