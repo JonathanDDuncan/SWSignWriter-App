@@ -8,15 +8,20 @@ import {
 import * as convert from 'xml-js';
 import { Storage } from '@ionic/storage';
 
-interface Entry {
+export interface Entry {
   key: string;
   attributes?: any;
   glosses: string[];
   fsw: string;
 }
 
-interface PuddleInfo {
+export interface PuddleInfo {
   puddle: number;
+}
+
+export interface Puddle {
+  puddleInfo: PuddleInfo;
+  entries: Entry[];
 }
 
 @Component({
@@ -63,7 +68,7 @@ export class SettingsPage implements OnInit {
   }
 
   saveSpml(spml: string) {
-    const result = this.convertspml(spml);
+    const result: Puddle = this.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 
     // Save spml
@@ -85,10 +90,10 @@ export class SettingsPage implements OnInit {
     });
   }
 
-  convertspml(xml: string) {
+  convertspml(xml: string): Puddle {
     const spmljs: any = convert.xml2js(xml, { compact: false });
     const puddleInfo: PuddleInfo = spmljs.elements[1].attributes;
-    const result: { puddleInfo: PuddleInfo; entries: Entry[] } = {
+    const result: Puddle = {
       puddleInfo: puddleInfo,
       entries: this.createEntries(spmljs, puddleInfo.puddle)
     };
@@ -118,14 +123,17 @@ export class SettingsPage implements OnInit {
     element: { attributes: any; elements?: any },
     puddle: number
   ): Entry {
-    const newEntry: any = {
-      attributes: element.attributes,
-      glosses: []
-    };
-    newEntry.key = newEntry.attributes.uuid;
-    if (!newEntry.key) {
-      newEntry.key = puddle + '_' + newEntry.attributes.id;
+    let key = element.attributes.uuid;
+    if (!key) {
+      key = puddle + '_' + element.attributes.id;
     }
+
+    const newEntry: Entry = {
+      attributes: element.attributes,
+      glosses: [],
+      key: key,
+      fsw: ''
+    };
 
     this.addFswGlosses(element, newEntry);
     return newEntry;
