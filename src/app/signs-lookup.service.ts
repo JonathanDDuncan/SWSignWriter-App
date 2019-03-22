@@ -90,6 +90,6 @@ export class SignsLookupService {
   }
 
   getsign(key: string) {
-    this.entrylist.find(entry => entry.key === key);
+    return this.entrylist.find(entry => entry.key === key);
   }
 }

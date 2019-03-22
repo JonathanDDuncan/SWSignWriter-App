@@ -6,13 +6,13 @@ import {
   AfterViewInit
 } from '@angular/core';
 
-import { fromEvent } from 'rxjs';
+import { fromEvent, ObjectUnsubscribedError } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { NormalizationService } from '../normalization.service';
 import { SignsLookupService } from '../signs-lookup.service';
-
+import { v4 as uuid } from 'uuid';
 interface EditResult {
   sign: string;
   key: string;
@@ -56,19 +56,28 @@ export class EditPage implements OnInit, AfterViewInit {
   searchFrase(text: string) {
     const texts = text.split(' ');
 
-    return texts.map(text1 => {
-      const founds: EditResult[] = this.signsLookupService.search(text1);
-      let found: EditResult;
-      if (founds.length > 0) {
-        found = this.findmatchingresult(founds, text1);
-      }
-      if (found) {
-        found.sign = this.styledSvg(found.fsw);
-        found.gloss = text1;
-      }
+    return texts
+      .filter(str => !(!str || 0 === str.length))
+      .map(text1 => {
+        const founds: EditResult[] = this.signsLookupService.search(text1);
+        let found: EditResult;
+        if (founds.length > 0) {
+          found = this.findmatchingresult(founds, text1);
+        }
+        if (found) {
+          found.sign = this.styledSvg(found.fsw);
+          found.gloss = text1;
+        } else {
+          found = {
+            sign: '',
+            key: uuid(),
+            fsw: '',
+            gloss: text1 + ' sign not found'
+          };
+        }
 
-      return found;
-    });
+        return found;
+      });
   }
 
   findmatchingresult(founds: EditResult[], searchText: string) {
@@ -97,7 +106,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   async replace($event, key) {
-    const clickedEntry = this.signsLookupService.getSign(key);
+    const clickedEntry = this.signsLookupService.getsign(key);
     const modal = await this.modalController.create({
       component: ChooseSignPage,
       componentProps: {
@@ -117,7 +126,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   replaceElement(elements, key, data) {
     const toChange = elements.find(elem => elem.key === key);
-    const changeWith = this.signsLookupService.getSign(data.result);
+    const changeWith = this.signsLookupService.getsign(data.result);
 
     if (toChange && changeWith) {
       const toChangeindex = elements.indexOf(toChange);
@@ -135,12 +144,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   private styledSvg(fsw: string) {
     return (
-      '<div style="min-width:100px; padding:5px;">' +
-      ssw.svg(fsw) +
-      '</div>' +
-      '<span">' +
-      ' ' +
-      '</span>'
+      '<div style="min-width:100px; padding:5px;">' + ssw.svg(fsw) + '</div>'
     );
   }
 }
