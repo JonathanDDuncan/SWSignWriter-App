@@ -7,6 +7,7 @@ interface EditResult {
   key: string;
   fsw: string;
   gloss: string;
+  normalized: string;
 }
 
 @Injectable({
@@ -32,12 +33,12 @@ export class SignsLookupService {
         const entry = this.entrylist[i];
 
         if (searchtext.length > 2) {
-          if (entry.index.includes(searchtext)) {
+          if (entry.normalized.includes(searchtext)) {
             result.push(entry);
             count++;
           }
         } else if (searchtext.length > 0) {
-          if (entry.index === searchtext) {
+          if (entry.normalized === searchtext) {
             result.push(entry);
             count++;
           }
@@ -77,7 +78,7 @@ export class SignsLookupService {
           puddleentries.entries.forEach(entry => {
             entry.glosses.forEach(gloss => {
               this.entrylist.push({
-                index: this.normalize.normalizeForSearch(gloss),
+                normalized: this.normalize.normalizeForSearch(gloss),
                 gloss: gloss,
                 key: entry.key,
                 fsw: entry.fsw
