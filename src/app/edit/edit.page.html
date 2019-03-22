@@ -19,7 +19,7 @@
         (click)="replace($event, item.key)"
         type="button"
       >
-        <span [innerHTML]="item.sign"></span>
+        <span [innerHTML]="item.sign | safeHtml"></span>
         <ion-label>{{ item.gloss }} </ion-label>
       </button>
     </ion-item>

@@ -11,8 +11,8 @@ import { ModalController } from '@ionic/angular';
 
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NormalizationService } from '../normalization.service';
+
 @Component({
   selector: 'app-choose-sign',
   templateUrl: './choose-sign.page.html',
@@ -24,11 +24,10 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
   private selectedkey: string;
   private entrylist: any[];
-  public elements: { sign: SafeHtml; key: string }[];
+  public elements: { sign: string; key: string }[];
   constructor(
     navParams: NavParams,
     public modalController: ModalController,
-    private sanitizer: DomSanitizer,
     private normalize: NormalizationService
   ) {
     // componentProps can also be accessed at construction time using NavParams
@@ -84,14 +83,13 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
     this.elements = [];
     result.forEach(entry => {
       this.elements.push({
-        sign: this.sanitize(
+        sign:
           '<div style="min-width:100px;">' +
-            ssw.svg(entry.fsw) +
-            '</div>' +
-            '<span">' +
-            entry.gloss +
-            '</span>'
-        ),
+          ssw.svg(entry.fsw) +
+          '</div>' +
+          '<span">' +
+          entry.gloss +
+          '</span>',
         key: entry.key
       });
     });
@@ -135,9 +133,5 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
       }
     });
     return keep;
-  }
-
-  sanitize(content: string) {
-    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 }

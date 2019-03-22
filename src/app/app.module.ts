@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { ChooseSignPageModule } from './choose-sign/choose-sign.module';
+import { PipesModule } from './pipes/pipes.module';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -20,7 +22,8 @@ import { ChooseSignPageModule } from './choose-sign/choose-sign.module';
       name: '__quicksigndocumentdb'
     }),
     AppRoutingModule,
-    ChooseSignPageModule
+    ChooseSignPageModule,
+    PipesModule
   ],
   providers: [
     StatusBar,

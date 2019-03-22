@@ -12,7 +12,7 @@
 
 <ion-content padding>
   <ion-item *ngFor="let item of elements">
-    <span style="padding:10px;" [innerHTML]="item.sign"></span>
+    <span style="padding:10px;" [innerHTML]="item.sign | safeHtml"></span>
     <ion-label> </ion-label>
     <ion-radio
       value="item.key"

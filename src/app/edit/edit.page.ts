@@ -5,7 +5,6 @@ import {
   ViewChild,
   AfterViewInit
 } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 
 import { fromEvent } from 'rxjs';
@@ -13,9 +12,9 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { NormalizationService } from '../normalization.service';
-import * as uuid from 'uuid';
+
 interface EditResult {
-  sign: SafeHtml;
+  sign: string;
   key: string;
   fsw: string;
   gloss: string;
@@ -33,7 +32,6 @@ export class EditPage implements OnInit, AfterViewInit {
 
   constructor(
     private storage: Storage,
-    private sanitizer: DomSanitizer,
     public modalController: ModalController,
     private normalize: NormalizationService
   ) {}
@@ -67,7 +65,7 @@ export class EditPage implements OnInit, AfterViewInit {
         found = this.findmatchingresult(founds, text1);
       }
       if (found) {
-        found.sign = this.sanitizeSvg(found.fsw);
+        found.sign = this.styledSvg(found.fsw);
         found.gloss = text1;
       }
 
@@ -137,7 +135,7 @@ export class EditPage implements OnInit, AfterViewInit {
       fsw: string;
       key: string;
       gloss: string;
-      sign: SafeHtml;
+      sign: string;
     }[] = [];
     arr.forEach(element => {
       if (!existingkeys.includes(element.key)) {
@@ -176,7 +174,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
       if (toChangeindex >= 0) {
         elements[toChangeindex] = {
-          sign: this.sanitizeSvg(changeWith.fsw),
+          sign: this.styledSvg(changeWith.fsw),
           key: changeWith.key,
           gloss: changeWith.gloss
         };
@@ -185,19 +183,15 @@ export class EditPage implements OnInit, AfterViewInit {
     return elements;
   }
 
-  private sanitizeSvg(fsw: string) {
-    return this.sanitize(
+  private styledSvg(fsw: string) {
+    return (
       '<div style="min-width:100px; padding:5px;">' +
-        ssw.svg(fsw) +
-        '</div>' +
-        '<span">' +
-        ' ' +
-        '</span>'
+      ssw.svg(fsw) +
+      '</div>' +
+      '<span">' +
+      ' ' +
+      '</span>'
     );
-  }
-
-  sanitize(content: string) {
-    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
   makelist() {

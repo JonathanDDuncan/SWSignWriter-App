@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { EditPage } from './edit.page';
-
+import { PipesModule } from '../pipes/pipes.module';
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PipesModule
   ],
   entryComponents: [],
   declarations: [EditPage]

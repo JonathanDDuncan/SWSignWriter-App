@@ -12,7 +12,7 @@
 <ion-content padding>
   <div style="width:100%; height:100%;  overflow:auto;">
     <div style="height:95%;" class="signtext">
-      <span [innerHTML]="document"></span>
+      <span [innerHTML]="document | safeHtml"></span>
     </div>
   </div>
 </ion-content>
