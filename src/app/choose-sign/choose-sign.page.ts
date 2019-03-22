@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
-
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NormalizationService } from '../normalization.service';
+import { SignsLookupService } from '../signs-lookup.service';
 
 @Component({
   selector: 'app-choose-sign',
@@ -23,12 +23,12 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   @Input() searchword: string;
   @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
   private selectedkey: string;
-  private entrylist: any[];
   public elements: { sign: string; key: string }[];
   constructor(
     navParams: NavParams,
     public modalController: ModalController,
-    private normalize: NormalizationService
+    private normalize: NormalizationService,
+    private signsLookupService: SignsLookupService
   ) {
     // componentProps can also be accessed at construction time using NavParams
   }
@@ -38,7 +38,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
     console.log(this.entrys);
     console.log(this.searchword);
     this.emailRef.nativeElement.value = this.searchword;
-    const result = this.search(this.searchword);
+    const result = this.signsLookupService.search(this.searchword);
     console.log(result);
     this.showResult(result);
   }
@@ -57,7 +57,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
       )
       // subscription
       .subscribe((text: string) => {
-        const result = this.search(text);
+        const result = this.signsLookupService.search(text);
         console.log(result);
         this.showResult(result);
       });
@@ -93,45 +93,5 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
         key: entry.key
       });
     });
-  }
-
-  search(text: string) {
-    const max = 25;
-    const result = [];
-    let count = 0;
-    const searchtext = this.normalize.normalizeForSearch(text.trim());
-    for (let i = 0; i < this.entrylist.length; i++) {
-      const entry = this.entrylist[i];
-
-      if (searchtext.length > 2) {
-        if (entry.index.includes(searchtext)) {
-          result.push(entry);
-          count++;
-        }
-      } else if (searchtext.length > 0) {
-        if (entry.index === searchtext) {
-          result.push(entry);
-          count++;
-        }
-      }
-      // limit to max entries
-      if (count >= max) {
-        break;
-      }
-    }
-
-    return this.arrayUnique(result);
-  }
-
-  arrayUnique(arr: any[]) {
-    const existingkeys = [];
-    const keep = [];
-    arr.forEach(element => {
-      if (!existingkeys.includes(element.key)) {
-        existingkeys.push(element.key);
-        keep.push(element);
-      }
-    });
-    return keep;
   }
 }
