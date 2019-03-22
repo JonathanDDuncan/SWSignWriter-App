@@ -27,7 +27,7 @@ interface EditResult {
 })
 export class EditPage implements OnInit, AfterViewInit {
   public elements: EditResult[];
-  @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
+  @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
 
   constructor(
     public modalController: ModalController,
@@ -40,7 +40,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    fromEvent(this.emailRef.nativeElement, 'keyup')
+    fromEvent(this.searchRef.nativeElement, 'keyup')
       .pipe(
         map((evt: any) => evt.target.value),
         debounceTime(100),

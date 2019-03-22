@@ -21,7 +21,7 @@ import { SignsLookupService } from '../signs-lookup.service';
 export class ChooseSignPage implements OnInit, AfterViewInit {
   @Input() entrys: any[];
   @Input() searchword: string;
-  @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
+  @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
   private selectedkey: string;
   public elements: { sign: string; key: string }[];
   constructor(
@@ -37,14 +37,14 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
     this.elements = [];
     console.log(this.entrys);
     console.log(this.searchword);
-    this.emailRef.nativeElement.value = this.searchword;
+    this.searchRef.nativeElement.value = this.searchword;
     const result = this.signsLookupService.search(this.searchword);
     console.log(result);
     this.showResult(result);
   }
 
   ngAfterViewInit() {
-    fromEvent(this.emailRef.nativeElement, 'keyup')
+    fromEvent(this.searchRef.nativeElement, 'keyup')
       .pipe(
         // get value
         map((evt: any) => evt.target.value),
