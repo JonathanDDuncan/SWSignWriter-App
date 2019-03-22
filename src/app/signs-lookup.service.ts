@@ -55,12 +55,7 @@ export class SignsLookupService {
 
   arrayUnique(arr: EditResult[]): EditResult[] {
     const existingkeys = [];
-    const keep: {
-      fsw: string;
-      key: string;
-      gloss: string;
-      sign: string;
-    }[] = [];
+    const keep: EditResult[] = [];
     arr.forEach(element => {
       if (!existingkeys.includes(element.key)) {
         existingkeys.push(element.key);

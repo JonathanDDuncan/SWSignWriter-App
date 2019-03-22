@@ -9,19 +9,21 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
+    loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
   },
   {
     path: 'quicksigndoc',
     loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
   },
-  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
-  { path: 'choose-sign', loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule' }
-
+  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsPageModule'
+  },
+  {
+    path: 'choose-sign',
+    loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule'
+  }
 ];
 
 @NgModule({
