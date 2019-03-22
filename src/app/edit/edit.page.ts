@@ -67,7 +67,7 @@ export class EditPage implements OnInit, AfterViewInit {
           found = this.findmatchingresult(founds, text1);
         }
         if (found) {
-          found.sign = this.styledSvg(found.fsw);
+          found.sign = ssw.svg(found.fsw);
           found.gloss = text1;
         } else {
           found = {
@@ -95,7 +95,9 @@ export class EditPage implements OnInit, AfterViewInit {
       return foundsimilar;
     }
 
-    const foundsubstring = founds.find(item => item.normalized.includes(normalized));
+    const foundsubstring = founds.find(item =>
+      item.normalized.includes(normalized)
+    );
     if (foundsubstring) {
       return foundsubstring;
     }
@@ -136,18 +138,12 @@ export class EditPage implements OnInit, AfterViewInit {
 
       if (toChangeindex >= 0) {
         elements[toChangeindex] = {
-          sign: this.styledSvg(changeWith.fsw),
+          sign: ssw.svg(changeWith.fsw),
           key: changeWith.key,
           gloss: changeWith.gloss
         };
       }
     }
     return elements;
-  }
-
-  private styledSvg(fsw: string) {
-    return (
-      '<div style="min-width:100px; padding:5px;">' + ssw.svg(fsw) + '</div>'
-    );
   }
 }

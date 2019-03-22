@@ -12,12 +12,10 @@
 
 <ion-content padding>
   <ion-item *ngFor="let item of elements">
-    <div style="min-width:100px;">
-      <span style="padding:10px;">
-        <span [innerHTML]="item.sign | safeHtml"></span>
-      </span>
+    <div class="sign">
+      <span [innerHTML]="item.sign | safeHtml"></span>
+      <ion-label>{{ item.gloss }}</ion-label>
     </div>
-    <span>{{ item.gloss }}</span>
 
     <ion-label> </ion-label>
     <ion-radio

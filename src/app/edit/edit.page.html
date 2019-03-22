@@ -15,11 +15,13 @@
   <ion-list>
     <ion-item *ngFor="let item of elements">
       <button
-        style="margin:10px;padding:5px;"
+        class="editbutton"
         (click)="replace($event, item.key)"
         type="button"
       >
-        <span [innerHTML]="item.sign | safeHtml"></span>
+        <div class="sign">
+          <span [innerHTML]="item.sign | safeHtml"></span>
+        </div>
         <ion-label>{{ item.gloss }} </ion-label>
       </button>
     </ion-item>
