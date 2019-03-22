@@ -15,8 +15,9 @@ interface Entry {
   fsw: string;
 }
 
-// tslint:disable-next-line:no-empty-interface
-interface PuddleInfo {}
+interface PuddleInfo {
+  puddle: number;
+}
 
 @Component({
   selector: 'app-settings',
@@ -41,8 +42,6 @@ export class SettingsPage implements OnInit {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          // // Here you can access the real file
-          // console.log(droppedFile.relativePath, file);
           if (droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
             this.reader.readAsText(file);
           }

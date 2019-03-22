@@ -13,11 +13,13 @@ import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { NormalizationService } from '../normalization.service';
 import { SignsLookupService } from '../signs-lookup.service';
 import { v4 as uuid } from 'uuid';
+
 interface EditResult {
   sign: string;
   key: string;
   fsw: string;
   gloss: string;
+  normalized: string;
 }
 
 @Component({
@@ -72,7 +74,8 @@ export class EditPage implements OnInit, AfterViewInit {
             sign: '',
             key: uuid(),
             fsw: '',
-            gloss: text1 + ' sign not found'
+            gloss: text1 + ' sign not found',
+            normalized: ''
           };
         }
 
@@ -87,12 +90,12 @@ export class EditPage implements OnInit, AfterViewInit {
       return foundexact;
     }
 
-    const foundsimilar = founds.find(item => item.index === normalized);
+    const foundsimilar = founds.find(item => item.normalized === normalized);
     if (foundsimilar) {
       return foundsimilar;
     }
 
-    const foundsubstring = founds.find(item => item.index.includes(normalized));
+    const foundsubstring = founds.find(item => item.normalized.includes(normalized));
     if (foundsubstring) {
       return foundsubstring;
     }
