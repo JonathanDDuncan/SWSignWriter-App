@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { ChooseSignPageModule } from './choose-sign/choose-sign.module';
 import { PipesModule } from './pipes/pipes.module';
+import { SignsLookupService } from './signs-lookup.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,8 @@ import { PipesModule } from './pipes/pipes.module';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    SignsLookupService
   ],
   bootstrap: [AppComponent]
 })

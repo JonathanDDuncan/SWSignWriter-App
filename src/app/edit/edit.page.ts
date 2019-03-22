@@ -5,13 +5,13 @@ import {
   ViewChild,
   AfterViewInit
 } from '@angular/core';
-import { Storage } from '@ionic/storage';
 
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { NormalizationService } from '../normalization.service';
+import { SignsLookupService } from '../signs-lookup.service';
 
 interface EditResult {
   sign: string;
@@ -28,17 +28,15 @@ interface EditResult {
 export class EditPage implements OnInit, AfterViewInit {
   public elements: EditResult[];
   @ViewChild('emailRef', { read: ElementRef }) emailRef: ElementRef;
-  private entrylist: any[];
 
   constructor(
-    private storage: Storage,
     public modalController: ModalController,
-    private normalize: NormalizationService
+    private normalize: NormalizationService,
+    private signsLookupService: SignsLookupService
   ) {}
 
   ngOnInit() {
     this.elements = [];
-    this.makelist();
   }
 
   ngAfterViewInit() {
@@ -59,7 +57,7 @@ export class EditPage implements OnInit, AfterViewInit {
     const texts = text.split(' ');
 
     return texts.map(text1 => {
-      const founds: EditResult[] = this.search(text1);
+      const founds: EditResult[] = this.signsLookupService.search(text1);
       let found: EditResult;
       if (founds.length > 0) {
         found = this.findmatchingresult(founds, text1);
@@ -74,21 +72,18 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   findmatchingresult(founds: EditResult[], searchText: string) {
+    const normalized = this.normalize.normalizeForSearch(searchText);
     const foundexact = founds.find(item => item.gloss === searchText);
     if (foundexact) {
       return foundexact;
     }
 
-    const foundsimilar = founds.find(
-      item => item.index === this.normalize.normalizeForSearch(searchText)
-    );
+    const foundsimilar = founds.find(item => item.index === normalized);
     if (foundsimilar) {
       return foundsimilar;
     }
 
-    const foundsubstring = founds.find(item =>
-      item.index.includes(this.normalize.normalizeForSearch(searchText))
-    );
+    const foundsubstring = founds.find(item => item.index.includes(normalized));
     if (foundsubstring) {
       return foundsubstring;
     }
@@ -101,56 +96,11 @@ export class EditPage implements OnInit, AfterViewInit {
     this.elements = result;
   }
 
-  search(text: string): EditResult[] {
-    const max = 25;
-    const result = [];
-    let count = 0;
-    const searchtext = this.normalize.normalizeForSearch(text.trim());
-    for (let i = 0; i < this.entrylist.length; i++) {
-      const entry = this.entrylist[i];
-
-      if (searchtext.length > 2) {
-        if (entry.index.includes(searchtext)) {
-          result.push(entry);
-          count++;
-        }
-      } else if (searchtext.length > 0) {
-        if (entry.index === searchtext) {
-          result.push(entry);
-          count++;
-        }
-      }
-      // limit to max entries
-      if (count >= max) {
-        break;
-      }
-    }
-
-    return this.arrayUnique(result);
-  }
-
-  arrayUnique(arr: EditResult[]): EditResult[] {
-    const existingkeys = [];
-    const keep: {
-      fsw: string;
-      key: string;
-      gloss: string;
-      sign: string;
-    }[] = [];
-    arr.forEach(element => {
-      if (!existingkeys.includes(element.key)) {
-        existingkeys.push(element.key);
-        keep.push(element);
-      }
-    });
-    return keep;
-  }
   async replace($event, key) {
-    const clickedEntry = this.entrylist.find(entry => entry.key === key);
+    const clickedEntry = this.signsLookupService.getSign(key);
     const modal = await this.modalController.create({
       component: ChooseSignPage,
       componentProps: {
-        entrylist: this.entrylist,
         searchword: clickedEntry.gloss
       }
     });
@@ -167,7 +117,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   replaceElement(elements, key, data) {
     const toChange = elements.find(elem => elem.key === key);
-    const changeWith = this.entrylist.find(entry => entry.key === data.result);
+    const changeWith = this.signsLookupService.getSign(data.result);
 
     if (toChange && changeWith) {
       const toChangeindex = elements.indexOf(toChange);
@@ -192,35 +142,5 @@ export class EditPage implements OnInit, AfterViewInit {
       ' ' +
       '</span>'
     );
-  }
-
-  makelist() {
-    const list = [];
-    this.storage.get('puddles').then(puddles => {
-      puddles.forEach(puddle => {
-        this.storage.get(puddle).then(puddleentries => {
-          puddleentries.entries.forEach(entry => {
-            entry.glosses.forEach(gloss => {
-              list.push({
-                index: this.normalize.normalizeForSearch(gloss),
-                gloss: gloss,
-                key: entry.key,
-                fsw: entry.fsw
-              });
-            });
-          });
-        });
-      });
-
-      this.entrylist = list;
-    });
-  }
-
-  read(xml: string) {
-    // Or to get a key/value pair
-    this.storage.get('puddle').then(val => {
-      console.log('Your name is', val);
-      this.makelist();
-    });
   }
 }
