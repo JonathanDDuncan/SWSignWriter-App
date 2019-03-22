@@ -23,7 +23,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   @Input() searchword: string;
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
   private selectedkey: string;
-  public elements: { sign: string; key: string }[];
+  public elements: { sign: string; key: string; gloss: string }[];
   constructor(
     navParams: NavParams,
     public modalController: ModalController,
@@ -46,13 +46,8 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     fromEvent(this.searchRef.nativeElement, 'keyup')
       .pipe(
-        // get value
         map((evt: any) => evt.target.value),
-        // text length must be > 2 chars
-        // .filter(res => res.length > 2)
-        // emit after 1s of silence
         debounceTime(100),
-        // emit only if data changes since the last emit
         distinctUntilChanged()
       )
       // subscription
@@ -83,14 +78,9 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
     this.elements = [];
     result.forEach(entry => {
       this.elements.push({
-        sign:
-          '<div style="min-width:100px;">' +
-          ssw.svg(entry.fsw) +
-          '</div>' +
-          '<span">' +
-          entry.gloss +
-          '</span>',
-        key: entry.key
+        sign: ssw.svg(entry.fsw),
+        key: entry.key,
+        gloss: entry.gloss
       });
     });
   }
