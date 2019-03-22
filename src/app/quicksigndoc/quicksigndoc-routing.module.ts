@@ -12,7 +12,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../document/document.module#DocumentPageModule'
+            loadChildren: '../view/view.module#ViewPageModule'
           }
         ]
       },
@@ -22,15 +22,6 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: '../edit/edit.module#EditPageModule'
-          }
-        ]
-      },
-      {
-        path: 'tab3',
-        children: [
-          {
-            path: '',
-            loadChildren: '../document/document.module#DocumentPageModule'
           }
         ]
       },
