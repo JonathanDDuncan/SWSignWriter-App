@@ -14,11 +14,7 @@
   <!-- List of Items -->
   <ion-list>
     <ion-item *ngFor="let item of elements">
-      <button
-        class="editbutton"
-        (click)="replace($event, item.key)"
-        type="button"
-      >
+      <button class="editbutton" (click)="replace(item.key)" type="button">
         <div class="sign">
           <span [innerHTML]="item.sign | safeHtml"></span>
         </div>

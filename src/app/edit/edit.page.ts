@@ -110,7 +110,7 @@ export class EditPage implements OnInit, AfterViewInit {
     this.elements = result;
   }
 
-  async replace($event, key) {
+  async replace(key) {
     const clickedEntry = this.signsLookupService.getsign(key);
     const modal = await this.modalController.create({
       component: ChooseSignPage,
