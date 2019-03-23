@@ -28,8 +28,8 @@ export class SettingsService {
 
   constructor(private storage: Storage) {}
 
-  loadDefaultPuddles(): void {
-    const puddlesExists = this.puddlesExists();
+  async loadDefaultPuddles() {
+    const puddlesExists = await this.puddlesExists();
     if (!puddlesExists) {
       this.loadDefaultSpml();
     }
