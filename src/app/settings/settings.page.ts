@@ -33,7 +33,7 @@ export class SettingsPage implements OnInit {
   constructor(private storage: Storage) {}
   private reader = new FileReader();
   public files: UploadFile[] = [];
-
+  private file: any;
   ngOnInit() {
     this.reader.onload = () => {
       const xml: string | ArrayBuffer = this.reader.result as string;
@@ -41,9 +41,14 @@ export class SettingsPage implements OnInit {
     };
   }
 
+  public upload(event) {
+    this.file = event.target.files[0];
+    this.reader.readAsText(this.file);
+  }
+
   public dropped(event: UploadEvent) {
     this.files = event.files;
-    for (const droppedFile of event.files) {
+    for (const droppedFile of this.files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
@@ -74,6 +79,7 @@ export class SettingsPage implements OnInit {
     // Save spml
     this.storage.set(puddlename, result);
 
+    alert(result.entries.length + ' entries saved. To ' + puddlename);
     // Save to list of existing puddles
     this.savePuddleName(puddlename);
   }

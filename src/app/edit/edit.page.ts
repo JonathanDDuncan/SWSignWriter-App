@@ -44,6 +44,10 @@ export class EditPage implements OnInit, AfterViewInit {
     this.showDocument(this.documentService.getDocument());
   }
 
+  resetEntries() {
+    this.signsLookupService.makelist();
+  }
+
   ngAfterViewInit() {
     fromEvent(this.searchRef.nativeElement, 'keyup')
       .pipe(

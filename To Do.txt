@@ -1,0 +1,21 @@
+
+
+Document doesn't take full height all the time.
+Make upload button bigger.
+Reset lookup after uploading.
+automatically add lesho file to lookup.
+
+Fix errors in Tests
+Copy document to clipboard
+Share document
+Make database saving service for settings
+Add basic tests
+Only search signs when new word is typed. only search next.
+Add e2e tests
+Localize
+Create about page
+Add types to "any" variables
+Test on Android
+Test on electron
+
+
