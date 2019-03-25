@@ -14,9 +14,9 @@
     >
     </file-drop>
     <input hidden type="file" #uploader (change)="upload($event)" />
-    <button (click)="uploader.click()">
-      Upload
-    </button>
+    <ion-button (click)="uploader.click()">
+      Choose SPML file
+    </ion-button>
     <div class="upload-table">
       <table class="table">
         <thead>
