@@ -1,14 +1,17 @@
-
+automatically add lesho file to lookup.
 
 Document doesn't take full height all the time.
 Make upload button bigger.
 Reset lookup after uploading.
-automatically add lesho file to lookup.
+
+Move code to change signs into DocumentService
+Rename EntryResult to Sign
+Test see what is taking so long.
 
 Fix errors in Tests
 Copy document to clipboard
 Share document
-Make database saving service for settings
+
 Add basic tests
 Only search signs when new word is typed. only search next.
 Add e2e tests
