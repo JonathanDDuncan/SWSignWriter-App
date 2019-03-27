@@ -1,7 +1,7 @@
 automatically add lesho file to lookup.
 
 Document doesn't take full height all the time.
-Make upload button bigger.
+
 Reset lookup after uploading.
 
 Move code to change signs into DocumentService

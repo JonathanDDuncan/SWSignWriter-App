@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ViewPage } from './view.page';
 import { PipesModule } from '../pipes/pipes.module';
+import { SocialSharingService } from '../social-sharing.service';
 
 const routes: Routes = [
   {

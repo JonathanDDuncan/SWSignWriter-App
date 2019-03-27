@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { DocumentService, Document } from '../document.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { SocialSharingService } from '../social-sharing.service';
 
 @Component({
   selector: 'app-view',
@@ -10,6 +11,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 export class ViewPage implements OnInit, OnChanges {
   constructor(
     private documentService: DocumentService,
+    private socialSharingService: SocialSharingService,
     private router: Router
   ) {
     this.router.events.subscribe(event => {
@@ -28,4 +30,8 @@ export class ViewPage implements OnInit, OnChanges {
 
   ngOnInit() {}
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void {}
+
+  public share() {
+    this.socialSharingService.share();
+  }
 }

@@ -13,7 +13,8 @@ import { ChooseSignPageModule } from './choose-sign/choose-sign.module';
 import { PipesModule } from './pipes/pipes.module';
 import { SignsLookupService } from './signs-lookup.service';
 import { DocumentService } from './document.service';
-
+import { SocialSharingService } from './social-sharing.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -32,7 +33,9 @@ import { DocumentService } from './document.service';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SignsLookupService,
-    DocumentService
+    DocumentService,
+    SocialSharingService,
+    SocialSharing
   ],
   bootstrap: [AppComponent]
 })

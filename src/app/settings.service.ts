@@ -29,10 +29,10 @@ export class SettingsService {
   constructor(private storage: Storage) {}
 
   async loadDefaultPuddles() {
-    const puddlesExists = await this.puddlesExists();
-    if (!puddlesExists) {
-      this.loadDefaultSpml();
-    }
+    // const puddlesExists = await this.puddlesExists();
+    // if (!puddlesExists) {
+    //   this.loadDefaultSpml();
+    // }
   }
 
   loadFile(file: any): any {
