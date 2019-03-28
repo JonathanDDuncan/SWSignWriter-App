@@ -44,7 +44,7 @@ export class ViewPage implements OnInit, OnChanges {
   }
 
   private async sharecontinuation(fsw: string){
-    const node: HTMLElement = document.getElementsByClassName('signtext')[0];
+    const node: any = document.getElementsByClassName('signtext')[0];
     
     const image1 = await htmlToImage.toPng(node)
    
