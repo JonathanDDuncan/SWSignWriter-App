@@ -13,9 +13,11 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="document">
-    <div class="signtext">
+  <div id="document"  class="document">
+    <div class="signtext" style="background-color: white;">
       <span [innerHTML]="document | safeHtml"></span>
     </div>
   </div>
+
+<canvas id ='canvas'></canvas>
 </ion-content>

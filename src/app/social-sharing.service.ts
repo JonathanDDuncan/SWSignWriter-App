@@ -6,7 +6,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class SocialSharingService {
   constructor(private socialSharing: SocialSharing) {}
 
-  public share() {
+  public share(image: HTMLImageElement) {
     // Check if sharing via email is supported
     this.socialSharing
       .canShareViaEmail()
@@ -15,7 +15,7 @@ export class SocialSharingService {
         // Sharing via email is possible
         // Share via email
         this.socialSharing
-          .shareViaEmail('Body', 'Subject', ['duncanjonathan@yahoo.ca'])
+          .shareViaEmail('Body' + image, 'Subject', ['duncanjonathan@yahoo.ca'])
           .then(() => {
             alert('email sent');
             // Success!
@@ -37,7 +37,7 @@ export class SocialSharingService {
         // Sharing via whatsapp is possible
         // Share via whatsapp
         this.socialSharing
-          .shareViaWhatsApp('Body', null, null)
+          .shareViaWhatsApp('Body', image.src, null)
           .then(() => {
             alert('whatsapp sent');
             // Success!
