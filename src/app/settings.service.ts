@@ -1,10 +1,8 @@
+import { StorageService } from './storage.service';
 import { Injectable, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
+
 import { UploadFile } from 'ngx-file-drop';
 import { SpmlService, Puddle } from './spml.service';
-
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,7 @@ export class SettingsService {
   public files: UploadFile[] = [];
   private file: any;
 
-  constructor(private storage: Storage, private spmlService: SpmlService) { }
+  constructor(private spmlService: SpmlService, private storageService: StorageService) { }
 
   async loadDefaultPuddles() {
     // const puddlesExists = await this.puddlesExists();
@@ -42,39 +40,12 @@ export class SettingsService {
         this.saveSpml(xml);
       });
   }
-  async puddlesExists(): Promise<boolean> {
-    const puddles = await this.storage.get('puddles');
-
-    if (puddles) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   saveSpml(spml: string) {
     const result: Puddle = this.spmlService.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 
     // Save spml
-    this.storage.set(puddlename, result);
-
-    alert(result.entries.length + ' entries saved. To ' + puddlename);
-    // Save to list of existing puddles
-    this.savePuddleName(puddlename);
+    this.storageService.savePuddle(puddlename, result);
   }
-
-  private savePuddleName(puddlename: string) {
-    this.storage.get('puddles').then(puddles => {
-      if (!puddles) {
-        puddles = [];
-      }
-      if (!puddles.includes(puddlename)) {
-        puddles.push(puddlename);
-        this.storage.set('puddles', puddles);
-      }
-    });
-  }
-
-
 }
