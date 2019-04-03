@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NormalizationService } from './normalization.service';
 import { Storage } from '@ionic/storage';
 
-export interface EntryResult {
+export interface Sign {
   sign: string;
   key: string;
   fsw: string;
@@ -45,7 +45,7 @@ export class SignsLookupService {
     });
   }
 
-  search(text: string): EntryResult[] {
+  search(text: string): Sign[] {
     const max = 25;
     const result = [];
     let count = 0;
@@ -75,9 +75,9 @@ export class SignsLookupService {
     return this.arrayUnique(result);
   }
 
-  private arrayUnique(arr: EntryResult[]): EntryResult[] {
+  private arrayUnique(arr: Sign[]): Sign[] {
     const existingkeys = [];
-    const keep: EntryResult[] = [];
+    const keep: Sign[] = [];
     arr.forEach(element => {
       if (!existingkeys.includes(element.key)) {
         existingkeys.push(element.key);

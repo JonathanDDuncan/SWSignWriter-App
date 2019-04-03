@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EntryResult } from './signs-lookup.service';
+import { Sign } from './signs-lookup.service';
 
 export interface Document {
-  signs: EntryResult[];
+  signs: Sign[];
 }
 
 @Injectable({
@@ -31,7 +31,7 @@ export class DocumentService {
     this.document = document;
   }
 
-  updateSigns(signs: EntryResult[]): void {
+  updateSigns(signs: Sign[]): void {
     const document = this.getDocument();
     document.signs = signs;
     this.updateDocument(document);

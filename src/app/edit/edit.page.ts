@@ -11,7 +11,7 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { NormalizationService } from '../normalization.service';
-import { SignsLookupService, EntryResult } from '../signs-lookup.service';
+import { SignsLookupService, Sign } from '../signs-lookup.service';
 import { v4 as uuid } from 'uuid';
 import { DocumentService, Document } from '../document.service';
 
@@ -19,7 +19,7 @@ interface EdittedDocument {
   editedsigns: EditedSign[];
 }
 
-interface EditedSign extends EntryResult {
+interface EditedSign extends Sign {
   index: number;
 }
 
@@ -62,7 +62,7 @@ export class EditPage implements OnInit, AfterViewInit {
       });
   }
 
-  private updateSigns(signs: EntryResult[]) {
+  private updateSigns(signs: Sign[]) {
     this.documentService.updateSigns(signs);
     this.showDocument(this.documentService.getDocument());
   }
@@ -81,7 +81,7 @@ export class EditPage implements OnInit, AfterViewInit {
     return editedSign;
   }
 
-  searchFrase(text: string): EntryResult[] {
+  searchFrase(text: string): Sign[] {
     const texts = text.split(' ');
 
     return texts
@@ -92,8 +92,8 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   private findSign(text: string) {
-    const founds: EntryResult[] = this.signsLookupService.search(text);
-    let found: EntryResult;
+    const founds: Sign[] = this.signsLookupService.search(text);
+    let found: Sign;
     if (founds.length > 0) {
       found = this.findmatchingresult(founds, text);
     }
@@ -112,7 +112,7 @@ export class EditPage implements OnInit, AfterViewInit {
     return found;
   }
 
-  findmatchingresult(founds: EntryResult[], searchText: string) {
+  findmatchingresult(founds: Sign[], searchText: string) {
     const normalized = this.normalize.normalizeForSearch(searchText);
     const foundexact = founds.find(item => item.gloss === searchText);
     if (foundexact) {
