@@ -11,16 +11,12 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { NormalizationService } from '../normalization.service';
-import { SignsLookupService, Sign } from '../signs-lookup.service';
+import { SignsLookupService, Sign, FoundSign } from '../signs-lookup.service';
 import { v4 as uuid } from 'uuid';
 import { DocumentService, Document } from '../document.service';
 
 interface EdittedDocument {
-  editedsigns: EditedSign[];
-}
-
-interface EditedSign extends Sign {
-  index: number;
+  editedsigns: FoundSign[];
 }
 
 @Component({
@@ -62,26 +58,30 @@ export class EditPage implements OnInit, AfterViewInit {
       });
   }
 
-  private updateSigns(signs: Sign[]) {
+  private updateSigns(signs: FoundSign[]) {
     this.documentService.updateSigns(signs);
     this.showDocument(this.documentService.getDocument());
   }
 
   showDocument(document: Document): void {
-    const editedsigns: EditedSign[] = document.signs.map((item: any, index) => {
+    const editedsigns: FoundSign[] = document.signs.map((item: any, index) => {
       return this.setIndex(item, index);
     });
 
     this.editedDocument = <EdittedDocument>{ editedsigns: editedsigns };
   }
 
-  private setIndex(item, index: number): EditedSign {
+  trackFound(index, foundSign: FoundSign) {
+    return foundSign ? foundSign.id : undefined;
+  }
+
+  private setIndex(item, index: number): FoundSign {
     const editedSign = Object.assign({}, item);
     editedSign.index = index;
     return editedSign;
   }
 
-  searchFrase(text: string): Sign[] {
+  searchFrase(text: string): FoundSign[] {
     const texts = text.split(' ');
 
     return texts
@@ -91,22 +91,24 @@ export class EditPage implements OnInit, AfterViewInit {
       });
   }
 
-  private findSign(text: string) {
-    const founds: Sign[] = this.signsLookupService.search(text);
-    let found: Sign;
-    if (founds.length > 0) {
-      found = this.findmatchingresult(founds, text);
-    }
-    if (found) {
-      found.sign = ssw.svg(found.fsw);
-      found.gloss = text;
-    } else {
+  private findSign(text: string): FoundSign {
+    const signs: Sign[] = this.signsLookupService.search(text);
+    let found: FoundSign;
+    if (signs.length > 0) {
+      const matching = this.findmatchingresult(signs, text);
       found = {
-        sign: '',
-        key: uuid(),
-        fsw: '',
-        gloss: text + ' sign not found',
-        normalized: ''
+        sign : matching,
+        text: text,
+        id: matching.key + text,
+        svg: ssw.svg(matching.fsw)
+      };
+    }
+    if (!found) {
+      found = {
+        sign : null,
+        text: text + ' sign not found',
+        id: uuid() + text,
+        svg: ''
       };
     }
     return found;

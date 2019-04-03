@@ -10,6 +10,13 @@ export interface Sign {
   normalized: string;
 }
 
+export interface FoundSign {
+  sign: Sign;
+  text: string;
+  id: string;
+  svg: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })

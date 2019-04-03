@@ -14,12 +14,12 @@
 <ion-content padding>
   <!-- List of Items -->
   <ion-list>
-    <ion-item *ngFor="let sign of editedDocument.editedsigns">
-      <button class="editbutton" (click)="replace(sign.index)" type="button">
+    <ion-item *ngFor="let found of editedDocument.editedsigns; index as i; ">
+      <button class="editbutton" (click)="replace(i)" type="button">
         <div class="sign">
-          <span [innerHTML]="sign.sign | safeHtml"></span>
+          <span [innerHTML]="found.svg | safeHtml"></span>
         </div>
-        <ion-label>{{ sign.gloss }} </ion-label>
+        <ion-label>{{ found.text }} </ion-label>
       </button>
     </ion-item>
   </ion-list>
