@@ -1,4 +1,3 @@
-import { SettingsService } from './settings.service';
 import { Injectable } from '@angular/core';
 import { NormalizationService } from './normalization.service';
 import { Storage } from '@ionic/storage';
@@ -19,19 +18,29 @@ export class SignsLookupService {
 
   constructor(
     private storage: Storage,
-    private settings: SettingsService,
     private normalize: NormalizationService
   ) {
     this.loadSigns();
   }
 
   loadSigns() {
-    this.storage.get('puddles').then(async puddles => {
-      if (!puddles || puddles.length <= 0) {
-        await this.settings.loadDefaultPuddles();
-        this.makelist();
-      } else {
-        this.makelist();
+    this.entrylist = [];
+    this.storage.get('puddles').then(puddles => {
+      if (puddles) {
+        puddles.forEach(puddle => {
+          this.storage.get(puddle).then(puddleentries => {
+            puddleentries.entries.forEach(entry => {
+              entry.glosses.forEach(gloss => {
+                this.entrylist.push({
+                  normalized: this.normalize.normalizeForSearch(gloss),
+                  gloss: gloss,
+                  key: entry.key,
+                  fsw: entry.fsw
+                });
+              });
+            });
+          });
+        });
       }
     });
   }
@@ -66,7 +75,7 @@ export class SignsLookupService {
     return this.arrayUnique(result);
   }
 
-  arrayUnique(arr: EntryResult[]): EntryResult[] {
+  private arrayUnique(arr: EntryResult[]): EntryResult[] {
     const existingkeys = [];
     const keep: EntryResult[] = [];
     arr.forEach(element => {
@@ -76,28 +85,6 @@ export class SignsLookupService {
       }
     });
     return keep;
-  }
-
-  makelist() {
-    this.entrylist = [];
-    this.storage.get('puddles').then(puddles => {
-      if (puddles) {
-        puddles.forEach(puddle => {
-          this.storage.get(puddle).then(puddleentries => {
-            puddleentries.entries.forEach(entry => {
-              entry.glosses.forEach(gloss => {
-                this.entrylist.push({
-                  normalized: this.normalize.normalizeForSearch(gloss),
-                  gloss: gloss,
-                  key: entry.key,
-                  fsw: entry.fsw
-                });
-              });
-            });
-          });
-        });
-      }
-    });
   }
 
   getsign(key: string) {

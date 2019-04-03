@@ -20,23 +20,24 @@ export class StorageService {
     }
   }
 
-  savePuddle(puddlename: string, result: Puddle) {
-    this.storage.set(puddlename, result);
+  async savePuddle(puddlename: string, result: Puddle): Promise<any> {
+    await this.storage.set(puddlename, result);
     alert(result.entries.length + ' entries saved. To ' + puddlename);
     // Save to list of existing puddles
-    this.savePuddleName(puddlename);
+    return this.savePuddleName(puddlename);
   }
 
-  private savePuddleName(puddlename: string) {
-    this.storage.get(this.puddleskey).then(puddles => {
-      if (!puddles) {
-        puddles = [];
-      }
-      if (!puddles.includes(puddlename)) {
-        puddles.push(puddlename);
-        this.storage.set(this.puddleskey, puddles);
-      }
-    });
+  private async savePuddleName(puddlename: string): Promise<void> {
+    let puddles = await this.storage.get(this.puddleskey);
+
+    if (!puddles) {
+      puddles = [];
+    }
+    if (!puddles.includes(puddlename)) {
+      puddles.push(puddlename);
+      await this.storage.set(this.puddleskey, puddles);
+    }
+    return;
   }
 
   setDefaultPuddleLoaded(defaultPuddle: boolean): void {

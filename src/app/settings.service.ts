@@ -1,3 +1,5 @@
+import { SignsLookupService } from './signs-lookup.service';
+import { DocumentService } from './document.service';
 import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
 
@@ -13,7 +15,10 @@ export class SettingsService {
   public files: UploadFile[] = [];
   data: string;
 
-  constructor(private spmlService: SpmlService, private storageService: StorageService, private http: HttpClient) { }
+  constructor(private spmlService: SpmlService,
+    private storageService: StorageService,
+    private signsLookupService: SignsLookupService,
+    private http: HttpClient) { }
 
   async loadDefaultPuddles() {
     const puddlesExists = await this.storageService.puddlesExists();
@@ -21,8 +26,9 @@ export class SettingsService {
       const filename = 'assets/spml/' + 'sgn2000.spml';
 
       return this.http.get(filename, { responseType: 'text' })
-        .subscribe(xml => {
-          this.saveSpml(xml);
+        .subscribe(async xml => {
+          await this.saveSpml(xml);
+          this.signsLookupService.loadSigns();
           this.storageService.setDefaultPuddleLoaded(true);
         });
     }
@@ -37,21 +43,23 @@ export class SettingsService {
     this.readFile(file);
   }
 
-  private readFile(file: File) {
+  private  readFile(file: File) {
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
       const xml: string | ArrayBuffer = reader.result as string;
-      this.saveSpml(xml);
+      await this.saveSpml(xml);
+      this.signsLookupService.loadSigns();
       this.storageService.setDefaultPuddleLoaded(false);
     };
     reader.readAsText(file);
   }
 
-  saveSpml(spml: string) {
+  async saveSpml(spml: string) {
     const result: Puddle = this.spmlService.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 
     // Save spml
-    this.storageService.savePuddle(puddlename, result);
+    await this.storageService.savePuddle(puddlename, result);
+    return;
   }
 }

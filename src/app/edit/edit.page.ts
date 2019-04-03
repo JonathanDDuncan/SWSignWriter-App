@@ -45,7 +45,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   resetEntries() {
-    this.signsLookupService.makelist();
+    this.signsLookupService.loadSigns();
   }
 
   ngAfterViewInit() {
