@@ -33,7 +33,7 @@ export class EditPage implements OnInit, AfterViewInit {
     private normalize: NormalizationService,
     private signsLookupService: SignsLookupService,
     private documentService: DocumentService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.documentService.clearDocument();
@@ -64,9 +64,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   showDocument(document: Document): void {
-    const editedsigns: FoundSign[] = document.signs.map((item: any, index) => {
-      return this.setIndex(item, index);
-    });
+    const editedsigns: FoundSign[] = document.signs;
 
     this.editedDocument = <EdittedDocument>{ editedsigns: editedsigns };
   }
@@ -75,11 +73,7 @@ export class EditPage implements OnInit, AfterViewInit {
     return foundSign ? foundSign.id : undefined;
   }
 
-  private setIndex(item, index: number): FoundSign {
-    const editedSign = Object.assign({}, item);
-    editedSign.index = index;
-    return editedSign;
-  }
+
 
   searchFrase(text: string): FoundSign[] {
     const texts = text.split(' ');
@@ -97,7 +91,7 @@ export class EditPage implements OnInit, AfterViewInit {
     if (signs.length > 0) {
       const matching = this.findmatchingresult(signs, text);
       found = {
-        sign : matching,
+        sign: matching,
         text: text,
         id: matching.key + text,
         svg: ssw.svg(matching.fsw)
@@ -105,7 +99,7 @@ export class EditPage implements OnInit, AfterViewInit {
     }
     if (!found) {
       found = {
-        sign : null,
+        sign: null,
         text: text + ' sign not found',
         id: uuid() + text,
         svg: ''
@@ -144,7 +138,7 @@ export class EditPage implements OnInit, AfterViewInit {
     const modal = await this.modalController.create({
       component: ChooseSignPage,
       componentProps: {
-        searchword: clickedEntry.gloss
+        searchword: clickedEntry.text
       }
     });
     const result = await modal.present();
@@ -172,10 +166,10 @@ export class EditPage implements OnInit, AfterViewInit {
 
       if (toChangeindex >= 0) {
         signs[toChangeindex] = {
-          sign: ssw.svg(changeWith.fsw),
-          key: changeWith.key,
-          gloss: changeWith.gloss,
-          fsw: changeWith.fsw
+          sign: changeWith,
+          text: changeWith.gloss,
+          id: changeWith.key + changeWith.gloss,
+          svg: ssw.svg(changeWith.fsw)
         };
       }
     }

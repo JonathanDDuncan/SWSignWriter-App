@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Sign } from './signs-lookup.service';
+import { FoundSign } from './signs-lookup.service';
 
 export interface Document {
-  signs: Sign[];
+  signs: FoundSign[];
 }
 
 @Injectable({
@@ -31,7 +31,7 @@ export class DocumentService {
     this.document = document;
   }
 
-  updateSigns(signs: Sign[]): void {
+  updateSigns(signs: FoundSign[]): void {
     const document = this.getDocument();
     document.signs = signs;
     this.updateDocument(document);
@@ -53,8 +53,8 @@ export class DocumentService {
 
   getFSW(): string {
     let fsw = '';
-    this.document.signs.forEach(sign => {
-      fsw += sign.fsw + ' ';
+    this.document.signs.forEach(found => {
+      fsw += found.sign.fsw + ' ';
     });
     return fsw;
   }
