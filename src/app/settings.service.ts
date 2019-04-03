@@ -32,10 +32,9 @@ export class SettingsService {
     const defaultLoaded: boolean = await this.storageService.getDefaultPuddleLoaded();
     if (defaultLoaded) {
       await this.storageService.removeDefaultPuddles();
-      this.readFile(file);
-    } else {
-      this.readFile(file);
     }
+
+    this.readFile(file);
   }
 
   private readFile(file: File) {
