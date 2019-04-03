@@ -1,5 +1,4 @@
-Rename EntryResult to Sign
-Make searchResult
+
 
 Optimize track by for sign lookup.
 Copy document to clipboard
