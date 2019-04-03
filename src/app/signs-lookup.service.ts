@@ -1,3 +1,4 @@
+import { SettingsService } from './settings.service';
 import { Injectable } from '@angular/core';
 import { NormalizationService } from './normalization.service';
 import { Storage } from '@ionic/storage';
@@ -18,9 +19,21 @@ export class SignsLookupService {
 
   constructor(
     private storage: Storage,
+    private settings: SettingsService,
     private normalize: NormalizationService
   ) {
-    this.makelist();
+    this.loadSigns();
+  }
+
+  loadSigns() {
+    this.storage.get('puddles').then(async puddles => {
+      if (!puddles || puddles.length <= 0) {
+        await this.settings.loadDefaultPuddles();
+        this.makelist();
+      } else {
+        this.makelist();
+      }
+    });
   }
 
   search(text: string): EntryResult[] {
@@ -68,20 +81,22 @@ export class SignsLookupService {
   makelist() {
     this.entrylist = [];
     this.storage.get('puddles').then(puddles => {
-      puddles.forEach(puddle => {
-        this.storage.get(puddle).then(puddleentries => {
-          puddleentries.entries.forEach(entry => {
-            entry.glosses.forEach(gloss => {
-              this.entrylist.push({
-                normalized: this.normalize.normalizeForSearch(gloss),
-                gloss: gloss,
-                key: entry.key,
-                fsw: entry.fsw
+      if (puddles) {
+        puddles.forEach(puddle => {
+          this.storage.get(puddle).then(puddleentries => {
+            puddleentries.entries.forEach(entry => {
+              entry.glosses.forEach(gloss => {
+                this.entrylist.push({
+                  normalized: this.normalize.normalizeForSearch(gloss),
+                  gloss: gloss,
+                  key: entry.key,
+                  fsw: entry.fsw
+                });
               });
             });
           });
         });
-      });
+      }
     });
   }
 

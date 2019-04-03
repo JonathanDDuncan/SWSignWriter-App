@@ -1,44 +1,51 @@
 import { StorageService } from './storage.service';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { UploadFile } from 'ngx-file-drop';
 import { SpmlService, Puddle } from './spml.service';
+
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
   public files: UploadFile[] = [];
-  private file: any;
+  data: string;
 
-  constructor(private spmlService: SpmlService, private storageService: StorageService) { }
+  constructor(private spmlService: SpmlService, private storageService: StorageService, private http: HttpClient) { }
 
   async loadDefaultPuddles() {
-    // const puddlesExists = await this.puddlesExists();
-    // if (!puddlesExists) {
-    //   this.loadDefaultSpml();
-    // }
+    const puddlesExists = await this.storageService.puddlesExists();
+    if (!puddlesExists) {
+      const filename = 'assets/spml/' + 'sgn2000.spml';
+
+      return this.http.get(filename, { responseType: 'text' })
+        .subscribe(xml => {
+          this.saveSpml(xml);
+          this.storageService.setDefaultPuddleLoaded(true);
+        });
+    }
   }
 
-  loadFile(file: any): any {
+  async loadFile(file: File) {
+    const defaultLoaded: boolean = await this.storageService.getDefaultPuddleLoaded();
+    if (defaultLoaded) {
+      await this.storageService.removeDefaultPuddles();
+      this.readFile(file);
+    } else {
+      this.readFile(file);
+    }
+  }
+
+  private readFile(file: File) {
     const reader = new FileReader();
     reader.onload = () => {
       const xml: string | ArrayBuffer = reader.result as string;
       this.saveSpml(xml);
+      this.storageService.setDefaultPuddleLoaded(false);
     };
     reader.readAsText(file);
-  }
-
-  loadDefaultSpml(): any {
-    this.file.name = 'sgn2000.spml';
-    this.file
-      .readAsText(
-        this.file.applicationDirectory + 'www/assets/spml',
-        'data.text'
-      )
-      .then((xml: string) => {
-        this.saveSpml(xml);
-      });
   }
 
   saveSpml(spml: string) {

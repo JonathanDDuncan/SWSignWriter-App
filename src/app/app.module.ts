@@ -15,12 +15,15 @@ import { SignsLookupService } from './signs-lookup.service';
 import { DocumentService } from './document.service';
 import { SocialSharingService } from './social-sharing.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot({
       name: '__quicksigndocumentdb'
