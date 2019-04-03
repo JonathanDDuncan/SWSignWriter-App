@@ -1,17 +1,18 @@
+Rename EntryResult to Sign
+Make searchResult
 
-Add hamburger menu on pages
 Optimize track by for sign lookup.
+Copy document to clipboard
+Add logo
 Deploy live updates Ionic  https://dashboard.ionicframework.com/app/5b4a5114/getting-started/overview
 Document doesn't take full height all the time.
 
-Reset lookup after uploading.
-
 Move code to change signs into DocumentService
-Rename EntryResult to Sign
+
 Test see what is taking so long.
 
 Fix errors in Tests
-Copy document to clipboard
+
 Share document
 
 Add basic tests
