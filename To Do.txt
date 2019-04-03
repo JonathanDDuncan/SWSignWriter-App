@@ -1,5 +1,7 @@
 automatically add lesho file to lookup.
 Add hamburger menu on pages
+Optimize track by for sign lookup.
+
 Document doesn't take full height all the time.
 
 Reset lookup after uploading.
