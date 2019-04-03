@@ -1,7 +1,5 @@
-
-
-Optimize track by for sign lookup.
 Copy document to clipboard
+Don't replace already select signs when changing text.
 Add logo
 Deploy live updates Ionic  https://dashboard.ionicframework.com/app/5b4a5114/getting-started/overview
 Document doesn't take full height all the time.
