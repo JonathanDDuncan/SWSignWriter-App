@@ -1,7 +1,7 @@
-automatically add lesho file to lookup.
+
 Add hamburger menu on pages
 Optimize track by for sign lookup.
-
+Deploy live updates Ionic  https://dashboard.ionicframework.com/app/5b4a5114/getting-started/overview
 Document doesn't take full height all the time.
 
 Reset lookup after uploading.
