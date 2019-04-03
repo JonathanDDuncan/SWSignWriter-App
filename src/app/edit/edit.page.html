@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
     <ion-title>Edit</ion-title>
+  </ion-toolbar>
     <ion-item>
       <ion-textarea
         #searchRef
@@ -8,7 +12,7 @@
       ></ion-textarea>
       <ion-button (click)="resetEntries()">Reset</ion-button>
     </ion-item>
-  </ion-toolbar>
+  
 </ion-header>
 
 <ion-content padding>
