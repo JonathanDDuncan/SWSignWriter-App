@@ -8,13 +8,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-radio-group> 
+  <ion-radio-group>
     <ion-item *ngFor="let item of elements">
       <div class="sign">
         <span [innerHTML]="item.sign | safeHtml"></span>
         <ion-label>{{ item.gloss }}</ion-label>
       </div>
-
       <ion-label> </ion-label>
       <ion-radio [value]="item.key" (ionSelect)="radioChecked(item.key)" slot="start"></ion-radio>
     </ion-item>
