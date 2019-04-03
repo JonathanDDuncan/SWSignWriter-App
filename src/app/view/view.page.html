@@ -5,19 +5,24 @@
     </ion-buttons>
     <ion-title>
       Document
-      <ion-button (click)="share()">
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" fill="solid" (click)="share()">
         Share
       </ion-button>
-    </ion-title>
+      <ion-button color="secondary" fill="solid" (click)="copy()"> 
+        Copy
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <div id="document"  class="document">
+  <div id="document" class="document">
     <div class="signtext" style="background-color: white;">
       <span [innerHTML]="document | safeHtml"></span>
     </div>
   </div>
 
-<canvas id ='canvas'></canvas>
+  <canvas id='canvas'></canvas>
 </ion-content>

@@ -43,6 +43,13 @@ export class ViewPage implements OnInit, OnChanges {
     requestAnimationFrame( () => this.sharecontinuation(fsw));
   }
 
+  public copy() {
+    const fsw = this.documentService.getFSW();
+    this.document = ssw.paragraph(fsw, "png");
+
+    requestAnimationFrame( () => this.sharecontinuation(fsw));
+  }
+
   private async sharecontinuation(fsw: string){
     const node: any = document.getElementsByClassName('signtext')[0];
     
