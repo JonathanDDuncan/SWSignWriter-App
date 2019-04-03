@@ -35,7 +35,7 @@ export class SettingsService {
   }
 
   async loadFile(file: File) {
-    const defaultLoaded: boolean = await this.storageService.getDefaultPuddleLoaded();
+    const defaultLoaded: string = await this.storageService.getDefaultPuddleLoaded();
     if (defaultLoaded) {
       await this.storageService.removeDefaultPuddles();
     }
