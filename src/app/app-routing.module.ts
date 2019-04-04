@@ -24,7 +24,7 @@ const routes: Routes = [
     path: 'choose-sign',
     loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule'
   },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule' }
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
 ];
 
 @NgModule({

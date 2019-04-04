@@ -1,3 +1,4 @@
+import { ShowImagePageModule } from './show-image/show-image.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -17,7 +18,6 @@ import { SocialSharingService } from './social-sharing.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -30,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     }),
     AppRoutingModule,
     ChooseSignPageModule,
+    ShowImagePageModule,
     PipesModule
   ],
   providers: [
