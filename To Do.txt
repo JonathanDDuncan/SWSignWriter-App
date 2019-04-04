@@ -1,6 +1,4 @@
-Create PWA
 Don't replace already select signs when changing text.
-Add logo
 Deploy live updates Ionic  https://dashboard.ionicframework.com/app/5b4a5114/getting-started/overview
 Document doesn't take full height all the time.
 
@@ -13,7 +11,7 @@ Fix errors in Tests
 Share document
 
 Add basic tests
-Only search signs when new word is typed. only search next.
+
 Add e2e tests
 Localize
 Create about page
