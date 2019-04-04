@@ -1,1 +1,1 @@
-ionic serve -devapp
+ionic serve --devapp
