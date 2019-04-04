@@ -17,6 +17,8 @@ import { DocumentService } from './document.service';
 import { SocialSharingService } from './social-sharing.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ChooseSignPageModule,
     ShowImagePageModule,
-    PipesModule
+    PipesModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
