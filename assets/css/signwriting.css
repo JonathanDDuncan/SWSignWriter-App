@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'SuttonSignWritingLine';
+  src: local('SuttonSignWritingLine'),
+    url('../fonts/SuttonSignWritingLine.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SuttonSignWritingFill';
+  src: local('SuttonSignWritingFill'),
+    url('../fonts/SuttonSignWritingFill.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SuttonSignWritingNull';
+  src: local('SuttonSignWritingNull'),
+    url('../fonts/SuttonSignWritingNull.ttf') format('truetype');
+}
+
+div.signtext {
+  -webkit-writing-mode: vertical-lr;
+  writing-mode: vertical-lr;
+  font-size: 0%;
+  border-left: 1px solid blue;
+  height: 100%;
+}
+
+span.outside {
+  border-left: 1px solid blue;
+  vertical-align: top;
+}
+
+span.middle {
+  vertical-align: bottom;
+}
+
+span.inside {
+  border-left: 1px dashed red;
+}
+
+div.sign {
+  writing-mode: horizontal-tb;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 20px;
+  box-sizing: content-box;
+}
