@@ -1,4 +1,4 @@
-Copy document to clipboard
+Create PWA
 Don't replace already select signs when changing text.
 Add logo
 Deploy live updates Ionic  https://dashboard.ionicframework.com/app/5b4a5114/getting-started/overview
