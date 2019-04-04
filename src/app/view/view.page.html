@@ -7,10 +7,10 @@
       Document
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" fill="solid" (click)="share()">
+      <ion-button *ngIf="isCordova()" color="primary" fill="solid" (click)="share()">
         Share
       </ion-button>
-      <ion-button color="secondary" fill="solid" (click)="copy()"> 
+      <ion-button *ngIf="!isCordova()" color="primary" fill="solid" (click)="copy()"> 
         Copy
       </ion-button>
     </ion-buttons>

@@ -1,9 +1,10 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { DocumentService, Document } from '../document.service';
+import { DocumentService } from '../document.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { SocialSharingService } from '../social-sharing.service';
 import * as htmlToImage from 'html-to-image';
-
+import { ShowImagePage } from '../show-image/show-image.page';
 
 @Component({
   selector: 'app-view',
@@ -12,6 +13,7 @@ import * as htmlToImage from 'html-to-image';
 })
 export class ViewPage implements OnInit, OnChanges {
   constructor(
+    public modalController: ModalController,
     private documentService: DocumentService,
     private socialSharingService: SocialSharingService,
     private router: Router
@@ -47,19 +49,39 @@ export class ViewPage implements OnInit, OnChanges {
     const fsw = this.documentService.getFSW();
     this.document = ssw.paragraph(fsw, 'png');
 
-    requestAnimationFrame(() => this.sharecontinuation(fsw));
+    requestAnimationFrame(() => this.copycontinuation(fsw));
   }
 
   private async sharecontinuation(fsw: string) {
     const node: any = document.getElementsByClassName('signtext')[0];
 
-    const image1 = await htmlToImage.toPng(node);
+    const imgsrc = await htmlToImage.toPng(node);
+
+    // reset back to the way it was with svg
+    this.document = ssw.paragraph(fsw);
 
     const img = new Image();
-    img.src = image1;
-    this.document = ssw.paragraph(fsw);
+    img.src = imgsrc;
     this.socialSharingService.share(img);
   }
 
 
+  private async copycontinuation(fsw: string) {
+    const node: any = document.getElementsByClassName('signtext')[0];
+
+    const modal = await this.modalController.create({
+      component: ShowImagePage,
+      componentProps: {
+        imagebase64: await htmlToImage.toPng(node)
+      }
+    });
+    // reset back to the way it was with svg
+    this.document = ssw.paragraph(fsw);
+    await modal.present();
+    await modal.onDidDismiss();
+  }
+
+  isCordova() {
+    return !!window.cordova;
+  }
 }
