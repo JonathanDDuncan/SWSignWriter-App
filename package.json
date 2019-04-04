@@ -1,15 +1,17 @@
 {
   "name": "quicksigndocument",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Jonathan Duncan",
+  "homepage": "https://jonathandduncan.github.io/QuickSignDocument/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "predeploy": "ionic build --prod",
+    "deploy": "gh-pages -d www"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +45,7 @@
     "cordova-sqlite-storage": "3.2.0",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "4.2.2",
+    "gh-pages": "^2.0.1",
     "html-to-image": "^0.1.0",
     "ngx-file-drop": "^6.0.0",
     "rxjs": "~6.3.3",
