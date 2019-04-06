@@ -52,6 +52,10 @@ export class ViewPage implements OnInit, OnChanges {
     requestAnimationFrame(() => this.copycontinuation(fsw));
   }
 
+  public edit() {
+    return this.router.navigateByUrl('/quicksigndoc/edit');
+  }
+
   private async sharecontinuation(fsw: string) {
     const node: any = document.getElementsByClassName('signtext')[0];
 

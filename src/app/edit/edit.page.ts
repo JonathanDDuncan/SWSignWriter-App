@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import {
   Component,
   OnInit,
@@ -32,7 +33,8 @@ export class EditPage implements OnInit, AfterViewInit {
     public modalController: ModalController,
     private normalize: NormalizationService,
     private signsLookupService: SignsLookupService,
-    private documentService: DocumentService
+    private documentService: DocumentService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -174,5 +176,9 @@ export class EditPage implements OnInit, AfterViewInit {
       }
     }
     return signs;
+  }
+
+  accept() {
+    return this.router.navigateByUrl('/quicksigndoc/view');
   }
 }
