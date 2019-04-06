@@ -179,6 +179,6 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   accept() {
-    return this.router.navigateByUrl('/view'); 
+    return this.router.navigateByUrl('/view');
   }
 }

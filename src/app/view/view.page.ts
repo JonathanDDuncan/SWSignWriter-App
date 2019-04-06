@@ -18,6 +18,9 @@ export class ViewPage implements OnInit, OnChanges {
     private socialSharingService: SocialSharingService,
     private router: Router
   ) {
+    // Force fonts to load before anything is shown
+    this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         console.log('ssw', ssw);
@@ -34,6 +37,7 @@ export class ViewPage implements OnInit, OnChanges {
     });
   }
   public document: string;
+  public preloadFonts: string;
 
   ngOnInit() { }
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void { }
