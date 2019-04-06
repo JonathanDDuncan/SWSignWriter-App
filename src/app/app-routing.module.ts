@@ -4,17 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'quicksigndoc/view',
+    redirectTo: 'view',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
+    redirectTo: 'view',
   },
-  {
-    path: 'quicksigndoc',
-    loadChildren: './quicksigndoc/quicksigndoc.module#QuicksigndocPageModule'
-  },
+  { path: 'view', loadChildren: './view/view.module#ViewPageModule' },
   { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },
   {
     path: 'settings',

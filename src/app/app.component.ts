@@ -13,7 +13,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Document',
-      url: '/quicksigndoc/view',
+      url: '/view',
       icon: 'document'
     },
     {

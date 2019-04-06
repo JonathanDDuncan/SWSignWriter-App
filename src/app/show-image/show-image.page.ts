@@ -10,9 +10,7 @@ export class ShowImagePage implements OnInit {
 
   constructor(public modalController: ModalController) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   close() {
     this.modalController.dismiss({

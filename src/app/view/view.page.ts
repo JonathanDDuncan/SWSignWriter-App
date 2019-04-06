@@ -53,7 +53,7 @@ export class ViewPage implements OnInit, OnChanges {
   }
 
   public edit() {
-    return this.router.navigateByUrl('/quicksigndoc/edit');
+    return this.router.navigateByUrl('/edit');
   }
 
   private async sharecontinuation(fsw: string) {
