@@ -65,14 +65,13 @@ export class ViewPage implements OnInit, OnChanges {
 
     const imgsrc = await htmlToImage.toPng(node);
 
-    // reset back to the way it was with svg
-    this.document = ssw.paragraph(fsw);
-
     const img = new Image();
     img.src = imgsrc;
     this.socialSharingService.share(img);
-  }
 
+    // reset back to the way it was with svg
+    this.document = ssw.paragraph(fsw);
+  }
 
   private async copycontinuation(fsw: string) {
     const node: any = document.getElementsByClassName('signtext')[0];
@@ -83,10 +82,11 @@ export class ViewPage implements OnInit, OnChanges {
         imagebase64: await htmlToImage.toPng(node)
       }
     });
-    // reset back to the way it was with svg
-    this.document = ssw.paragraph(fsw);
+
     await modal.present();
     await modal.onDidDismiss();
+    // reset back to the way it was with svg
+    this.document = ssw.paragraph(fsw);
   }
 
   isCordova() {

@@ -1508,8 +1508,33 @@ var ssw = {
     y2 = y2 + options.pad;
     w = (x2-x1) * options.size;
     h = (y2-y1) * options.size;
-    canvas.width = w?w:1;
-    canvas.height = h?h:1;
+    
+    var PIXEL_RATIO = (function () {
+      // https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
+      var ctx = document.createElement("canvas").getContext("2d"),
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
+          ctx.mozBackingStorePixelRatio ||
+          ctx.msBackingStorePixelRatio ||
+          ctx.oBackingStorePixelRatio ||
+          ctx.backingStorePixelRatio || 1;
+
+      return dpr / bsr;
+    })();
+
+    createHiDPICanvas = function (w, h, ratio) {
+      // https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
+      if (!ratio) { ratio = PIXEL_RATIO; }
+      var can = document.createElement("canvas");
+      can.width = w * ratio;
+      can.height = h * ratio;
+      can.style.width = w + "px";
+      can.style.height = h + "px";
+      can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+      return can;
+    }
+    var canvas = createHiDPICanvas(w ? w : 1, h ? h : 1, 4);
+
     var context = canvas.getContext("2d");
     if (options.back){
       context.rect(0,0,w,h);
