@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1554519970736,
+  "timestamp": 1554520474491,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -495,7 +495,7 @@
     "/assets/fonts/SuttonSignWritingFill.ttf": "e3fbe9e29e99bf157aa8d295684d282f562217e4",
     "/assets/fonts/SuttonSignWritingLine.ttf": "9b054e5dcedebdb2997e71eb1379c0f7c7f23d54",
     "/assets/fonts/SuttonSignWritingNull.ttf": "f22165ae1980ae6b40c780c3344876b3b64b3bb6",
-    "/assets/icon/favicon.png": "7798b8e0eb61d7375c245af78bbf5c916932bf13",
+    "/assets/icon/favicon.png": "5d7bab0db987e4ca28ac1206c21b6f91e6c79614",
     "/assets/icons/android/android-launchericon-192-192.png": "440dde78b0f8820847fd25edd9d134ed1c47f7d0",
     "/assets/icons/android/android-launchericon-512-512.png": "5d7bab0db987e4ca28ac1206c21b6f91e6c79614",
     "/assets/icons/chrome/chrome-extensionmanagementpage-48-48.png": "ff046e220abe72bfb5e7f41ea8e0ee566c4fcc5f",
