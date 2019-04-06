@@ -6,11 +6,9 @@ import {
   ViewChild,
   AfterViewInit
 } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { NormalizationService } from '../normalization.service';
 import { SignsLookupService } from '../signs-lookup.service';
 
 @Component({
@@ -25,10 +23,8 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   private selectedkey: string;
   public elements: { sign: string; key: string; gloss: string }[];
   constructor(
-    navParams: NavParams,
-    public modalController: ModalController,
-    private normalize: NormalizationService,
-    private signsLookupService: SignsLookupService
+        public modalController: ModalController,
+        private signsLookupService: SignsLookupService
   ) {
     // componentProps can also be accessed at construction time using NavParams
   }
