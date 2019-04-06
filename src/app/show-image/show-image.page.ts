@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
+import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-show-image',
   templateUrl: './show-image.page.html',
@@ -8,10 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ShowImagePage implements OnInit {
   @Input() imagebase64: string;
 
-  constructor() { }
+  constructor(public modalController: ModalController) { }
 
   ngOnInit() {
     
   }
 
+  close() {
+    this.modalController.dismiss({
+      result: 'cancel'
+    });
+  }
 }
