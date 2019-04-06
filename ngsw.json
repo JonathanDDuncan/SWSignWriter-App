@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1554521095316,
+  "timestamp": 1554521388520,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -210,6 +210,7 @@
         "/assets/icons/chrome/chrome-extensionmanagementpage-48-48.png",
         "/assets/icons/chrome/chrome-favicon-16-16.png",
         "/assets/icons/chrome/chrome-installprocess-128-128.png",
+        "/assets/icons/chrome/chrome-installprocess-128-1281.png",
         "/assets/icons/firefox/firefox-general-128-128.png",
         "/assets/icons/firefox/firefox-general-16-16.png",
         "/assets/icons/firefox/firefox-general-256-256.png",
@@ -219,6 +220,7 @@
         "/assets/icons/firefox/firefox-general-90-90.png",
         "/assets/icons/firefox/firefox-marketplace-128-128.png",
         "/assets/icons/firefox/firefox-marketplace-512-512.png",
+        "/assets/icons/firefox/firefox-marketplace-512-5121.png",
         "/assets/icons/ios/ios-appicon-1024-1024.png",
         "/assets/icons/ios/ios-appicon-120-120.png",
         "/assets/icons/ios/ios-appicon-152-152.png",
@@ -500,7 +502,8 @@
     "/assets/icons/android/android-launchericon-512-512.png": "5d7bab0db987e4ca28ac1206c21b6f91e6c79614",
     "/assets/icons/chrome/chrome-extensionmanagementpage-48-48.png": "ff046e220abe72bfb5e7f41ea8e0ee566c4fcc5f",
     "/assets/icons/chrome/chrome-favicon-16-16.png": "be61a2c260b5fa17b982ecaba8578cb579a47e37",
-    "/assets/icons/chrome/chrome-installprocess-128-128.png": "e077e2fc705a9301892b1b8682b46551bb773205",
+    "/assets/icons/chrome/chrome-installprocess-128-128.png": "440dde78b0f8820847fd25edd9d134ed1c47f7d0",
+    "/assets/icons/chrome/chrome-installprocess-128-1281.png": "e077e2fc705a9301892b1b8682b46551bb773205",
     "/assets/icons/firefox/firefox-general-128-128.png": "e077e2fc705a9301892b1b8682b46551bb773205",
     "/assets/icons/firefox/firefox-general-16-16.png": "be61a2c260b5fa17b982ecaba8578cb579a47e37",
     "/assets/icons/firefox/firefox-general-256-256.png": "88c1fb17d0b463739f178402e4af8143b8009b6d",
@@ -509,7 +512,8 @@
     "/assets/icons/firefox/firefox-general-64-64.png": "b1591f2ab01750b56af27fdda3aef21244131e96",
     "/assets/icons/firefox/firefox-general-90-90.png": "cc79a589828b0c45eadea629319a6f9d6e3a408a",
     "/assets/icons/firefox/firefox-marketplace-128-128.png": "e077e2fc705a9301892b1b8682b46551bb773205",
-    "/assets/icons/firefox/firefox-marketplace-512-512.png": "239233a313b676c7058ee2856588b1cfe643f3d4",
+    "/assets/icons/firefox/firefox-marketplace-512-512.png": "5d7bab0db987e4ca28ac1206c21b6f91e6c79614",
+    "/assets/icons/firefox/firefox-marketplace-512-5121.png": "239233a313b676c7058ee2856588b1cfe643f3d4",
     "/assets/icons/ios/ios-appicon-1024-1024.png": "3fb830f9a8da9fb9ec5faf43a4db492d0ba1363c",
     "/assets/icons/ios/ios-appicon-120-120.png": "ddc2fb1b48ac1a6cfd4307c9615254282e1ab400",
     "/assets/icons/ios/ios-appicon-152-152.png": "49852f3b98d976bd0f2da4705050dceab168b973",
