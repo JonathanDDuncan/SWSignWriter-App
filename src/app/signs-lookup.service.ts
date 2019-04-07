@@ -67,7 +67,7 @@ export class SignsLookupService {
             count++;
           }
         } else if (searchtext.length > 0) {
-          if (entry.normalized === searchtext) {
+          if (entry.normalized === searchtext || entry.normalized.startsWith(searchtext + '-')) {
             result.push(entry);
             count++;
           }
