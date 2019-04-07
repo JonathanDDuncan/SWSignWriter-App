@@ -38,6 +38,7 @@ export class ViewPage implements OnInit, OnChanges {
   }
   public document: string;
   public preloadFonts: string;
+  public signtextHeight: number;
 
   ngOnInit() { }
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void { }
@@ -54,6 +55,10 @@ export class ViewPage implements OnInit, OnChanges {
     this.document = ssw.paragraph(fsw, 'png');
 
     requestAnimationFrame(() => this.copycontinuation(fsw));
+  }
+
+  heightChange(ev: any) {
+    this.signtextHeight = ev.detail.value;
   }
 
   public edit() {
