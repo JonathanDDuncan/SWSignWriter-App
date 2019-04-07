@@ -7,7 +7,7 @@ import {
   AfterViewInit
 } from '@angular/core';
 
-import { fromEvent, ObjectUnsubscribedError } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
@@ -75,16 +75,29 @@ export class EditPage implements OnInit, AfterViewInit {
     return foundSign ? foundSign.id : undefined;
   }
 
-
-
   searchFrase(text: string): FoundSign[] {
-    const texts = text.split(' ');
+    const cleaned = this.clean(text);
+    const texts = cleaned.split(' ');
 
     return texts
       .filter(str => !(!str || 0 === str.length))
       .map(str => {
         return this.findSign(str);
       });
+  }
+
+  clean(text: string): string {
+    let tobereplaced = text;
+    const replaceArr: {f: string, t: string}[] = [{ f: '{', t: '' }, { f: '}', t: '' }, { f: '}', t: '' },
+    { f: '( ', t: '' }, { f: ')', t: '' }, { f: ',', t: ' , ' }, { f: '.', t: ' . ' },
+    { f: '!', t: ' ! ' }, { f: '¡', t: ' ¡ ' }, { f: '?', t: ' ? ' },
+    { f: '¿', t: ' ¿ ' }, { f: ':', t: ' : ' }, { f: ';', t: ' ; ' },
+    { f: '   ', t: ' ' }, { f: '  ', t: ' ' }, , { f: '\t', t: ' ' }];
+
+    replaceArr.forEach(repl => {
+      tobereplaced =  tobereplaced.replace(repl.f, repl.t);
+    });
+    return tobereplaced;
   }
 
   private findSign(text: string): FoundSign {
