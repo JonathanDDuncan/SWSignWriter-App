@@ -158,7 +158,8 @@ export class EditPage implements OnInit, AfterViewInit {
         default:
           color = 'red';
       }
-
+    } else {
+      color = 'red';
     }
 
 
@@ -166,20 +167,26 @@ export class EditPage implements OnInit, AfterViewInit {
   }
   colorgradient(count: number, color1: { r: number; g: number; b: number; }, color2: { r: number; g: number; b: number; }): string {
     const percent = count / 10;
-    const r = (color1.r - color2.r) * percent + color1.r;
-    const g = (color1.g - color2.g) * percent + color1.g;
-    const b = (color1.b - color2.b) * percent + color1.b;
+    const rdist = color1.r - color2.r;
+    const gdist = color1.g - color2.g;
+    const bdist = color1.b - color2.b;
+    const rperc: number = rdist > 0 ? count / 10 : (10 - count) / 10;
+    const gperc: number = gdist > 0 ? count / 10 : (10 - count) / 10;
+    const bperc: number = bdist > 0 ? count / 10 : (10 - count) / 10;
 
-    const newColor = this.RGB2HTML(r, g, b);
+    const r = Math.round(Math.abs(rdist) * rperc + color1.r);
+    const g = Math.round(Math.abs(gdist) * gperc + color1.g);
+    const b = Math.round(Math.abs(bdist) * bperc + color1.b);
+
+    const newColor = this.hexcolor(r, g, b);
 
     return newColor;
   }
 
-  RGB2HTML(red, green, blue) {
-    const decColor = 0x1000000 + blue + 0x100 * green + 0x10000 * red;
+  hexcolor(red: number, green: number, blue: number) {
+    const decColor = 0x1000000 + 0x10000 * red + 0x100 * green + blue;
     return '#' + decColor.toString(16).substr(1);
   }
-
 
   findmatchingresult(founds: Sign[], searchText: string): { type: string, sign: Sign, count: number } {
     const normalized = this.normalize.normalizeForSearch(searchText);
