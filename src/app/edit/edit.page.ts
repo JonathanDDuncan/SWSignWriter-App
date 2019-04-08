@@ -1,3 +1,4 @@
+import { ColorService, Color } from './../color.service';
 import { Router } from '@angular/router';
 import {
   Component,
@@ -20,12 +21,6 @@ interface EdittedDocument {
   editedsigns: FoundSign[];
 }
 
-interface Color {
-  r: number;
-  g: number;
-  b: number;
-}
-
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
@@ -33,10 +28,7 @@ interface Color {
 })
 export class EditPage implements OnInit, AfterViewInit {
   public editedDocument: EdittedDocument;
-  private green = { r: 0, g: 128, b: 0 };
-  private yelllow = { r: 255, g: 255, b: 0 };
-  private orange = { r: 255, g: 165, b: 0 };
-  private red = { r: 255, g: 0, b: 0 };
+
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
 
   constructor(
@@ -44,6 +36,7 @@ export class EditPage implements OnInit, AfterViewInit {
     private normalize: NormalizationService,
     private signsLookupService: SignsLookupService,
     private documentService: DocumentService,
+    private color: ColorService,
     private router: Router
 
   ) { }
@@ -143,57 +136,32 @@ export class EditPage implements OnInit, AfterViewInit {
   matchColor(matching: { type: string; sign: Sign; count: number; }): string {
 
 
-    let color: string;
+    let finalcolor: string;
     if (matching) {
       switch (matching.type) {
         case 'exact':
           if (matching.count === 1) {
-            color = this.hexcolor(this.green);
+            finalcolor = this.color.hexcolor(this.color.green);
           } else {
-            color = this.colorgradient(matching.count, this.green, this.yelllow);
+            finalcolor = this.color.colorgradient(matching.count, this.color.green, this.color.yelllow);
           }
           break;
         case 'similar':
-          color = this.colorgradient(matching.count, this.yelllow, this.orange);
+        finalcolor = this.color.colorgradient(matching.count, this.color.yelllow, this.color.orange);
           break;
         case 'substring':
-          color = this.colorgradient(matching.count, this.orange, this.red);
+        finalcolor = this.color.colorgradient(matching.count, this.color.orange, this.color.red);
           break;
         case 'notmatching':
         default:
-          color = this.hexcolor(this.red);
+        finalcolor = this.color.hexcolor(this.color.red);
       }
     } else {
-      color = this.hexcolor(this.red);
+      finalcolor = this.color.hexcolor(this.color.red);
     }
 
 
-    return color;
-  }
-  colorgradient(count: number, color1: { r: number; g: number; b: number; }, color2: { r: number; g: number; b: number; }): string {
-    const rdist = color1.r - color2.r;
-    const gdist = color1.g - color2.g;
-    const bdist = color1.b - color2.b;
-    const rperc: number = rdist > 0 ? count / 10 : (10 - count) / 10;
-    const gperc: number = gdist > 0 ? count / 10 : (10 - count) / 10;
-    const bperc: number = bdist > 0 ? count / 10 : (10 - count) / 10;
-
-    const r = Math.round(Math.abs(rdist) * rperc + color1.r);
-    const g = Math.round(Math.abs(gdist) * gperc + color1.g);
-    const b = Math.round(Math.abs(bdist) * bperc + color1.b);
-
-    const newColor = this.hexrgb(r, g, b);
-
-    return newColor;
-  }
-
-  hexrgb(red: number, green: number, blue: number): string {
-    const decColor = 0x1000000 + 0x10000 * red + 0x100 * green + blue;
-    return '#' + decColor.toString(16).substr(1);
-  }
-
-  hexcolor(color: Color): string {
-    return this.hexrgb(color.r, color.g, color.b);
+    return finalcolor;
   }
 
   findmatchingresult(founds: Sign[], searchText: string): { type: string, sign: Sign, count: number } {
@@ -274,7 +242,7 @@ export class EditPage implements OnInit, AfterViewInit {
           id: changeWith.key + changeWith.gloss,
           svg: ssw.svg(changeWith.fsw),
           totalmatches: 1,
-          color: this.hexcolor(this.green)
+          color: this.color.hexcolor(this.color.green)
         };
       }
     }
