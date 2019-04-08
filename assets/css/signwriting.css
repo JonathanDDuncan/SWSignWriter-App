@@ -23,6 +23,7 @@ div.signtext {
     min-height: 50px;
     max-height: 900px;
     height: 100px;
+    background-color: white;
 }
 
 span.outside {
