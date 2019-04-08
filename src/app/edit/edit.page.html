@@ -1,18 +1,15 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Edit</ion-title>
   </ion-toolbar>
-    <ion-item>
-      <ion-textarea
-        #searchRef
-        placeholder="Enter words to search here..."
-      ></ion-textarea>
-      <ion-button style="display:none" (click)="resetEntries()">Reset</ion-button>
-    </ion-item>
-  
+  <ion-item>
+    <ion-textarea #searchRef placeholder="Enter words to search here..."></ion-textarea>
+    <ion-button style="display:none" (click)="resetEntries()">Reset</ion-button>
+  </ion-item>
+
 </ion-header>
 
 <ion-content padding>
@@ -22,14 +19,23 @@
       <button class="editbutton" (click)="replace(i)" type="button">
         <div class="sign">
           <span [innerHTML]="found.svg | safeHtml"></span>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10">
+                <ion-label>{{ found.text }} </ion-label>
+              </ion-col>
+              <ion-col size="1">
+                <ion-badge *ngIf="found.totalmatches > 1" color="light">{{ found.totalmatches }}</ion-badge>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </div>
-        <ion-label>{{ found.text }} </ion-label>
       </button>
-    </ion-item> 
+    </ion-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon (click)="accept()"name="checkmark"></ion-icon>
+      <ion-icon (click)="accept()" name="checkmark"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

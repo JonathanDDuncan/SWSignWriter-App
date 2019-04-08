@@ -100,8 +100,9 @@ export class EditPage implements OnInit, AfterViewInit {
     return tobereplaced;
   }
 
-  private findSign(text: string): FoundSign {
+  private findSign(text: string):  FoundSign  {
     const signs: Sign[] = this.signsLookupService.search(text);
+    const count: number = signs.length;
     let found: FoundSign;
     if (signs.length > 0) {
       const matching = this.findmatchingresult(signs, text);
@@ -109,7 +110,8 @@ export class EditPage implements OnInit, AfterViewInit {
         sign: matching,
         text: text,
         id: matching.key + text,
-        svg: ssw.svg(matching.fsw)
+        svg: ssw.svg(matching.fsw),
+        totalmatches: count
       };
     }
     if (!found) {
@@ -117,7 +119,8 @@ export class EditPage implements OnInit, AfterViewInit {
         sign: null,
         text: text + ' sign not found',
         id: uuid() + text,
-        svg: ''
+        svg: '',
+        totalmatches: count
       };
     }
     return found;

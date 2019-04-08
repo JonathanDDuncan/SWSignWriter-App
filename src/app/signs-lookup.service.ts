@@ -15,6 +15,7 @@ export interface FoundSign {
   text: string;
   id: string;
   svg: string;
+  totalmatches: number;
 }
 
 @Injectable({
