@@ -55,7 +55,8 @@ export class EditPage implements OnInit, AfterViewInit {
       )
       // subscription
       .subscribe((text: string) => {
-        const signs = this.searchFrase(text);
+        const cleaned = this.clean(text);
+        const signs = this.searchFrase(cleaned);
         this.updateSigns(signs);
       });
   }
@@ -88,14 +89,15 @@ export class EditPage implements OnInit, AfterViewInit {
 
   clean(text: string): string {
     let tobereplaced = text;
-    const replaceArr: {f: string, t: string}[] = [{ f: '{', t: '' }, { f: '}', t: '' }, { f: '}', t: '' },
-    { f: '( ', t: '' }, { f: ')', t: '' }, { f: ',', t: ' , ' }, { f: '.', t: ' . ' },
-    { f: '!', t: ' ! ' }, { f: '¡', t: ' ¡ ' }, { f: '?', t: ' ? ' },
-    { f: '¿', t: ' ¿ ' }, { f: ':', t: ' : ' }, { f: ';', t: ' ; ' },
-    { f: '   ', t: ' ' }, { f: '  ', t: ' ' }, , { f: '\t', t: ' ' }];
+    const replaceArr: { f: string, t: string }[] =
+      [{ f: '{', t: '' }, { f: '}', t: '' }, { f: '}', t: '' },
+      { f: '\\( ', t: '' }, { f: '\\)', t: '' }, { f: ',', t: ' , ' }, { f: '\\.', t: ' . ' },
+      { f: '!', t: ' ! ' }, { f: '¡', t: ' ¡ ' }, { f: '\\?', t: ' ? ' }, { f: '¿', t: ' ¿ ' },
+      { f: ':', t: ' : ' }, { f: ';', t: ' ; ' }, { f: '\t', t: ' ' },
+      { f: '   ', t: ' ' }, { f: '  ', t: ' ' }];
 
     replaceArr.forEach(repl => {
-      tobereplaced =  tobereplaced.replace(repl.f, repl.t);
+      tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
     });
     return tobereplaced;
   }
