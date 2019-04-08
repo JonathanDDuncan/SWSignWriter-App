@@ -6,18 +6,15 @@ export interface Color {
   b: number;
 }
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class ColorService {
-  // public readonly green = { r: 0, g: 128, b: 0 };
-  public readonly green = { r: 0, g: 153, b: 51 };
+  public readonly green = { r: 51, g: 204, b: 51 };
 
   public readonly yelllow = { r: 255, g: 255, b: 0 };
   public readonly orange = { r: 255, g: 165, b: 0 };
-  public readonly red = { r: 255, g: 0, b: 0 };
+  public readonly red = { r: 255, g: 77, b: 77 };
 
   constructor() { }
 
