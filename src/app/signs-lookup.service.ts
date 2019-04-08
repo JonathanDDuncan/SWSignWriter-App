@@ -56,17 +56,22 @@ export class SignsLookupService {
 
   search(text: string): Sign[] {
     const max = 25;
-    const result = [];
+    let result = [];
+    const substring = [];
     let count = 0;
+    let substringcount = 0;
     const searchtext = this.normalize.normalizeForSearch(text.trim());
     if (this.entrylist) {
       for (let i = 0; i < this.entrylist.length; i++) {
         const entry = this.entrylist[i];
 
         if (searchtext.length > 2) {
-          if (entry.normalized.includes(searchtext)) {
+          if (entry.normalized.startsWith(searchtext)) {
             result.push(entry);
             count++;
+          } else if (entry.normalized.includes(searchtext)) {
+            substring.push(entry);
+            substringcount++;
           }
         } else if (searchtext.length > 0) {
           if (entry.normalized === searchtext || entry.normalized.startsWith(searchtext + '-')) {
@@ -74,11 +79,17 @@ export class SignsLookupService {
             count++;
           }
         }
+
         // limit to max entries
         if (count >= max) {
           break;
         }
       }
+    }
+
+    // show substring matches if no start of line found
+    if (count === 0 && substringcount > 0) {
+      result = substring;
     }
 
     return this.arrayUnique(result);
