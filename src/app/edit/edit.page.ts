@@ -102,18 +102,19 @@ export class EditPage implements OnInit, AfterViewInit {
     return tobereplaced;
   }
 
-  private findSign(text: string):  FoundSign  {
+  private findSign(text: string): FoundSign {
     const signs: Sign[] = this.signsLookupService.search(text);
     const count: number = signs.length;
     let found: FoundSign;
     if (signs.length > 0) {
       const matching = this.findmatchingresult(signs, text);
       found = {
-        sign: matching,
+        sign: matching.sign,
         text: text,
-        id: matching.key + text,
-        svg: ssw.svg(matching.fsw),
-        totalmatches: count
+        id: matching.sign.key + text,
+        svg: ssw.svg(matching.sign.fsw),
+        totalmatches: count,
+        color: this.matchColor(matching)
       };
     }
     if (!found) {
@@ -122,33 +123,110 @@ export class EditPage implements OnInit, AfterViewInit {
         text: text + ' sign not found',
         id: uuid() + text,
         svg: '',
-        totalmatches: count
+        totalmatches: count,
+        color: this.matchColor(null)
       };
     }
     return found;
   }
+  matchColor(matching: { type: string; sign: Sign; count: number; }): string {
+    const green = { r: 0, g: 128, b: 0 };
+    const yelllow = { r: 255, g: 255, b: 0 };
+    const orange = { r: 255, g: 165, b: 0 };
+    const red = { r: 255, g: 0, b: 0 };
 
-  findmatchingresult(founds: Sign[], searchText: string) {
+    let color: string;
+    if (matching) {
+      switch (matching.type) {
+        case 'exact':
+          if (matching.count === 1) {
+            color = 'green';
+          } else {
+            color = this.colorgradient(matching.count, green, yelllow);
+          }
+          break;
+        case 'case':
+          color = this.colorgradient(matching.count + 1, green, yelllow);
+          break;
+        case 'similar':
+          color = this.colorgradient(matching.count, yelllow, orange);
+          break;
+        case 'substring':
+          color = this.colorgradient(matching.count, orange, red);
+          break;
+        case 'notmatching':
+        default:
+          color = 'red';
+      }
+
+    }
+
+
+    return color;
+  }
+  colorgradient(count: number, color1: { r: number; g: number; b: number; }, color2: { r: number; g: number; b: number; }): string {
+    const percent = count / 10;
+    const r = (color1.r - color2.r) * percent + color1.r;
+    const g = (color1.g - color2.g) * percent + color1.g;
+    const b = (color1.b - color2.b) * percent + color1.b;
+
+    const newColor = this.RGB2HTML(r, g, b);
+
+    return newColor;
+  }
+
+  RGB2HTML(red, green, blue) {
+    const decColor = 0x1000000 + blue + 0x100 * green + 0x10000 * red;
+    return '#' + decColor.toString(16).substr(1);
+  }
+
+
+  findmatchingresult(founds: Sign[], searchText: string): { type: string, sign: Sign, count: number } {
     const normalized = this.normalize.normalizeForSearch(searchText);
-    const foundexact = founds.find(item => item.gloss === searchText);
+
+    let type = 'exact';
+    const foundexacts = founds.filter(item => item.gloss === searchText);
+    const exactCount = foundexacts.length;
+    let foundexact: Sign;
+    if (exactCount > 0) { foundexact = foundexacts[0]; }
+
     if (foundexact) {
-      return foundexact;
+      return { type: type, sign: foundexact, count: exactCount };
     }
 
-    const foundsimilar = founds.find(item => item.normalized === normalized);
+    type = 'case';
+    const foundcases = founds.filter(item => item.gloss.toLowerCase() === searchText.toLowerCase());
+    const caseCount = foundcases.length;
+    let foundcase: Sign;
+    if (caseCount > 0) { foundcase = foundcases[0]; }
+
+    if (foundcase) {
+      return { type: type, sign: foundcase, count: caseCount };
+    }
+
+    type = 'similar';
+    const foundsimilars = founds.filter(item => item.normalized === normalized);
+    const similarCount = foundexacts.length;
+    let foundsimilar: Sign;
+    if (similarCount > 0) { foundsimilar = foundsimilars[0]; }
     if (foundsimilar) {
-      return foundsimilar;
+      return { type: type, sign: foundsimilar, count: similarCount };
     }
 
-    const foundsubstring = founds.find(item =>
+    type = 'substring';
+    const foundsubstrings = founds.filter(item =>
       item.normalized.includes(normalized)
     );
+    const substringCount = foundexacts.length;
+    let foundsubstring: Sign;
+    if (substringCount > 0) { foundsubstring = foundsubstrings[0]; }
     if (foundsubstring) {
-      return foundsubstring;
+      return { type: type, sign: foundsubstring, count: substringCount };
     }
 
+    type = 'notmatching';
     const first = founds[0];
-    return first;
+    return { type: type, sign: first, count: 0 };
   }
 
   async replace(index: number) {

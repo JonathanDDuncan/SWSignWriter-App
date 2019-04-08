@@ -16,7 +16,7 @@
   <!-- List of Items -->
   <ion-list>
     <ion-item *ngFor="let found of editedDocument.editedsigns; index as i; trackBy: trackFound ">
-      <button class="editbutton" (click)="replace(i)" type="button">
+      <button class="editbutton" [style.background-color]="found.color" (click)="replace(i)" type="button">
         <div class="sign">
           <span [innerHTML]="found.svg | safeHtml"></span>
           <ion-grid>
