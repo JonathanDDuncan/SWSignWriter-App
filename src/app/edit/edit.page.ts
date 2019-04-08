@@ -20,6 +20,12 @@ interface EdittedDocument {
   editedsigns: FoundSign[];
 }
 
+interface Color {
+  r: number;
+  g: number;
+  b: number;
+}
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
@@ -27,6 +33,10 @@ interface EdittedDocument {
 })
 export class EditPage implements OnInit, AfterViewInit {
   public editedDocument: EdittedDocument;
+  private green = { r: 0, g: 128, b: 0 };
+  private yelllow = { r: 255, g: 255, b: 0 };
+  private orange = { r: 255, g: 165, b: 0 };
+  private red = { r: 255, g: 0, b: 0 };
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
 
   constructor(
@@ -35,6 +45,7 @@ export class EditPage implements OnInit, AfterViewInit {
     private signsLookupService: SignsLookupService,
     private documentService: DocumentService,
     private router: Router
+
   ) { }
 
   ngOnInit() {
@@ -130,43 +141,36 @@ export class EditPage implements OnInit, AfterViewInit {
     return found;
   }
   matchColor(matching: { type: string; sign: Sign; count: number; }): string {
-    const green = { r: 0, g: 128, b: 0 };
-    const yelllow = { r: 255, g: 255, b: 0 };
-    const orange = { r: 255, g: 165, b: 0 };
-    const red = { r: 255, g: 0, b: 0 };
+
 
     let color: string;
     if (matching) {
       switch (matching.type) {
         case 'exact':
           if (matching.count === 1) {
-            color = 'green';
+            color = this.hexcolor(this.green);
           } else {
-            color = this.colorgradient(matching.count, green, yelllow);
+            color = this.colorgradient(matching.count, this.green, this.yelllow);
           }
           break;
-        case 'case':
-          color = this.colorgradient(matching.count + 1, green, yelllow);
-          break;
         case 'similar':
-          color = this.colorgradient(matching.count, yelllow, orange);
+          color = this.colorgradient(matching.count, this.yelllow, this.orange);
           break;
         case 'substring':
-          color = this.colorgradient(matching.count, orange, red);
+          color = this.colorgradient(matching.count, this.orange, this.red);
           break;
         case 'notmatching':
         default:
-          color = 'red';
+          color = this.hexcolor(this.red);
       }
     } else {
-      color = 'red';
+      color = this.hexcolor(this.red);
     }
 
 
     return color;
   }
   colorgradient(count: number, color1: { r: number; g: number; b: number; }, color2: { r: number; g: number; b: number; }): string {
-    const percent = count / 10;
     const rdist = color1.r - color2.r;
     const gdist = color1.g - color2.g;
     const bdist = color1.b - color2.b;
@@ -178,37 +182,31 @@ export class EditPage implements OnInit, AfterViewInit {
     const g = Math.round(Math.abs(gdist) * gperc + color1.g);
     const b = Math.round(Math.abs(bdist) * bperc + color1.b);
 
-    const newColor = this.hexcolor(r, g, b);
+    const newColor = this.hexrgb(r, g, b);
 
     return newColor;
   }
 
-  hexcolor(red: number, green: number, blue: number) {
+  hexrgb(red: number, green: number, blue: number): string {
     const decColor = 0x1000000 + 0x10000 * red + 0x100 * green + blue;
     return '#' + decColor.toString(16).substr(1);
+  }
+
+  hexcolor(color: Color): string {
+    return this.hexrgb(color.r, color.g, color.b);
   }
 
   findmatchingresult(founds: Sign[], searchText: string): { type: string, sign: Sign, count: number } {
     const normalized = this.normalize.normalizeForSearch(searchText);
 
     let type = 'exact';
-    const foundexacts = founds.filter(item => item.gloss === searchText);
+    const foundexacts = founds.filter(item => item.gloss.toLowerCase() === searchText.toLowerCase());
     const exactCount = foundexacts.length;
     let foundexact: Sign;
     if (exactCount > 0) { foundexact = foundexacts[0]; }
 
     if (foundexact) {
       return { type: type, sign: foundexact, count: exactCount };
-    }
-
-    type = 'case';
-    const foundcases = founds.filter(item => item.gloss.toLowerCase() === searchText.toLowerCase());
-    const caseCount = foundcases.length;
-    let foundcase: Sign;
-    if (caseCount > 0) { foundcase = foundcases[0]; }
-
-    if (foundcase) {
-      return { type: type, sign: foundcase, count: caseCount };
     }
 
     type = 'similar';
@@ -255,16 +253,16 @@ export class EditPage implements OnInit, AfterViewInit {
     document.signs = this.replaceElement(
       this.documentService.getDocument().signs,
       index,
-      data
+      data.result
     );
     this.documentService.updateDocument(document);
     this.showDocument(this.documentService.getDocument());
     return result;
   }
 
-  replaceElement(signs, index, data) {
+  replaceElement(signs: FoundSign[], index: number, key: string): FoundSign[] {
     const toChange = signs[index];
-    const changeWith = this.signsLookupService.getsign(data.result);
+    const changeWith = this.signsLookupService.getsign(key);
 
     if (toChange && changeWith) {
       const toChangeindex = signs.indexOf(toChange);
@@ -274,7 +272,9 @@ export class EditPage implements OnInit, AfterViewInit {
           sign: changeWith,
           text: changeWith.gloss,
           id: changeWith.key + changeWith.gloss,
-          svg: ssw.svg(changeWith.fsw)
+          svg: ssw.svg(changeWith.fsw),
+          totalmatches: 1,
+          color: this.hexcolor(this.green)
         };
       }
     }
