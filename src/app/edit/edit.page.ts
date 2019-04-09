@@ -84,5 +84,8 @@ export class EditPage implements OnInit, AfterViewInit {
     // Replace existing item in list
     this.documentService.replaceElement(index, data.result);
     this.showDocument(this.documentService.getDocument());
+    this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
   }
+
+  resetEntries() {}
 }

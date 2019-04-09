@@ -68,13 +68,27 @@ export class DocumentService {
     const cleaned = this.clean(text);
     const texts = cleaned.split(' ');
 
-    const signs = texts
-      .filter(str => !(!str || 0 === str.length))
-      .map(str => {
-        return this.findSign(str);
+    const glosses = texts
+      .filter(str => !(!str || 0 === str.length));
+
+    const signs0 = this.zip(glosses, this.document.signs);
+
+    const signs = signs0
+      .map((element: { item1: string, item2: FoundSign }) => {
+        if (element.item2 && element.item1 === element.item2.text) {
+          return element.item2;
+        } else { return this.findSign(element.item1); }
       });
 
-      this.updateSigns(signs);
+    this.updateSigns(signs);
+  }
+
+  private zip(a: any[], b: any[]): { item1: any, item2: any }[] {
+    const c: { item1: any, item2: any }[] = [];
+    for (let i = 0; i < a.length; i++) {
+      c.push({ item1: a[i], item2: b[i] });
+    }
+    return c;
   }
 
   clean(text: string): string {
@@ -111,7 +125,7 @@ export class DocumentService {
     if (!found) {
       found = {
         sign: null,
-        text: text + ' sign not found',
+        text: text,
         id: uuid() + text,
         svg: '',
         totalmatches: count,
@@ -193,8 +207,8 @@ export class DocumentService {
     this.signsLookupService.loadSigns();
   }
 
-  replaceElement(  index: number, key: string): void {
-    const signs =  this.document.signs;
+  replaceElement(index: number, key: string): void {
+    const signs = this.document.signs;
     const toChange = signs[index];
     const changeWith = this.signsLookupService.getsign(key);
 
@@ -218,5 +232,14 @@ export class DocumentService {
     if (index <= this.document.signs.length - 1) {
       return (this.document.signs[index]).text;
     } else { return ''; }
+  }
+
+  getSearchSentence(): string {
+    let sentence = '';
+    this.document.signs.forEach(sign => {
+      sentence += sign.text + ' ';
+    });
+
+    return sentence;
   }
 }
