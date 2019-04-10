@@ -60,7 +60,8 @@ export class SignsLookupService {
     const substring = [];
     let count = 0;
     let substringcount = 0;
-    const searchtext = this.normalize.normalizeForSearch(text.trim());
+    const text1 = text ? text.trim() : '';
+    const searchtext = this.normalize.normalizeForSearch(text1);
     if (this.entrylist) {
       for (let i = 0; i < this.entrylist.length; i++) {
         const entry = this.entrylist[i];

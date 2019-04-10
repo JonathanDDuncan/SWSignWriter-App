@@ -1,3 +1,5 @@
+import { IonicStorageModule } from '@ionic/storage';
+import { ModalController, AngularDelegate } from '@ionic/angular';
 import { PipesModule } from './../pipes/pipes.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -10,9 +12,13 @@ describe('ChooseSignPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [ModalController, AngularDelegate],
       declarations: [ChooseSignPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [PipesModule]
+      imports: [PipesModule,
+        IonicStorageModule.forRoot({
+        name: '__testquicksigndocumentdb'
+      })],
     })
       .compileComponents();
   }));

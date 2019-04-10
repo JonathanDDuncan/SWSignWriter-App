@@ -1,3 +1,6 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { IonicStorageModule } from '@ionic/storage';
+import { ModalController, AngularDelegate } from '@ionic/angular';
 import { PipesModule } from './../pipes/pipes.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -10,11 +13,15 @@ describe('EditPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditPage ],
+      declarations: [EditPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [PipesModule],
+      imports: [PipesModule, RouterTestingModule,
+        IonicStorageModule.forRoot({
+          name: '__testquicksigndocumentdb'
+        })],
+      providers: [ModalController, AngularDelegate],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

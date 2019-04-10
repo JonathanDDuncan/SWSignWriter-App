@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -12,7 +13,8 @@ describe('SettingsPage', () => {
     TestBed.configureTestingModule({
       declarations: [ SettingsPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [IonicStorageModule.forRoot({
+      imports: [HttpClientModule,
+        IonicStorageModule.forRoot({
         name: '__testquicksigndocumentdb'
       })],
     })

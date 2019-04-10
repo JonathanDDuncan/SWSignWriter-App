@@ -1,6 +1,7 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ModalController, AngularDelegate } from '@ionic/angular';
 import { ShowImagePage } from './show-image.page';
 
 describe('ShowImagePage', () => {
@@ -9,10 +10,18 @@ describe('ShowImagePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShowImagePage ],
+      declarations: [ShowImagePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [ModalController,
+        AngularDelegate,
+        {
+          provide: DomSanitizer, useValue: {
+            sanitize: () => 'safeString',
+            bypassSecurityTrustHtml: () => 'safeString'
+          }
+        }],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
