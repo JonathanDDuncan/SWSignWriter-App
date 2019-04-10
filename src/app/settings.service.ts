@@ -1,5 +1,4 @@
 import { SignsLookupService } from './signs-lookup.service';
-import { DocumentService } from './document.service';
 import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
 
@@ -7,6 +6,7 @@ import { UploadFile } from 'ngx-file-drop';
 import { SpmlService, Puddle } from './spml.service';
 
 import { HttpClient } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class SettingsService {
   constructor(private spmlService: SpmlService,
     private storageService: StorageService,
     private signsLookupService: SignsLookupService,
+    public toastController: ToastController,
     private http: HttpClient) { }
 
   async loadDefaultPuddles() {
@@ -27,7 +28,8 @@ export class SettingsService {
 
       return this.http.get(filename, { responseType: 'text' })
         .subscribe(async xml => {
-          await this.saveSpml(xml);
+          const saveresult = await this.saveSpml(xml);
+          await this.presentToast(saveresult);
           this.signsLookupService.loadSigns();
           this.storageService.setDefaultPuddleLoaded(true);
         });
@@ -43,23 +45,32 @@ export class SettingsService {
     this.readFile(file);
   }
 
-  private  readFile(file: File) {
+  private readFile(file: File) {
     const reader = new FileReader();
     reader.onload = async () => {
       const xml: string | ArrayBuffer = reader.result as string;
-      await this.saveSpml(xml);
+      const saveresult = await this.saveSpml(xml);
+      await this.presentToast(saveresult);
       this.signsLookupService.loadSigns();
       this.storageService.setDefaultPuddleLoaded(false);
     };
     reader.readAsText(file);
   }
 
-  async saveSpml(spml: string) {
+  async saveSpml(spml: string): Promise<{ puddlename: string, entries: number }> {
     const result: Puddle = this.spmlService.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 
     // Save spml
-    await this.storageService.savePuddle(puddlename, result);
-    return;
+    const saveresult = await this.storageService.savePuddle(puddlename, result);
+    return saveresult;
+  }
+
+  async presentToast(saved: { puddlename: string, entries: number }) {
+    const toast = await this.toastController.create({
+      message: saved.entries + ' entries saved. To ' + saved.puddlename,
+      duration: 2000
+    });
+    toast.present();
   }
 }
