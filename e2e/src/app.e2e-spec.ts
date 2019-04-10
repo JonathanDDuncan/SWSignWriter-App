@@ -6,13 +6,15 @@ describe('new App', () => {
   beforeEach(() => {
     page = new AppPage();
   });
+  const url = '/view';
   describe('default screen', () => {
+
     beforeEach(() => {
-      page.navigateTo('/home');
+      page.navigateTo(url);
     });
-    it('should have a title saying Home', () => {
+    it('should have a title saying Document', () => {
       page.getPageOneTitleText().then(title => {
-        expect(title).toEqual('Home');
+        expect(title).toEqual('Document');
       });
     });
   });
