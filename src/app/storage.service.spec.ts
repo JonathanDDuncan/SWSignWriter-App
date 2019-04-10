@@ -1,9 +1,12 @@
+import { IonicStorageModule } from '@ionic/storage';
 import { TestBed } from '@angular/core/testing';
 
 import { StorageService } from './storage.service';
 
 describe('StorageService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({ imports: [IonicStorageModule.forRoot({
+    name: '__testquicksigndocumentdb'
+  })]}));
 
   it('should be created', () => {
     const service: StorageService = TestBed.get(StorageService);

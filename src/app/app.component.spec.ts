@@ -1,3 +1,4 @@
+import { IonicStorageModule } from '@ionic/storage';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
@@ -26,7 +27,9 @@ describe('AppComponent', () => {
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
       ],
-      imports: [ RouterTestingModule.withRoutes([])],
+      imports: [ RouterTestingModule.withRoutes([]), IonicStorageModule.forRoot({
+        name: '__testquicksigndocumentdb'
+      })],
     }).compileComponents();
   }));
 
