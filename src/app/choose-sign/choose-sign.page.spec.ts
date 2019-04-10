@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -9,10 +10,11 @@ describe('ChooseSignPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChooseSignPage ],
+      declarations: [ChooseSignPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [PipesModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

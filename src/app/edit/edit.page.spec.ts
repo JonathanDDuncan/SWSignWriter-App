@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -11,6 +12,7 @@ describe('EditPage', () => {
     TestBed.configureTestingModule({
       declarations: [ EditPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [PipesModule],
     })
     .compileComponents();
   }));
