@@ -3,6 +3,7 @@ import { FoundSign, SignsLookupService, Sign } from './signs-lookup.service';
 import { v4 as uuid } from 'uuid';
 import { ColorService } from './color.service';
 import { NormalizationService } from './normalization.service';
+import { SynchArraysService } from './synch-arrays.service';
 
 export interface Document {
   signs: FoundSign[];
@@ -16,6 +17,7 @@ export class DocumentService {
 
   constructor(private signsLookupService: SignsLookupService,
     private color: ColorService,
+    private synchArray: SynchArraysService,
     private normalize: NormalizationService) {
     this.clearDocument();
   }
@@ -71,9 +73,14 @@ export class DocumentService {
     const glosses = texts
       .filter(str => !(!str || 0 === str.length));
 
-    const signs0 = this.zip(glosses, this.document.signs);
-
-    const signs = signs0
+    const signs = this.synchArray.synchzip(glosses, this.document.signs,(item) => item,(item: any) => item.text,{
+      sign: '',
+      text: '',
+      id: '',
+      svg: '',
+      totalmatches: 0,
+      color: 'red'
+    })
       .map((element: { item1: string, item2: FoundSign }) => {
         if (element.item2 && element.item1 === element.item2.text) {
           return element.item2;
@@ -81,14 +88,6 @@ export class DocumentService {
       });
 
     this.updateSigns(signs);
-  }
-
-  private zip(a: any[], b: any[]): { item1: any, item2: any }[] {
-    const c: { item1: any, item2: any }[] = [];
-    for (let i = 0; i < a.length; i++) {
-      c.push({ item1: a[i], item2: b[i] });
-    }
-    return c;
   }
 
   clean(text: string): string {
