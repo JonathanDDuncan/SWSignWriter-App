@@ -97,12 +97,20 @@ export class SpmlService {
               if (node.type === 'text') {
                 newEntry.fsw = node.text;
               } else if ((node.type = 'cdata')) {
-                newEntry.glosses.push(node.cdata.trim());
+                newEntry.glosses.push(this.cleangloss(node.cdata));
               }
             }
           );
         }
       });
+    }
+  }
+
+  private cleangloss(gloss: string): string {
+    if (gloss) {
+      return gloss.trim().replace('  ', ' ').replace(/\s+/g, '-');
+    } else {
+      return gloss;
     }
   }
 }
