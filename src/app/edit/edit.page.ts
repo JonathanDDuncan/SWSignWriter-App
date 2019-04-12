@@ -88,4 +88,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   resetEntries() {}
+  segmentChanged($event, i) {
+    console.log(i);
+  }
 }
