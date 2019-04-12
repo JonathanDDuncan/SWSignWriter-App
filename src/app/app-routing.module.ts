@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'view',
+    loadChildren: './view/view.module#ViewPageModule',
     pathMatch: 'full'
   },
   {
