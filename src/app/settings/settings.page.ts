@@ -6,6 +6,7 @@ import {
 } from 'ngx-file-drop';
 
 import { SettingsService } from '../settings.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -13,14 +14,15 @@ import { SettingsService } from '../settings.service';
   styleUrls: ['./settings.page.scss']
 })
 export class SettingsPage {
-  constructor(private settingsService: SettingsService) {}
+  constructor(private settingsService: SettingsService,
+    private alertController: AlertController) { }
 
-  public upload(event) {
+  upload(event) {
     const file = event.target.files[0];
     this.settingsService.loadFile(file);
   }
 
-  public dropped(event: UploadEvent) {
+  dropped(event: UploadEvent) {
     const files = event.files;
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
@@ -38,11 +40,35 @@ export class SettingsPage {
     }
   }
 
-  public fileOver(event) {
+  fileOver(event) {
     console.log(event);
   }
 
-  public fileLeave(event) {
+  fileLeave(event) {
     console.log(event);
+  }
+
+  async clearSigns() {
+    const alert = await this.alertController.create({
+      header: 'Clear Signs!',
+      message: 'Do you <strong>really</strong> want to delete all the signs!!!',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.settingsService.removeAllSigns();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

@@ -52,17 +52,21 @@ export class StorageService {
   async removeDefaultPuddles(): Promise<void> {
     const defaultPuddle = await this.getDefaultPuddleLoaded();
     if (defaultPuddle) {
-      await this.storage.get(this.puddleskey).then(async (puddles: string[]) => {
-        if (puddles) {
-          puddles.forEach(async (puddle: string) => {
-            if (puddle && puddle.startsWith('puddle_')) {
-              await this.storage.remove(puddle);
-            }
-          });
-          await this.storage.remove(this.puddleskey);
-        }
-      });
+      await this.removeAllPuddles();
     }
     return;
+  }
+
+  async removeAllPuddles() {
+    await this.storage.get(this.puddleskey).then(async (puddles: string[]) => {
+      if (puddles) {
+        puddles.forEach(async (puddle: string) => {
+          if (puddle && puddle.startsWith('puddle_')) {
+            await this.storage.remove(puddle);
+          }
+        });
+        await this.storage.remove(this.puddleskey);
+      }
+    });
   }
 }

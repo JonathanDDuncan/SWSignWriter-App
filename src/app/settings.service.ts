@@ -73,4 +73,9 @@ export class SettingsService {
     });
     toast.present();
   }
+
+  async removeAllSigns() {
+    await this.storageService.removeAllPuddles();
+    this.signsLookupService.loadSigns();
+  }
 }
