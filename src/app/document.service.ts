@@ -61,11 +61,16 @@ export class DocumentService {
   getFSW(): string {
     let fsw = '';
     this.document.signs.forEach(found => {
-      fsw += found.sign.fsw + ' ';
+      fsw += this.changeLane(found.sign.fsw, found.lane) + ' ';
     });
+    console.log(fsw);
     return fsw;
   }
 
+  private changeLane(fsw: string, lane: Lane): string {
+    const newLane = lane === Lane.Left ? 'L' : (lane === Lane.Right ? 'R' : 'M');
+    return fsw.replace('M', newLane);
+  }
   searchFrase(text: string): void {
     const cleaned = this.clean(text);
     const texts = cleaned.split(' ');
@@ -73,7 +78,7 @@ export class DocumentService {
     const glosses = texts
       .filter(str => !(!str || 0 === str.length));
 
-    const signs = this.synchArray.synchzip(glosses, this.document.signs,(item) => item,(item: any) => item.text,{
+    const signs = this.synchArray.synchzip(glosses, this.document.signs, (item) => item, (item: any) => item.text, {
       sign: '',
       text: '',
       id: '',

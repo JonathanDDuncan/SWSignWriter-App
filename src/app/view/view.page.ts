@@ -38,7 +38,9 @@ export class ViewPage implements OnInit, OnChanges {
   public signtextHeight: number;
 
   ngOnInit() { }
-  ngOnChanges(changes: import('@angular/core').SimpleChanges): void { }
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
+    console.log('ngOnChanges');
+  }
 
   public share() {
     const fsw = this.documentService.getFSW();
