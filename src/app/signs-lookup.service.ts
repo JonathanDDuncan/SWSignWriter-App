@@ -17,6 +17,13 @@ export interface FoundSign {
   svg: string;
   totalmatches: number;
   color: string;
+  lane: Lane;
+}
+
+export enum Lane {
+  Left,
+  Middle,
+  Right
 }
 
 @Injectable({

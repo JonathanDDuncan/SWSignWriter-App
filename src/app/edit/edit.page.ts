@@ -1,4 +1,3 @@
-
 import { Router } from '@angular/router';
 import {
   Component,
@@ -12,7 +11,7 @@ import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ChooseSignPage } from '../choose-sign/choose-sign.page';
-import { FoundSign } from '../signs-lookup.service';
+import { FoundSign, Lane } from '../signs-lookup.service';
 
 import { DocumentService, Document } from '../document.service';
 
@@ -26,6 +25,7 @@ interface EdittedDocument {
   styleUrls: ['./edit.page.scss']
 })
 export class EditPage implements OnInit, AfterViewInit {
+  Lane = Lane;
   public editedDocument: EdittedDocument;
 
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;

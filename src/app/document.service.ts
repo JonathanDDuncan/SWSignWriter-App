@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FoundSign, SignsLookupService, Sign } from './signs-lookup.service';
+import { FoundSign, SignsLookupService, Sign, Lane } from './signs-lookup.service';
 import { v4 as uuid } from 'uuid';
 import { ColorService } from './color.service';
 import { NormalizationService } from './normalization.service';
@@ -118,7 +118,8 @@ export class DocumentService {
         id: matching.sign.key + text,
         svg: ssw.svg(matching.sign.fsw),
         totalmatches: count,
-        color: this.matchColor(matching)
+        color: this.matchColor(matching),
+        lane: Lane.Middle
       };
     }
     if (!found) {
@@ -128,7 +129,8 @@ export class DocumentService {
         id: uuid() + text,
         svg: '',
         totalmatches: count,
-        color: this.matchColor(null)
+        color: this.matchColor(null),
+        lane: Lane.Middle
       };
     }
     return found;
@@ -221,7 +223,8 @@ export class DocumentService {
           id: changeWith.key + changeWith.gloss,
           svg: ssw.svg(changeWith.fsw),
           totalmatches: 1,
-          color: this.color.hexcolor(this.color.green)
+          color: this.color.hexcolor(this.color.green),
+          lane: toChange.lane
         };
       }
     }

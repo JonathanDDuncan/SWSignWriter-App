@@ -35,11 +35,11 @@
         </ion-row>
         <ion-row>
           <div class="lane-selector">
-            <input id="{{found.id}}-left" type="radio" name="name{{found.id}}" value="left" />
+            <input id="{{found.id}}-left" type="radio" name="name{{found.id}}" value="left" [checked]="Lane.Left === found.lane"/>
             <label class="label-background left" for="{{found.id}}-left"></label>
-            <input id="{{found.id}}-middle" type="radio" name="name{{found.id}}" value="middle" />
+            <input id="{{found.id}}-middle" type="radio" name="name{{found.id}}" value="middle" [checked]="Lane.Middle === found.lane"/>
             <label class="label-background middle" for="{{found.id}}-middle"></label>
-            <input id="{{found.id}}-right" type="radio" name="name{{found.id}}" value="right" />
+            <input id="{{found.id}}-right" type="radio" name="name{{found.id}}" value="right" [checked]="Lane.Right === found.lane"/>
             <label class="label-background right" for="{{found.id}}-right"></label>
           </div>
         </ion-row>
