@@ -9,11 +9,9 @@
     <ion-textarea #searchRef placeholder="Enter words to search here..."></ion-textarea>
     <ion-button style="display:none" (click)="resetEntries()">Reset</ion-button>
   </ion-item>
-
 </ion-header>
 
 <ion-content padding>
-  <!-- List of Items -->
   <ion-list>
     <ion-item *ngFor="let found of editedDocument.editedsigns; index as i; trackBy: trackFound ">
       <ion-grid>
@@ -33,24 +31,17 @@
               </ion-grid>
             </div>
           </button>
+
         </ion-row>
         <ion-row>
-          <ion-col [sizeXl]="3" sizeLg="4" sizeMd="4" sizeSm="8" sizeXs="12">
-            <ion-segment color="primary"  value="left" (ionChange)="segmentChanged($event, i)">
-              <ion-segment-button value="left">
-                 <ion-label>Left</ion-label>
-                <img src="../../assets/img/Left.png">
-              </ion-segment-button>
-              <ion-segment-button value="middle">
-                  <ion-label>Middle</ion-label>  
-                <img src="../../assets/img/Center.png">
-              </ion-segment-button>
-              <ion-segment-button value="right">
-                  <ion-label>Right</ion-label>   
-                <img src="../../assets/img/Right.png">
-              </ion-segment-button>
-            </ion-segment>
-          </ion-col>
+          <div class="lane-selector">
+            <input id="{{found.id}}-left" type="radio" name="name{{found.id}}" value="left" />
+            <label class="label-background left" for="{{found.id}}-left"></label>
+            <input id="{{found.id}}-middle" type="radio" name="name{{found.id}}" value="middle" />
+            <label class="label-background middle" for="{{found.id}}-middle"></label>
+            <input id="{{found.id}}-right" type="radio" name="name{{found.id}}" value="right" />
+            <label class="label-background right" for="{{found.id}}-right"></label>
+          </div>
         </ion-row>
       </ion-grid>
     </ion-item>

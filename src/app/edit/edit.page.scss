@@ -1,17 +1,56 @@
 .sign {
-  min-width: 100px;
-  padding: 0;
+    min-width: 100px;
+    padding: 0;
 }
 
 .editbutton {
-  margin: 5px;
-  padding: 10px 10px 0 10px;
+    margin: 5px;
+    padding: 10px 10px 0 10px;
 }
 
-ion-segment img {
-  width: 25px;
+.lane-selector input {
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
-ion-segment .segment-button-checked {
-  background-color: aqua;
+.left {
+    background-image: url('../../assets/img/Left.png');
+}
+
+.middle {
+    background-image: url('../../assets/img/Center.png');
+}
+
+.right {
+    background-image: url('../../assets/img/Right.png');
+}
+
+.lane-selector input[type="radio"]:checked+label {
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    filter: brightness(1.2) grayscale(.5) opacity(.9);
+    background-color: rgb(57, 122, 196);
+}
+
+.lane-selector input[type="radio"]:not(:checked)+label {
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+    -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+    filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+
+.label-background {
+    cursor: pointer;
+    background-size: contain;
+    background-position: center; 
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin: 0 2px 0 2px;
+    width: 45px;
+    height: 45px;
+    -webkit-transition: all 100ms ease-in;
+    -moz-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
 }
