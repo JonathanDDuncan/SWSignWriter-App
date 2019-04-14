@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { FoundSign, SignsLookupService, Sign, Lane } from './signs-lookup.service';
 import { v4 as uuid } from 'uuid';
+
+import { FoundSign, SignsLookupService, Sign, Lane } from './signs-lookup.service';
 import { ColorService } from './color.service';
 import { NormalizationService } from './normalization.service';
 import { SynchArraysService } from './synch-arrays.service';
@@ -71,6 +72,7 @@ export class DocumentService {
     const newLane = lane === Lane.Left ? 'L' : (lane === Lane.Right ? 'R' : 'M');
     return fsw.replace('M', newLane);
   }
+
   searchFrase(text: string): void {
     const cleaned = this.clean(text);
     const texts = cleaned.split(' ');
@@ -78,14 +80,17 @@ export class DocumentService {
     const glosses = texts
       .filter(str => !(!str || 0 === str.length));
 
-    const signs = this.synchArray.synchzip(glosses, this.document.signs, (item) => item, (item: any) => item.text, {
+    const blankFoundSign = {
       sign: '',
       text: '',
       id: '',
       svg: '',
       totalmatches: 0,
       color: 'red'
-    })
+    };
+
+    const signs = this.synchArray.synchzip(glosses, this.document.signs,
+      (item) => item, (item: any) => item.text, blankFoundSign)
       .map((element: { item1: string, item2: FoundSign }) => {
         if (element.item2 && element.item1 === element.item2.text) {
           return element.item2;
@@ -109,7 +114,6 @@ export class DocumentService {
     });
     return tobereplaced;
   }
-
 
   private findSign(text: string): FoundSign {
     const signs: Sign[] = this.signsLookupService.search(text);
@@ -141,7 +145,6 @@ export class DocumentService {
     return found;
   }
 
-
   matchColor(matching: { type: string; sign: Sign; count: number; }): string {
     let finalcolor: string;
     if (matching) {
@@ -166,7 +169,6 @@ export class DocumentService {
     } else {
       finalcolor = this.color.hexcolor(this.color.red);
     }
-
 
     return finalcolor;
   }
