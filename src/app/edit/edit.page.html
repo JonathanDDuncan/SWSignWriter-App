@@ -11,12 +11,13 @@
   </ion-item>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding  class="vertical-center">
   <ion-list>
     <ion-item *ngFor="let found of editedDocument.editedsigns; index as i; trackBy: trackFound ">
       <ion-grid>
-        <ion-row>
-          <button class="editbutton" [style.background-color]="found.color" (click)="replace(i)" type="button">
+        <ion-row justify-content-center>
+          <button class="editbutton"  [style.background-color]="found.color" (click)="replace(i)" type="button">
+            <div [className]="laneStyle(found.lane)">
             <div class="sign">
               <span [innerHTML]="found.svg | safeHtml"></span>
               <ion-grid>
@@ -30,10 +31,11 @@
                 </ion-row>
               </ion-grid>
             </div>
+          </div>
           </button>
 
         </ion-row>
-        <ion-row>
+        <ion-row justify-content-center>
           <div class="lane-selector">
             <input id="{{found.id}}-left" type="radio" name="name{{found.id}}" 
             value="left" [checked]="Lane.Left === found.lane" (change)="found.lane = Lane.Left"/>

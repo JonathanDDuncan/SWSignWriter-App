@@ -87,7 +87,7 @@ export class EditPage implements OnInit, AfterViewInit {
     this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
   }
 
-  resetEntries() {}
+  resetEntries() { }
   segmentChanged($event, i) {
     console.log(i);
   }
@@ -95,4 +95,14 @@ export class EditPage implements OnInit, AfterViewInit {
   laneChange($event) {
     console.log('');
   }
+
+  laneStyle(lane: Lane) {
+    switch (lane) {
+      case (Lane.Left): return 'lane-left';
+      case (Lane.Right): return 'lane-right';
+      default: return 'lane-middle';
+    }
+  }
+
+  
 }
