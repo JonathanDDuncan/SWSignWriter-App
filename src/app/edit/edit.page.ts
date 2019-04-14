@@ -91,4 +91,8 @@ export class EditPage implements OnInit, AfterViewInit {
   segmentChanged($event, i) {
     console.log(i);
   }
+
+  laneChange($event) {
+    console.log('');
+  }
 }
