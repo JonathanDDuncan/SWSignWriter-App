@@ -1,9 +1,10 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { DocumentService } from '../document.service';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { SocialSharingService } from '../social-sharing.service';
 import * as htmlToImage from 'html-to-image';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+import { DocumentService } from '../document.service';
+import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 
 @Component({
@@ -23,7 +24,6 @@ export class ViewPage implements OnInit {
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        console.log('ssw', ssw);
         const fsw = this.documentService.getFSW();
         this.document = ssw.paragraph(fsw);
       }
@@ -69,10 +69,8 @@ export class ViewPage implements OnInit {
   private async sharecontinuation(fsw: string) {
     const node: any = document.getElementsByClassName('signtext')[0];
 
-    const imgsrc = await htmlToImage.toPng(node);
-
     const img = new Image();
-    img.src = imgsrc;
+    img.src = await htmlToImage.toPng(node);
     this.socialSharingService.share(img);
 
     // reset back to the way it was with svg
@@ -84,9 +82,7 @@ export class ViewPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: ShowImagePage,
-      componentProps: {
-        imagebase64: await htmlToImage.toPng(node)
-      }
+      componentProps: { imagebase64: await htmlToImage.toPng(node) }
     });
 
     await modal.present();
