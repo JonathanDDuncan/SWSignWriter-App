@@ -7,19 +7,27 @@
       Document
     </ion-title>
     <ion-item>
-        <ion-range min="50" max="900" step="10" pin="true" (ionChange)="heightChange($event)">
-          <ion-icon size="small" slot="start" name="resize"></ion-icon>
-          <ion-icon slot="end" name="resize"></ion-icon>
-        </ion-range>
-      </ion-item>
-     
+      <ion-grid>
+        <ion-row justify-content-center >
+          <ion-label>Image height</ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-range min="50" max="900" step="10" [(ngModel)]="imageheight" pin="true"
+            (ionChange)="heightChange($event)">
+            <ion-icon size="small" slot="start" name="resize"></ion-icon>
+            <ion-icon slot="end" name="resize"></ion-icon>
+          </ion-range>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
     <ion-buttons slot="end">
-        
+
       <ion-button *ngIf="isCordova()" color="primary" fill="solid" (click)="share()">
-        Share  <ion-icon name="share"></ion-icon>
+        Share <ion-icon name="share"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="!isCordova()" color="primary" fill="solid" (click)="copy()"> 
-          <ion-icon  name="copy"></ion-icon>
+      <ion-button *ngIf="!isCordova()" color="primary" fill="solid" (click)="copy()">
+        <ion-icon name="copy"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -27,13 +35,13 @@
 
 <ion-content padding>
   <div id="document" class="document">
-    <div class="signtext" [style.height.px]="signtextHeight"> 
+    <div class="signtext" [style.height.px]="signtextHeight">
       <span [innerHTML]="document | safeHtml"></span>
     </div>
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon (click)="edit()"name="create"></ion-icon>
+      <ion-icon (click)="edit()" name="create"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <canvas id='canvas'></canvas>

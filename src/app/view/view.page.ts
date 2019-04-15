@@ -13,6 +13,11 @@ import { ShowImagePage } from '../show-image/show-image.page';
   styleUrls: ['./view.page.scss']
 })
 export class ViewPage implements OnInit {
+  public imageheight = 900;
+  public document: string;
+  public preloadFonts: string;
+  public signtextHeight: number;
+
   constructor(
     public modalController: ModalController,
     private documentService: DocumentService,
@@ -33,9 +38,6 @@ export class ViewPage implements OnInit {
       }
     });
   }
-  public document: string;
-  public preloadFonts: string;
-  public signtextHeight: number;
 
   ngOnInit() { }
 
