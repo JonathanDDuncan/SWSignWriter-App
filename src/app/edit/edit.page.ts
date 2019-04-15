@@ -78,9 +78,6 @@ export class EditPage implements OnInit, AfterViewInit {
 
     await modal.present();
     const { data } = await modal.onDidDismiss();
-
-    console.log(data);
-
     // Replace existing item in list
     this.documentService.replaceElement(index, data.result);
     this.showDocument(this.documentService.getDocument());
@@ -88,13 +85,6 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   resetEntries() { }
-  segmentChanged($event, i) {
-    console.log(i);
-  }
-
-  laneChange($event) {
-    console.log('');
-  }
 
   laneStyle(lane: Lane) {
     switch (lane) {
@@ -103,6 +93,4 @@ export class EditPage implements OnInit, AfterViewInit {
       default: return 'lane-middle';
     }
   }
-
-  
 }

@@ -35,17 +35,16 @@ export class SettingsPage {
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
       }
     }
   }
 
   fileOver(event) {
-    console.log(event);
+    // console.log(event);
   }
 
   fileLeave(event) {
-    console.log(event);
+    // console.log(event);
   }
 
   async clearSigns() {
@@ -57,8 +56,7 @@ export class SettingsPage {
           text: 'No',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+          handler: (data) => {
           }
         }, {
           text: 'Yes',
