@@ -11,7 +11,7 @@ import { ShowImagePage } from '../show-image/show-image.page';
   templateUrl: './view.page.html',
   styleUrls: ['./view.page.scss']
 })
-export class ViewPage implements OnInit, OnChanges {
+export class ViewPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private documentService: DocumentService,
@@ -38,8 +38,10 @@ export class ViewPage implements OnInit, OnChanges {
   public signtextHeight: number;
 
   ngOnInit() { }
-  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
-    console.log('ngOnChanges');
+
+  ionViewWillEnter() {
+    const fsw = this.documentService.getFSW();
+    this.document = ssw.paragraph(fsw);
   }
 
   public share() {
