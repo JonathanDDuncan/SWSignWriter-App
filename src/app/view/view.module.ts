@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ViewPage } from './view.page';
 import { PipesModule } from '../pipes/pipes.module';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    PipesModule
+    PipesModule,
+    SharedModule
   ],
   declarations: [ViewPage]
 })

@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -33,8 +34,12 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    public translate: TranslateService
   ) {
+    this.translate.setDefaultLang('pt');
+    this.translate.use('pt');
+
     this.initializeApp();
     platform.ready().then(() => {
       this.settingsService.loadDefaultPuddles();

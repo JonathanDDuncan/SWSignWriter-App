@@ -4,12 +4,12 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Document
-    </ion-title>
+      {{'Document' | translate}}
+    </ion-title> 
     <ion-item>
       <ion-grid>
         <ion-row justify-content-center >
-          <ion-label>Image height</ion-label>
+          <ion-label>{{'Image height' | translate}}</ion-label>
         </ion-row>
         <ion-row>
           <ion-range min="50" max="900" step="10" [(ngModel)]="imageheight" pin="true"

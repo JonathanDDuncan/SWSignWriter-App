@@ -2,10 +2,13 @@ import * as htmlToImage from 'html-to-image';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 import { DocumentService } from '../document.service';
 import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
+import { SharedModule } from '../shared/shared.module';
+
 
 @Component({
   selector: 'app-view',
@@ -22,6 +25,7 @@ export class ViewPage implements OnInit {
     public modalController: ModalController,
     private documentService: DocumentService,
     private socialSharingService: SocialSharingService,
+    public translate: TranslateService,
     private router: Router
   ) {
     // Force fonts to load before anything is shown

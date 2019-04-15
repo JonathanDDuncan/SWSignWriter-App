@@ -1,6 +1,6 @@
 {
   "name": "quicksigndocument",
-  "version": "0.0.64",
+  "version": "0.0.65",
   "author": "Jonathan Duncan",
   "homepage": "https://jonathandduncan.github.io/QuickSignDocument/",
   "scripts": {
@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "predeploy": "ionic build --prod",
-    "deploy": "gh-pages -d www"
+    "deploy": "gh-pages -d www",
+    "extract": "ngx-translate-extract --input ./src/app/ --output ./src/assets/i18n/{en,es,pt}.json --clean --sort --format namespaced-json"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,8 @@
     "@ionic/angular": "^4.1.0",
     "@ionic/pro": "2.0.4",
     "@ionic/storage": "^2.2.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@rxjs/rx": "^4.1.0",
     "cordova-android": "8.0.0",
     "cordova-plugin-device": "^2.0.2",
@@ -61,10 +64,11 @@
     "@angular/compiler": "~7.2.2",
     "@angular/compiler-cli": "~7.2.2",
     "@angular/language-service": "~7.2.2",
+    "@biesbjerg/ngx-translate-extract": "^2.3.4",
     "@ionic/angular-toolkit": "~1.4.0",
-    "@types/node": "~10.12.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~10.12.0",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
