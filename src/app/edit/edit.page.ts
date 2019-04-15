@@ -41,6 +41,11 @@ export class EditPage implements OnInit, AfterViewInit {
     this.showDocument(this.documentService.getDocument());
   }
 
+  ionViewWillEnter() {
+    this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+    this.showDocument(this.documentService.getDocument());
+  }
+
   ngAfterViewInit() {
     fromEvent(this.searchRef.nativeElement, 'keyup')
       .pipe(
