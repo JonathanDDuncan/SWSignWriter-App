@@ -64,7 +64,7 @@ export class DocumentService {
     this.document.signs.forEach(found => {
       fsw += this.changeLane(found.sign.fsw, found.lane) + ' ';
     });
-    console.log(fsw);
+
     return fsw;
   }
 

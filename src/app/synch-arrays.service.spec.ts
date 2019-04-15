@@ -164,8 +164,6 @@ describe('SynchArraysService', () => {
     const getterb = (item: any) => item.id;
     const service: SynchArraysService = TestBed.get(SynchArraysService);
     const [array3, array4] = service.synch(array1, array2, gettera, getterb, blank);
-    console.log(array3);
-    console.log(array4);
     expect(array3.map(gettera)).toEqual(array4.map(getterb));
   });
 });

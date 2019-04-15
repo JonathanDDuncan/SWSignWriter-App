@@ -31,11 +31,8 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.elements = [];
-    console.log(this.entrys);
-    console.log(this.searchword);
     this.searchRef.nativeElement.value = this.searchword;
     const result = this.signsLookupService.search(this.searchword);
-    console.log(result);
     this.showResult(result);
   }
 
@@ -49,7 +46,6 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
       // subscription
       .subscribe((text: string) => {
         const result = this.signsLookupService.search(text);
-        console.log(result);
         this.showResult(result);
       });
   }
@@ -67,7 +63,6 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
 
   radioChecked(key: string) {
     this.selectedkey = key;
-    console.log(this.selectedkey);
   }
 
   showResult(result) {
