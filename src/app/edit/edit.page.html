@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Edit</ion-title>
+    <ion-title>{{'Edit' | translate}}</ion-title>
   </ion-toolbar>
   <ion-item>
     <ion-textarea #searchRef placeholder="Enter words to search here..."></ion-textarea>
-    <ion-button style="display:none" (click)="resetEntries()">Reset</ion-button>
+    <ion-button style="display:none" (click)="resetEntries()"> {{'Reset' | translate}}</ion-button>
   </ion-item>
 </ion-header>
 
@@ -23,7 +23,7 @@
               <ion-grid>
                 <ion-row>
                   <ion-col size="10">
-                    <ion-label>{{ found.text + (!found.sign ? ' sign not found' : '') }} </ion-label>
+                    <ion-label>{{ found.text + (!found.sign ? (' sign not found' | translate) : '') }} </ion-label>
                   </ion-col>
                   <ion-col size="1">
                     <ion-badge *ngIf="found.totalmatches > 1" color="light">{{ found.totalmatches }}</ion-badge>

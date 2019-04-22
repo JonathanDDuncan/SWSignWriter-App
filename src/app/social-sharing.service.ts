@@ -1,55 +1,58 @@
 import { Injectable } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root'
 })
 export class SocialSharingService {
-  constructor(private socialSharing: SocialSharing) {}
+  constructor(private socialSharing: SocialSharing,
+    private translateService: TranslateService) {}
 
   public share(image: HTMLImageElement) {
     // Check if sharing via email is supported
     this.socialSharing
       .canShareViaEmail()
       .then(() => {
-        alert('Sharing via email is possible');
+        alert(this.translateService.instant('Sharing via email is possible'));
         // Sharing via email is possible
         // Share via email
         this.socialSharing
-          .shareViaEmail('Body' + image, 'Subject', ['duncanjonathan@yahoo.ca'])
+          .shareViaEmail(this.translateService.instant('Body') + image, 
+          this.translateService.instant('Subject'), ['duncanjonathan@yahoo.ca'])
           .then(() => {
-            alert('email sent');
+            alert(this.translateService.instant('email sent'));
             // Success!
           })
           .catch(() => {
-            alert('Error sending email');
+            alert(this.translateService.instant('Error sending email'));
             // Error!
           });
       })
       .catch(() => {
         // Sharing via email is not possible
-        alert('Social sharing by email not available');
+        alert(this.translateService.instant('Social sharing by email not available'));
       });
 
     this.socialSharing
       .canShareVia('whatsapp')
       .then(() => {
-        alert('Sharing via whatsapp is possible');
+        alert(this.translateService.instant('Sharing via whatsapp is possible'));
         // Sharing via whatsapp is possible
         // Share via whatsapp
         this.socialSharing
-          .shareViaWhatsApp('Body', image.src, null)
+          .shareViaWhatsApp(this.translateService.instant('Body'), image.src, null)
           .then(() => {
-            alert('whatsapp sent');
+            alert(this.translateService.instant('whatsapp sent'));
             // Success!
           })
           .catch(() => {
-            alert('Error sending whatsapp');
+            alert(this.translateService.instant('Error sending whatsapp'));
             // Error!
           });
       })
       .catch(() => {
         // Sharing via whatsapp is not possible
-        alert('Social sharing by whatsapp not available');
+        alert(this.translateService.instant('Social sharing by whatsapp not available'));
       });
   }
 }

@@ -7,6 +7,8 @@ import {
 
 import { SettingsService } from '../settings.service';
 import { AlertController } from '@ionic/angular';
+import { SharedModule } from '../shared/shared.module';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +17,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class SettingsPage {
   constructor(private settingsService: SettingsService,
-    private alertController: AlertController) { }
+    private alertController: AlertController,
+    private translate: TranslateService) { }
 
   upload(event) {
     const file = event.target.files[0];
@@ -48,18 +51,18 @@ export class SettingsPage {
   }
 
   async clearSigns() {
-    const alert = await this.alertController.create({
-      header: 'Clear Signs!',
-      message: 'Do you <strong>really</strong> want to delete all the signs!!!',
+      const alert = await this.alertController.create({
+      header: this.translate.instant('Clear Signs!'),
+      message: this.translate.instant('Do you <strong>really</strong> want to delete all the signs!!!'),
       buttons: [
         {
-          text: 'No',
+          text: this.translate.instant('No'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (data) => {
           }
         }, {
-          text: 'Yes',
+          text: this.translate.instant('Yes'),
           handler: () => {
             this.settingsService.removeAllSigns();
           }

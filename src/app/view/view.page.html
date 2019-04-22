@@ -24,7 +24,7 @@
     <ion-buttons slot="end">
 
       <ion-button *ngIf="isCordova()" color="primary" fill="solid" (click)="share()">
-        Share <ion-icon name="share"></ion-icon>
+         {{'Share' | translate}}<ion-icon name="share"></ion-icon>
       </ion-button>
       <ion-button *ngIf="!isCordova()" color="primary" fill="solid" (click)="copy()">
         <ion-icon name="copy"></ion-icon>

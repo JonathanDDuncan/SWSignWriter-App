@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SynchArraysService {
-  constructor() { }
+  constructor( private translateService: TranslateService) { }
 
   synchzip(a: any[], b: any[], gettera: (item: any) => any, getterb: (item: any) => any, blank: any): { item1: any, item2: any }[] {
     const [array1, array2] = this.synch(a, b, gettera, getterb, blank);
@@ -13,7 +14,7 @@ export class SynchArraysService {
 
   zip(a: any[], b: any[]): { item1: any, item2: any }[] {
     if (a.length !== b.length) {
-      throw new Error('Both arrays must be of the same length');
+      throw new Error(this.translateService.instant('Both arrays must be of the same length'));
     }
     const c: { item1: any, item2: any }[] = [];
     for (let i = 0; i < a.length; i++) {

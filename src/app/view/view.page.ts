@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DocumentService } from '../document.service';
 import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
-import { SharedModule } from '../shared/shared.module';
+
 
 
 @Component({

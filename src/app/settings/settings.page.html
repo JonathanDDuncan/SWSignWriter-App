@@ -3,14 +3,14 @@
       <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-    <ion-title>Settings</ion-title>
+    <ion-title>{{'Settings' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <div class="center">
     <file-drop
-      dropZoneLabel="Drop SPML file here to add signs"
+      dropZoneLabel="{{'Drop SPML file here to add signs'  | translate}}"
       (onFileDrop)="dropped($event)"
       (onFileOver)="fileOver($event)"
       (onFileLeave)="fileLeave($event)"
@@ -18,11 +18,11 @@
     </file-drop>
     <input hidden type="file" #uploader (change)="upload($event)" />
     <ion-button (click)="uploader.click()">
-      Choose SPML file
+       {{'Choose SPML file' | translate}}
     </ion-button>
     <hr>
     <ion-button (click)="clearSigns()">
-      Clear Signs
+        {{'Clear Signs' | translate}}
     </ion-button>
   </div>
 </ion-content>

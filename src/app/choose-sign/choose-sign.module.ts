@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { ChooseSignPage } from './choose-sign.page';
 import { PipesModule } from '../pipes/pipes.module';
+import { SharedModule } from '../shared/shared.module';
+
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    PipesModule
+    PipesModule,
+    SharedModule
   ],
   declarations: [ChooseSignPage]
 })

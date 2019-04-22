@@ -7,6 +7,7 @@ import { SpmlService, Puddle } from './spml.service';
 
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class SettingsService {
     private storageService: StorageService,
     private signsLookupService: SignsLookupService,
     public toastController: ToastController,
+    private translateService: TranslateService,
     private http: HttpClient) { }
 
   async loadDefaultPuddles() {
@@ -68,7 +70,7 @@ export class SettingsService {
 
   async presentToast(saved: { puddlename: string, entries: number }) {
     const toast = await this.toastController.create({
-      message: saved.entries + ' entries saved. To ' + saved.puddlename,
+      message: saved.entries + this.translateService.instant('entries saved To') + saved.puddlename,
       duration: 2000
     });
     toast.present();
