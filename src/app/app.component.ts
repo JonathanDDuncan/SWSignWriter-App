@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './settings.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     private settingsService: SettingsService,
     public translate: TranslateService
   ) {
-    this.translate.setDefaultLang('es');
-    this.translate.use('es');
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
 
     this.initializeApp();
     platform.ready().then(() => {
@@ -35,6 +35,13 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.translate.onLangChange.subscribe((params: LangChangeEvent) => {
+      this.translateMenu();
+    });
+    this.translateMenu();
+  }
+
+  public translateMenu() {
     this.translate.get('Document').subscribe((document) => {
       this.translate.get('Settings').subscribe((settings) => {
         this.translate.get('About').subscribe((about) => {

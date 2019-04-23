@@ -51,7 +51,7 @@ export class SettingsPage {
   }
 
   async clearSigns() {
-      const alert = await this.alertController.create({
+    const alert = await this.alertController.create({
       header: this.translate.instant('Clear Signs!'),
       message: this.translate.instant('Do you <strong>really</strong> want to delete all the signs!!!'),
       buttons: [
@@ -72,4 +72,13 @@ export class SettingsPage {
 
     await alert.present();
   }
+
+  useLanguage(language: string) {
+    this.translate.use(language);
+  }
+  
+  onCountryChange(event) {
+    this.translate.use(event.detail.value);
+  }
 }
+

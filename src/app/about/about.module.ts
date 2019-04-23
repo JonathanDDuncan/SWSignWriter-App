@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
+
+
 import { AboutPage } from './about.page';
 import { SharedModule } from '../shared/shared.module';
 
