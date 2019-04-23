@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>chooseSign</ion-title>
+    <ion-title>{{ 'Choose Sign' | translate }}</ion-title>
     <ion-item>
-      <ion-textarea #searchRef placeholder="'Enter word to search here' | translate" ></ion-textarea>
+      <ion-textarea #searchRef placeholder="{{'Enter word to search here' | translate}}" ></ion-textarea>
     </ion-item>
   </ion-toolbar>
 </ion-header>
@@ -26,11 +26,11 @@
       <ion-row>
         <ion-col> </ion-col>
         <ion-col>
-          <ion-button (click)="accept()" color="primary">Accept</ion-button>
+          <ion-button (click)="accept()" color="primary">{{ 'Accept' | translate }}</ion-button>
         </ion-col>
         <ion-col> </ion-col>
         <ion-col>
-          <ion-button (click)="cancel()" color="secondary">Cancel</ion-button>
+          <ion-button (click)="cancel()" color="secondary">{{ 'Cancel' | translate }}</ion-button>
         </ion-col>
         <ion-col> </ion-col>
       </ion-row>

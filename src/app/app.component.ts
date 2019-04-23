@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -10,26 +10,13 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
-  public appPages = [
-    {
-      title: 'Document',
-      url: '/view',
-      icon: 'document'
-    },
-    {
-      title: 'Settings',
-      url: '/settings',
-      icon: 'settings'
-    },
-    {
-      title: 'About',
-      url: '/about',
-      icon: 'about'
-    }
+export class AppComponent implements OnInit {
 
-  ];
-
+  public appPages: {
+    title: string;
+    url: string;
+    icon: string;
+  }[];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -37,12 +24,39 @@ export class AppComponent {
     private settingsService: SettingsService,
     public translate: TranslateService
   ) {
-    this.translate.setDefaultLang('pt');
-    this.translate.use('pt');
+    this.translate.setDefaultLang('es');
+    this.translate.use('es');
 
     this.initializeApp();
     platform.ready().then(() => {
       this.settingsService.loadDefaultPuddles();
+    });
+
+
+  }
+  ngOnInit(): void {
+    this.translate.get('Document').subscribe((document) => {
+      this.translate.get('Settings').subscribe((settings) => {
+        this.translate.get('About').subscribe((about) => {
+          this.appPages = [
+            {
+              title: document,
+              url: '/view',
+              icon: 'document'
+            },
+            {
+              title: settings,
+              url: '/settings',
+              icon: 'settings'
+            },
+            {
+              title: about,
+              url: '/about',
+              icon: 'about'
+            }
+          ];
+        });
+      });
     });
   }
 
@@ -52,4 +66,6 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+
 }
