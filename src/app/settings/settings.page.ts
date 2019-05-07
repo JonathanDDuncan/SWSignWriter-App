@@ -85,7 +85,8 @@ export class SettingsPage implements OnInit {
   }
 
   async currentUILanguage(): Promise<string> {
-    return await this.settingsService.getUILanguage();
+    const language = await this.settingsService.getUILanguage();
+    return language ? language : 'en';
   }
 }
 
