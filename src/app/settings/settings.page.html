@@ -27,10 +27,10 @@
   </div>
   <ion-item>
     <ion-label>{{'UI Language' | translate}}</ion-label>
-    <ion-select value="en" interface="popover"  (ionChange)="onCountryChange($event)">
-          <ion-select-option value="en" (onSet)="useLanguage('en')">{{'English' | translate}}</ion-select-option>
-      <ion-select-option value="es" (onSet)="useLanguage('es')">{{'Spanish' | translate}}</ion-select-option>
-      <ion-select-option value="pt" (onSet)="useLanguage('pt')">{{'Portuguese' | translate}}</ion-select-option>
+    <ion-select  [(ngModel)]="UILanguage"   interface="popover"  (ionChange)="onLanguageChange($event)">
+          <ion-select-option value="en">English</ion-select-option>
+      <ion-select-option value="es">español</ion-select-option>
+      <ion-select-option value="pt">português</ion-select-option>
     </ion-select>
   </ion-item>
 

@@ -25,7 +25,11 @@ export class AppComponent implements OnInit {
     public translate: TranslateService
   ) {
     this.translate.setDefaultLang('en');
-    this.translate.use('en');
+
+    settingsService.getUILanguage().then(language => {
+      console.log(language);
+      this.translate.use(language);
+    });
 
     this.initializeApp();
     platform.ready().then(() => {

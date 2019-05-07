@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UploadEvent,
   FileSystemFileEntry,
@@ -15,7 +15,9 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss']
 })
-export class SettingsPage {
+export class SettingsPage implements OnInit {
+  public UILanguage: string;
+
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
     private translate: TranslateService) { }
@@ -23,6 +25,10 @@ export class SettingsPage {
   upload(event) {
     const file = event.target.files[0];
     this.settingsService.loadFile(file);
+  }
+
+  async ngOnInit() {
+    this.UILanguage = await this.currentUILanguage()
   }
 
   dropped(event: UploadEvent) {
@@ -73,12 +79,13 @@ export class SettingsPage {
     await alert.present();
   }
 
-  useLanguage(language: string) {
-    this.translate.use(language);
+  onLanguageChange(event) {
+    this.settingsService.setUILanguage(event.detail.value);
+    this.UILanguage = event.detail.value;
   }
-  
-  onCountryChange(event) {
-    this.translate.use(event.detail.value);
+
+  async currentUILanguage(): Promise<string> {
+    return await this.settingsService.getUILanguage();
   }
 }
 

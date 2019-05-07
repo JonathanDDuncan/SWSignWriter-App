@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class SettingsService {
-  public files: UploadFile[] = [];
+    public files: UploadFile[] = [];
   data: string;
 
   constructor(private spmlService: SpmlService,
@@ -79,5 +79,13 @@ export class SettingsService {
   async removeAllSigns() {
     await this.storageService.removeAllPuddles();
     this.signsLookupService.loadSigns();
+  }
+
+  setUILanguage(language: string) {
+    this.translateService.use(language);
+    this.storageService.saveUILanguage(language);
+  }
+  async getUILanguage(): Promise<string> {
+    return await this.storageService.getUILanguage();
   }
 }

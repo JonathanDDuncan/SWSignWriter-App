@@ -8,6 +8,7 @@ import { Puddle } from './spml.service';
 export class StorageService {
   private puddleskey = 'puddles';
   private defaultkey = 'default';
+  private uiLanguagekey = 'uiLanguage';
   constructor(private storage: Storage) { }
 
   async puddlesExists(): Promise<boolean> {
@@ -68,5 +69,13 @@ export class StorageService {
         await this.storage.remove(this.puddleskey);
       }
     });
+  }
+
+  saveUILanguage(language: string) {
+    this.storage.set(this.uiLanguagekey, language);
+  }
+
+  async getUILanguage(): Promise<string> {
+    return await this.storage.get(this.uiLanguagekey);
   }
 }
