@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './settings.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { AdMob } from "ionic-admob";
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private settingsService: SettingsService,
+    private admob: AdMob,
     public translate: TranslateService
   ) {
     this.translate.setDefaultLang('en');
@@ -34,9 +36,8 @@ export class AppComponent implements OnInit {
     this.initializeApp();
     platform.ready().then(() => {
       this.settingsService.loadDefaultPuddles();
+      admob.banner.show({ id: "ca-app-pub-3940256099942544/6300978111" });
     });
-
-
   }
   ngOnInit(): void {
     this.translate.onLangChange.subscribe((params: LangChangeEvent) => {

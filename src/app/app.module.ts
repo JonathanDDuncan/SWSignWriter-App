@@ -12,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { AdMob } from "ionic-admob";
 
 import { ShowImagePageModule } from './show-image/show-image.module';
 import { AppComponent } from './app.component';
@@ -55,6 +56,7 @@ import { environment } from '../environments/environment';
     SignsLookupService,
     DocumentService,
     SocialSharingService,
+    AdMob,
     SocialSharing
   ],
   bootstrap: [AppComponent]
