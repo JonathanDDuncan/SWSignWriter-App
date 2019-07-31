@@ -76,7 +76,9 @@ export class ViewPage implements OnInit {
     const node: any = document.getElementsByClassName('signtext')[0];
 
     const img = new Image();
+
     img.src = await htmlToImage.toPng(node);
+    img.crossOrigin = 'anonymous';
     this.socialSharingService.share(img);
 
     // reset back to the way it was with svg
