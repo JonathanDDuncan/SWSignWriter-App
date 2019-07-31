@@ -90,7 +90,7 @@ export class ViewPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: ShowImagePage,
-      componentProps: { imagebase64: await htmlToImage.toPng(node) }
+      componentProps: { imagebase64:  await htmlToImage.toPng(node) }
     });
 
     await modal.present();
