@@ -17,7 +17,7 @@ describe('ChooseSignPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [PipesModule,
         IonicStorageModule.forRoot({
-        name: '__testquicksigndocumentdb'
+        name: '__testswsignwriterdb'
       })],
     })
       .compileComponents();

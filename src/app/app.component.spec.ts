@@ -29,7 +29,7 @@ describe('AppComponent', () => {
         { provide: Platform, useValue: platformSpy },
       ],
       imports: [ HttpClientModule, RouterTestingModule.withRoutes([]), IonicStorageModule.forRoot({
-        name: '__testquicksigndocumentdb'
+        name: '__testswsignwriterdb'
       })],
     }).compileComponents();
   }));

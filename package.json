@@ -1,5 +1,5 @@
 {
-  "name": "pro.jonathanduncan.quicksigndocument",
+  "name": "pro.jonathanduncan.SWSignWriter",
   "version": "0.0.71",
   "author": "Jonathan Duncan",
   "homepage": "https://www.jonathanduncan.pro/qsd/",
@@ -88,7 +88,7 @@
     "tslint": "~5.12.0",
     "typescript": "~3.1.6"
   },
-  "description": "An Ionic project",
+  "description": "A SignWriting project",
   "cordova": {
     "plugins": {
       "cordova-sqlite-storage": {},

@@ -17,7 +17,7 @@ describe('new App', () => {
     });
     it('should have a title', function () {
       browser.get('/view');
-      expect(browser.getTitle()).toEqual('Ionic App');
+      expect(browser.getTitle()).toEqual('SWSignWriter');
     });
     it('should have a title saying Document', () => {
       page.getPageOneTitleText().then(title => {

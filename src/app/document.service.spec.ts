@@ -6,7 +6,7 @@ import { SignsLookupService } from './signs-lookup.service';
 describe('DocumentService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [SignsLookupService], imports: [IonicStorageModule.forRoot({
-      name: '__testquicksigndocumentdb'
+      name: '__testswsignwriterdb'
     })]
   }));
 

@@ -39,7 +39,7 @@ import { environment } from '../environments/environment';
       }
     }),
     IonicStorageModule.forRoot({
-      name: '__quicksigndocumentdb'
+      name: '__swsignwriterdb'
     }),
     AppRoutingModule,
     ChooseSignPageModule,

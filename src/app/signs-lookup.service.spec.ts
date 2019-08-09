@@ -7,7 +7,7 @@ describe('SignsLookupService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [NormalizationService],
     imports: [IonicStorageModule.forRoot({
-      name: '__testquicksigndocumentdb'
+      name: '__testswsignwriterdb'
     })]
   }));
 

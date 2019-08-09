@@ -15,7 +15,7 @@ describe('SettingsPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [HttpClientModule,
         IonicStorageModule.forRoot({
-        name: '__testquicksigndocumentdb'
+        name: '__testswsignwriterdb'
       })],
     })
     .compileComponents();

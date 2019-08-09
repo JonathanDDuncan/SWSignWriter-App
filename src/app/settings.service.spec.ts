@@ -7,7 +7,7 @@ import { SettingsService } from './settings.service';
 describe('SettingsService', () => {
   beforeEach(() => TestBed.configureTestingModule({ imports: [HttpClientModule,
     IonicStorageModule.forRoot({
-    name: '__testquicksigndocumentdb'
+    name: '__testswsignwriterdb'
   })]}));
 
   it('should be created', () => {

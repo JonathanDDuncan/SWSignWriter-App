@@ -17,7 +17,7 @@ describe('EditPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [PipesModule, RouterTestingModule,
         IonicStorageModule.forRoot({
-          name: '__testquicksigndocumentdb'
+          name: '__testswsignwriterdb'
         })],
       providers: [ModalController, AngularDelegate],
     })
