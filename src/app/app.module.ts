@@ -27,7 +27,10 @@ import { environment } from '../environments/environment';
 
 
 @NgModule({
-  declarations: [AppComponent, CallbackComponent, ProfileComponent],
+  declarations: [
+    AppComponent,
+    CallbackComponent,
+    ProfileComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
