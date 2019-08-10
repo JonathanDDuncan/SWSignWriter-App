@@ -1,4 +1,6 @@
 <ion-header>
+    <button (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
+    <button (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
