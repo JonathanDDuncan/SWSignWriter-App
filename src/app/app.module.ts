@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback/callback.component';
 
 import { NgModule } from '@angular/core';
@@ -26,7 +27,7 @@ import { environment } from '../environments/environment';
 
 
 @NgModule({
-  declarations: [AppComponent, CallbackComponent],
+  declarations: [AppComponent, CallbackComponent, ProfileComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
