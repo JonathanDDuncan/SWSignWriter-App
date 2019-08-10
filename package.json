@@ -5,7 +5,7 @@
   "homepage": "https://www.jonathanduncan.pro/qsd/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve 3000",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
