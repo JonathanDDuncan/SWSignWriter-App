@@ -37,7 +37,6 @@ export class AuthService {
   loggedIn: boolean = null;
 
   constructor(private router: Router) { }
-  
   // getUser$() is a method because options can be passed if desired
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
   getUser$(options?): Observable<any> {
@@ -128,5 +127,4 @@ export class AuthService {
       });
     });
   }
-
 }

@@ -7,9 +7,9 @@ import { CallbackComponent } from './callback/callback.component';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './view/view.module#ViewPageModule',
+    loadChildren: './login/login.module#LoginPageModule',
     pathMatch: 'full'
-  },
+},
   {
     path: 'home',
     redirectTo: 'view',
@@ -34,6 +34,9 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'logout', loadChildren: './logout/logout.module#LogoutPageModule' },
+
+
 ];
 
 @NgModule({
