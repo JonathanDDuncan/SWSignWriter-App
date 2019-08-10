@@ -1,3 +1,4 @@
+import { CallbackComponent } from './callback/callback.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,7 +26,7 @@ import { environment } from '../environments/environment';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CallbackComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

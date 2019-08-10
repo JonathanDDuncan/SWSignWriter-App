@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CallbackComponent } from './callback/callback.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule'
   },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
+  {
+    path: 'callback',
+    component: CallbackComponent
+  },
 ];
 
 @NgModule({
