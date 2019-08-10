@@ -1,1 +1,1 @@
-ionic serve --devapp
+ionic serve --devapp --port 3000
