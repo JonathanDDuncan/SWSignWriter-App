@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
     this.translate.get('Document').subscribe((document) => {
       this.translate.get('Settings').subscribe((settings) => {
         this.translate.get('About').subscribe((about) => {
+          this.translate.get('Logout').subscribe((logout) => {
           this.appPages = [
             {
               title: document,
@@ -64,11 +65,17 @@ export class AppComponent implements OnInit {
               title: about,
               url: '/about',
               icon: 'about'
+            },
+            {
+              title: logout,
+              url: '/logout',
+              icon: 'logout'
             }
           ];
         });
       });
     });
+   });
   }
 
   initializeApp() {

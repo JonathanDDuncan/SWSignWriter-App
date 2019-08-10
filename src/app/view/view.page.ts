@@ -1,4 +1,3 @@
-import { AuthService } from './../auth.service';
 import * as htmlToImage from 'html-to-image';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -27,7 +26,6 @@ export class ViewPage implements OnInit {
     private documentService: DocumentService,
     private socialSharingService: SocialSharingService,
     public translate: TranslateService,
-    public auth: AuthService,
     private router: Router
   ) {
     // Force fonts to load before anything is shown
@@ -45,9 +43,7 @@ export class ViewPage implements OnInit {
     });
   }
 
-  ngOnInit() { 
-    this.auth.localAuthSetup();
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     const fsw = this.documentService.getFSW();
