@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor( public auth: AuthService) { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
     this.auth.localAuthSetup();
