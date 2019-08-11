@@ -9,39 +9,75 @@ const routes: Routes = [
     path: '',
     loadChildren: './login/login.module#LoginPageModule',
     pathMatch: 'full'
-},
+  },
   {
     path: 'home',
-    redirectTo: 'view',
+    redirectTo: 'login',
   },
-  { path: 'view', loadChildren: './view/view.module#ViewPageModule' },
-  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },
+  {
+    path: 'view',
+    loadChildren: './view/view.module#ViewPageModule',
+    data: {
+      allowedRoles: ['subscribed', 'trial']
+    }
+  },
+  {
+    path: 'edit',
+    loadChildren: './edit/edit.module#EditPageModule',
+    data: {
+      allowedRoles: ['subscribed', 'trial']
+    }
+  },
   {
     path: 'settings',
-    loadChildren: './settings/settings.module#SettingsPageModule'
+    loadChildren: './settings/settings.module#SettingsPageModule',
+    data: {
+      allowedRoles: ['subscribed', 'trial']
+    }
   },
   {
     path: 'choose-sign',
-    loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule'
+    loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule',
+    data: {
+      allowedRoles: ['subscribed', 'trial']
+    }
   },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
+  {
+    path: 'about',
+    loadChildren: './about/about.module#AboutPageModule',
+    data: {
+      allowedRoles: ['subscribed', 'trial']
+    }
+  },
+
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    data: {
+      allowedRoles: ['subscribed', 'trial']
+    }
+  },
+  {
+    path: 'login',
+    loadChildren: './login/login.module#LoginPageModule'
+  },
+  {
+    path: 'logout',
+    loadChildren: './logout/logout.module#LogoutPageModule'
+  },
+  {
+    path: 'subscribe',
+    loadChildren: './subscribe/subscribe.module#SubscribePageModule'
+  },
   {
     path: 'callback',
     component: CallbackComponent
   },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AuthGuard]
-  },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'logout', loadChildren: './logout/logout.module#LogoutPageModule' },
-  { path: 'subscribe', loadChildren: './subscribe/subscribe.module#SubscribePageModule' },
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
