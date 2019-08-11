@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
     if (!currentUserProfile) {
       this.auth.login();
     } else {
-      this.router.navigate(['/subscribe']);
+      this.router.navigate(['/home']);
     }
   }
 

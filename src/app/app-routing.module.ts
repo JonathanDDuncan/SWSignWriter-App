@@ -1,5 +1,4 @@
 import { AuthorizationGuard } from './authorization.guard';
-import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -10,12 +9,7 @@ const routes: Routes = [
     path: '',
     loadChildren: './login/login.module#LoginPageModule',
     canActivateChild: [AuthorizationGuard],
-   
     pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    redirectTo: 'login',
   },
   {
     path: 'view',
@@ -68,6 +62,10 @@ const routes: Routes = [
     }
   },
   {
+    path: 'home',
+    loadChildren: './home/home.module#HomePageModule'
+  },
+  {
     path: 'login',
     loadChildren: './login/login.module#LoginPageModule'
   },
@@ -82,7 +80,9 @@ const routes: Routes = [
   {
     path: 'callback',
     component: CallbackComponent
-  }
+  },
+
+
 ];
 
 @NgModule({
