@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
               this.appPages = [
                 {
                   title: document,
-                  url: '/view',
+                  url: '/edit',
                   icon: 'document'
                 },
                 {
