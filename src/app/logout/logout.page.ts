@@ -1,3 +1,4 @@
+import { StorageService } from './../storage.service';
 import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoutPage implements OnInit {
 
-  constructor(public auth: AuthService) { }
+  constructor(private auth: AuthService, private storage: StorageService) { }
 
   ngOnInit() {
+    this.storage.SaveCurrentUserProfile(null);
     this.auth.logout();
   }
 
