@@ -82,8 +82,7 @@ const routes: Routes = [
   {
     path: 'callback',
     component: CallbackComponent
-  },  { path: 'accessdenied', loadChildren: './accessdenied/accessdenied.module#AccessdeniedPageModule' },
-
+  }
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './logout.page.html',
   styleUrls: ['./logout.page.scss'],
 })
-export class LogoutPage implements OnInit {
+export class LogoutPage implements OnInit { 
 
   constructor(private auth: AuthService, private storage: StorageService) { }
 
