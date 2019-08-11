@@ -13,11 +13,11 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  goHome() {
+  goSubscribe() {
     this.router.navigate(['subscribe']);
   }
 
-  goView() {
+  goEdit() {
     this.router.navigate(['edit']);
   }
 }
