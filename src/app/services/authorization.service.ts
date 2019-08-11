@@ -18,7 +18,7 @@ export class AuthorizationService {
     const email = currentUserProfile.email;
 
     let roles = [];
-    if (email === 'joyoduncan1@gmail.com') {
+    if (email === 'joyoduncan@gmail.com') {
       roles = ['subscribed'];
     }
 
