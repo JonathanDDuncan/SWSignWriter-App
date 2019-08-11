@@ -50,32 +50,39 @@ export class AppComponent implements OnInit {
       this.translate.get('Settings').subscribe((settings) => {
         this.translate.get('About').subscribe((about) => {
           this.translate.get('Logout').subscribe((logout) => {
-          this.appPages = [
-            {
-              title: document,
-              url: '/view',
-              icon: 'document'
-            },
-            {
-              title: settings,
-              url: '/settings',
-              icon: 'settings'
-            },
-            {
-              title: about,
-              url: '/about',
-              icon: 'about'
-            },
-            {
-              title: logout,
-              url: '/logout',
-              icon: 'logout'
-            }
-          ];
+            this.translate.get('Subscription').subscribe((subscription) => {
+              this.appPages = [
+                {
+                  title: document,
+                  url: '/view',
+                  icon: 'document'
+                },
+                {
+                  title: settings,
+                  url: '/settings',
+                  icon: 'settings'
+                },
+                {
+                  title: subscription,
+                  url: '/subscribe',
+                  icon: 'subscription'
+                },
+                {
+                  title: about,
+                  url: '/about',
+                  icon: 'about'
+                },
+                {
+                  title: logout,
+                  url: '/logout',
+                  icon: 'logout'
+                }
+              ];
+            });
+          });
         });
       });
     });
-   });
   }
 
   initializeApp() {

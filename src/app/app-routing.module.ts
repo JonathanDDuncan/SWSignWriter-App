@@ -35,6 +35,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'logout', loadChildren: './logout/logout.module#LogoutPageModule' },
+  { path: 'subscribe', loadChildren: './subscribe/subscribe.module#SubscribePageModule' },
 
 
 ];
