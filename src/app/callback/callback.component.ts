@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { StorageService } from './../storage.service';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -8,9 +9,11 @@ import { AuthService } from '../auth.service';
 })
 export class CallbackComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private storage: StorageService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.auth.userProfile$.subscribe(userProfile => this.storage.SaveCurrentUserProfile(userProfile));
+
     this.auth.handleAuthCallback();
   }
 }

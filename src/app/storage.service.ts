@@ -9,6 +9,8 @@ export class StorageService {
   private puddleskey = 'puddles';
   private defaultkey = 'default';
   private uiLanguagekey = 'uiLanguage';
+  private userCurrentProfilekey = 'userCurrentProfile';
+
   constructor(private storage: Storage) { }
 
   async puddlesExists(): Promise<boolean> {
@@ -77,5 +79,13 @@ export class StorageService {
 
   async getUILanguage(): Promise<string> {
     return await this.storage.get(this.uiLanguagekey);
+  }
+
+  SaveCurrentUserProfile(userProfile: any) {
+    this.storage.set(this.userCurrentProfilekey, userProfile);
+  }
+
+  async GetCurrentUserProfile(): Promise<any> {
+    return await this.storage.get(this.userCurrentProfilekey);
   }
 }
