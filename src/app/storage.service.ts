@@ -1,3 +1,4 @@
+import { UserProfile } from './user/user-profile';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Puddle } from './spml.service';
@@ -81,11 +82,11 @@ export class StorageService {
     return await this.storage.get(this.uiLanguagekey);
   }
 
-  SaveCurrentUserProfile(userProfile: any) {
+  SaveCurrentUserProfile(userProfile: UserProfile) {
     this.storage.set(this.userCurrentProfilekey, userProfile);
   }
 
-  async GetCurrentUserProfile(): Promise<any> {
+  async GetCurrentUserProfile(): Promise<UserProfile> {
     return await this.storage.get(this.userCurrentProfilekey);
   }
 }
