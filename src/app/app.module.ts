@@ -1,3 +1,4 @@
+import { AuthorizationService } from './services/authorization.service';
 import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback/callback.component';
 
@@ -60,7 +61,8 @@ import { environment } from '../environments/environment';
     SignsLookupService,
     DocumentService,
     SocialSharingService,
-    SocialSharing
+    SocialSharing,
+    AuthorizationService
   ],
   bootstrap: [AppComponent]
 })

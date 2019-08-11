@@ -1,3 +1,4 @@
+import { AuthorizationGuard } from './authorization.guard';
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { NgModule } from '@angular/core';
@@ -8,6 +9,8 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './login/login.module#LoginPageModule',
+    canActivateChild: [AuthorizationGuard],
+   
     pathMatch: 'full'
   },
   {
@@ -17,6 +20,7 @@ const routes: Routes = [
   {
     path: 'view',
     loadChildren: './view/view.module#ViewPageModule',
+    canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
     }
@@ -24,6 +28,7 @@ const routes: Routes = [
   {
     path: 'edit',
     loadChildren: './edit/edit.module#EditPageModule',
+    canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
     }
@@ -31,6 +36,7 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: './settings/settings.module#SettingsPageModule',
+    canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
     }
@@ -38,6 +44,8 @@ const routes: Routes = [
   {
     path: 'choose-sign',
     loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule',
+    canActivate: [AuthorizationGuard],
+
     data: {
       allowedRoles: ['subscribed', 'trial']
     }
@@ -45,6 +53,7 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: './about/about.module#AboutPageModule',
+    canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
     }
@@ -53,7 +62,7 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
     }
@@ -73,7 +82,8 @@ const routes: Routes = [
   {
     path: 'callback',
     component: CallbackComponent
-  },
+  },  { path: 'accessdenied', loadChildren: './accessdenied/accessdenied.module#AccessdeniedPageModule' },
+
 ];
 
 @NgModule({
