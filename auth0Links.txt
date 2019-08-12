@@ -1,8 +1,11 @@
 
-// https://auth0.com/docs/quickstart/spa/angular2#add-an-authentication-guard
-// https://manage.auth0.com/dashboard/us/swsignwriter-dev/applications/ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK/settings
 // https://medium.com/@jonnykalambay/progressive-web-apps-with-oauth-dont-repeat-my-mistake-16a4063ce113
 
 
 https://auth0.com/docs/api/management/v2#!/Users/patch_users_by_id
 https://gist.github.com/vktr/c6c99491f39349ac9b0547a9893837bf
+
+https://medium.com/@eliasmsedano/angular-4-how-to-check-authorization-based-on-role-and-entity-states-cf0282280961
+
+
+https://developers.google.com/web/updates/2019/05/web-share-files
