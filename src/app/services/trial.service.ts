@@ -17,7 +17,6 @@ export class TrialService {
 
   async GetTrialDaysLeft(email: string): Promise<number> {
     const trialLength = 15;
-    debugger;
     const trialStartDate: Date = await this.GetTrialStartDate(email);
     const diff = Math.abs(new Date().getTime() - trialStartDate.getTime());
     const daysLeft: number = trialLength - Math.ceil(diff / (1000 * 3600 * 24));
