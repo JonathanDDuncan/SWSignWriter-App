@@ -7,6 +7,8 @@ import { Puddle } from './spml.service';
   providedIn: 'root'
 })
 export class StorageService {
+
+
   private puddleskey = 'puddles';
   private defaultkey = 'default';
   private uiLanguagekey = 'uiLanguage';
@@ -88,5 +90,65 @@ export class StorageService {
 
   async GetCurrentUserProfile(): Promise<UserProfile> {
     return await this.storage.get(this.userCurrentProfilekey);
+  }
+
+  SaveSubscriptionEndDate(email: string, endDate: Date): void {
+    const key = this.Obfuscate(email + 'subscriptionEndDate');
+    const date = this.Obfuscate(endDate.toString());
+    this.storage.set(key, date);
+  }
+
+  async GetSubscriptionEndDate(email: string): Promise<Date> {
+    const key = this.Obfuscate(email + 'subscriptionEndDate');
+    const value = await this.storage.get(key);
+    const cleaned = this.Clean(value);
+    const endDate = new Date(cleaned);
+    return endDate;
+  }
+
+  Clean(value: string): string {
+    if (value) {
+      const stripped = value.replace(/[^A-Za-z0-9+-]/g, '');
+      return stripped;
+    }
+    return null;
+  }
+
+  Obfuscate(str: string): string {
+    let obf1 = '%%' + btoa(str) + '%%';
+    const insert = ['!', '"', '#', '$', '%', '&', '(', ')', '*'];
+    let count = 0;
+    for (let index = 0; index < obf1.length; index++) {
+      const element = obf1[index];
+      if (index % 5 === 0) {
+        count = count > 8 ? 0 : count;
+        obf1 = this.InsertChar(obf1, insert[count], index);
+      }
+    }
+    return obf1;
+  }
+
+  InsertChar(a: string, b: string, index: number): string {
+    return a.substr(0, index) + b + a.substr(index);
+  }
+
+  async GetTrialStartDate(email: string) {
+    const key = this.Obfuscate(email + 'trialStartDate');
+    const value = await this.storage.get(key);
+    const cleaned = atob(this.Clean(value));
+
+    if (cleaned) {
+      console.log(cleaned);
+      const endDate = new Date(cleaned);
+      return endDate;
+    } else {
+      return null;
+    }
+  }
+
+  SaveTrialStartDate(email: string, startDate: Date): void {
+    const key = this.Obfuscate(email + 'trialStartDate');
+    const date = this.Obfuscate(startDate.toString());
+    this.storage.set(key, date);
   }
 }

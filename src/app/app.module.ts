@@ -1,3 +1,4 @@
+import { UserService } from './services/user.service';
 import { AuthorizationService } from './services/authorization.service';
 import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback/callback.component';
@@ -62,7 +63,8 @@ import { environment } from '../environments/environment';
     DocumentService,
     SocialSharingService,
     SocialSharing,
-    AuthorizationService
+    AuthorizationService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

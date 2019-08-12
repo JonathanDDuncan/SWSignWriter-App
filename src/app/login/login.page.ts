@@ -1,6 +1,6 @@
 import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router"
+import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
     public auth: AuthService,
     private router: Router,
     private storage: StorageService
-    ) { }
+  ) { }
 
   async ngOnInit() {
     this.auth.localAuthSetup();

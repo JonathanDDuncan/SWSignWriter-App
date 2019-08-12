@@ -11,8 +11,18 @@ export class CallbackComponent implements OnInit {
 
   constructor(private auth: AuthService, private storage: StorageService) { }
 
-  async ngOnInit() {
-    this.auth.userProfile$.subscribe(userProfile => this.storage.SaveCurrentUserProfile(userProfile));
+  ngOnInit() {
+    this.auth.userProfile$.subscribe(async userProfile => {
+      if (userProfile) {
+        this.storage.SaveCurrentUserProfile(userProfile);
+        const trialDate = await this.storage.GetTrialStartDate(userProfile.email);
+        if (!trialDate) {
+          this.storage.SaveTrialStartDate(userProfile.email, new Date());
+        }
+      }
+    }
+    );
+
 
     this.auth.handleAuthCallback();
   }
