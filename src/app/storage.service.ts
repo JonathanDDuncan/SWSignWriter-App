@@ -137,7 +137,7 @@ export class StorageService {
     const value = await this.storage.get(key);
     const cleaned = atob(this.Clean(value));
 
-    if (cleaned) {
+    if (cleaned && cleaned !== 'ée') {
       console.log(cleaned);
       const endDate = new Date(cleaned);
       return endDate;
