@@ -73,6 +73,7 @@ export class ViewPage implements OnInit {
   }
 
   private async sharecontinuation(fsw: string) {
+    debugger;
     const node: any = document.getElementsByClassName('signtext')[0];
 
     const img = new Image();
@@ -86,11 +87,13 @@ export class ViewPage implements OnInit {
   }
 
   private async copycontinuation(fsw: string) {
+    debugger;
     const node: any = document.getElementsByClassName('signtext')[0];
 
+    const png = await htmlToImage.toPng(node);
     const modal = await this.modalController.create({
       component: ShowImagePage,
-      componentProps: { imagebase64:  await htmlToImage.toPng(node) }
+      componentProps: { imagebase64: png }
     });
 
     await modal.present();
