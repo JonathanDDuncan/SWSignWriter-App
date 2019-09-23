@@ -76,27 +76,37 @@ export class ViewPage implements OnInit {
     const node: any = document.getElementsByClassName('signtext')[0];
 
     const img = new Image();
+    console.log('sharecontinuation');
 
-    img.src = await htmlToImage.toPng(node);
-    img.crossOrigin = 'anonymous';
-    this.socialSharingService.share(img);
-
-    // reset back to the way it was with svg
-    this.document = ssw.paragraph(fsw);
+     await htmlToImage.toPng(node).then(function (dataUrl) {
+      img.src = dataUrl;
+      img.crossOrigin = 'anonymous';
+      this.socialSharingService.share(img);
+      // reset back to the way it was with svg
+      this.document = ssw.paragraph(fsw);
+    });
   }
 
   private async copycontinuation(fsw: string) {
     const node: any = document.getElementsByClassName('signtext')[0];
 
-    const modal = await this.modalController.create({
-      component: ShowImagePage,
-      componentProps: { imagebase64:  await htmlToImage.toPng(node) }
-    });
+    const self = this;
+    htmlToImage.toPng(node).then(async function (dataUrl) {
 
-    await modal.present();
-    await modal.onDidDismiss();
-    // reset back to the way it was with svg
-    this.document = ssw.paragraph(fsw);
+      console.log(dataUrl);
+      const modal = await self.modalController.create({
+        component: ShowImagePage,
+        componentProps: { imagebase64: dataUrl }
+      });
+
+      await modal.present();
+      await modal.onDidDismiss();
+      // reset back to the way it was with svg
+      self.document = ssw.paragraph(fsw);
+    })
+      .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+      });
   }
 
   isCordova() {
