@@ -10,7 +10,6 @@ export class TrialService {
   ) { }
 
    async GetTrialDaysLeft(email: string): Promise<number> {
-    debugger;
     const trialLength = 15;
     const trialStartDate: Date = await this.storage.GetTrialStartDate(email);
     let daysLeft: number;
