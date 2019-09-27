@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1569293460329,
+  "timestamp": 1569611052819,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
         "/102.4dcac294c48b88b0cea8.js",
         "/103.fb6ff4922bb62f781c66.js",
         "/104.5bf7d2a3a30e5e7776bc.js",
-        "/14.23b6c15f09fd1d1d304a.js",
+        "/14.ac3a505755489ad7c7fc.js",
         "/15.0e4b31215192e7b31b1e.js",
         "/16.d088b743ca2eb113df41.js",
         "/17.792d8bbee159ffdf4323.js",
@@ -110,9 +110,9 @@
         "/common.1e6a643760aeb283947e.js",
         "/es2015-polyfills.6830bff5c1068b994f4a.js",
         "/index.html",
-        "/main.98cb03e6e79cda3a652e.js",
+        "/main.f8838835633a61bd46fb.js",
         "/polyfills.099fd92b74efbd3ba666.js",
-        "/runtime.cfa72c07c900c7c133c5.js",
+        "/runtime.356759e57621282cf9d0.js",
         "/styles.5d0c9f62f7365da569a6.css"
       ],
       "patterns": []
@@ -236,6 +236,7 @@
         "/assets/img/Center.png",
         "/assets/img/Left.png",
         "/assets/img/Right.png",
+        "/assets/js/SSWHelper.js",
         "/assets/js/SuttonSignWriting.js",
         "/assets/shapes.svg",
         "/assets/spml/sgn2000 - Copy.spml",
@@ -251,7 +252,7 @@
     "/102.4dcac294c48b88b0cea8.js": "e1027df3155c9b81308aafc10a00826719da92ff",
     "/103.fb6ff4922bb62f781c66.js": "402ffdc6446f456aedbcd4f91ebedbdd3bb45831",
     "/104.5bf7d2a3a30e5e7776bc.js": "62778808cedebf4275b25c03a44b9f74c9f0e587",
-    "/14.23b6c15f09fd1d1d304a.js": "03c19bc5514887d202685bd03e1148c47fb97cbb",
+    "/14.ac3a505755489ad7c7fc.js": "6d758dd818c2bd56af4b636b99f5318913f3f476",
     "/15.0e4b31215192e7b31b1e.js": "98ee490d6977fcdfb103aaa6418027ca272992d2",
     "/16.d088b743ca2eb113df41.js": "16c200a7e3f4327f541432e7529c2a96610c3d13",
     "/17.792d8bbee159ffdf4323.js": "f301d52696477e2e1a6424cbab5c7946ad63d25d",
@@ -459,16 +460,17 @@
     "/assets/img/Center.png": "c21a06e583735c58c47657c4eb4f5035fa777b56",
     "/assets/img/Left.png": "a6e39c5279e51b0b6c1e220f95837b1dddf4bc96",
     "/assets/img/Right.png": "8123e6a9729cf4769e24a2987834501fa7b60b96",
+    "/assets/js/SSWHelper.js": "eb7b51c332e05d4842b5247145058798a4c51d2d",
     "/assets/js/SuttonSignWriting.js": "6b04234777b86295af4736de3bb2d523e98425dc",
     "/assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
     "/assets/spml/sgn2000 - Copy.spml": "85937351d7ba8786502cc620294f9478c135b4b2",
     "/assets/spml/sgn2000.spml": "090f1272c865339c67eb3fe0071cf8bb9c63fafa",
     "/common.1e6a643760aeb283947e.js": "82c48af1426fbc934c6520ba36efba782ec927ad",
     "/es2015-polyfills.6830bff5c1068b994f4a.js": "373a2379e2225c70d07ae5a7a676739336dde371",
-    "/index.html": "3edb3626bdaeb8e118f8478725ff6ddc3ae16288",
-    "/main.98cb03e6e79cda3a652e.js": "d93674badf80c58847dac156dc8399d169b37072",
+    "/index.html": "5496feff30e74065e0965a6a037dfff2d7fb0e75",
+    "/main.f8838835633a61bd46fb.js": "3e943a49629035b344b1f69315f99fa84e911d9a",
     "/polyfills.099fd92b74efbd3ba666.js": "31c6357d3d83bfe5289c56f62516f09993bb82eb",
-    "/runtime.cfa72c07c900c7c133c5.js": "f5d6b0f9049fcec1417780bd1b4fdee85c0e493b",
+    "/runtime.356759e57621282cf9d0.js": "b6eced1d7b02c9176461d407ae7e52b5f676f40a",
     "/styles.5d0c9f62f7365da569a6.css": "bc9ca4360179085388fbc04732210eb8c75cb508"
   },
   "navigationUrls": [
