@@ -16,7 +16,7 @@ import { ShowImagePage } from '../show-image/show-image.page';
   styleUrls: ['./view.page.scss']
 })
 export class ViewPage implements OnInit {
-  public imageheight = 900;
+  public imageheight = 199;
   public document: string;
   public preloadFonts: string;
   public signtextHeight: number;
@@ -35,6 +35,7 @@ export class ViewPage implements OnInit {
       if (event instanceof NavigationStart) {
         const fsw = this.documentService.getFSW();
         this.document = ssw.paragraph(fsw);
+        this.imageheight = 200;
       }
 
       if (event instanceof NavigationEnd) {
@@ -52,14 +53,14 @@ export class ViewPage implements OnInit {
 
   public share() {
     const fsw = this.documentService.getFSW();
-    this.document = ssw.paragraph(fsw, 'png');
+    this.document = ssw.paragraph(fsw);
 
     requestAnimationFrame(() => this.sharecontinuation(fsw));
   }
 
   public copy() {
     const fsw = this.documentService.getFSW();
-    this.document = ssw.paragraph(fsw, 'png');
+    this.document = ssw.paragraph(fsw);
 
     requestAnimationFrame(() => this.copycontinuation(fsw));
   }
@@ -89,9 +90,9 @@ export class ViewPage implements OnInit {
 
   private async copycontinuation(fsw: string) {
     const node: any = document.getElementsByClassName('signtext')[0];
-
+    const size = getFSWWidth(fsw, 20.0, this.imageheight);
     const self = this;
-    htmlToImage.toPng(node).then(async function (dataUrl) {
+    htmlToImage.toPng(node, {width: size[0], height: size[1]}).then(async function (dataUrl) {
 
       console.log(dataUrl);
       const modal = await self.modalController.create({
