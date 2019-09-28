@@ -26,6 +26,6 @@ export class ShowImagePage implements OnInit {
     });
   }
 getimage() {
-//  return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+ return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
 }
 }

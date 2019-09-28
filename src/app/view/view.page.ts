@@ -8,7 +8,7 @@ import { DocumentService } from '../document.service';
 import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 
-
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-view',
@@ -63,19 +63,37 @@ export class ViewPage implements OnInit {
     const node: any = document.getElementsByClassName('signtext')[0];
     const size = getFSWWidth(fsw, 20.0, this.imageheight);
     const self = this;
-    htmlToImage.toCanvas(node, {width: size[0], height: size[1]}).then(async function (canvas) {
-      document.body.appendChild(canvas);
+    domtoimage.toPng(node).then(async function (dataUrl: string) {
+      const img = new Image();
+      img.src = dataUrl;
+      document.body.appendChild(img);
+      // const canvas = a;
+      // document.body.appendChild(canvas);
       const modal = await self.modalController.create({
         component: ShowImagePage,
-        componentProps: { canvas: canvas}
+        componentProps: { imagebase64: dataUrl}
       });
 
       await modal.present();
       await modal.onDidDismiss();
-    })
-      .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-      });
+
+  })
+  .catch(function (error) {
+      console.error('oops, something went wrong!', error);
+  });
+    // htmlToImage.toCanvas(node, {width: size[0], height: size[1]}).then(async function (canvas) {
+    //   document.body.appendChild(canvas);
+    //   const modal = await self.modalController.create({
+    //     component: ShowImagePage,
+    //     componentProps: { canvas: canvas}
+    //   });
+
+    //   await modal.present();
+    //   await modal.onDidDismiss();
+    // })
+    //   .catch(function (error) {
+    //     console.error('oops, something went wrong!', error);
+    //   });
   }
 
   public copy2() {
