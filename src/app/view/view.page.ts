@@ -67,6 +67,7 @@ export class ViewPage implements OnInit {
       const img = new Image();
       img.crossOrigin = 'Anonymous';
       img.src = dataUrl;
+      debugger;
       document.body.appendChild(img);
       // const canvas = a;
       // document.body.appendChild(canvas);

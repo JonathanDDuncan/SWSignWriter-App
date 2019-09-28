@@ -17,6 +17,7 @@ export class ShowImagePage implements OnInit {
   ngOnInit() {
     this.tiffCanvas = this.canvas;
     const ele = document.getElementById('tiffCanvasContainer');
+    debugger;
     ele.appendChild(this.tiffCanvas);
   }
 
