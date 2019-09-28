@@ -63,17 +63,17 @@ export class ViewPage implements OnInit {
     const node: any = document.getElementsByClassName('signtext')[0];
     const size = getFSWWidth(fsw, 20.0, this.imageheight);
     const self = this;
-    domtoimage.toPng(node).then(async function (dataUrl: string) {
-      const img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.src = dataUrl;
-      debugger;
-      document.body.appendChild(img);
+    htmlToImage.toCanvas(node).then(async function (canvas) {
+      // const img = new Image();
+      // img.crossOrigin = 'Anonymous';
+      // img.src = dataUrl;
+      // debugger;
+      // document.body.appendChild(img);
       // const canvas = a;
       // document.body.appendChild(canvas);
       const modal = await self.modalController.create({
         component: ShowImagePage,
-        componentProps: { imagebase64: dataUrl}
+        componentProps: { canvas: canvas}
       });
 
       await modal.present();
