@@ -65,6 +65,7 @@ export class ViewPage implements OnInit {
     const self = this;
     domtoimage.toPng(node).then(async function (dataUrl: string) {
       const img = new Image();
+      img.crossOrigin = 'Anonymous';
       img.src = dataUrl;
       document.body.appendChild(img);
       // const canvas = a;
