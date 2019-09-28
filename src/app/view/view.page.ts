@@ -60,6 +60,26 @@ export class ViewPage implements OnInit {
 
   public copy() {
     const fsw = this.documentService.getFSW();
+    const node: any = document.getElementsByClassName('signtext')[0];
+    const size = getFSWWidth(fsw, 20.0, this.imageheight);
+    const self = this;
+    htmlToImage.toCanvas(node, {width: size[0], height: size[1]}).then(async function (canvas) {
+      document.body.appendChild(canvas);
+      const modal = await self.modalController.create({
+        component: ShowImagePage,
+        componentProps: { canvas: canvas}
+      });
+
+      await modal.present();
+      await modal.onDidDismiss();
+    })
+      .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+      });
+  }
+
+  public copy2() {
+    const fsw = this.documentService.getFSW();
     this.document = ssw.paragraph(fsw);
 
     requestAnimationFrame(() => this.copycontinuation(fsw));
@@ -92,6 +112,7 @@ export class ViewPage implements OnInit {
     const node: any = document.getElementsByClassName('signtext')[0];
     const size = getFSWWidth(fsw, 20.0, this.imageheight);
     const self = this;
+    debugger;
     htmlToImage.toPng(node, {width: size[0], height: size[1]}).then(async function (dataUrl) {
 
       console.log(dataUrl);
