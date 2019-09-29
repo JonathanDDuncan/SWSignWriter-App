@@ -58,11 +58,21 @@ export class ViewPage implements OnInit {
     requestAnimationFrame(() => this.sharecontinuation(fsw));
   }
 
-  public copy() {
+  public async copy() {
     const fsw = this.documentService.getFSW();
     const node: any = document.getElementsByClassName('signtext')[0];
     const size = getFSWWidth(fsw, 20.0, this.imageheight);
     const self = this;
+    const spl = fsw.split(' ')[0];
+    const canvas1 = ssw.canvas(spl);
+    const modal = await self.modalController.create({
+      component: ShowImagePage,
+      componentProps: { canvas: canvas1 }
+    });
+
+    await modal.present();
+    await modal.onDidDismiss();
+
     htmlToImage.toCanvas(node).then(async function (canvas) {
       // const img = new Image();
       // img.crossOrigin = 'Anonymous';
@@ -71,13 +81,13 @@ export class ViewPage implements OnInit {
       // document.body.appendChild(img);
       // const canvas = a;
       // document.body.appendChild(canvas);
-      const modal = await self.modalController.create({
-        component: ShowImagePage,
-        componentProps: { canvas: canvas}
-      });
+      // const modal = await self.modalController.create({
+      //   component: ShowImagePage,
+      //   componentProps: { canvas: canvas }
+      // });
 
-      await modal.present();
-      await modal.onDidDismiss();
+      // await modal.present();
+      // await modal.onDidDismiss();
 
   })
   .catch(function (error) {
