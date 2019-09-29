@@ -64,12 +64,12 @@ export class ViewPage implements OnInit {
     const size = getFSWWidth(fsw, 20.0, this.imageheight);
     const self = this;
     const spl = fsw.split(' ')[0];
-    const canvas1 = ssw.canvas(spl);
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight );
     const modal = await self.modalController.create({
       component: ShowImagePage,
       componentProps: { canvas: canvas1 }
     });
-
+ 
     await modal.present();
     await modal.onDidDismiss();
 
