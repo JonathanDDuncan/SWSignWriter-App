@@ -1,4 +1,3 @@
-import * as htmlToImage from 'html-to-image';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -8,7 +7,6 @@ import { DocumentService } from '../document.service';
 import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 
-import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-view',
@@ -60,59 +58,13 @@ export class ViewPage implements OnInit {
 
   public async copy() {
     const fsw = this.documentService.getFSW();
-    const node: any = document.getElementsByClassName('signtext')[0];
-    const size = getFSWWidth(fsw, 20.0, this.imageheight);
-    const self = this;
-    const spl = fsw.split(' ')[0];
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight );
-    const modal = await self.modalController.create({
+    const modal = await this.modalController.create({
       component: ShowImagePage,
       componentProps: { canvas: canvas1 }
     });
- 
     await modal.present();
     await modal.onDidDismiss();
-
-    htmlToImage.toCanvas(node).then(async function (canvas) {
-      // const img = new Image();
-      // img.crossOrigin = 'Anonymous';
-      // img.src = dataUrl;
-      // debugger;
-      // document.body.appendChild(img);
-      // const canvas = a;
-      // document.body.appendChild(canvas);
-      // const modal = await self.modalController.create({
-      //   component: ShowImagePage,
-      //   componentProps: { canvas: canvas }
-      // });
-
-      // await modal.present();
-      // await modal.onDidDismiss();
-
-  })
-  .catch(function (error) {
-      console.error('oops, something went wrong!', error);
-  });
-    // htmlToImage.toCanvas(node, {width: size[0], height: size[1]}).then(async function (canvas) {
-    //   document.body.appendChild(canvas);
-    //   const modal = await self.modalController.create({
-    //     component: ShowImagePage,
-    //     componentProps: { canvas: canvas}
-    //   });
-
-    //   await modal.present();
-    //   await modal.onDidDismiss();
-    // })
-    //   .catch(function (error) {
-    //     console.error('oops, something went wrong!', error);
-    //   });
-  }
-
-  public copy2() {
-    const fsw = this.documentService.getFSW();
-    this.document = ssw.paragraph(fsw);
-
-    requestAnimationFrame(() => this.copycontinuation(fsw));
   }
 
   heightChange(ev: any) {
@@ -136,29 +88,6 @@ export class ViewPage implements OnInit {
       // reset back to the way it was with svg
       this.document = ssw.paragraph(fsw);
     });
-  }
-
-  private async copycontinuation(fsw: string) {
-    const node: any = document.getElementsByClassName('signtext')[0];
-    const size = getFSWWidth(fsw, 20.0, this.imageheight);
-    const self = this;
-    debugger;
-    htmlToImage.toPng(node, {width: size[0], height: size[1]}).then(async function (dataUrl) {
-
-      console.log(dataUrl);
-      const modal = await self.modalController.create({
-        component: ShowImagePage,
-        componentProps: { imagebase64: dataUrl }
-      });
-
-      await modal.present();
-      await modal.onDidDismiss();
-      // reset back to the way it was with svg
-      self.document = ssw.paragraph(fsw);
-    })
-      .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-      });
   }
 
   isCordova() {
