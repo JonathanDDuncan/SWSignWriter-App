@@ -1533,7 +1533,7 @@ var ssw = {
       can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
       return can;
     }
-    var canvas = createHiDPICanvas(w ? w : 1, h ? h : 1, 1);
+    var canvas = createHiDPICanvas(w ? w : 1, h ? h : 1, 4);
 
     var context = canvas.getContext("2d");
     if (options.back){
