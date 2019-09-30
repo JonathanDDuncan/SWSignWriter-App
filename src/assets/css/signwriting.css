@@ -27,7 +27,7 @@ div.signtext {
 }
 
 span.outside {
-    border-right: 1px solid blue;
+    border-right: 1px solid #66a1ff;
     vertical-align: top;
 }
 
@@ -36,7 +36,7 @@ span.middle {
 }
 
 span.inside {
-    border-left: 1px dashed red;
+    border-left: 1px dashed#ff80b5
 }
 
 div.sign {
