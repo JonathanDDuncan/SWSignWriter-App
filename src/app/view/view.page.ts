@@ -58,10 +58,10 @@ export class ViewPage implements OnInit {
 
   public async copy() {
     const fsw = this.documentService.getFSW();
-    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight );
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight ) as HTMLCanvasElement;
     const modal = await this.modalController.create({
       component: ShowImagePage,
-      componentProps: { canvas: canvas1 }
+      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
     });
     await modal.present();
     await modal.onDidDismiss();
@@ -76,18 +76,18 @@ export class ViewPage implements OnInit {
   }
 
   private async sharecontinuation(fsw: string) {
-    const node: any = document.getElementsByClassName('signtext')[0];
+    // const node: any = document.getElementsByClassName('signtext')[0];
 
-    const img = new Image();
-    console.log('sharecontinuation');
+    // const img = new Image();
+    // console.log('sharecontinuation');
 
-     await htmlToImage.toPng(node).then(function (dataUrl) {
-      img.src = dataUrl;
-      img.crossOrigin = 'anonymous';
-      this.socialSharingService.share(img);
-      // reset back to the way it was with svg
-      this.document = ssw.paragraph(fsw);
-    });
+    //  await htmlToImage.toPng(node).then(function (dataUrl) {
+    //   img.src = dataUrl;
+    //   img.crossOrigin = 'anonymous';
+    //   this.socialSharingService.share(img);
+    //   // reset back to the way it was with svg
+    //   this.document = ssw.paragraph(fsw);
+    // });
   }
 
   isCordova() {
