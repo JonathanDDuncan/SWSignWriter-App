@@ -8,16 +8,16 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./show-image.page.scss'],
 })
 export class ShowImagePage implements OnInit {
-  @Input() imagebase64: string;
+  public imagebase64: string;
+  public contentWidth: Number;
+  public contentHeight: Number;
+  public swCanvas: HTMLCanvasElement; // your canvas element
+
   @Input() canvas: HTMLCanvasElement;
-  @ViewChild('tiffCanvasContainer') public tiffCanvasContainer: HTMLCanvasElement;
-  public tiffCanvas: HTMLCanvasElement; // your canvas element
   constructor(public modalController: ModalController, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.tiffCanvas = this.canvas;
-    const ele = document.getElementById('tiffCanvasContainer');
-    ele.appendChild(this.tiffCanvas);
+    this.swCanvas = this.canvas;
   }
 
   close() {
@@ -25,7 +25,10 @@ export class ShowImagePage implements OnInit {
       result: 'cancel'
     });
   }
-getimage() {
- return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+
+  getimage() {
+    this.contentHeight = this.swCanvas.height / 4;
+    this.contentWidth = this.swCanvas.width / 4;
+    return this.sanitizer.bypassSecurityTrustResourceUrl( '' + this.imagebase64);
 }
 }
