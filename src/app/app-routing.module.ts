@@ -4,17 +4,24 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    loadChildren: './edit/edit.module#EditPageModule',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    redirectTo: 'edit',
+  },
+  { path: 'view', loadChildren: './view/view.module#ViewPageModule' },
+  { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsPageModule'
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+    path: 'choose-sign',
+    loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule'
+  },
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
 ];
 
 @NgModule({

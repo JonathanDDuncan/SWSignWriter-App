@@ -1,0 +1,101 @@
+.sign {
+   
+    padding: 0;
+}
+
+.editbutton {
+    margin: 5px;
+}
+
+.lane-selector input {
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.left {
+    background-image: url('../../assets/img/Left.png');
+}
+
+.middle {
+    background-image: url('../../assets/img/Center.png');
+}
+
+.right {
+    background-image: url('../../assets/img/Right.png');
+}
+
+.lane-selector input[type="radio"]:checked+label {
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    filter: brightness(1.2) grayscale(.5) opacity(.9);
+    background-color: rgb(57, 122, 196);
+}
+
+.lane-selector input[type="radio"]:not(:checked)+label {
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+    -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+    filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+
+.label-background {
+    cursor: pointer;
+    background-size: contain;
+    background-position: center; 
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin: 0 2px 0 2px;
+    width: 45px;
+    height: 45px;
+    -webkit-transition: all 100ms ease-in;
+    -moz-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+}
+
+.lane-left {
+  padding-right: 40px;
+} 
+
+.lane-middle {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.lane-right {
+  padding-left: 40px;
+}
+
+.item-text-center
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    height: 100%;
+}
+
+.vertical-center {
+  .fixed-content,
+  .scroll-content {
+      display: flex;
+      align-items: center;
+
+      ion-list {
+          max-width: 300px; 
+          width:100%; 
+          margin: auto; 
+          text-align: center;
+      }
+  }
+}

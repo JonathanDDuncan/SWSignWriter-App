@@ -1,33 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SettingsService } from './settings.service';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
-  ];
+export class AppComponent implements OnInit {
 
+  public appPages: {
+    title: string;
+    url: string;
+    icon: string;
+  }[];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private settingsService: SettingsService,
+    public translate: TranslateService
   ) {
+    this.translate.setDefaultLang('en');
+
+    settingsService.getUILanguage().then(language => {
+      console.log(language);
+      this.translate.use(language);
+    });
+
     this.initializeApp();
+    platform.ready().then(() => {
+      this.settingsService.loadDefaultPuddles();
+    });
+
+
+  }
+  ngOnInit(): void {
+    this.translate.onLangChange.subscribe((params: LangChangeEvent) => {
+      this.translateMenu();
+    });
+    this.translateMenu();
+  }
+
+  public translateMenu() {
+    this.translate.get('Edit').subscribe((edit) => {
+      this.translate.get('Settings').subscribe((settings) => {
+        this.translate.get('About').subscribe((about) => {
+          this.appPages = [
+            {
+              title: edit,
+              url: '/edit',
+              icon: 'document'
+            },
+            {
+              title: settings,
+              url: '/settings',
+              icon: 'settings'
+            },
+            {
+              title: about,
+              url: '/about',
+              icon: 'about'
+            }
+          ];
+        });
+      });
+    });
   }
 
   initializeApp() {
@@ -36,4 +77,6 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+
 }
