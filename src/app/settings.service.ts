@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class SettingsService {
+
     public files: UploadFile[] = [];
   data: string;
 
@@ -87,5 +88,13 @@ export class SettingsService {
   }
   async getUILanguage(): Promise<string> {
     return await this.storageService.getUILanguage();
+  }
+
+  setFirstTime() {
+    this.storageService.saveFirstTime();
+  }
+
+  async getFirstTime() {
+    return await this.storageService.getFirstTime();
   }
 }

@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './view/view.module#ViewPageModule',
+    loadChildren: './edit/edit.module#EditPageModule',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    redirectTo: 'view',
+    redirectTo: 'edit',
   },
   { path: 'view', loadChildren: './view/view.module#ViewPageModule' },
   { path: 'edit', loadChildren: './edit/edit.module#EditPageModule' },

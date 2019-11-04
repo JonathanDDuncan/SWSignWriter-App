@@ -46,13 +46,13 @@ export class AppComponent implements OnInit {
   }
 
   public translateMenu() {
-    this.translate.get('Document').subscribe((document) => {
+    this.translate.get('Edit').subscribe((edit) => {
       this.translate.get('Settings').subscribe((settings) => {
         this.translate.get('About').subscribe((about) => {
           this.appPages = [
             {
-              title: document,
-              url: '/view',
+              title: edit,
+              url: '/edit',
               icon: 'document'
             },
             {

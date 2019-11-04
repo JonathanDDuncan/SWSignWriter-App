@@ -51,9 +51,11 @@
       </ion-grid>
     </ion-item>
   </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon (click)="accept()" name="checkmark"></ion-icon>
-    </ion-fab-button>
+
+  <ion-fab horizontal="end" slot="fixed" vertical="bottom">
+      <ion-label>Next</ion-label>
+      <ion-fab-button>
+          <ion-icon (click)="accept()" name="arrow-dropright-circle" style="zoom:2.0;"></ion-icon>
+      </ion-fab-button>
   </ion-fab>
 </ion-content>

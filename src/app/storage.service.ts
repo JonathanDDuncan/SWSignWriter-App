@@ -9,6 +9,7 @@ export class StorageService {
   private puddleskey = 'puddles';
   private defaultkey = 'default';
   private uiLanguagekey = 'uiLanguage';
+  private firstTimekey = 'firstTime';
   constructor(private storage: Storage) { }
 
   async puddlesExists(): Promise<boolean> {
@@ -77,5 +78,16 @@ export class StorageService {
 
   async getUILanguage(): Promise<string> {
     return await this.storage.get(this.uiLanguagekey);
+  }
+
+  async getFirstTime(): Promise<boolean> {
+    try {
+      return await this.storage.get(this.firstTimekey);
+    } catch {
+      return true;
+    }
+  }
+  async saveFirstTime() {
+    await this.storage.set(this.firstTimekey, false);
   }
 }

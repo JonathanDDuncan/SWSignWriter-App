@@ -1,15 +1,16 @@
+import { StorageService } from './../storage.service';
 import { Component, OnInit } from '@angular/core';
 import {
   UploadEvent,
   FileSystemFileEntry,
   FileSystemDirectoryEntry
 } from 'ngx-file-drop';
+import { Router } from '@angular/router';
 
 import { SettingsService } from '../settings.service';
 import { AlertController } from '@ionic/angular';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
-
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -20,15 +21,21 @@ export class SettingsPage implements OnInit {
 
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
-    private translate: TranslateService) { }
+    private translate: TranslateService,
+    private router: Router  ) { }
 
   upload(event) {
     const file = event.target.files[0];
     this.settingsService.loadFile(file);
   }
 
+  next() {
+    return this.router.navigateByUrl('/edit');
+  }
+
   async ngOnInit() {
-    this.UILanguage = await this.currentUILanguage()
+    this.UILanguage = await this.currentUILanguage();
+    this.settingsService.setFirstTime();
   }
 
   dropped(event: UploadEvent) {
