@@ -14,7 +14,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/internal/operators/tap';
 import { ToastController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
