@@ -21,6 +21,10 @@ export class HomePage implements OnInit {
     const profile = await this.storage.GetCurrentUserProfile();
     this.daysleft = await this.trial.GetTrialDaysLeft(profile.email);
   }
+  
+  goSettings() {
+    this.router.navigate(['settings']);
+  }
 
   goSubscribe() {
     this.router.navigate(['subscribe']);
