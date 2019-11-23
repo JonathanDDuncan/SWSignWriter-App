@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -8,18 +8,27 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./show-image.page.scss'],
 })
 export class ShowImagePage implements OnInit {
-  @Input() imagebase64: string;
+  public imagebase64: string;
+  public contentWidth: Number;
+  public contentHeight: Number;
+  public swCanvas: HTMLCanvasElement; // your canvas element
 
+  @Input() canvas: HTMLCanvasElement;
   constructor(public modalController: ModalController, private sanitizer: DomSanitizer) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.swCanvas = this.canvas;
+  }
 
   close() {
     this.modalController.dismiss({
       result: 'cancel'
     });
   }
-getimage() {
- return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+
+  getimage() {
+    this.contentHeight = this.swCanvas.height / 4;
+    this.contentWidth = this.swCanvas.width / 4;
+    return this.sanitizer.bypassSecurityTrustResourceUrl( '' + this.imagebase64);
 }
 }

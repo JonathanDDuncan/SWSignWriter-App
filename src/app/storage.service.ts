@@ -13,6 +13,7 @@ export class StorageService {
   private defaultkey = 'default';
   private uiLanguagekey = 'uiLanguage';
   private userCurrentProfilekey = 'userCurrentProfile';
+  private firstTimekey = 'firstTime';
 
   constructor(private storage: Storage) { }
 
@@ -90,8 +91,18 @@ export class StorageService {
 
   async GetCurrentUserProfile(): Promise<UserProfile> {
     return await this.storage.get(this.userCurrentProfilekey);
+ 
   }
-
+  async getFirstTime(): Promise<boolean> {
+    try {
+      return await this.storage.get(this.firstTimekey);
+    } catch {
+      return true;
+    }
+  }
+  async saveFirstTime() {
+    await this.storage.set(this.firstTimekey, false);
+  }
   SaveSubscriptionEndDate(email: string, endDate: Date): void {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
     const date = this.Obfuscate(endDate.toString());

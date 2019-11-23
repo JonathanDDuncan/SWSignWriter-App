@@ -1,4 +1,3 @@
-import * as htmlToImage from 'html-to-image';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -9,14 +8,13 @@ import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 
 
-
 @Component({
   selector: 'app-view',
   templateUrl: './view.page.html',
   styleUrls: ['./view.page.scss']
 })
 export class ViewPage implements OnInit {
-  public imageheight = 900;
+  public imageheight = 199;
   public document: string;
   public preloadFonts: string;
   public signtextHeight: number;
@@ -35,6 +33,7 @@ export class ViewPage implements OnInit {
       if (event instanceof NavigationStart) {
         const fsw = this.documentService.getFSW();
         this.document = ssw.paragraph(fsw);
+        this.imageheight = 200;
       }
 
       if (event instanceof NavigationEnd) {
@@ -43,7 +42,7 @@ export class ViewPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     const fsw = this.documentService.getFSW();
@@ -52,16 +51,20 @@ export class ViewPage implements OnInit {
 
   public share() {
     const fsw = this.documentService.getFSW();
-    this.document = ssw.paragraph(fsw, 'png');
+    this.document = ssw.paragraph(fsw);
 
     requestAnimationFrame(() => this.sharecontinuation(fsw));
   }
 
-  public copy() {
+  public async copy() {
     const fsw = this.documentService.getFSW();
-    this.document = ssw.paragraph(fsw, 'png');
-
-    requestAnimationFrame(() => this.copycontinuation(fsw));
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight ) as HTMLCanvasElement;
+    const modal = await this.modalController.create({
+      component: ShowImagePage,
+      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+    });
+    await modal.present();
+    await modal.onDidDismiss();
   }
 
   heightChange(ev: any) {
@@ -73,33 +76,18 @@ export class ViewPage implements OnInit {
   }
 
   private async sharecontinuation(fsw: string) {
-    debugger;
-    const node: any = document.getElementsByClassName('signtext')[0];
+    // const node: any = document.getElementsByClassName('signtext')[0];
 
-    const img = new Image();
+    // const img = new Image();
+    // console.log('sharecontinuation');
 
-    img.src = await htmlToImage.toPng(node);
-    img.crossOrigin = 'anonymous';
-    this.socialSharingService.share(img);
-
-    // reset back to the way it was with svg
-    this.document = ssw.paragraph(fsw);
-  }
-
-  private async copycontinuation(fsw: string) {
-    debugger;
-    const node: any = document.getElementsByClassName('signtext')[0];
-
-    const png = await htmlToImage.toPng(node);
-    const modal = await this.modalController.create({
-      component: ShowImagePage,
-      componentProps: { imagebase64: png }
-    });
-
-    await modal.present();
-    await modal.onDidDismiss();
-    // reset back to the way it was with svg
-    this.document = ssw.paragraph(fsw);
+    //  await htmlToImage.toPng(node).then(function (dataUrl) {
+    //   img.src = dataUrl;
+    //   img.crossOrigin = 'anonymous';
+    //   this.socialSharingService.share(img);
+    //   // reset back to the way it was with svg
+    //   this.document = ssw.paragraph(fsw);
+    // });
   }
 
   isCordova() {

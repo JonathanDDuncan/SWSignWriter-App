@@ -35,3 +35,6 @@ UserInterfaceState.xcuserstate
 open cmd.cmd
 .ssh/
 dist/
+
+# Local Netlify folder
+.netlify

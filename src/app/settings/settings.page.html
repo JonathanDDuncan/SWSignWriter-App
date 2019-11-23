@@ -1,37 +1,53 @@
 <ion-header>
-  <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
         </ion-buttons>
-    <ion-title>{{'Settings' | translate}}</ion-title>
-  </ion-toolbar>
+        <ion-title>{{'Settings' | translate}}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <div class="center">
-    <file-drop
-      dropZoneLabel="{{'Drop SPML file here to add signs'  | translate}}"
-      (onFileDrop)="dropped($event)"
-      (onFileOver)="fileOver($event)"
-      (onFileLeave)="fileLeave($event)"
-    >
-    </file-drop>
-    <input hidden type="file" #uploader (change)="upload($event)" />
-    <ion-button (click)="uploader.click()">
-       {{'Choose SPML file' | translate}}
-    </ion-button>
-    <hr>
-    <ion-button (click)="clearSigns()">
-        {{'Clear Signs' | translate}}
-    </ion-button>
-  </div>
-  <ion-item>
-    <ion-label>{{'UI Language' | translate}}</ion-label>
-    <ion-select  [(ngModel)]="UILanguage"   interface="popover"  (ionChange)="onLanguageChange($event)">
-          <ion-select-option value="en">English</ion-select-option>
-      <ion-select-option value="es">español</ion-select-option>
-      <ion-select-option value="pt">português</ion-select-option>
-    </ion-select>
-  </ion-item>
-
+<ion-content padding="padding">
+    <ion-item>
+        <ion-label>{{'UI Language' | translate}}</ion-label>
+        <ion-select (ionChange)="onLanguageChange($event)" [(ngModel)]="UILanguage" interface="popover">
+            <ion-select-option value="en">English</ion-select-option>
+            <ion-select-option value="es">español</ion-select-option>
+            <ion-select-option value="pt">português</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <hr class="hr-margin-bottom hr-black"/>
+    <ion-item>
+        <ion-label>{{'Sign Language Puddle' | translate}}</ion-label>
+        <ion-select (ionChange)="onPuddleChange($event)" [(ngModel)]="puddleID" interface="popover">
+            <ion-select-option value="4">ASL - USA & Canada</ion-select-option>
+            <ion-select-option value="16">LESHO - Honduras</ion-select-option>
+            <ion-select-option value="46">LIBRAS - Brazil</ion-select-option>
+        </ion-select>
+    </ion-item>
+    
+    <ion-item>
+        <ion-button (click)="downloadPuddle()">
+            {{'Install Puddle' | translate}}
+        </ion-button>
+    </ion-item>
+    <hr class="hr-margin-bottom hr-black"/>
+    <div class="center">
+        <file-drop dropZoneLabel="{{'Drop SPML file here to add signs' | translate}}" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"></file-drop>
+        <input (change)="upload($event)" type="file"/>
+        <!-- <input #uploader="ngModel" [(ngModel)]="uploaderInput" (change)="upload($event)" type="file"/> -->
+        <!-- <ion-button (click)="uploader.click()">
+                                                            {{'Choose SPML file' | translate}}
+                                                        </ion-button> -->
+        <hr class="hr-margin-bottom hr-black"/> <ion-button (click)="clearSigns()">
+            {{'Clear Signs' | translate}}
+        </ion-button>
+    </div>
+    <hr class="hr-margin-bottom hr-black"/>
+    <ion-fab horizontal="end" slot="fixed" vertical="bottom">
+        <ion-label>{{'Next' | translate}}</ion-label>
+        <ion-fab-button>
+            <ion-icon (click)="next()" name="arrow-dropright-circle" style="zoom:2.0;"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

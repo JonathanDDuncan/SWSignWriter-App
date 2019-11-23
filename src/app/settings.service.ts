@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class SettingsService {
+
     public files: UploadFile[] = [];
   data: string;
 
@@ -51,12 +52,16 @@ export class SettingsService {
     const reader = new FileReader();
     reader.onload = async () => {
       const xml: string | ArrayBuffer = reader.result as string;
-      const saveresult = await this.saveSpml(xml);
-      await this.presentToast(saveresult);
-      this.signsLookupService.loadSigns();
-      this.storageService.setDefaultPuddleLoaded(false);
+      await this.loadPuddle(xml);
     };
     reader.readAsText(file);
+  }
+
+  async loadPuddle(xml: string) {
+    const saveresult = await this.saveSpml(xml);
+    await this.presentToast(saveresult);
+    this.signsLookupService.loadSigns();
+    this.storageService.setDefaultPuddleLoaded(false);
   }
 
   async saveSpml(spml: string): Promise<{ puddlename: string, entries: number }> {
@@ -87,5 +92,13 @@ export class SettingsService {
   }
   async getUILanguage(): Promise<string> {
     return await this.storageService.getUILanguage();
+  }
+
+  setFirstTime() {
+    this.storageService.saveFirstTime();
+  }
+
+  async getFirstTime() {
+    return await this.storageService.getFirstTime();
   }
 }

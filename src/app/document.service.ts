@@ -61,7 +61,7 @@ export class DocumentService {
 
   getFSW(): string {
     let fsw = '';
-    this.document.signs.forEach(found => {
+    this.document.signs.filter(found => found.sign && found.sign.fsw).forEach(found => {
       fsw += this.changeLane(found.sign.fsw, found.lane) + ' ';
     });
 

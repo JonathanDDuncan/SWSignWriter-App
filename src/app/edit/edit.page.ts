@@ -1,3 +1,4 @@
+import { SettingsService } from './../settings.service';
 import { Router } from '@angular/router';
 import {
   Component,
@@ -33,10 +34,18 @@ export class EditPage implements OnInit, AfterViewInit {
   constructor(
     public modalController: ModalController,
     private documentService: DocumentService,
+    private settingsService: SettingsService,
     private router: Router
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.editedDocument = {
+      editedsigns: []
+    };
+    const isFirstTime  = await this.settingsService.getFirstTime();
+    if (isFirstTime == null) {
+      return this.router.navigateByUrl('/settings');
+    }
     this.documentService.clearDocument();
     this.showDocument(this.documentService.getDocument());
   }

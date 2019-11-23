@@ -1,14 +1,19 @@
+import { StorageService } from './../storage.service';
 import { Component, OnInit } from '@angular/core';
 import {
   UploadEvent,
   FileSystemFileEntry,
   FileSystemDirectoryEntry
 } from 'ngx-file-drop';
+import { Router } from '@angular/router';
 
 import { SettingsService } from '../settings.service';
 import { AlertController } from '@ionic/angular';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/internal/operators/tap';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -17,18 +22,28 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SettingsPage implements OnInit {
   public UILanguage: string;
-
+  public puddleID: string;
+  
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
-    private translate: TranslateService) { }
+    private translate: TranslateService,
+    public toastController: ToastController,
+    private translateService: TranslateService,
+    private http: HttpClient,
+    private router: Router) { }
 
   upload(event) {
     const file = event.target.files[0];
     this.settingsService.loadFile(file);
   }
 
+  next() {
+    return this.router.navigateByUrl('/edit');
+  }
+
   async ngOnInit() {
-    this.UILanguage = await this.currentUILanguage()
+    this.UILanguage = await this.currentUILanguage();
+    this.settingsService.setFirstTime();
   }
 
   dropped(event: UploadEvent) {
@@ -88,5 +103,44 @@ export class SettingsPage implements OnInit {
     const language = await this.settingsService.getUILanguage();
     return language ? language : 'en';
   }
-}
 
+  async downloadPuddle() {
+    await this.showToast(this.translateService.instant('Downloading'), 3000);
+    await this.showToast(this.translateService.instant('This may take a few minutes'), 3000);
+    this.xhrDownloadPuddle();
+  }
+
+  private xhrDownloadPuddle() {
+    const data = 'action=Download&ex_source=All';
+    let puddle = 0;
+     puddle = parseInt(this.puddleID, 10);
+    if (isNaN(puddle)) {
+      puddle = 4;
+    }
+    const url = 'https://cors-anywhere.herokuapp.com/http://www.signbank.org/signpuddle2.0/export.php?ui=1&sgn=' + puddle.toString();
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    const thispage = this;
+    xhr.addEventListener('readystatechange', function () {
+      if (this.readyState === 4) {
+        thispage.settingsService.loadPuddle(this.responseText);
+      }
+    });
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Accept', 'application/xml');
+    xhr.send(data);
+  }
+
+  onPuddleChange(event) {
+    this.puddleID = event.detail.value;
+  }
+
+  async showToast(message, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
+  }
+}

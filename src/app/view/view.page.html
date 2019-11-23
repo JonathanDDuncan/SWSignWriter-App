@@ -21,7 +21,7 @@
       </ion-grid>
     </ion-item>
 
-    <ion-buttons slot="end">
+    <!-- <ion-buttons slot="end">
 
       <ion-button *ngIf="isCordova()" color="primary" fill="solid" (click)="share()">
          {{'Share' | translate}}<ion-icon name="share"></ion-icon>
@@ -29,7 +29,7 @@
       <ion-button *ngIf="!isCordova()" color="primary" fill="solid" (click)="copy()">
         <ion-icon name="copy"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -39,11 +39,32 @@
       <span [innerHTML]="document | safeHtml"></span>
     </div>
   </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon (click)="edit()" name="create"></ion-icon>
     </ion-fab-button>
+  </ion-fab> 
+
+  <div>
+  <ion-fab horizontal="end" slot="fixed" vertical="bottom">
+      <ion-label>Edit</ion-label>
+      <ion-fab-button>
+          <ion-icon (click)="edit()" name="arrow-dropright-circle" style="zoom:2.0;"></ion-icon>
+      </ion-fab-button>
   </ion-fab>
+</div>
+  -->
+  <ion-fab horizontal="end" slot="fixed" vertical="bottom">
+       <ion-label>{{'Share' | translate}}</ion-label>
+      <ion-fab-button (click)="share()" *ngIf="isCordova()">
+          <ion-icon  name="arrow-dropright-circle" style="zoom:2.0;"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="copy()" *ngIf="!isCordova()" >
+          <ion-icon  name="share" style="zoom:2.0;"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
+ 
+
   <canvas id='canvas'></canvas>
   <span class="preloadFonts" [innerHTML]="preloadFonts | safeHtml"></span>
 </ion-content>
