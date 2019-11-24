@@ -81,6 +81,16 @@ const routes: Routes = [
     path: 'callback',
     component: CallbackComponent
   },
+  {
+    path: 'stripesuccess',
+    loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule'
+  },
+  {
+    path: 'stripecancel',
+    loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule'
+  },  { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
+  { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
+
 
 
 ];
