@@ -15,9 +15,19 @@ export class SubscribePage implements OnInit {
 
   async SubscribeMonthly(){
     const profile = await this.storage.GetCurrentUserProfile();
-    console.log(profile);
+    const subscriptionEndDate = await this.storage.GetSubscriptionEndDate(profile.email);
+    const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
 
-    this.http.post(this.serverUrl + 'api/stripe/sendclient', profile, { headers: new HttpHeaders({
+    console.log(profile);
+    const planId = 'plan_GEcB3WZYgKsVER';
+    const subscriptionRequest = {
+      client: profile,
+      planId: planId,
+      subscriptionEndDate: subscriptionEndDate,
+      trialStartDate: trialStartDate
+    }
+
+    this.http.post(this.serverUrl + 'api/stripe/sendclient', subscriptionRequest, { headers: new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     }) })
