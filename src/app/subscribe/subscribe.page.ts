@@ -14,23 +14,32 @@ export class SubscribePage implements OnInit {
   }
 
   async SubscribeMonthly() {
+    const planId = 'plan_GEcB3WZYgKsVER';
+    await this.createSession(planId);
+  }
+
+  async SubscribeYearly() {
+    const planId = 'plan_GEcEaSP0i9BI5L';
+    await this.createSession(planId);
+  }
+
+  private async createSession(planId: string) {
     const profile = await this.storage.GetCurrentUserProfile();
     const subscriptionEndDate = await this.storage.GetSubscriptionEndDate(profile.email);
     const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
-
     console.log(profile);
-    const planId = 'plan_GEcB3WZYgKsVER';
     const subscriptionRequest = {
       client: profile,
       planId: planId,
       subscriptionEndDate: subscriptionEndDate,
       trialStartDate: trialStartDate
     };
-
-    this.http.post(this.serverUrl + 'api/stripe/createsession', subscriptionRequest, { headers: new HttpHeaders({
+    this.http.post(this.serverUrl + 'api/stripe/createsession', subscriptionRequest, {
+    headers: new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-    }) })
+    })
+    })
       .subscribe(data => {
         console.log(data);
         const CHECKOUT_SESSION_ID = data;
@@ -39,7 +48,7 @@ export class SubscribePage implements OnInit {
           sessionId: CHECKOUT_SESSION_ID
         }).then(function (result) {
           if (result.error) {
-              console.log('There was an error with the checkout.');
+            console.log('There was an error with the checkout.');
           } else {
             console.log('Checkout was a success.');
             console.log(result);
@@ -48,12 +57,8 @@ export class SubscribePage implements OnInit {
           // error, display the localized error message to your customer
           // using `result.error.message`.
         });
-       }, error => {
+      }, error => {
         console.log(error);
       });
-  }
-
-  SubscribeYearly() {
-
   }
 }
