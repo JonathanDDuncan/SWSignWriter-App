@@ -33,6 +33,21 @@ export class SubscribePage implements OnInit {
     }) })
       .subscribe(data => {
         console.log(data);
+        const CHECKOUT_SESSION_ID = data;
+        const stripe = Stripe('pk_test_l5XnhomUyeQmxzROJWndWDXD00M33eN4jl');
+        stripe.redirectToCheckout({
+          sessionId: CHECKOUT_SESSION_ID
+        }).then(function (result) {
+          if (result.error) {
+              console.log('There was an error with the checkout.');
+          } else {
+            console.log('Checkout was a success.');
+            console.log(result);
+          }
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer
+          // using `result.error.message`.
+        });
        }, error => {
         console.log(error);
       });
