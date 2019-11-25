@@ -1,10 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Subscribe</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>{{'Subscribe' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-   <ion-button  (click)="SubscribeMonthly()">Subscribe Monthly</ion-button>
-   <ion-button  (click)="SubscribeYearly()"> Subscribe Yearly</ion-button>
+  <ion-button (click)="SubscribeMonthly()">Subscribe Monthly</ion-button>
+  <ion-button (click)="SubscribeYearly()"> Subscribe Yearly</ion-button>
 </ion-content>

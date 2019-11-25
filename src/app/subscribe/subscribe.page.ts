@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
+
 @Component({
   selector: 'app-subscribe',
   templateUrl: './subscribe.page.html',
@@ -8,7 +9,9 @@ import { StorageService } from '../storage.service';
 })
 export class SubscribePage implements OnInit {
 
-  constructor(private http: HttpClient, private storage: StorageService  ) { }
+  constructor(private http: HttpClient,
+    private storage: StorageService
+     ) { }
   // private serverUrl = 'https://localhost:44309/';
   private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
 

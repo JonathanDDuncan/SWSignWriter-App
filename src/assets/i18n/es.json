@@ -36,10 +36,15 @@
 	"Spanish": "español",
 	"Social sharing by email not available": "No se puede compartir por correo electrónico",
 	"Social sharing by whatsapp not available": "No se puede compartir por WhatsApp",
+	"Stripe Canceled": "Stripe Cancelado",
+	"Stripe Success": "Stripe Éxitoso",
 	"Subject": "Asunto",
+	"Subscribe": "Suscribese",
 	"This may take a few minutes": "Se puede tardar unos minutos",
 	"Yes": "Sí",
 	"UI Language": "Idioma de UI",
 	"version": "versión",
-	"whatsapp sent": "Whatsapp enviado"
+	"whatsapp sent": "Whatsapp enviado",
+	"Welcome": "Bienvenido"
+
 }
