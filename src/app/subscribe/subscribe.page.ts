@@ -9,7 +9,9 @@ import { StorageService } from '../storage.service';
 export class SubscribePage implements OnInit {
 
   constructor(private http: HttpClient, private storage: StorageService  ) { }
-  private serverUrl = 'https://localhost:44309/';
+  // private serverUrl = 'https://localhost:44309/';
+  private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+
   ngOnInit() {
   }
 
