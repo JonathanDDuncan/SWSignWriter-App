@@ -28,7 +28,7 @@ export class StripesuccessPage implements OnInit {
         email: profile.email
       };
 
-      this.http.post(this.serverUrl + 'api/stripe/getsubscription', subscriptionData, {
+      this.http.post(this.serverUrl + 'api/stripe/subscription', subscriptionData, {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
