@@ -1,4 +1,3 @@
-import { Storage } from '@ionic/storage';
 import { TrialService } from './../services/trial.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
