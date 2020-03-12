@@ -87,21 +87,38 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscribePage", function() { return SubscribePage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
+
 
 
 
 
 var SubscribePage = /** @class */ (function () {
-    function SubscribePage(http, storage) {
+    function SubscribePage(http, storage, router) {
         this.http = http;
         this.storage = storage;
+        this.router = router;
         // private serverUrl = 'https://localhost:44309/';
         this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
     }
     SubscribePage.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var profile;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                    case 1:
+                        profile = _a.sent();
+                        if (!profile) {
+                            this.router.navigate(['/login']);
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     SubscribePage.prototype.SubscribeMonthly = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -155,7 +172,7 @@ var SubscribePage = /** @class */ (function () {
                             trialStartDate: trialStartDate
                         };
                         this.http.post(this.serverUrl + 'api/stripe/createsession', subscriptionRequest, {
-                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
                             })
@@ -187,13 +204,14 @@ var SubscribePage = /** @class */ (function () {
         });
     };
     SubscribePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-subscribe',
             template: __webpack_require__(/*! ./subscribe.page.html */ "./src/app/subscribe/subscribe.page.html"),
             styles: [__webpack_require__(/*! ./subscribe.page.scss */ "./src/app/subscribe/subscribe.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            _storage_service__WEBPACK_IMPORTED_MODULE_3__["StorageService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _storage_service__WEBPACK_IMPORTED_MODULE_4__["StorageService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], SubscribePage);
     return SubscribePage;
 }());

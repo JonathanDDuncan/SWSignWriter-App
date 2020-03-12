@@ -90,22 +90,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
 
 var StripesuccessPage = /** @class */ (function () {
-    function StripesuccessPage(http, storage) {
+    function StripesuccessPage(http, storage, route, router) {
         this.http = http;
         this.storage = storage;
+        this.route = route;
+        this.router = router;
         this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
     }
     StripesuccessPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var profile;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getSubscriptionInfo()];
+                    case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
+                        profile = _a.sent();
+                        if (!profile) {
+                            this.router.navigate(['/login']);
+                        }
+                        return [4 /*yield*/, this.getSubscriptionInfo()];
+                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -114,15 +125,18 @@ var StripesuccessPage = /** @class */ (function () {
     };
     StripesuccessPage.prototype.getSubscriptionInfo = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var profile, subscriptionData;
+            var session_id, profile, subscriptionData;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                    case 0:
+                        session_id = this.route.snapshot.paramMap.get('session_id');
+                        return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
                         subscriptionData = {
                             privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-                            email: profile.email
+                            email: profile.email,
+                            sessionId: session_id
                         };
                         this.http.post(this.serverUrl + 'api/stripe/subscription', subscriptionData, {
                             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
@@ -142,7 +156,9 @@ var StripesuccessPage = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./stripesuccess.page.scss */ "./src/app/stripesuccess/stripesuccess.page.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            _storage_service__WEBPACK_IMPORTED_MODULE_3__["StorageService"]])
+            _storage_service__WEBPACK_IMPORTED_MODULE_3__["StorageService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], StripesuccessPage);
     return StripesuccessPage;
 }());
