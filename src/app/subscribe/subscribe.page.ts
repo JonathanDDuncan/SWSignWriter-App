@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
@@ -10,12 +11,17 @@ import { StorageService } from '../storage.service';
 export class SubscribePage implements OnInit {
 
   constructor(private http: HttpClient,
-    private storage: StorageService
+    private storage: StorageService,
+    private router: Router
      ) { }
   // private serverUrl = 'https://localhost:44309/';
   private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
 
-  ngOnInit() {
+  async ngOnInit() {
+    const profile = await this.storage.GetCurrentUserProfile();
+    if (!profile) {
+      this.router.navigate(['/login']);
+    }
   }
 
   async SubscribeMonthly() {
@@ -30,6 +36,7 @@ export class SubscribePage implements OnInit {
 
   private async createSession(planId: string) {
     const profile = await this.storage.GetCurrentUserProfile();
+ 
     const subscriptionEndDate = await this.storage.GetSubscriptionEndDate(profile.email);
     const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
     console.log(profile);
