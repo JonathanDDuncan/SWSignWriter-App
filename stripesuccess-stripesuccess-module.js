@@ -114,27 +114,22 @@ var StripesuccessPage = /** @class */ (function () {
     };
     StripesuccessPage.prototype.getSubscriptionInfo = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var profile, subscriptionData, response, result;
+            var profile, subscriptionData;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        debugger;
-                        return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                    case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
                         subscriptionData = {
                             privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
                             email: profile.email
                         };
-                        return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/subscription', subscriptionData, {
-                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json',
-                                })
-                            }).toPromise()];
-                    case 2:
-                        response = _a.sent();
-                        result = response.toString();
+                        this.http.post(this.serverUrl + 'api/stripe/subscription', subscriptionData, {
+                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            })
+                        });
                         return [2 /*return*/];
                 }
             });
