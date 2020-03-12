@@ -148,6 +148,7 @@ var SubscribePage = /** @class */ (function () {
                     case 3:
                         trialStartDate = _a.sent();
                         console.log(profile);
+                        debugger;
                         subscriptionRequest = {
                             client: profile,
                             planId: planId,
