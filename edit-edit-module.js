@@ -1,0 +1,227 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["edit-edit-module"],{
+
+/***/ "./src/app/edit/edit.module.ts":
+/*!*************************************!*\
+  !*** ./src/app/edit/edit.module.ts ***!
+  \*************************************/
+/*! exports provided: EditPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditPageModule", function() { return EditPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _edit_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit.page */ "./src/app/edit/edit.page.ts");
+/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
+
+
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: '',
+        component: _edit_page__WEBPACK_IMPORTED_MODULE_6__["EditPage"]
+    }
+];
+var EditPageModule = /** @class */ (function () {
+    function EditPageModule() {
+    }
+    EditPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes),
+                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_7__["PipesModule"],
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__["SharedModule"]
+            ],
+            entryComponents: [],
+            declarations: [_edit_page__WEBPACK_IMPORTED_MODULE_6__["EditPage"]]
+        })
+    ], EditPageModule);
+    return EditPageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/edit/edit.page.html":
+/*!*************************************!*\
+  !*** ./src/app/edit/edit.page.html ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>{{'Edit' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n  <ion-item>\r\n    <ion-textarea #searchRef placeholder=\"{{'Enter word to search here' | translate}}\"></ion-textarea>\r\n    <ion-button style=\"display:none\" (click)=\"resetEntries()\"> {{'Reset' | translate}}</ion-button>\r\n  </ion-item>\r\n</ion-header>\r\n\r\n<ion-content padding class=\"vertical-center\">\r\n  <ion-list>\r\n    <ion-item *ngFor=\"let found of editedDocument.editedsigns; index as i; trackBy: trackFound \">\r\n      <ion-grid>\r\n        <ion-row justify-content-center>\r\n          <button class=\"editbutton\" [style.background-color]=\"found.color\" (click)=\"replace(i)\" type=\"button\">\r\n            <div [className]=\"laneStyle(found.lane)\">\r\n              <div class=\"sign\">\r\n                <span [innerHTML]=\"found.svg | safeHtml\"></span>\r\n                <ion-grid>\r\n                  <ion-row>\r\n                    <ion-col size=\"10\">\r\n                      <p>{{ (!found.sign ? (' sign not found' | translate) : found.sign.gloss ) }} </p>\r\n                    </ion-col>\r\n                    <ion-col size=\"1\">\r\n                      <ion-badge *ngIf=\"found.totalmatches > 1\" color=\"light\">{{ found.totalmatches }}</ion-badge>\r\n                    </ion-col>\r\n                  </ion-row>\r\n                </ion-grid>\r\n              </div>\r\n            </div>\r\n          </button>\r\n\r\n        </ion-row>\r\n        <ion-row justify-content-center>\r\n          <div class=\"lane-selector\">\r\n            <input id=\"{{found.id}}-left\" type=\"radio\" name=\"name{{found.id}}\" value=\"left\"\r\n              [checked]=\"Lane.Left === found.lane\" (change)=\"found.lane = Lane.Left\" />\r\n            <label class=\"label-background left\" for=\"{{found.id}}-left\"></label>\r\n            <input id=\"{{found.id}}-middle\" type=\"radio\" name=\"name{{found.id}}\" value=\"middle\"\r\n              [checked]=\"Lane.Middle === found.lane\" (change)=\"found.lane = Lane.Middle\" />\r\n            <label class=\"label-background middle\" for=\"{{found.id}}-middle\"></label>\r\n            <input id=\"{{found.id}}-right\" type=\"radio\" name=\"name{{found.id}}\" value=\"right\"\r\n              [checked]=\"Lane.Right === found.lane\" (change)=\"found.lane = Lane.Right\" />\r\n            <label class=\"label-background right\" for=\"{{found.id}}-right\"></label>\r\n          </div>\r\n        </ion-row>\r\n      </ion-grid>\r\n    </ion-item>\r\n  </ion-list>\r\n\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n      <ion-label>{{'Next' | translate}}</ion-label>\r\n      <ion-fab-button>\r\n          <ion-icon (click)=\"accept()\" name=\"arrow-dropright-circle\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button>\r\n  </ion-fab>\r\n</ion-content>"
+
+/***/ }),
+
+/***/ "./src/app/edit/edit.page.scss":
+/*!*************************************!*\
+  !*** ./src/app/edit/edit.page.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".sign {\n  padding: 0; }\n\n.editbutton {\n  margin: 5px; }\n\n.lane-selector input {\n  margin: 0;\n  padding: 0;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none; }\n\n.left {\n  background-image: url('Left.png'); }\n\n.middle {\n  background-image: url('Center.png'); }\n\n.right {\n  background-image: url('Right.png'); }\n\n.lane-selector input[type=\"radio\"]:checked + label {\n  -webkit-filter: brightness(1.2) grayscale(0.5) opacity(0.9);\n  -moz-filter: brightness(1.2) grayscale(0.5) opacity(0.9);\n  filter: brightness(1.2) grayscale(0.5) opacity(0.9);\n  background-color: #397ac4; }\n\n.lane-selector input[type=\"radio\"]:not(:checked) + label {\n  -webkit-filter: brightness(1.8) grayscale(1) opacity(0.7);\n  -moz-filter: brightness(1.8) grayscale(1) opacity(0.7);\n  filter: brightness(1.8) grayscale(1) opacity(0.7); }\n\n.label-background {\n  cursor: pointer;\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  display: inline-block;\n  margin: 0 2px 0 2px;\n  width: 45px;\n  height: 45px;\n  transition: all 100ms ease-in; }\n\n.lane-left {\n  padding-right: 40px; }\n\n.lane-middle {\n  padding-left: 20px;\n  padding-right: 20px; }\n\n.lane-right {\n  padding-left: 40px; }\n\n.item-text-center {\n  display: -moz-flex;\n  display: flex;\n  -moz-align-items: center;\n  align-items: center;\n  position: absolute;\n  top: 0;\n  height: 100%; }\n\n.vertical-center .fixed-content,\n.vertical-center .scroll-content {\n  display: flex;\n  align-items: center; }\n\n.vertical-center .fixed-content ion-list,\n  .vertical-center .scroll-content ion-list {\n    max-width: 300px;\n    width: 100%;\n    margin: auto;\n    text-align: center; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZWRpdC9JOlxcU1dTaWduV3JpdGVyXFxTV1NpZ25Xcml0ZXItQXBwL3NyY1xcYXBwXFxlZGl0XFxlZGl0LnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUVJLFVBQVUsRUFBQTs7QUFHZDtFQUNJLFdBQVcsRUFBQTs7QUFHZjtFQUNJLFNBQVM7RUFDVCxVQUFVO0VBQ1Ysd0JBQXdCO0VBQ3hCLHFCQUFxQjtFQUNyQixnQkFBZ0IsRUFBQTs7QUFHcEI7RUFDSSxpQ0FBa0QsRUFBQTs7QUFHdEQ7RUFDSSxtQ0FBb0QsRUFBQTs7QUFHeEQ7RUFDSSxrQ0FBbUQsRUFBQTs7QUFHdkQ7RUFDSSwyREFBeUQ7RUFDekQsd0RBQXNEO0VBQ3RELG1EQUFpRDtFQUNqRCx5QkFBbUMsRUFBQTs7QUFHdkM7RUFDSSx5REFBd0Q7RUFDeEQsc0RBQXFEO0VBQ3JELGlEQUFnRCxFQUFBOztBQUdwRDtFQUNJLGVBQWU7RUFDZix3QkFBd0I7RUFDeEIsMkJBQTJCO0VBQzNCLDRCQUE0QjtFQUM1QixxQkFBcUI7RUFDckIsbUJBQW1CO0VBQ25CLFdBQVc7RUFDWCxZQUFZO0VBR1osNkJBQTZCLEVBQUE7O0FBR2pDO0VBQ0UsbUJBQW1CLEVBQUE7O0FBR3JCO0VBQ0Usa0JBQWtCO0VBQ2xCLG1CQUFtQixFQUFBOztBQUdyQjtFQUNFLGtCQUFrQixFQUFBOztBQUdwQjtFQUtJLGtCQUFrQjtFQUVsQixhQUFhO0VBSWIsd0JBQXdCO0VBQ3hCLG1CQUFtQjtFQUNuQixrQkFBa0I7RUFDbEIsTUFBTTtFQUNOLFlBQVksRUFBQTs7QUFHaEI7O0VBR00sYUFBYTtFQUNiLG1CQUFtQixFQUFBOztBQUp6Qjs7SUFPVSxnQkFBZ0I7SUFDaEIsV0FBVTtJQUNWLFlBQVk7SUFDWixrQkFBa0IsRUFBQSIsImZpbGUiOiJzcmMvYXBwL2VkaXQvZWRpdC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc2lnbiB7XHJcbiAgIFxyXG4gICAgcGFkZGluZzogMDtcclxufVxyXG5cclxuLmVkaXRidXR0b24ge1xyXG4gICAgbWFyZ2luOiA1cHg7XHJcbn1cclxuXHJcbi5sYW5lLXNlbGVjdG9yIGlucHV0IHtcclxuICAgIG1hcmdpbjogMDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICAtd2Via2l0LWFwcGVhcmFuY2U6IG5vbmU7XHJcbiAgICAtbW96LWFwcGVhcmFuY2U6IG5vbmU7XHJcbiAgICBhcHBlYXJhbmNlOiBub25lO1xyXG59XHJcblxyXG4ubGVmdCB7XHJcbiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoJy4uLy4uL2Fzc2V0cy9pbWcvTGVmdC5wbmcnKTtcclxufVxyXG5cclxuLm1pZGRsZSB7XHJcbiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoJy4uLy4uL2Fzc2V0cy9pbWcvQ2VudGVyLnBuZycpO1xyXG59XHJcblxyXG4ucmlnaHQge1xyXG4gICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuLi8uLi9hc3NldHMvaW1nL1JpZ2h0LnBuZycpO1xyXG59XHJcblxyXG4ubGFuZS1zZWxlY3RvciBpbnB1dFt0eXBlPVwicmFkaW9cIl06Y2hlY2tlZCtsYWJlbCB7XHJcbiAgICAtd2Via2l0LWZpbHRlcjogYnJpZ2h0bmVzcygxLjIpIGdyYXlzY2FsZSguNSkgb3BhY2l0eSguOSk7XHJcbiAgICAtbW96LWZpbHRlcjogYnJpZ2h0bmVzcygxLjIpIGdyYXlzY2FsZSguNSkgb3BhY2l0eSguOSk7XHJcbiAgICBmaWx0ZXI6IGJyaWdodG5lc3MoMS4yKSBncmF5c2NhbGUoLjUpIG9wYWNpdHkoLjkpO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDU3LCAxMjIsIDE5Nik7XHJcbn1cclxuXHJcbi5sYW5lLXNlbGVjdG9yIGlucHV0W3R5cGU9XCJyYWRpb1wiXTpub3QoOmNoZWNrZWQpK2xhYmVsIHtcclxuICAgIC13ZWJraXQtZmlsdGVyOiBicmlnaHRuZXNzKDEuOCkgZ3JheXNjYWxlKDEpIG9wYWNpdHkoLjcpO1xyXG4gICAgLW1vei1maWx0ZXI6IGJyaWdodG5lc3MoMS44KSBncmF5c2NhbGUoMSkgb3BhY2l0eSguNyk7XHJcbiAgICBmaWx0ZXI6IGJyaWdodG5lc3MoMS44KSBncmF5c2NhbGUoMSkgb3BhY2l0eSguNyk7XHJcbn1cclxuXHJcbi5sYWJlbC1iYWNrZ3JvdW5kIHtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcclxuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjsgXHJcbiAgICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgbWFyZ2luOiAwIDJweCAwIDJweDtcclxuICAgIHdpZHRoOiA0NXB4O1xyXG4gICAgaGVpZ2h0OiA0NXB4O1xyXG4gICAgLXdlYmtpdC10cmFuc2l0aW9uOiBhbGwgMTAwbXMgZWFzZS1pbjtcclxuICAgIC1tb3otdHJhbnNpdGlvbjogYWxsIDEwMG1zIGVhc2UtaW47XHJcbiAgICB0cmFuc2l0aW9uOiBhbGwgMTAwbXMgZWFzZS1pbjtcclxufVxyXG5cclxuLmxhbmUtbGVmdCB7XHJcbiAgcGFkZGluZy1yaWdodDogNDBweDtcclxufSBcclxuXHJcbi5sYW5lLW1pZGRsZSB7XHJcbiAgcGFkZGluZy1sZWZ0OiAyMHB4O1xyXG4gIHBhZGRpbmctcmlnaHQ6IDIwcHg7XHJcbn1cclxuXHJcbi5sYW5lLXJpZ2h0IHtcclxuICBwYWRkaW5nLWxlZnQ6IDQwcHg7XHJcbn1cclxuXHJcbi5pdGVtLXRleHQtY2VudGVyXHJcbntcclxuICAgIGRpc3BsYXk6IC13ZWJraXQtYm94O1xyXG4gICAgZGlzcGxheTogLXdlYmtpdC1mbGV4O1xyXG4gICAgZGlzcGxheTogLW1vei1ib3g7XHJcbiAgICBkaXNwbGF5OiAtbW96LWZsZXg7XHJcbiAgICBkaXNwbGF5OiAtbXMtZmxleGJveDtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAtd2Via2l0LWJveC1hbGlnbjogY2VudGVyO1xyXG4gICAgLW1zLWZsZXgtYWxpZ246IGNlbnRlcjtcclxuICAgIC13ZWJraXQtYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIC1tb3otYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbn1cclxuXHJcbi52ZXJ0aWNhbC1jZW50ZXIge1xyXG4gIC5maXhlZC1jb250ZW50LFxyXG4gIC5zY3JvbGwtY29udGVudCB7XHJcbiAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcblxyXG4gICAgICBpb24tbGlzdCB7XHJcbiAgICAgICAgICBtYXgtd2lkdGg6IDMwMHB4OyBcclxuICAgICAgICAgIHdpZHRoOjEwMCU7IFxyXG4gICAgICAgICAgbWFyZ2luOiBhdXRvOyBcclxuICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgICAgfVxyXG4gIH1cclxufSJdfQ== */"
+
+/***/ }),
+
+/***/ "./src/app/edit/edit.page.ts":
+/*!***********************************!*\
+  !*** ./src/app/edit/edit.page.ts ***!
+  \***********************************/
+/*! exports provided: EditPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditPage", function() { return EditPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _settings_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../settings.service */ "./src/app/settings.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _choose_sign_choose_sign_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../choose-sign/choose-sign.page */ "./src/app/choose-sign/choose-sign.page.ts");
+/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../signs-lookup.service */ "./src/app/signs-lookup.service.ts");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
+
+
+
+
+
+
+
+
+
+
+var EditPage = /** @class */ (function () {
+    function EditPage(modalController, documentService, settingsService, router) {
+        this.modalController = modalController;
+        this.documentService = documentService;
+        this.settingsService = settingsService;
+        this.router = router;
+        this.Lane = _signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__["Lane"];
+    }
+    EditPage.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var isFirstTime;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.editedDocument = {
+                            editedsigns: []
+                        };
+                        return [4 /*yield*/, this.settingsService.getFirstTime()];
+                    case 1:
+                        isFirstTime = _a.sent();
+                        if (isFirstTime == null) {
+                            return [2 /*return*/, this.router.navigateByUrl('/settings')];
+                        }
+                        this.documentService.clearDocument();
+                        this.showDocument(this.documentService.getDocument());
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EditPage.prototype.ionViewWillEnter = function () {
+        this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+        this.showDocument(this.documentService.getDocument());
+    };
+    EditPage.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["fromEvent"])(this.searchRef.nativeElement, 'keyup')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (evt) { return evt.target.value; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["debounceTime"])(100), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["distinctUntilChanged"])())
+            // subscription
+            .subscribe(function (text) {
+            _this.documentService.searchFrase(text);
+            _this.showDocument(_this.documentService.getDocument());
+        });
+    };
+    EditPage.prototype.showDocument = function (document) {
+        this.editedDocument = { editedsigns: document.signs };
+    };
+    EditPage.prototype.trackFound = function (index, foundSign) {
+        return foundSign ? foundSign.id : undefined;
+    };
+    EditPage.prototype.accept = function () {
+        return this.router.navigateByUrl('/view');
+    };
+    EditPage.prototype.replace = function (index) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var searchWord, modal, data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        searchWord = this.documentService.getSearchWord(index);
+                        return [4 /*yield*/, this.modalController.create({
+                                component: _choose_sign_choose_sign_page__WEBPACK_IMPORTED_MODULE_7__["ChooseSignPage"],
+                                componentProps: {
+                                    searchword: searchWord
+                                }
+                            })];
+                    case 1:
+                        modal = _a.sent();
+                        return [4 /*yield*/, modal.present()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, modal.onDidDismiss()];
+                    case 3:
+                        data = (_a.sent()).data;
+                        // Replace existing item in list
+                        this.documentService.replaceElement(index, data.result);
+                        this.showDocument(this.documentService.getDocument());
+                        this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    EditPage.prototype.resetEntries = function () { };
+    EditPage.prototype.laneStyle = function (lane) {
+        switch (lane) {
+            case (_signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__["Lane"].Left): return 'lane-left';
+            case (_signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__["Lane"].Right): return 'lane-right';
+            default: return 'lane-middle';
+        }
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"])('searchRef', { read: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ElementRef"] }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ElementRef"])
+    ], EditPage.prototype, "searchRef", void 0);
+    EditPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+            selector: 'app-edit',
+            template: __webpack_require__(/*! ./edit.page.html */ "./src/app/edit/edit.page.html"),
+            styles: [__webpack_require__(/*! ./edit.page.scss */ "./src/app/edit/edit.page.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_6__["ModalController"],
+            _document_service__WEBPACK_IMPORTED_MODULE_9__["DocumentService"],
+            _settings_service__WEBPACK_IMPORTED_MODULE_1__["SettingsService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+    ], EditPage);
+    return EditPage;
+}());
+
+
+
+/***/ })
+
+}]);
+//# sourceMappingURL=edit-edit-module.js.map
