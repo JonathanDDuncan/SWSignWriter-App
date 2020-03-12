@@ -166,7 +166,7 @@ var SubscribePage = /** @class */ (function () {
                         trialStartDate = _a.sent();
                         console.log(profile);
                         subscriptionRequest = {
-                            client: profile,
+                            customer: profile,
                             planId: planId,
                             subscriptionEndDate: subscriptionEndDate,
                             trialStartDate: trialStartDate
