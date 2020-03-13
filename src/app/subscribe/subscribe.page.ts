@@ -41,7 +41,7 @@ export class SubscribePage implements OnInit {
     const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
     console.log(profile);
     const subscriptionRequest = {
-      client: profile,
+      customer: profile,
       planId: planId,
       subscriptionEndDate: subscriptionEndDate,
       trialStartDate: trialStartDate
