@@ -134,7 +134,7 @@ var StripesuccessPage = /** @class */ (function () {
                         profile = _a.sent();
                         this.route.queryParamMap
                             .subscribe(function (params) {
-                            var sessionid = params['session_id'];
+                            var sessionid = params.params.session_id;
                             var subscriptionData = {
                                 privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
                                 email: profile.email,
