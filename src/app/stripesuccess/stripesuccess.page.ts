@@ -29,13 +29,14 @@ export class StripesuccessPage implements OnInit {
   }
 
   async getSubscriptionInfo() {
-    const session_id  = this.route.snapshot.paramMap.get('session_id');
     const profile = await this.storage.GetCurrentUserProfile();
-
+    this.route.queryParamMap
+      .subscribe((params: any) => {
+      const sessionid = params.params['session_id'];
       const subscriptionData = {
         privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
         email: profile.email,
-        sessionId: session_id
+        sessionId: sessionid
       };
 
       this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
@@ -45,6 +46,7 @@ export class StripesuccessPage implements OnInit {
       })
     }).subscribe(data => {
       console.log(data);
+    });
     });
   }
 }

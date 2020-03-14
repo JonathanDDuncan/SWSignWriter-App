@@ -14,7 +14,6 @@ export class SubscribePage implements OnInit {
     private storage: StorageService,
     private router: Router
      ) { }
-  // private serverUrl = 'https://localhost:44309/';
   private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
 
   async ngOnInit() {
@@ -36,17 +35,15 @@ export class SubscribePage implements OnInit {
 
   private async createSession(planId: string) {
     const profile = await this.storage.GetCurrentUserProfile();
- 
+
     const subscriptionEndDate = await this.storage.GetSubscriptionEndDate(profile.email);
     const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
     console.log(profile);
-    const subscriptionRequest = {
-      customer: profile,
-      planId: planId,
-      subscriptionEndDate: subscriptionEndDate,
-      trialStartDate: trialStartDate
-    };
-    this.http.post(this.serverUrl + 'api/stripe/createsession', subscriptionRequest, {
+
+    const request: any  = profile;
+    request.planId = planId;
+
+    this.http.post(this.serverUrl + 'api/stripe/createsession', request, {
     headers: new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
