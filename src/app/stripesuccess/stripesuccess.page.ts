@@ -38,13 +38,13 @@ export class StripesuccessPage implements OnInit {
         sessionId: session_id
       };
 
-      this.http.post(this.serverUrl + 'api/stripe/subscription', subscriptionData, {
+      this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       })
+    }).subscribe(data => {
+      console.log(data);
     });
-
-    
   }
 }
