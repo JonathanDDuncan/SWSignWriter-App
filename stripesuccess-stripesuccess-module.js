@@ -125,26 +125,29 @@ var StripesuccessPage = /** @class */ (function () {
     };
     StripesuccessPage.prototype.getSubscriptionInfo = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var session_id, profile, subscriptionData;
+            var profile;
+            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        session_id = this.route.snapshot.paramMap.get('session_id');
-                        return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                    case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        subscriptionData = {
-                            privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-                            email: profile.email,
-                            sessionId: session_id
-                        };
-                        this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
-                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            })
-                        }).subscribe(function (data) {
-                            console.log(data);
+                        this.route.queryParamMap
+                            .subscribe(function (params) {
+                            var sessionid = params['session_id'];
+                            var subscriptionData = {
+                                privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+                                email: profile.email,
+                                sessionId: sessionid
+                            };
+                            _this.http.post(_this.serverUrl + 'api/stripe/session', subscriptionData, {
+                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                })
+                            }).subscribe(function (data) {
+                                console.log(data);
+                            });
                         });
                         return [2 /*return*/];
                 }
