@@ -138,11 +138,13 @@ var StripesuccessPage = /** @class */ (function () {
                             email: profile.email,
                             sessionId: session_id
                         };
-                        this.http.post(this.serverUrl + 'api/stripe/subscription', subscriptionData, {
+                        this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
                             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
                             })
+                        }).subscribe(function (data) {
+                            console.log(data);
                         });
                         return [2 /*return*/];
                 }
