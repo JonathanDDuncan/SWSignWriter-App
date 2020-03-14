@@ -152,7 +152,7 @@ var SubscribePage = /** @class */ (function () {
     };
     SubscribePage.prototype.createSession = function (planId) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var profile, subscriptionEndDate, trialStartDate, subscriptionRequest;
+            var profile, subscriptionEndDate, trialStartDate, request;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
@@ -165,13 +165,15 @@ var SubscribePage = /** @class */ (function () {
                     case 3:
                         trialStartDate = _a.sent();
                         console.log(profile);
-                        subscriptionRequest = {
-                            customer: profile,
-                            planId: planId,
-                            subscriptionEndDate: subscriptionEndDate,
-                            trialStartDate: trialStartDate
-                        };
-                        this.http.post(this.serverUrl + 'api/stripe/createsession', subscriptionRequest, {
+                        request = profile;
+                        request.planId = planId;
+                        // const subscriptionRequest = profile {
+                        //   customer: profile,
+                        //   planId: planId,
+                        //   subscriptionEndDate: subscriptionEndDate,
+                        //   trialStartDate: trialStartDate
+                        // };
+                        this.http.post(this.serverUrl + 'api/stripe/createsession', request, {
                             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
