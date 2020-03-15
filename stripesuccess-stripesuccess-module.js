@@ -61,7 +61,7 @@ var StripesuccessPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-toggle>\n        <ion-button>\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\n        </ion-button>\n      </ion-menu-toggle>\n    </ion-buttons>\n    <ion-title>{{'Stripe Success' | translate}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  Your purchase was a success.\n</ion-content>\n"
+module.exports = ".<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-toggle>\n        <ion-button>\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\n        </ion-button>\n      </ion-menu-toggle>\n    </ion-buttons>\n    <ion-title>{{'Stripe Success' | translate}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  Your purchase was a success.\n\n  Your subscription will renew on {{subscriptionEndDate}}\n</ion-content>\n"
 
 /***/ }),
 
@@ -147,6 +147,8 @@ var StripesuccessPage = /** @class */ (function () {
                                 })
                             }).subscribe(function (data) {
                                 console.log(data);
+                                _this.storage.SaveSubscriptionEndDate(data.email, data.SubscriptionEndDate);
+                                _this.subscriptionEndDate = data.SubscriptionEndDate;
                             });
                         });
                         return [2 /*return*/];

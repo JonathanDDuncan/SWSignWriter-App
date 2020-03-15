@@ -101,7 +101,6 @@ var SubscribePage = /** @class */ (function () {
         this.http = http;
         this.storage = storage;
         this.router = router;
-        // private serverUrl = 'https://localhost:44309/';
         this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
     }
     SubscribePage.prototype.ngOnInit = function () {
@@ -167,12 +166,8 @@ var SubscribePage = /** @class */ (function () {
                         console.log(profile);
                         request = profile;
                         request.planId = planId;
-                        // const subscriptionRequest = profile {
-                        //   customer: profile,
-                        //   planId: planId,
-                        //   subscriptionEndDate: subscriptionEndDate,
-                        //   trialStartDate: trialStartDate
-                        // };
+                        request.trialStartDate = trialStartDate;
+                        request.subscriptionEndDate = subscriptionEndDate;
                         this.http.post(this.serverUrl + 'api/stripe/createsession', request, {
                             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
                                 'Accept': 'application/json',
