@@ -1923,14 +1923,15 @@ var SubscriptionService = /** @class */ (function () {
     function SubscriptionService(storage) {
         this.storage = storage;
     }
-    SubscriptionService.prototype.GetSubscriptionEndDate = function (email) {
+    SubscriptionService.prototype.GetSubscription = function (email) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var subscriptionEndDate;
+            var subscription, subscriptionEndDate;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.storage.GetSubscriptionEndDate(email)];
+                    case 0: return [4 /*yield*/, this.storage.GetSubscription(email)];
                     case 1:
-                        subscriptionEndDate = _a.sent();
+                        subscription = _a.sent();
+                        subscriptionEndDate = subscription.endDate;
                         return [2 /*return*/, subscriptionEndDate];
                 }
             });
@@ -1941,7 +1942,7 @@ var SubscriptionService = /** @class */ (function () {
             var subscriptionEndDate, diff, daysLeft;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.GetSubscriptionEndDate(email)];
+                    case 0: return [4 /*yield*/, this.GetSubscription(email)];
                     case 1:
                         subscriptionEndDate = _a.sent();
                         diff = Math.abs(subscriptionEndDate.getTime() - new Date().getTime());
@@ -2999,12 +3000,12 @@ var StorageService = /** @class */ (function () {
             });
         });
     };
-    StorageService.prototype.SaveSubscriptionEndDate = function (email, endDate) {
+    StorageService.prototype.SaveSubscriptionEndDate = function (email, endDate, cancelatperiodend) {
         var key = this.Obfuscate(email + 'subscriptionEndDate');
-        var date = this.Obfuscate(endDate.toString());
+        var date = this.Obfuscate(JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend }));
         this.storage.set(key, date);
     };
-    StorageService.prototype.GetSubscriptionEndDate = function (email) {
+    StorageService.prototype.GetSubscription = function (email) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var key, value, cleaned, endDate;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
@@ -3015,7 +3016,7 @@ var StorageService = /** @class */ (function () {
                     case 1:
                         value = _a.sent();
                         cleaned = this.Clean(value);
-                        endDate = new Date(cleaned);
+                        endDate = JSON.parse(cleaned);
                         return [2 /*return*/, endDate];
                 }
             });

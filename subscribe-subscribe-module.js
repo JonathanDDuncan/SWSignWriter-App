@@ -151,15 +151,19 @@ var SubscribePage = /** @class */ (function () {
     };
     SubscribePage.prototype.createSession = function (planId) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var profile, subscriptionEndDate, trialStartDate, request;
+            var profile, subscription, subscriptionEndDate, trialStartDate, request;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        return [4 /*yield*/, this.storage.GetSubscriptionEndDate(profile.email)];
+                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                     case 2:
-                        subscriptionEndDate = _a.sent();
+                        subscription = _a.sent();
+                        subscriptionEndDate = new Date();
+                        if (subscription) {
+                            subscriptionEndDate = subscription.endDate;
+                        }
                         return [4 /*yield*/, this.storage.GetTrialStartDate(profile.email)];
                     case 3:
                         trialStartDate = _a.sent();
