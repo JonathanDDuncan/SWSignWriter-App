@@ -1923,7 +1923,7 @@ var SubscriptionService = /** @class */ (function () {
     function SubscriptionService(storage) {
         this.storage = storage;
     }
-    SubscriptionService.prototype.GetSubscription = function (email) {
+    SubscriptionService.prototype.GetSubscriptionEndDate = function (email) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var subscription, subscriptionEndDate;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
@@ -1931,7 +1931,9 @@ var SubscriptionService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetSubscription(email)];
                     case 1:
                         subscription = _a.sent();
-                        subscriptionEndDate = subscription.endDate;
+                        if (subscription) {
+                            subscriptionEndDate = subscription.endDate;
+                        }
                         return [2 /*return*/, subscriptionEndDate];
                 }
             });
@@ -1942,7 +1944,7 @@ var SubscriptionService = /** @class */ (function () {
             var subscriptionEndDate, diff, daysLeft;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.GetSubscription(email)];
+                    case 0: return [4 /*yield*/, this.GetSubscriptionEndDate(email)];
                     case 1:
                         subscriptionEndDate = _a.sent();
                         diff = Math.abs(subscriptionEndDate.getTime() - new Date().getTime());
