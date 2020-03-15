@@ -3004,7 +3004,6 @@ var StorageService = /** @class */ (function () {
     };
     StorageService.prototype.SaveSubscription = function (email, endDate, cancelatperiodend) {
         var key = this.Obfuscate(email + 'subscriptionEndDate');
-        debugger;
         var subscription = this.Obfuscate(JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend }));
         this.storage.set(key, subscription);
     };
@@ -3015,7 +3014,6 @@ var StorageService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         key = this.Obfuscate(email + 'subscriptionEndDate');
-                        debugger;
                         return [4 /*yield*/, this.storage.get(key)];
                     case 1:
                         value = _a.sent();

@@ -106,7 +106,7 @@ var SubscribePage = /** @class */ (function () {
     }
     SubscribePage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var profile, subscription, subscribed;
+            var profile, subscription, subscribed, d, ye, mo, da;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
@@ -119,10 +119,13 @@ var SubscribePage = /** @class */ (function () {
                     case 2:
                         subscription = _a.sent();
                         subscribed = subscription && subscription.endDate && !subscription.cancelatperiodend;
-                        debugger;
                         if (subscribed) {
                             this.buttonDisabled = true;
-                            this.subscriptionEndDate = new Date(subscription.endDate);
+                            d = new Date(subscription.endDate);
+                            ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                            this.subscriptionEndDate = da + "-" + mo + "-" + ye;
                         }
                         else {
                             this.buttonDisabled = null;
