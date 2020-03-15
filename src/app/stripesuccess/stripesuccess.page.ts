@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class StripesuccessPage implements OnInit {
   private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-
+  public subscriptionEndDate: string;
   constructor(
     private http: HttpClient,
     private storage: StorageService,
@@ -47,6 +47,11 @@ export class StripesuccessPage implements OnInit {
     }).subscribe((data: any) => {
       console.log(data);
       this.storage.SaveSubscriptionEndDate(data.email, data.SubscriptionEndDate);
+      const d = new Date(data.SubscriptionEndDate);
+      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+      const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+      this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
     });
     });
   }
