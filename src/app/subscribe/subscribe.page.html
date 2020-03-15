@@ -11,15 +11,21 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-row *ngIf="buttonDisabled">
+    <ion-col>
+      Your subscription will renew on {{subscriptionEndDate}}
+    </ion-col>
+    
+  </ion-row>
   <ion-row>
     <ion-col>
       <p>1 Month FREE</p>
       <p>+ $5/month for 11 months</p>
-      <ion-button (click)="SubscribeYearly()"> Subscribe Yearly</ion-button>
+      <ion-button [disabled]="buttonDisabled" (click)="SubscribeYearly()"> Subscribe Yearly</ion-button>
     <hr/>
      
       <p>$5/month</p>
-      <ion-button (click)="SubscribeMonthly()">Subscribe Monthly</ion-button>
+      <ion-button  [disabled]="buttonDisabled" (click)="SubscribeMonthly()">Subscribe Monthly</ion-button>
     </ion-col>
     
   </ion-row>

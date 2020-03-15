@@ -105,18 +105,18 @@ export class StorageService {
     await this.storage.set(this.firstTimekey, false);
   }
 
-  SaveSubscriptionEndDate(email: string, endDate: Date, cancelatperiodend: boolean): void {
+  SaveSubscription(email: string, endDate: Date, cancelatperiodend: boolean): void {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
-    const date = this.Obfuscate( JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend}) );
-    this.storage.set(key, date);
+    const subscription = this.Obfuscate( JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend}) );
+    this.storage.set(key, subscription);
   }
 
   async GetSubscription(email: string): Promise<{endDate: Date, cancelatperiodend: boolean }> {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
     const value = await this.storage.get(key);
     const cleaned = this.Clean(value);
-    const endDate = JSON.parse(cleaned);
-    return endDate;
+    const subscription = JSON.parse(atob(cleaned));
+    return subscription;
   }
 
   Clean(value: string): string {

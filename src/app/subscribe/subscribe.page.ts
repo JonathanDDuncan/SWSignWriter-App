@@ -9,6 +9,8 @@ import { StorageService } from '../storage.service';
   styleUrls: ['./subscribe.page.scss'],
 })
 export class SubscribePage implements OnInit {
+  public buttonDisabled: boolean | null = null;
+  public subscriptionEndDate: string;
 
   constructor(private http: HttpClient,
     private storage: StorageService,
@@ -20,6 +22,20 @@ export class SubscribePage implements OnInit {
     const profile = await this.storage.GetCurrentUserProfile();
     if (!profile) {
       this.router.navigate(['/login']);
+    }
+    const subscription = await this.storage.GetSubscription(profile.email);
+    const subscribed = subscription && subscription.endDate && !subscription.cancelatperiodend;
+    if (subscribed) {
+      this.buttonDisabled = true;
+
+      const d = new Date(subscription.endDate);
+      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+      const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+      this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
+
+    } else {
+      this.buttonDisabled = null;
     }
   }
 

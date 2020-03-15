@@ -11,15 +11,17 @@ export class SubscriptionService {
     private storage: StorageService,
   ) { }
 
-  async GetSubscription(email: string): Promise<Date> {
+  async GetSubscriptionEndDate(email: string): Promise<Date> {
     const subscription = await this.storage.GetSubscription(email);
-    const subscriptionEndDate: Date = subscription.endDate;
-
+    let subscriptionEndDate: Date;
+    if (subscription) {
+      subscriptionEndDate  = subscription.endDate;
+    }
     return subscriptionEndDate;
   }
 
   async GetSubscriptionDaysLeft(email: string): Promise<number> {
-    const subscriptionEndDate: Date = await this.GetSubscription(email);
+    const subscriptionEndDate: Date = await this.GetSubscriptionEndDate(email);
     const diff = Math.abs(subscriptionEndDate.getTime() - new Date().getTime());
     const daysLeft: number = Math.ceil(diff / (1000 * 3600 * 24));
 

@@ -46,7 +46,7 @@ export class StripesuccessPage implements OnInit {
       })
     }).subscribe((data: any) => {
       console.log(data);
-      this.storage.SaveSubscriptionEndDate(data.email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
+      this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
 
       const d = new Date(data.SubscriptionEndDate);
       const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
