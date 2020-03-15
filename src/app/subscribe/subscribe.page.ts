@@ -36,7 +36,11 @@ export class SubscribePage implements OnInit {
   private async createSession(planId: string) {
     const profile = await this.storage.GetCurrentUserProfile();
 
-    const subscriptionEndDate = await this.storage.GetSubscriptionEndDate(profile.email);
+    const subscription = await this.storage.GetSubscription(profile.email);
+    let subscriptionEndDate: Date = new Date();
+    if (subscription) {
+      subscriptionEndDate = subscription.endDate;
+  }
     const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
     console.log(profile);
 
