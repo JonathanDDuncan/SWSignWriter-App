@@ -3020,7 +3020,7 @@ var StorageService = /** @class */ (function () {
                     case 1:
                         value = _a.sent();
                         cleaned = this.Clean(value);
-                        subscription = JSON.parse(cleaned);
+                        subscription = JSON.parse(atob(cleaned));
                         return [2 /*return*/, subscription];
                 }
             });
