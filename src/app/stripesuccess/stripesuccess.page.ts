@@ -44,8 +44,9 @@ export class StripesuccessPage implements OnInit {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       })
-    }).subscribe(data => {
+    }).subscribe((data: any) => {
       console.log(data);
+      this.storage.SaveSubscriptionEndDate(data.email, data.SubscriptionEndDate);
     });
     });
   }

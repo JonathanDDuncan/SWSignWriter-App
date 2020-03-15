@@ -42,6 +42,8 @@ export class SubscribePage implements OnInit {
 
     const request: any  = profile;
     request.planId = planId;
+    request.trialStartDate = trialStartDate;
+    request.subscriptionEndDate = subscriptionEndDate;
 
     this.http.post(this.serverUrl + 'api/stripe/createsession', request, {
     headers: new HttpHeaders({

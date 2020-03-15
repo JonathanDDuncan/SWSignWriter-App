@@ -91,8 +91,8 @@ export class StorageService {
 
   async GetCurrentUserProfile(): Promise<UserProfile> {
     return await this.storage.get(this.userCurrentProfilekey);
- 
   }
+
   async getFirstTime(): Promise<boolean> {
     try {
       return await this.storage.get(this.firstTimekey);
@@ -100,9 +100,11 @@ export class StorageService {
       return true;
     }
   }
+
   async saveFirstTime() {
     await this.storage.set(this.firstTimekey, false);
   }
+
   SaveSubscriptionEndDate(email: string, endDate: Date): void {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
     const date = this.Obfuscate(endDate.toString());
