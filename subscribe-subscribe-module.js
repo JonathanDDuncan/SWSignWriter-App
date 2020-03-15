@@ -61,7 +61,7 @@ var SubscribePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Subscribe' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col>\r\n      <p>1 Month FREE</p>\r\n      <p>+ $5/month for 11 months</p>\r\n      <ion-button (click)=\"SubscribeYearly()\"> Subscribe Yearly</ion-button>\r\n    <hr/>\r\n     \r\n      <p>$5/month</p>\r\n      <ion-button (click)=\"SubscribeMonthly()\">Subscribe Monthly</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Subscribe' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-row *ngIf=\"buttonDisabled\">\r\n    <ion-col>\r\n      Your subscription will renew on {{subscriptionEndDate}}\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n  <ion-row>\r\n    <ion-col>\r\n      <p>1 Month FREE</p>\r\n      <p>+ $5/month for 11 months</p>\r\n      <ion-button [disabled]=\"buttonDisabled\" (click)=\"SubscribeYearly()\"> Subscribe Yearly</ion-button>\r\n    <hr/>\r\n     \r\n      <p>$5/month</p>\r\n      <ion-button  [disabled]=\"buttonDisabled\" (click)=\"SubscribeMonthly()\">Subscribe Monthly</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -101,11 +101,12 @@ var SubscribePage = /** @class */ (function () {
         this.http = http;
         this.storage = storage;
         this.router = router;
+        this.buttonDisabled = null;
         this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
     }
     SubscribePage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var profile;
+            var profile, subscription, subscribed;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
@@ -113,6 +114,18 @@ var SubscribePage = /** @class */ (function () {
                         profile = _a.sent();
                         if (!profile) {
                             this.router.navigate(['/login']);
+                        }
+                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
+                    case 2:
+                        subscription = _a.sent();
+                        subscribed = subscription && subscription.endDate && !subscription.cancelatperiodend;
+                        debugger;
+                        if (subscribed) {
+                            this.buttonDisabled = true;
+                            this.subscriptionEndDate = subscription.endDate;
+                        }
+                        else {
+                            this.buttonDisabled = null;
                         }
                         return [2 /*return*/];
                 }
