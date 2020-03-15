@@ -122,7 +122,7 @@ var SubscribePage = /** @class */ (function () {
                         debugger;
                         if (subscribed) {
                             this.buttonDisabled = true;
-                            this.subscriptionEndDate = subscription.endDate;
+                            this.subscriptionEndDate = new Date(subscription.endDate);
                         }
                         else {
                             this.buttonDisabled = null;
