@@ -3002,24 +3002,26 @@ var StorageService = /** @class */ (function () {
             });
         });
     };
-    StorageService.prototype.SaveSubscriptionEndDate = function (email, endDate, cancelatperiodend) {
+    StorageService.prototype.SaveSubscription = function (email, endDate, cancelatperiodend) {
         var key = this.Obfuscate(email + 'subscriptionEndDate');
-        var date = this.Obfuscate(JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend }));
-        this.storage.set(key, date);
+        debugger;
+        var subscription = this.Obfuscate(JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend }));
+        this.storage.set(key, subscription);
     };
     StorageService.prototype.GetSubscription = function (email) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var key, value, cleaned, endDate;
+            var key, value, cleaned, subscription;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         key = this.Obfuscate(email + 'subscriptionEndDate');
+                        debugger;
                         return [4 /*yield*/, this.storage.get(key)];
                     case 1:
                         value = _a.sent();
                         cleaned = this.Clean(value);
-                        endDate = JSON.parse(cleaned);
-                        return [2 /*return*/, endDate];
+                        subscription = JSON.parse(cleaned);
+                        return [2 /*return*/, subscription];
                 }
             });
         });

@@ -147,7 +147,7 @@ var StripesuccessPage = /** @class */ (function () {
                                 })
                             }).subscribe(function (data) {
                                 console.log(data);
-                                _this.storage.SaveSubscriptionEndDate(data.email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
+                                _this.storage.SaveSubscription(data.email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
                                 var d = new Date(data.SubscriptionEndDate);
                                 var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
                                 var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
