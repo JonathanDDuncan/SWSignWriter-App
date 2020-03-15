@@ -148,7 +148,11 @@ var StripesuccessPage = /** @class */ (function () {
                             }).subscribe(function (data) {
                                 console.log(data);
                                 _this.storage.SaveSubscriptionEndDate(data.email, data.SubscriptionEndDate);
-                                _this.subscriptionEndDate = data.SubscriptionEndDate;
+                                var d = new Date(data.SubscriptionEndDate);
+                                var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                                var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                                var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                                _this.subscriptionEndDate = da + "-" + mo + "-" + ye;
                             });
                         });
                         return [2 /*return*/];
