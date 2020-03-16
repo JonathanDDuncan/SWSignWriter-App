@@ -61,7 +61,7 @@ var SubscribePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Subscribe' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-row *ngIf=\"subscriptionEndDate\">\r\n    <ion-col *ngIf=\"autoRenewal; else validuntil\">\r\n      Your subscription is valid until and will renew on {{subscriptionEndDate}}  <ion-button (click)=\"CancelRenewal()\"> Cancel Automatic Renewal</ion-button>\r\n    </ion-col>\r\n    <ng-template #validuntil>\r\n      <ion-col>\r\n        Your subscription is valid until on {{subscriptionEndDate}}\r\n      </ion-col>\r\n    </ng-template>\r\n    \r\n  </ion-row>\r\n  <ion-row>\r\n    <ion-col>\r\n      <p>1 Month FREE</p>\r\n      <p>+ $5/month for 11 months</p>\r\n      <ion-button [disabled]=\"buttonDisabled\" (click)=\"SubscribeYearly()\"> Subscribe Yearly</ion-button>\r\n    <hr/>\r\n     \r\n      <p>$5/month</p>\r\n      <ion-button  [disabled]=\"buttonDisabled\" (click)=\"SubscribeMonthly()\">Subscribe Monthly</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Subscribe' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-row *ngIf=\"subscriptionEndDate\">\r\n    <ion-col *ngIf=\"autoRenewal; else validuntil\">\r\n      Your subscription is valid until and will renew on {{subscriptionEndDate}}  <ion-button (click)=\"CancelRenewal()\"> Cancel Automatic Renewal</ion-button>\r\n    </ion-col>\r\n    <ng-template #validuntil>\r\n      <ion-col>\r\n        Your subscription is valid until {{subscriptionEndDate}}\r\n      </ion-col>\r\n    </ng-template>\r\n    \r\n  </ion-row>\r\n  <ion-row>\r\n    <ion-col>\r\n      <p>1 Month FREE</p>\r\n      <p>+ $5/month for 11 months</p>\r\n      <ion-button [disabled]=\"buttonDisabled\" (click)=\"SubscribeYearly()\"> Subscribe Yearly</ion-button>\r\n    <hr/>\r\n     \r\n      <p>$5/month</p>\r\n      <ion-button  [disabled]=\"buttonDisabled\" (click)=\"SubscribeMonthly()\">Subscribe Monthly</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -136,6 +136,7 @@ var SubscribePage = /** @class */ (function () {
                         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
                         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
                         this.subscriptionEndDate = da + "-" + mo + "-" + ye;
+                        this.autoRenewal = subscription.cancelatperiodend;
                         return [2 /*return*/];
                 }
             });
