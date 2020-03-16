@@ -29,17 +29,19 @@ export class SubscribePage implements OnInit {
       this.router.navigate(['/login']);
     }
     const subscription = await this.storage.GetSubscription(profile.email);
-    const subscribed = subscription && subscription.endDate && subscription.cancelatperiodend ;
-    if (subscribed) {
-      this.buttonDisabled = true;
-    } else {
-      this.buttonDisabled = false;
-    }
+    this.SetButtonDisabled(subscription.endDate);
     const d = new Date(subscription.endDate);
     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
     this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
+    this.autoRenewal = subscription.cancelatperiodend;
+  }
+
+  private SetButtonDisabled( endDate: Date) {
+    const subscribed = new Date(endDate) >= new Date();
+
+    this.buttonDisabled = subscribed;
   }
 
   async SubscribeMonthly() {
@@ -129,6 +131,7 @@ export class SubscribePage implements OnInit {
             const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
             this.subscriptionEndDate = `${da}-${mo}-${ye}`;
             this.autoRenewal = subscription.CancelAtPeriodEnd;
+            this.SetButtonDisabled(subscription.endDate);
         }
       }
     ]

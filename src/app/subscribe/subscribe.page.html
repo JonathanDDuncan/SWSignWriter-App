@@ -11,13 +11,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row>
-    <ion-col *ngIf="buttonDisabled; else validuntil">
+  <ion-row *ngIf="subscriptionEndDate">
+    <ion-col *ngIf="autoRenewal; else validuntil">
       Your subscription is valid until and will renew on {{subscriptionEndDate}}  <ion-button (click)="CancelRenewal()"> Cancel Automatic Renewal</ion-button>
     </ion-col>
     <ng-template #validuntil>
       <ion-col>
-        Your subscription is valid until on {{subscriptionEndDate}}
+        Your subscription is valid until {{subscriptionEndDate}}
       </ion-col>
     </ng-template>
     
