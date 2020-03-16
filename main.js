@@ -3009,7 +3009,7 @@ var StorageService = /** @class */ (function () {
     };
     StorageService.prototype.GetSubscription = function (email) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var key, value, cleaned, subscription;
+            var key, value, subscription, cleaned;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -3017,8 +3017,10 @@ var StorageService = /** @class */ (function () {
                         return [4 /*yield*/, this.storage.get(key)];
                     case 1:
                         value = _a.sent();
-                        cleaned = this.Clean(value);
-                        subscription = JSON.parse(atob(cleaned));
+                        if (value) {
+                            cleaned = this.Clean(value);
+                            subscription = JSON.parse(atob(cleaned));
+                        }
                         return [2 /*return*/, subscription];
                 }
             });

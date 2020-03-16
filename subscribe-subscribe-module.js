@@ -61,7 +61,7 @@ var SubscribePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Subscribe' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-row *ngIf=\"buttonDisabled\">\r\n    <ion-col>\r\n      Your subscription will renew on {{subscriptionEndDate}}\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n  <ion-row>\r\n    <ion-col>\r\n      <p>1 Month FREE</p>\r\n      <p>+ $5/month for 11 months</p>\r\n      <ion-button [disabled]=\"buttonDisabled\" (click)=\"SubscribeYearly()\"> Subscribe Yearly</ion-button>\r\n    <hr/>\r\n     \r\n      <p>$5/month</p>\r\n      <ion-button  [disabled]=\"buttonDisabled\" (click)=\"SubscribeMonthly()\">Subscribe Monthly</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Subscribe' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-row *ngIf=\"buttonDisabled\">\r\n    <ion-col>\r\n      Your subscription will renew on {{subscriptionEndDate}}  <ion-button (click)=\"CancelRenewal()\"> Cancel Automatic Renewal</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n  <ion-row>\r\n    <ion-col>\r\n      <p>1 Month FREE</p>\r\n      <p>+ $5/month for 11 months</p>\r\n      <ion-button [disabled]=\"buttonDisabled\" (click)=\"SubscribeYearly()\"> Subscribe Yearly</ion-button>\r\n    <hr/>\r\n     \r\n      <p>$5/month</p>\r\n      <ion-button  [disabled]=\"buttonDisabled\" (click)=\"SubscribeMonthly()\">Subscribe Monthly</ion-button>\r\n    </ion-col>\r\n    \r\n  </ion-row>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -91,15 +91,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+
 
 
 
 
 
 var SubscribePage = /** @class */ (function () {
-    function SubscribePage(http, storage, router) {
+    function SubscribePage(http, storage, alertController, router) {
         this.http = http;
         this.storage = storage;
+        this.alertController = alertController;
         this.router = router;
         this.buttonDisabled = null;
         this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
@@ -220,6 +223,40 @@ var SubscribePage = /** @class */ (function () {
             });
         });
     };
+    SubscribePage.prototype.CancelRenewal = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            header: 'Confirm!',
+                            message: 'Message <strong>text</strong>!!!',
+                            buttons: [
+                                {
+                                    text: 'Cancel',
+                                    role: 'cancel',
+                                    cssClass: 'secondary',
+                                    handler: function (blah) {
+                                        console.log('Confirm Cancel: blah');
+                                    }
+                                }, {
+                                    text: 'Okay',
+                                    handler: function () {
+                                        console.log('Confirm Okay');
+                                    }
+                                }
+                            ]
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SubscribePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-subscribe',
@@ -228,6 +265,7 @@ var SubscribePage = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
             _storage_service__WEBPACK_IMPORTED_MODULE_4__["StorageService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], SubscribePage);
     return SubscribePage;
