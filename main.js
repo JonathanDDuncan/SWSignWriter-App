@@ -1949,7 +1949,7 @@ var SubscriptionService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.GetSubscriptionEndDate(email)];
                     case 1:
                         subscriptionEndDate = _a.sent();
-                        diff = Math.abs(subscriptionEndDate.getTime() - new Date().getTime());
+                        diff = Math.abs(new Date(subscriptionEndDate).getTime() - new Date().getTime());
                         daysLeft = Math.ceil(diff / (1000 * 3600 * 24));
                         return [2 /*return*/, (daysLeft > 0) ? daysLeft : 0];
                 }
