@@ -129,7 +129,7 @@ var SubscribePage = /** @class */ (function () {
                             this.buttonDisabled = true;
                         }
                         else {
-                            this.buttonDisabled = null;
+                            this.buttonDisabled = false;
                         }
                         d = new Date(subscription.endDate);
                         ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
