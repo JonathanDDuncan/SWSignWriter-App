@@ -144,6 +144,7 @@ var StripesuccessPage = /** @class */ (function () {
                                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                                     case 1:
                                         subscription = _a.sent();
+                                        debugger;
                                         console.log('subscription');
                                         console.log(subscription);
                                         d = new Date(subscription.SubscriptionEndDate);
