@@ -124,6 +124,7 @@ var SubscribePage = /** @class */ (function () {
                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                     case 2:
                         subscription = _a.sent();
+                        debugger;
                         subscribed = subscription && subscription.endDate >= new Date();
                         if (subscribed) {
                             this.buttonDisabled = true;
