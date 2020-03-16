@@ -140,9 +140,11 @@ var StripesuccessPage = /** @class */ (function () {
                                 switch (_a.label) {
                                     case 0:
                                         sessionid = params.params['session_id'];
-                                        data1 = this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid);
-                                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
+                                        return [4 /*yield*/, this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid)];
                                     case 1:
+                                        data1 = _a.sent();
+                                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
+                                    case 2:
                                         subscription = _a.sent();
                                         debugger;
                                         console.log('subscription');
