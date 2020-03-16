@@ -87,22 +87,24 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StripesuccessPage", function() { return StripesuccessPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _stripe_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../stripe.service */ "./src/app/stripe.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
 
 
 var StripesuccessPage = /** @class */ (function () {
-    function StripesuccessPage(http, storage, route, router) {
+    function StripesuccessPage(http, storage, route, stripeservice, router) {
         this.http = http;
         this.storage = storage;
         this.route = route;
+        this.stripeservice = stripeservice;
         this.router = router;
-        this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
     }
     StripesuccessPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -132,28 +134,14 @@ var StripesuccessPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        this.route.queryParamMap
-                            .subscribe(function (params) {
+                        this.route.queryParamMap.subscribe(function (params) {
                             var sessionid = params.params['session_id'];
-                            var subscriptionData = {
-                                privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-                                email: profile.email,
-                                sessionId: sessionid
-                            };
-                            _this.http.post(_this.serverUrl + 'api/stripe/session', subscriptionData, {
-                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json',
-                                })
-                            }).subscribe(function (data) {
-                                console.log(data);
-                                _this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
-                                var d = new Date(data.SubscriptionEndDate);
-                                var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-                                var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-                                var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-                                _this.subscriptionEndDate = da + "-" + mo + "-" + ye;
-                            });
+                            var data = _this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid);
+                            var d = new Date(data.SubscriptionEndDate);
+                            var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                            var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                            var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                            _this.subscriptionEndDate = da + "-" + mo + "-" + ye;
                         });
                         return [2 /*return*/];
                 }
@@ -161,15 +149,16 @@ var StripesuccessPage = /** @class */ (function () {
         });
     };
     StripesuccessPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-stripesuccess',
             template: __webpack_require__(/*! ./stripesuccess.page.html */ "./src/app/stripesuccess/stripesuccess.page.html"),
             styles: [__webpack_require__(/*! ./stripesuccess.page.scss */ "./src/app/stripesuccess/stripesuccess.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            _storage_service__WEBPACK_IMPORTED_MODULE_3__["StorageService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _storage_service__WEBPACK_IMPORTED_MODULE_4__["StorageService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"],
+            _stripe_service__WEBPACK_IMPORTED_MODULE_1__["StripeService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
     ], StripesuccessPage);
     return StripesuccessPage;
 }());

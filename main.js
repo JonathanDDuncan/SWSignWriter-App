@@ -467,10 +467,12 @@ var map = {
 	],
 	"./stripesuccess/stripesuccess.module": [
 		"./src/app/stripesuccess/stripesuccess.module.ts",
+		"common",
 		"stripesuccess-stripesuccess-module"
 	],
 	"./subscribe/subscribe.module": [
 		"./src/app/subscribe/subscribe.module.ts",
+		"common",
 		"subscribe-subscribe-module"
 	],
 	"./view/view.module": [
