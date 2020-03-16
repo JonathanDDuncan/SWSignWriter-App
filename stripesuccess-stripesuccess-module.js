@@ -134,15 +134,25 @@ var StripesuccessPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        this.route.queryParamMap.subscribe(function (params) {
-                            var sessionid = params.params['session_id'];
-                            var data = _this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid);
-                            var d = Date.parse(data.SubscriptionEndDate);
-                            var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-                            var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-                            var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-                            _this.subscriptionEndDate = da + "-" + mo + "-" + ye;
-                        });
+                        this.route.queryParamMap.subscribe(function (params) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                            var sessionid, data1, subscription, d, ye, mo, da;
+                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        sessionid = params.params['session_id'];
+                                        data1 = this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid);
+                                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
+                                    case 1:
+                                        subscription = _a.sent();
+                                        d = Date.parse(subscription.SubscriptionEndDate);
+                                        ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                                        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                                        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                                        this.subscriptionEndDate = da + "-" + mo + "-" + ye;
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); });
                         return [2 /*return*/];
                 }
             });

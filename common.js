@@ -422,7 +422,7 @@ var StripeService = /** @class */ (function () {
                         data = _a.sent();
                         console.log(data);
                         this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
-                        return [2 /*return*/, data];
+                        return [2 /*return*/];
                 }
             });
         });
