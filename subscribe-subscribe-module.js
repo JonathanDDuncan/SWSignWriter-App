@@ -125,7 +125,7 @@ var SubscribePage = /** @class */ (function () {
                     case 2:
                         subscription = _a.sent();
                         debugger;
-                        subscribed = subscription && subscription.endDate >= new Date();
+                        subscribed = subscription && new Date(subscription.endDate) >= new Date();
                         if (subscribed) {
                             this.buttonDisabled = true;
                         }
