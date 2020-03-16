@@ -144,7 +144,7 @@ var StripesuccessPage = /** @class */ (function () {
                                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                                     case 1:
                                         subscription = _a.sent();
-                                        d = Date.parse(subscription.SubscriptionEndDate);
+                                        d = new Date(subscription.SubscriptionEndDate);
                                         ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
                                         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
                                         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
