@@ -229,18 +229,18 @@ var SubscribePage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.alertController.create({
-                            header: 'Confirm!',
-                            message: 'Message <strong>text</strong>!!!',
+                            header: 'Cancel automatic renewal',
+                            message: 'Are you <strong>sure</strong> you want to remove automatic renewal?',
                             buttons: [
                                 {
-                                    text: 'Cancel',
+                                    text: 'Disagree',
                                     role: 'cancel',
                                     cssClass: 'secondary',
                                     handler: function (blah) {
-                                        console.log('Confirm Cancel: blah');
+                                        console.log('Confirm Cancel');
                                     }
                                 }, {
-                                    text: 'Okay',
+                                    text: 'Agree',
                                     handler: function () {
                                         console.log('Confirm Okay');
                                     }
