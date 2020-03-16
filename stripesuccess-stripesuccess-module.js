@@ -137,7 +137,7 @@ var StripesuccessPage = /** @class */ (function () {
                         this.route.queryParamMap.subscribe(function (params) {
                             var sessionid = params.params['session_id'];
                             var data = _this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid);
-                            var d = new Date(data.SubscriptionEndDate);
+                            var d = data.SubscriptionEndDate;
                             var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
                             var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
                             var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
