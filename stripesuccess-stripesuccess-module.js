@@ -135,14 +135,14 @@ var StripesuccessPage = /** @class */ (function () {
                     case 1:
                         profile = _a.sent();
                         this.route.queryParamMap.subscribe(function (params) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                            var sessionid, data1, subscription, d, ye, mo, da;
+                            var sessionid, subscription, d, ye, mo, da;
                             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
                                         sessionid = params.params['session_id'];
                                         return [4 /*yield*/, this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid)];
                                     case 1:
-                                        data1 = _a.sent();
+                                        _a.sent();
                                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                                     case 2:
                                         subscription = _a.sent();
