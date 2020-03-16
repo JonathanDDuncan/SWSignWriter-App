@@ -1,7 +1,9 @@
+import { StripeService } from './../stripe.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-subscribe',
@@ -11,9 +13,12 @@ import { StorageService } from '../storage.service';
 export class SubscribePage implements OnInit {
   public buttonDisabled: boolean | null = null;
   public subscriptionEndDate: string;
+  public autoRenewal: boolean;
 
   constructor(private http: HttpClient,
     private storage: StorageService,
+    private alertController: AlertController,
+    private stripeservice: StripeService,
     private router: Router
      ) { }
   private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
@@ -24,19 +29,17 @@ export class SubscribePage implements OnInit {
       this.router.navigate(['/login']);
     }
     const subscription = await this.storage.GetSubscription(profile.email);
-    const subscribed = subscription && subscription.endDate && !subscription.cancelatperiodend;
+    const subscribed = subscription && subscription.endDate && subscription.cancelatperiodend ;
     if (subscribed) {
       this.buttonDisabled = true;
-
-      const d = new Date(subscription.endDate);
-      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-      const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-      this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
-
     } else {
-      this.buttonDisabled = null;
+      this.buttonDisabled = false;
     }
+    const d = new Date(subscription.endDate);
+    const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
   }
 
   async SubscribeMonthly() {
@@ -91,5 +94,46 @@ export class SubscribePage implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+  async CancelRenewal() {
+    const alert = await this.alertController.create({
+    header: 'Cancel automatic renewal',
+    message: 'Are you <strong>sure</strong> you want to remove automatic renewal?',
+    buttons: [
+      {
+        text: 'Disagree',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel');
+        }
+      }, {
+        text: 'Agree',
+        handler: async () => {
+          console.log('Confirm Okay');
+          const profile = await this.storage.GetCurrentUserProfile();
+          const request = { privatekey:
+            '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+            email: profile.email};
+          await this.http.post(this.serverUrl + 'api/stripe/cancelrenewal', request, {
+            headers: new HttpHeaders({
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            })
+            }).toPromise();
+            this.stripeservice.GetandSaveSubscriptionData(profile.email);
+            const subscription: any = await this.storage.GetSubscription(profile.email);
+            const d = subscription.endDate;
+            const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+            const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+            const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+            this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+            this.autoRenewal = subscription.CancelAtPeriodEnd;
+        }
+      }
+    ]
+  });
+
+  await alert.present();
   }
 }
