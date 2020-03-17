@@ -91,15 +91,17 @@ module.exports = ".sign {\n  padding: 0; }\n\n.editbutton {\n  margin: 5px; }\n\
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditPage", function() { return EditPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _settings_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../settings.service */ "./src/app/settings.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _choose_sign_choose_sign_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../choose-sign/choose-sign.page */ "./src/app/choose-sign/choose-sign.page.ts");
-/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../signs-lookup.service */ "./src/app/signs-lookup.service.ts");
-/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
+/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
+/* harmony import */ var _settings_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../settings.service */ "./src/app/settings.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _choose_sign_choose_sign_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../choose-sign/choose-sign.page */ "./src/app/choose-sign/choose-sign.page.ts");
+/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../signs-lookup.service */ "./src/app/signs-lookup.service.ts");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
+
 
 
 
@@ -111,12 +113,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var EditPage = /** @class */ (function () {
-    function EditPage(modalController, documentService, settingsService, router) {
+    function EditPage(modalController, documentService, settingsService, subscriptionService, router) {
         this.modalController = modalController;
         this.documentService = documentService;
         this.settingsService = settingsService;
+        this.subscriptionService = subscriptionService;
         this.router = router;
-        this.Lane = _signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__["Lane"];
+        this.Lane = _signs_lookup_service__WEBPACK_IMPORTED_MODULE_9__["Lane"];
     }
     EditPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -124,6 +127,7 @@ var EditPage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        this.subscriptionService.CanUse();
                         this.editedDocument = {
                             editedsigns: []
                         };
@@ -146,8 +150,8 @@ var EditPage = /** @class */ (function () {
     };
     EditPage.prototype.ngAfterViewInit = function () {
         var _this = this;
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["fromEvent"])(this.searchRef.nativeElement, 'keyup')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (evt) { return evt.target.value; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["debounceTime"])(100), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["distinctUntilChanged"])())
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["fromEvent"])(this.searchRef.nativeElement, 'keyup')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (evt) { return evt.target.value; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["debounceTime"])(100), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["distinctUntilChanged"])())
             // subscription
             .subscribe(function (text) {
             _this.documentService.searchFrase(text);
@@ -171,7 +175,7 @@ var EditPage = /** @class */ (function () {
                     case 0:
                         searchWord = this.documentService.getSearchWord(index);
                         return [4 /*yield*/, this.modalController.create({
-                                component: _choose_sign_choose_sign_page__WEBPACK_IMPORTED_MODULE_7__["ChooseSignPage"],
+                                component: _choose_sign_choose_sign_page__WEBPACK_IMPORTED_MODULE_8__["ChooseSignPage"],
                                 componentProps: {
                                     searchword: searchWord
                                 }
@@ -196,25 +200,26 @@ var EditPage = /** @class */ (function () {
     EditPage.prototype.resetEntries = function () { };
     EditPage.prototype.laneStyle = function (lane) {
         switch (lane) {
-            case (_signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__["Lane"].Left): return 'lane-left';
-            case (_signs_lookup_service__WEBPACK_IMPORTED_MODULE_8__["Lane"].Right): return 'lane-right';
+            case (_signs_lookup_service__WEBPACK_IMPORTED_MODULE_9__["Lane"].Left): return 'lane-left';
+            case (_signs_lookup_service__WEBPACK_IMPORTED_MODULE_9__["Lane"].Right): return 'lane-right';
             default: return 'lane-middle';
         }
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"])('searchRef', { read: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ElementRef"] }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ElementRef"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ViewChild"])('searchRef', { read: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"] }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"])
     ], EditPage.prototype, "searchRef", void 0);
     EditPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({
             selector: 'app-edit',
             template: __webpack_require__(/*! ./edit.page.html */ "./src/app/edit/edit.page.html"),
             styles: [__webpack_require__(/*! ./edit.page.scss */ "./src/app/edit/edit.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_6__["ModalController"],
-            _document_service__WEBPACK_IMPORTED_MODULE_9__["DocumentService"],
-            _settings_service__WEBPACK_IMPORTED_MODULE_1__["SettingsService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_7__["ModalController"],
+            _document_service__WEBPACK_IMPORTED_MODULE_10__["DocumentService"],
+            _settings_service__WEBPACK_IMPORTED_MODULE_2__["SettingsService"],
+            _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__["SubscriptionService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], EditPage);
     return EditPage;
 }());

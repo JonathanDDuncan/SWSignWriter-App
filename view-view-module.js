@@ -90,12 +90,12 @@ module.exports = ".document {\n  width: 100%;\n  height: 100%;\n  overflow: auto
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewPage", function() { return ViewPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
-/* harmony import */ var _social_sharing_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../social-sharing.service */ "./src/app/social-sharing.service.ts");
+/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
 /* harmony import */ var _show_image_show_image_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../show-image/show-image.page */ "./src/app/show-image/show-image.page.ts");
 
 
@@ -106,28 +106,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ViewPage = /** @class */ (function () {
-    function ViewPage(modalController, documentService, socialSharingService, translate, router) {
+    function ViewPage(modalController, documentService, subscriptionService, translate, router) {
         var _this = this;
         this.modalController = modalController;
         this.documentService = documentService;
-        this.socialSharingService = socialSharingService;
+        this.subscriptionService = subscriptionService;
         this.translate = translate;
         this.router = router;
         this.imageheight = 199;
         // Force fonts to load before anything is shown
         this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
         this.router.events.subscribe(function (event) {
-            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationStart"]) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationStart"]) {
                 var fsw = _this.documentService.getFSW();
                 _this.document = ssw.paragraph(fsw);
                 _this.imageheight = 200;
             }
-            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 // Hide loading indicator
             }
         });
     }
-    ViewPage.prototype.ngOnInit = function () { };
+    ViewPage.prototype.ngOnInit = function () {
+        this.subscriptionService.CanUse();
+    };
     ViewPage.prototype.ionViewWillEnter = function () {
         var fsw = this.documentService.getFSW();
         this.document = ssw.paragraph(fsw);
@@ -180,16 +182,16 @@ var ViewPage = /** @class */ (function () {
         return !!window.cordova;
     };
     ViewPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
             selector: 'app-view',
             template: __webpack_require__(/*! ./view.page.html */ "./src/app/view/view.page.html"),
             styles: [__webpack_require__(/*! ./view.page.scss */ "./src/app/view/view.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"],
-            _document_service__WEBPACK_IMPORTED_MODULE_5__["DocumentService"],
-            _social_sharing_service__WEBPACK_IMPORTED_MODULE_6__["SocialSharingService"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"],
+            _document_service__WEBPACK_IMPORTED_MODULE_6__["DocumentService"],
+            _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__["SubscriptionService"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], ViewPage);
     return ViewPage;
 }());

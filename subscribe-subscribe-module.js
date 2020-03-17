@@ -130,7 +130,7 @@ var SubscribePage = /** @class */ (function () {
                         mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
                         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
                         this.subscriptionEndDate = da + "-" + mo + "-" + ye;
-                        this.autoRenewal = subscription.cancelatperiodend;
+                        this.autoRenewal = !subscription.cancelatperiodend;
                         return [2 /*return*/];
                 }
             });
@@ -263,7 +263,7 @@ var SubscribePage = /** @class */ (function () {
                                                         }).toPromise()];
                                                 case 2:
                                                     _a.sent();
-                                                    this.stripeservice.GetandSaveSubscriptionData(profile.email);
+                                                    this.stripeservice.GetandSaveStripeSubscriptionData(profile.email);
                                                     return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                                                 case 3:
                                                     subscription = _a.sent();

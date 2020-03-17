@@ -615,12 +615,12 @@ module.exports = ".hr-margin-bottom {\n  margin-bottom: 16px; }\n\n.hr-black {\n
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SettingsPage", function() { return SettingsPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _settings_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../settings.service */ "./src/app/settings.service.ts");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _settings_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../settings.service */ "./src/app/settings.service.ts");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 
 
 
@@ -630,13 +630,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SettingsPage = /** @class */ (function () {
-    function SettingsPage(settingsService, alertController, translate, toastController, translateService, http, router) {
+    function SettingsPage(settingsService, alertController, translate, toastController, translateService, subscriptionService, router) {
         this.settingsService = settingsService;
         this.alertController = alertController;
         this.translate = translate;
         this.toastController = toastController;
         this.translateService = translateService;
-        this.http = http;
+        this.subscriptionService = subscriptionService;
         this.router = router;
     }
     SettingsPage.prototype.upload = function (event) {
@@ -652,6 +652,7 @@ var SettingsPage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
                 switch (_b.label) {
                     case 0:
+                        this.subscriptionService.CanUse();
                         _a = this;
                         return [4 /*yield*/, this.currentUILanguage()];
                     case 1:
@@ -799,18 +800,18 @@ var SettingsPage = /** @class */ (function () {
         });
     };
     SettingsPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-settings',
             template: __webpack_require__(/*! ./settings.page.html */ "./src/app/settings/settings.page.html"),
             styles: [__webpack_require__(/*! ./settings.page.scss */ "./src/app/settings/settings.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_settings_service__WEBPACK_IMPORTED_MODULE_3__["SettingsService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ToastController"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClient"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_settings_service__WEBPACK_IMPORTED_MODULE_4__["SettingsService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
+            _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__["SubscriptionService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], SettingsPage);
     return SettingsPage;
 }());
