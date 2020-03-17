@@ -1,10 +1,10 @@
+import { SubscriptionService } from './../services/subscription.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { DocumentService } from '../document.service';
-import { SocialSharingService } from '../social-sharing.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 
 
@@ -22,7 +22,7 @@ export class ViewPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private documentService: DocumentService,
-    private socialSharingService: SocialSharingService,
+    private subscriptionService: SubscriptionService,
     public translate: TranslateService,
     private router: Router
   ) {
@@ -42,7 +42,9 @@ export class ViewPage implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.subscriptionService.CanUse();
+   }
 
   ionViewWillEnter() {
     const fsw = this.documentService.getFSW();

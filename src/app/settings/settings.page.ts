@@ -1,4 +1,4 @@
-import { StorageService } from './../storage.service';
+import { SubscriptionService } from './../services/subscription.service';
 import { Component, OnInit } from '@angular/core';
 import {
   UploadEvent,
@@ -9,10 +9,7 @@ import { Router } from '@angular/router';
 
 import { SettingsService } from '../settings.service';
 import { AlertController } from '@ionic/angular';
-import { SharedModule } from '../shared/shared.module';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/internal/operators/tap';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -23,14 +20,14 @@ import { ToastController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
   public UILanguage: string;
   public puddleID: string;
-  
+
   constructor(private settingsService: SettingsService,
-    private alertController: AlertController,
-    private translate: TranslateService,
-    public toastController: ToastController,
-    private translateService: TranslateService,
-    private http: HttpClient,
-    private router: Router) { }
+  private alertController: AlertController,
+  private translate: TranslateService,
+  public toastController: ToastController,
+  private translateService: TranslateService,
+  private subscriptionService: SubscriptionService,
+  private router: Router) { }
 
   upload(event) {
     const file = event.target.files[0];
@@ -42,6 +39,7 @@ export class SettingsPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.subscriptionService.CanUse();
     this.UILanguage = await this.currentUILanguage();
     this.settingsService.setFirstTime();
   }

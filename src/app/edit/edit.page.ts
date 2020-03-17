@@ -1,3 +1,4 @@
+import { SubscriptionService } from './../services/subscription.service';
 import { SettingsService } from './../settings.service';
 import { Router } from '@angular/router';
 import {
@@ -35,10 +36,12 @@ export class EditPage implements OnInit, AfterViewInit {
     public modalController: ModalController,
     private documentService: DocumentService,
     private settingsService: SettingsService,
+    private subscriptionService: SubscriptionService,
     private router: Router
   ) { }
 
   async ngOnInit() {
+    this.subscriptionService.CanUse();
     this.editedDocument = {
       editedsigns: []
     };
