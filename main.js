@@ -467,10 +467,12 @@ var map = {
 	],
 	"./stripesuccess/stripesuccess.module": [
 		"./src/app/stripesuccess/stripesuccess.module.ts",
+		"common",
 		"stripesuccess-stripesuccess-module"
 	],
 	"./subscribe/subscribe.module": [
 		"./src/app/subscribe/subscribe.module.ts",
+		"common",
 		"subscribe-subscribe-module"
 	],
 	"./view/view.module": [
@@ -1094,70 +1096,49 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CallbackComponent", function() { return CallbackComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _stripe_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../stripe.service */ "./src/app/stripe.service.ts");
-/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../storage.service */ "./src/app/storage.service.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../auth.service */ "./src/app/auth.service.ts");
-
+/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth.service */ "./src/app/auth.service.ts");
 
 
 
 
 var CallbackComponent = /** @class */ (function () {
-    function CallbackComponent(auth, storage, stripeservice) {
+    function CallbackComponent(auth, storage) {
         this.auth = auth;
         this.storage = storage;
-        this.stripeservice = stripeservice;
     }
     CallbackComponent.prototype.ngOnInit = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _this = this;
+        var _this = this;
+        this.auth.userProfile$.subscribe(function (userProfile) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+            var trialDate;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.auth.userProfile$.subscribe(function (userProfile) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                    var profile, trialDate;
-                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                        switch (_a.label) {
-                            case 0:
-                                debugger;
-                                if (!!userProfile) return [3 /*break*/, 3];
-                                return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
-                            case 1:
-                                profile = _a.sent();
-                                return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(profile.email)];
-                            case 2:
-                                _a.sent();
-                                _a.label = 3;
-                            case 3:
-                                if (!userProfile) return [3 /*break*/, 6];
-                                return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(userProfile.email)];
-                            case 4:
-                                _a.sent();
-                                this.storage.SaveCurrentUserProfile(userProfile);
-                                return [4 /*yield*/, this.storage.GetTrialStartDate(userProfile.email)];
-                            case 5:
-                                trialDate = _a.sent();
-                                if (!trialDate) {
-                                    this.storage.SaveTrialStartDate(userProfile.email, new Date());
-                                }
-                                _a.label = 6;
-                            case 6: return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        console.log('userProfile');
+                        console.log(userProfile);
+                        if (!userProfile) return [3 /*break*/, 2];
+                        this.storage.SaveCurrentUserProfile(userProfile);
+                        return [4 /*yield*/, this.storage.GetTrialStartDate(userProfile.email)];
+                    case 1:
+                        trialDate = _a.sent();
+                        if (!trialDate) {
+                            this.storage.SaveTrialStartDate(userProfile.email, new Date());
                         }
-                    });
-                }); });
-                this.auth.handleAuthCallback();
-                return [2 /*return*/];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
             });
-        });
+        }); });
+        this.auth.handleAuthCallback();
     };
     CallbackComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-callback',
             template: __webpack_require__(/*! ./callback.component.html */ "./src/app/callback/callback.component.html"),
             styles: [__webpack_require__(/*! ./callback.component.scss */ "./src/app/callback/callback.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"],
-            _storage_service__WEBPACK_IMPORTED_MODULE_2__["StorageService"],
-            _stripe_service__WEBPACK_IMPORTED_MODULE_1__["StripeService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _storage_service__WEBPACK_IMPORTED_MODULE_1__["StorageService"]])
     ], CallbackComponent);
     return CallbackComponent;
 }());
@@ -3156,71 +3137,6 @@ var StorageService = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"]])
     ], StorageService);
     return StorageService;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/stripe.service.ts":
-/*!***********************************!*\
-  !*** ./src/app/stripe.service.ts ***!
-  \***********************************/
-/*! exports provided: StripeService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StripeService", function() { return StripeService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storage.service */ "./src/app/storage.service.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-
-
-
-
-var StripeService = /** @class */ (function () {
-    function StripeService(http, storage) {
-        this.http = http;
-        this.storage = storage;
-        this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-    }
-    StripeService.prototype.GetandSaveStripeSubscriptionData = function (email, sessionId) {
-        if (sessionId === void 0) { sessionId = null; }
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var subscriptionData, data;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        subscriptionData = {
-                            privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-                            email: email,
-                            sessionId: sessionId
-                        };
-                        return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
-                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-                                    Accept: 'application/json',
-                                    'Content-Type': 'application/json'
-                                })
-                            }).toPromise()];
-                    case 1:
-                        data = _a.sent();
-                        console.log(data);
-                        this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    StripeService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])({
-            providedIn: 'root'
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            _storage_service__WEBPACK_IMPORTED_MODULE_1__["StorageService"]])
-    ], StripeService);
-    return StripeService;
 }());
 
 

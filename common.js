@@ -374,6 +374,71 @@ var blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed
 
 
 
+/***/ }),
+
+/***/ "./src/app/stripe.service.ts":
+/*!***********************************!*\
+  !*** ./src/app/stripe.service.ts ***!
+  \***********************************/
+/*! exports provided: StripeService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StripeService", function() { return StripeService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+
+var StripeService = /** @class */ (function () {
+    function StripeService(http, storage) {
+        this.http = http;
+        this.storage = storage;
+        this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+    }
+    StripeService.prototype.GetandSaveStripeSubscriptionData = function (email, sessionId) {
+        if (sessionId === void 0) { sessionId = null; }
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var subscriptionData, data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        subscriptionData = {
+                            privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+                            email: email,
+                            sessionId: sessionId
+                        };
+                        return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
+                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json'
+                                })
+                            }).toPromise()];
+                    case 1:
+                        data = _a.sent();
+                        console.log(data);
+                        this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    StripeService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+            _storage_service__WEBPACK_IMPORTED_MODULE_1__["StorageService"]])
+    ], StripeService);
+    return StripeService;
+}());
+
+
+
 /***/ })
 
 }]);
