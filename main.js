@@ -1117,22 +1117,29 @@ var CallbackComponent = /** @class */ (function () {
                     var profile, trialDate;
                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                            case 0:
+                                if (!!userProfile) return [3 /*break*/, 3];
+                                return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                             case 1:
                                 profile = _a.sent();
                                 return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(profile.email)];
                             case 2:
                                 _a.sent();
-                                if (!userProfile) return [3 /*break*/, 4];
+                                _a.label = 3;
+                            case 3:
+                                if (!userProfile) return [3 /*break*/, 6];
+                                return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(userProfile.email)];
+                            case 4:
+                                _a.sent();
                                 this.storage.SaveCurrentUserProfile(userProfile);
                                 return [4 /*yield*/, this.storage.GetTrialStartDate(userProfile.email)];
-                            case 3:
+                            case 5:
                                 trialDate = _a.sent();
                                 if (!trialDate) {
                                     this.storage.SaveTrialStartDate(userProfile.email, new Date());
                                 }
-                                _a.label = 4;
-                            case 4: return [2 /*return*/];
+                                _a.label = 6;
+                            case 6: return [2 /*return*/];
                         }
                     });
                 }); });
