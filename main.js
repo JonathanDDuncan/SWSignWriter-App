@@ -1118,6 +1118,7 @@ var CallbackComponent = /** @class */ (function () {
                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                         switch (_a.label) {
                             case 0:
+                                debugger;
                                 if (!!userProfile) return [3 /*break*/, 3];
                                 return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                             case 1:
