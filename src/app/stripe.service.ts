@@ -11,7 +11,7 @@ export class StripeService {
     private storage: StorageService
    ) { }
     private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-    public async  GetandSaveSubscriptionData(
+    public async  GetandSaveStripeSubscriptionData(
     email: string,
     sessionId: string = null
   ) {

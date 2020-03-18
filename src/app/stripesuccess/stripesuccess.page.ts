@@ -33,7 +33,7 @@ export class StripesuccessPage implements OnInit {
     this.route.queryParamMap.subscribe(async (params: any) => {
       const sessionid = params.params['session_id'];
 
-      await this.stripeservice.GetandSaveSubscriptionData(profile.email, sessionid);
+      await this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid);
       const subscription: any = await this.storage.GetSubscription(profile.email);
       debugger;
       console.log('subscription');

@@ -35,7 +35,7 @@ export class SubscribePage implements OnInit {
     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
     this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
-    this.autoRenewal = subscription.cancelatperiodend;
+    this.autoRenewal = !subscription.cancelatperiodend;
   }
 
   private SetButtonDisabled( endDate: Date) {
@@ -123,7 +123,7 @@ export class SubscribePage implements OnInit {
               'Content-Type': 'application/json',
             })
             }).toPromise();
-            this.stripeservice.GetandSaveSubscriptionData(profile.email);
+            this.stripeservice.GetandSaveStripeSubscriptionData(profile.email);
             const subscription: any = await this.storage.GetSubscription(profile.email);
             const d = subscription.endDate;
             const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
