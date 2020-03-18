@@ -1110,27 +1110,36 @@ var CallbackComponent = /** @class */ (function () {
         this.stripeservice = stripeservice;
     }
     CallbackComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.auth.userProfile$.subscribe(function (userProfile) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-            var trialDate;
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.stripeservice.GetandSaveStripeSubscriptionData(userProfile.email);
-                        if (!userProfile) return [3 /*break*/, 2];
-                        this.storage.SaveCurrentUserProfile(userProfile);
-                        return [4 /*yield*/, this.storage.GetTrialStartDate(userProfile.email)];
-                    case 1:
-                        trialDate = _a.sent();
-                        if (!trialDate) {
-                            this.storage.SaveTrialStartDate(userProfile.email, new Date());
+                this.auth.userProfile$.subscribe(function (userProfile) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                    var profile, trialDate;
+                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                            case 1:
+                                profile = _a.sent();
+                                return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(profile.email)];
+                            case 2:
+                                _a.sent();
+                                if (!userProfile) return [3 /*break*/, 4];
+                                this.storage.SaveCurrentUserProfile(userProfile);
+                                return [4 /*yield*/, this.storage.GetTrialStartDate(userProfile.email)];
+                            case 3:
+                                trialDate = _a.sent();
+                                if (!trialDate) {
+                                    this.storage.SaveTrialStartDate(userProfile.email, new Date());
+                                }
+                                _a.label = 4;
+                            case 4: return [2 /*return*/];
                         }
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
-                }
+                    });
+                }); });
+                this.auth.handleAuthCallback();
+                return [2 /*return*/];
             });
-        }); });
-        this.auth.handleAuthCallback();
+        });
     };
     CallbackComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
