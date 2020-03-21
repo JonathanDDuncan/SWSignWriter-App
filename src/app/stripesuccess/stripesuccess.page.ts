@@ -35,9 +35,6 @@ export class StripesuccessPage implements OnInit {
 
       await this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid);
       const subscription: any = await this.storage.GetSubscription(profile.email);
-      debugger;
-      console.log('subscription');
-      console.log(subscription);
       const d = new  Date(subscription.endDate);
       const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
       const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);

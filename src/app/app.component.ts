@@ -27,8 +27,9 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang('en');
 
     settingsService.getUILanguage().then(language => {
-      console.log(language);
-      this.translate.use(language);
+      if (language) {
+        this.translate.use(language);
+      }
     });
 
     this.initializeApp();
@@ -65,17 +66,17 @@ export class AppComponent implements OnInit {
                 {
                   title: subscription,
                   url: '/subscribe',
-                  icon: 'subscription'
+                  icon: 'card'
                 },
                 {
                   title: about,
                   url: '/about',
-                  icon: 'about'
+                  icon: 'information-circle-outline'
                 },
                 {
                   title: logout,
                   url: '/logout',
-                  icon: 'logout'
+                  icon: 'exit'
                 }
               ];
             });

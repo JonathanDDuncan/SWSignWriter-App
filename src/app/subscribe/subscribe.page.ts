@@ -29,6 +29,7 @@ export class SubscribePage implements OnInit {
       this.router.navigate(['/login']);
     }
     const subscription = await this.storage.GetSubscription(profile.email);
+    if (subscription) {
     this.SetButtonDisabled(subscription.endDate);
     const d = new Date(subscription.endDate);
     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
@@ -36,6 +37,7 @@ export class SubscribePage implements OnInit {
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
     this.subscriptionEndDate =  `${da}-${mo}-${ye}`;
     this.autoRenewal = !subscription.cancelatperiodend;
+  }
   }
 
   private SetButtonDisabled( endDate: Date) {
@@ -63,7 +65,6 @@ export class SubscribePage implements OnInit {
       subscriptionEndDate = subscription.endDate;
   }
     const trialStartDate = await this.storage.GetTrialStartDate(profile.email);
-    console.log(profile);
 
     const request: any  = profile;
     request.planId = planId;
@@ -107,12 +108,10 @@ export class SubscribePage implements OnInit {
         role: 'cancel',
         cssClass: 'secondary',
         handler: (blah) => {
-          console.log('Confirm Cancel');
         }
       }, {
         text: 'Agree',
         handler: async () => {
-          console.log('Confirm Okay');
           const profile = await this.storage.GetCurrentUserProfile();
           const request = { privatekey:
             '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',

@@ -1,6 +1,6 @@
 {
-  "name": "Quick Sign Document",
-  "short_name": "QSD",
+  "name": "SWSignWriter",
+  "short_name": "SWSW",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

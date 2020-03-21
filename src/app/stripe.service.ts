@@ -30,7 +30,6 @@ export class StripeService {
         })
       }).toPromise();
 
-      console.log(data);
         this.storage.SaveSubscription(
           data.Email,
           data.SubscriptionEndDate,

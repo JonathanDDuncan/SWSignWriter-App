@@ -154,7 +154,6 @@ export class StorageService {
     const cleaned = atob(this.Clean(value));
 
     if (cleaned && cleaned !== 'ée') {
-      console.log(cleaned);
       const endDate = new Date(cleaned);
       return endDate;
     } else {

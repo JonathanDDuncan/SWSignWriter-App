@@ -77,20 +77,7 @@ export class ViewPage implements OnInit {
     return this.router.navigateByUrl('/edit');
   }
 
-  private async sharecontinuation(fsw: string) {
-    // const node: any = document.getElementsByClassName('signtext')[0];
-
-    // const img = new Image();
-    // console.log('sharecontinuation');
-
-    //  await htmlToImage.toPng(node).then(function (dataUrl) {
-    //   img.src = dataUrl;
-    //   img.crossOrigin = 'anonymous';
-    //   this.socialSharingService.share(img);
-    //   // reset back to the way it was with svg
-    //   this.document = ssw.paragraph(fsw);
-    // });
-  }
+  private async sharecontinuation(fsw: string) {}
 
   isCordova() {
     return !!window.cordova;
