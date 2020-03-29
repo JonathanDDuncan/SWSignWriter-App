@@ -44,7 +44,7 @@ export class ViewPage implements OnInit {
 
   ngOnInit() {
     this.subscriptionService.CanUse();
-   }
+  }
 
   ionViewWillEnter() {
     const fsw = this.documentService.getFSW();
@@ -60,7 +60,7 @@ export class ViewPage implements OnInit {
 
   public async copy() {
     const fsw = this.documentService.getFSW();
-    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight ) as HTMLCanvasElement;
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
     const modal = await this.modalController.create({
       component: ShowImagePage,
       componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
@@ -77,7 +77,7 @@ export class ViewPage implements OnInit {
     return this.router.navigateByUrl('/edit');
   }
 
-  private async sharecontinuation(fsw: string) {}
+  private async sharecontinuation(fsw: string) { }
 
   isCordova() {
     return !!window.cordova;
