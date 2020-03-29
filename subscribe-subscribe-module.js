@@ -124,13 +124,15 @@ var SubscribePage = /** @class */ (function () {
                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                     case 2:
                         subscription = _a.sent();
-                        this.SetButtonDisabled(subscription.endDate);
-                        d = new Date(subscription.endDate);
-                        ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-                        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-                        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-                        this.subscriptionEndDate = da + "-" + mo + "-" + ye;
-                        this.autoRenewal = !subscription.cancelatperiodend;
+                        if (subscription) {
+                            this.SetButtonDisabled(subscription.endDate);
+                            d = new Date(subscription.endDate);
+                            ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                            this.subscriptionEndDate = da + "-" + mo + "-" + ye;
+                            this.autoRenewal = !subscription.cancelatperiodend;
+                        }
                         return [2 /*return*/];
                 }
             });
@@ -188,7 +190,6 @@ var SubscribePage = /** @class */ (function () {
                         return [4 /*yield*/, this.storage.GetTrialStartDate(profile.email)];
                     case 3:
                         trialStartDate = _a.sent();
-                        console.log(profile);
                         request = profile;
                         request.planId = planId;
                         request.trialStartDate = trialStartDate;
@@ -240,7 +241,6 @@ var SubscribePage = /** @class */ (function () {
                                     role: 'cancel',
                                     cssClass: 'secondary',
                                     handler: function (blah) {
-                                        console.log('Confirm Cancel');
                                     }
                                 }, {
                                     text: 'Agree',
@@ -248,9 +248,7 @@ var SubscribePage = /** @class */ (function () {
                                         var profile, request, subscription, d, ye, mo, da;
                                         return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                             switch (_a.label) {
-                                                case 0:
-                                                    console.log('Confirm Okay');
-                                                    return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
+                                                case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                                                 case 1:
                                                     profile = _a.sent();
                                                     request = { privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',

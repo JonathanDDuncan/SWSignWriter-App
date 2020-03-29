@@ -461,6 +461,9 @@ var map = {
 		"./src/app/settings/settings.module.ts",
 		"settings-settings-module"
 	],
+	"./share/share.module": [
+		"./src/app/share/share.module.ts"
+	],
 	"./stripecancel/stripecancel.module": [
 		"./src/app/stripecancel/stripecancel.module.ts",
 		"stripecancel-stripecancel-module"
@@ -607,6 +610,7 @@ var routes = [
     },
     { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
     { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
+    { path: 'share', loadChildren: './share/share.module#SharePageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -631,7 +635,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.93)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.94)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -669,8 +673,9 @@ var AppComponent = /** @class */ (function () {
         this.translate = translate;
         this.translate.setDefaultLang('en');
         settingsService.getUILanguage().then(function (language) {
-            console.log(language);
-            _this.translate.use(language);
+            if (language) {
+                _this.translate.use(language);
+            }
         });
         this.initializeApp();
         platform.ready().then(function () {
@@ -705,17 +710,17 @@ var AppComponent = /** @class */ (function () {
                                 {
                                     title: subscription,
                                     url: '/subscribe',
-                                    icon: 'subscription'
+                                    icon: 'card'
                                 },
                                 {
                                     title: about,
                                     url: '/about',
-                                    icon: 'about'
+                                    icon: 'information-circle-outline'
                                 },
                                 {
                                     title: logout,
                                     url: '/logout',
-                                    icon: 'logout'
+                                    icon: 'exit'
                                 }
                             ];
                         });
@@ -761,31 +766,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTranslateLoader", function() { return createTranslateLoader; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _services_authorization_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/authorization.service */ "./src/app/services/authorization.service.ts");
-/* harmony import */ var _profile_profile_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile/profile.component */ "./src/app/profile/profile.component.ts");
-/* harmony import */ var _callback_callback_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./callback/callback.component */ "./src/app/callback/callback.component.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/service-worker */ "./node_modules/@angular/service-worker/fesm5/service-worker.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm5/ngx-translate-http-loader.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
-/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
-/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
-/* harmony import */ var _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/social-sharing/ngx */ "./node_modules/@ionic-native/social-sharing/ngx/index.js");
-/* harmony import */ var _show_image_show_image_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./show-image/show-image.module */ "./src/app/show-image/show-image.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./choose-sign/choose-sign.module */ "./src/app/choose-sign/choose-sign.module.ts");
-/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
-/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./signs-lookup.service */ "./src/app/signs-lookup.service.ts");
-/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./document.service */ "./src/app/document.service.ts");
-/* harmony import */ var _social_sharing_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./social-sharing.service */ "./src/app/social-sharing.service.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _share_share_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./share/share.module */ "./src/app/share/share.module.ts");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _services_authorization_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/authorization.service */ "./src/app/services/authorization.service.ts");
+/* harmony import */ var _profile_profile_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./profile/profile.component */ "./src/app/profile/profile.component.ts");
+/* harmony import */ var _callback_callback_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./callback/callback.component */ "./src/app/callback/callback.component.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/service-worker */ "./node_modules/@angular/service-worker/fesm5/service-worker.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm5/ngx-translate-http-loader.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
+/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
+/* harmony import */ var _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/social-sharing/ngx */ "./node_modules/@ionic-native/social-sharing/ngx/index.js");
+/* harmony import */ var _show_image_show_image_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./show-image/show-image.module */ "./src/app/show-image/show-image.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./choose-sign/choose-sign.module */ "./src/app/choose-sign/choose-sign.module.ts");
+/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
+/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./signs-lookup.service */ "./src/app/signs-lookup.service.ts");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./document.service */ "./src/app/document.service.ts");
+/* harmony import */ var _social_sharing_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./social-sharing.service */ "./src/app/social-sharing.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+
 
 
 
@@ -816,53 +823,54 @@ var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["NgModule"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_6__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_18__["AppComponent"],
-                _callback_callback_component__WEBPACK_IMPORTED_MODULE_4__["CallbackComponent"],
-                _profile_profile_component__WEBPACK_IMPORTED_MODULE_3__["ProfileComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_19__["AppComponent"],
+                _callback_callback_component__WEBPACK_IMPORTED_MODULE_5__["CallbackComponent"],
+                _profile_profile_component__WEBPACK_IMPORTED_MODULE_4__["ProfileComponent"]
             ],
             entryComponents: [],
             imports: [
-                _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__["BrowserModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"],
-                _ionic_angular__WEBPACK_IMPORTED_MODULE_12__["IonicModule"].forRoot(),
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"].forRoot({
+                _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__["BrowserModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClientModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_13__["IonicModule"].forRoot(),
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"].forRoot({
                     loader: {
-                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateLoader"],
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateLoader"],
                         useFactory: (createTranslateLoader),
-                        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClient"]]
+                        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClient"]]
                     }
                 }),
-                _ionic_storage__WEBPACK_IMPORTED_MODULE_15__["IonicStorageModule"].forRoot({
+                _ionic_storage__WEBPACK_IMPORTED_MODULE_16__["IonicStorageModule"].forRoot({
                     name: '__swsignwriterdb'
                 }),
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_19__["AppRoutingModule"],
-                _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_20__["ChooseSignPageModule"],
-                _show_image_show_image_module__WEBPACK_IMPORTED_MODULE_17__["ShowImagePageModule"],
-                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_21__["PipesModule"],
-                _angular_service_worker__WEBPACK_IMPORTED_MODULE_9__["ServiceWorkerModule"].register('ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_25__["environment"].production })
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_20__["AppRoutingModule"],
+                _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_21__["ChooseSignPageModule"],
+                _show_image_show_image_module__WEBPACK_IMPORTED_MODULE_18__["ShowImagePageModule"],
+                _share_share_module__WEBPACK_IMPORTED_MODULE_1__["SharePageModule"],
+                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_22__["PipesModule"],
+                _angular_service_worker__WEBPACK_IMPORTED_MODULE_10__["ServiceWorkerModule"].register('ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_26__["environment"].production })
             ],
-            exports: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"]],
+            exports: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"]],
             providers: [
-                _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_14__["StatusBar"],
-                _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_13__["SplashScreen"],
-                { provide: _angular_router__WEBPACK_IMPORTED_MODULE_7__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__["IonicRouteStrategy"] },
-                _signs_lookup_service__WEBPACK_IMPORTED_MODULE_22__["SignsLookupService"],
-                _document_service__WEBPACK_IMPORTED_MODULE_23__["DocumentService"],
-                _social_sharing_service__WEBPACK_IMPORTED_MODULE_24__["SocialSharingService"],
-                _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_16__["SocialSharing"],
-                _services_authorization_service__WEBPACK_IMPORTED_MODULE_2__["AuthorizationService"],
-                _services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]
+                _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_15__["StatusBar"],
+                _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_14__["SplashScreen"],
+                { provide: _angular_router__WEBPACK_IMPORTED_MODULE_8__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__["IonicRouteStrategy"] },
+                _signs_lookup_service__WEBPACK_IMPORTED_MODULE_23__["SignsLookupService"],
+                _document_service__WEBPACK_IMPORTED_MODULE_24__["DocumentService"],
+                _social_sharing_service__WEBPACK_IMPORTED_MODULE_25__["SocialSharingService"],
+                _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_17__["SocialSharing"],
+                _services_authorization_service__WEBPACK_IMPORTED_MODULE_3__["AuthorizationService"],
+                _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_18__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_19__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
 }());
 
 function createTranslateLoader(http) {
-    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_11__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
+    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
 }
 
 
@@ -1116,8 +1124,6 @@ var CallbackComponent = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log('userProfile');
-                        console.log(userProfile);
                         if (!userProfile) return [3 /*break*/, 2];
                         this.storage.SaveCurrentUserProfile(userProfile);
                         this.stripeService.GetandSaveStripeSubscriptionData(userProfile.email);
@@ -2371,6 +2377,161 @@ var SettingsService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/share/share.module.ts":
+/*!***************************************!*\
+  !*** ./src/app/share/share.module.ts ***!
+  \***************************************/
+/*! exports provided: SharePageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SharePageModule", function() { return SharePageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _share_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./share.page */ "./src/app/share/share.page.ts");
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: '',
+        component: _share_page__WEBPACK_IMPORTED_MODULE_6__["SharePage"]
+    }
+];
+var SharePageModule = /** @class */ (function () {
+    function SharePageModule() {
+    }
+    SharePageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes)
+            ],
+            declarations: [_share_page__WEBPACK_IMPORTED_MODULE_6__["SharePage"]]
+        })
+    ], SharePageModule);
+    return SharePageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/share/share.page.html":
+/*!***************************************!*\
+  !*** ./src/app/share/share.page.html ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div>\n  \n    <div class=\"link\">\n      <button (click)=\"copyToClipboard($event)\" class=\"copy-link\">Copy Image</button>\n    </div>\n  </div>\n</ion-content>\n"
+
+/***/ }),
+
+/***/ "./src/app/share/share.page.scss":
+/*!***************************************!*\
+  !*** ./src/app/share/share.page.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "html {\n  box-sizing: border-box; }\n\n*, *::before, *::after {\n  box-sizing: inherit;\n  padding: 0;\n  margin: 0; }\n\nbody {\n  font-family: -apple-system,BlinkMacSystemFont,San Francisco,Helvetica Neue,Helvetica,Ubuntu,Roboto,Noto,Segoe UI,Arial,sans-serif; }\n\n.hidden {\n  display: none; }\n\nsvg {\n  width: 20px;\n  height: 20px;\n  margin-right: 7px; }\n\nbutton, .button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  height: auto;\n  padding-top: 8px;\n  padding-bottom: 8px;\n  color: #777;\n  text-align: center;\n  font-size: 14px;\n  font-weight: 500;\n  line-height: 1.1;\n  letter-spacing: 2px;\n  text-transform: capitalize;\n  text-decoration: none;\n  white-space: nowrap;\n  border-radius: 4px;\n  border: 1px solid #ddd;\n  cursor: pointer; }\n\nbutton:hover, .button:hover {\n  border-color: #cdd; }\n\n.share-button, .copy-link {\n  padding-left: 30px;\n  padding-right: 30px; }\n\n.share-button, .share-dialog {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%); }\n\n.share-dialog {\n  display: none;\n  width: 95%;\n  max-width: 500px;\n  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);\n  z-index: -1;\n  border: 1px solid #ddd;\n  padding: 20px;\n  border-radius: 4px;\n  background-color: #fff; }\n\n.share-dialog.is-open {\n  display: block;\n  z-index: 2; }\n\nheader {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 20px; }\n\n.targets {\n  display: grid;\n  grid-template-rows: 1fr 1fr;\n  grid-template-columns: 1fr 1fr;\n  grid-gap: 20px;\n  margin-bottom: 20px; }\n\n.close-button {\n  background-color: transparent;\n  border: none;\n  padding: 0; }\n\n.close-button svg {\n  margin-right: 0; }\n\n.link {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 10px;\n  border-radius: 4px;\n  background-color: #eee; }\n\n.pen-url {\n  margin-right: 15px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmUvSTpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcc2hhcmVcXHNoYXJlLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUNJLHNCQUFzQixFQUFBOztBQUd4QjtFQUNFLG1CQUFtQjtFQUNuQixVQUFVO0VBQ1YsU0FBUyxFQUFBOztBQUdYO0VBQ0UsaUlBQWlJLEVBQUE7O0FBR25JO0VBQ0UsYUFBYSxFQUFBOztBQUdmO0VBQ0UsV0FBVztFQUNYLFlBQVk7RUFDWixpQkFBaUIsRUFBQTs7QUFHbkI7RUFDRSxvQkFBb0I7RUFDcEIsbUJBQW1CO0VBQ25CLHVCQUF1QjtFQUN2QixZQUFZO0VBQ1osZ0JBQWdCO0VBQ2hCLG1CQUFtQjtFQUNuQixXQUFXO0VBQ1gsa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsZ0JBQWdCO0VBQ2hCLG1CQUFtQjtFQUNuQiwwQkFBMEI7RUFDMUIscUJBQXFCO0VBQ3JCLG1CQUFtQjtFQUNuQixrQkFBa0I7RUFDbEIsc0JBQXNCO0VBQ3RCLGVBQWUsRUFBQTs7QUFHakI7RUFDRSxrQkFBa0IsRUFBQTs7QUFHcEI7RUFDRSxrQkFBa0I7RUFDbEIsbUJBQW1CLEVBQUE7O0FBR3JCO0VBQ0Usa0JBQWtCO0VBQ2xCLFFBQVE7RUFDUixTQUFTO0VBQ1QsZ0NBQWdDLEVBQUE7O0FBR2xDO0VBQ0UsYUFBYTtFQUNiLFVBQVU7RUFDVixnQkFBZ0I7RUFDaEIsMENBQXNDO0VBQ3RDLFdBQVc7RUFDWCxzQkFBc0I7RUFDdEIsYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixzQkFBc0IsRUFBQTs7QUFHeEI7RUFDRSxjQUFjO0VBQ2QsVUFBVSxFQUFBOztBQUdaO0VBQ0UsYUFBYTtFQUNiLDhCQUE4QjtFQUM5QixtQkFBbUIsRUFBQTs7QUFHckI7RUFDRSxhQUFhO0VBQ2IsMkJBQTJCO0VBQzNCLDhCQUE4QjtFQUM5QixjQUFjO0VBQ2QsbUJBQW1CLEVBQUE7O0FBR3JCO0VBQ0UsNkJBQTZCO0VBQzdCLFlBQVk7RUFDWixVQUFVLEVBQUE7O0FBR1o7RUFDRSxlQUFlLEVBQUE7O0FBR2pCO0VBQ0UsYUFBYTtFQUNiLHVCQUF1QjtFQUN2QixtQkFBbUI7RUFDbkIsYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixzQkFBc0IsRUFBQTs7QUFHeEI7RUFDRSxrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLHVCQUF1QjtFQUN2QixtQkFBbUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3NoYXJlL3NoYXJlLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG4vLyBzaGFyZS1kaWFsb2dcclxuXHJcbmh0bWwge1xyXG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICB9XHJcbiAgXHJcbiAgKiwgKjo6YmVmb3JlLCAqOjphZnRlciB7XHJcbiAgICBib3gtc2l6aW5nOiBpbmhlcml0O1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIG1hcmdpbjogMDtcclxuICB9XHJcbiAgXHJcbiAgYm9keSB7XHJcbiAgICBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsU2FuIEZyYW5jaXNjbyxIZWx2ZXRpY2EgTmV1ZSxIZWx2ZXRpY2EsVWJ1bnR1LFJvYm90byxOb3RvLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWY7XHJcbiAgfVxyXG4gIFxyXG4gIC5oaWRkZW4ge1xyXG4gICAgZGlzcGxheTogbm9uZTtcclxuICB9XHJcbiAgXHJcbiAgc3ZnIHtcclxuICAgIHdpZHRoOiAyMHB4O1xyXG4gICAgaGVpZ2h0OiAyMHB4O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiA3cHg7XHJcbiAgfVxyXG4gIFxyXG4gIGJ1dHRvbiwgLmJ1dHRvbiB7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgIGhlaWdodDogYXV0bztcclxuICAgIHBhZGRpbmctdG9wOiA4cHg7XHJcbiAgICBwYWRkaW5nLWJvdHRvbTogOHB4O1xyXG4gICAgY29sb3I6ICM3Nzc7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICBmb250LXdlaWdodDogNTAwO1xyXG4gICAgbGluZS1oZWlnaHQ6IDEuMTtcclxuICAgIGxldHRlci1zcGFjaW5nOiAycHg7XHJcbiAgICB0ZXh0LXRyYW5zZm9ybTogY2FwaXRhbGl6ZTtcclxuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcclxuICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCAjZGRkO1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIH1cclxuICBcclxuICBidXR0b246aG92ZXIsIC5idXR0b246aG92ZXIge1xyXG4gICAgYm9yZGVyLWNvbG9yOiAjY2RkO1xyXG4gIH1cclxuICBcclxuICAuc2hhcmUtYnV0dG9uLCAuY29weS1saW5rIHtcclxuICAgIHBhZGRpbmctbGVmdDogMzBweDtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDMwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5zaGFyZS1idXR0b24sIC5zaGFyZS1kaWFsb2cge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiA1MCU7XHJcbiAgICBsZWZ0OiA1MCU7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcclxuICB9XHJcbiAgXHJcbiAgLnNoYXJlLWRpYWxvZyB7XHJcbiAgICBkaXNwbGF5OiBub25lO1xyXG4gICAgd2lkdGg6IDk1JTtcclxuICAgIG1heC13aWR0aDogNTAwcHg7XHJcbiAgICBib3gtc2hhZG93OiAwIDhweCAxNnB4IHJnYmEoMCwwLDAsLjE1KTtcclxuICAgIHotaW5kZXg6IC0xO1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgI2RkZDtcclxuICAgIHBhZGRpbmc6IDIwcHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xyXG4gIH1cclxuICBcclxuICAuc2hhcmUtZGlhbG9nLmlzLW9wZW4ge1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICB6LWluZGV4OiAyO1xyXG4gIH1cclxuICBcclxuICBoZWFkZXIge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICAgIG1hcmdpbi1ib3R0b206IDIwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC50YXJnZXRzIHtcclxuICAgIGRpc3BsYXk6IGdyaWQ7XHJcbiAgICBncmlkLXRlbXBsYXRlLXJvd3M6IDFmciAxZnI7XHJcbiAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IDFmciAxZnI7XHJcbiAgICBncmlkLWdhcDogMjBweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDIwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5jbG9zZS1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gIH1cclxuICBcclxuICAuY2xvc2UtYnV0dG9uIHN2ZyB7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDA7XHJcbiAgfVxyXG4gIFxyXG4gIC5saW5rIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2VlZTtcclxuICB9XHJcbiAgXHJcbiAgLnBlbi11cmwge1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAxNXB4O1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xyXG4gICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcclxuICB9Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/share/share.page.ts":
+/*!*************************************!*\
+  !*** ./src/app/share/share.page.ts ***!
+  \*************************************/
+/*! exports provided: SharePage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SharePage", function() { return SharePage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+var SharePage = /** @class */ (function () {
+    function SharePage(modalController) {
+        this.modalController = modalController;
+    }
+    SharePage.prototype.ngOnInit = function () {
+    };
+    SharePage.prototype.close = function () {
+        this.modalController.dismiss({
+            result: 'cancel'
+        });
+    };
+    SharePage.prototype.copyToClipboard = function (event) {
+        try {
+            var canvas_1 = this.canvas;
+            this.canvas.toBlob(function (blob) {
+                if (navigator['clipboard']) {
+                    // Safe to use Async Clipboard API!
+                    var clip = navigator['clipboard'];
+                    clip.write([new ClipboardItem({ 'image/png': blob })]).then(function () {
+                        console.log('Copied to clipboard successfully!');
+                    }, function (err) {
+                        console.error(err);
+                        console.error('Unable to write to clipboard. :-(');
+                    });
+                }
+                else {
+                    var img = document.createElement('img');
+                    img.src = canvas_1.toDataURL();
+                    document.body.appendChild(img);
+                    var r = document.createRange();
+                    r.setStartBefore(img);
+                    r.setEndAfter(img);
+                    r.selectNode(img);
+                    var sel = window.getSelection();
+                    sel.addRange(r);
+                    var wascopied = document.execCommand('Copy');
+                    if (!wascopied) {
+                        alert('You need to right click or long press on image to copy it.');
+                    }
+                    img.remove();
+                }
+            });
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLCanvasElement)
+    ], SharePage.prototype, "canvas", void 0);
+    SharePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+            selector: 'app-share',
+            template: __webpack_require__(/*! ./share.page.html */ "./src/app/share/share.page.html"),
+            styles: [__webpack_require__(/*! ./share.page.scss */ "./src/app/share/share.page.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["ModalController"]])
+    ], SharePage);
+    return SharePage;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/shared.module.ts":
 /*!*****************************************!*\
   !*** ./src/app/shared/shared.module.ts ***!
@@ -2472,7 +2633,7 @@ var ShowImagePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"socialShare()\">Share</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
 
 /***/ }),
 
@@ -2501,6 +2662,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _share_share_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../share/share.page */ "./src/app/share/share.page.ts");
+
 
 
 
@@ -2522,6 +2685,51 @@ var ShowImagePage = /** @class */ (function () {
         this.contentHeight = this.swCanvas.height / 4;
         this.contentWidth = this.swCanvas.width / 4;
         return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+    };
+    ShowImagePage.prototype.socialShare = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var navShare, _a;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        navShare = window.navigator;
+                        if (!navShare.share) return [3 /*break*/, 1];
+                        this.canvas.toBlob(function (blob) {
+                            var filename = 'signWriting.png';
+                            var fd = new FormData();
+                            var files = [];
+                            fd.append('SignWriting', blob, filename);
+                            for (var _i = 0, _a = fd.getAll('file'); _i < _a.length; _i++) {
+                                var newfile = _a[_i];
+                                files.push(newfile);
+                            }
+                            navShare.share({
+                                files: files
+                            }).then(function () {
+                                console.log('Thanks for sharing!');
+                            })
+                                .catch(console.error);
+                        });
+                        return [3 /*break*/, 5];
+                    case 1:
+                        _a = this;
+                        return [4 /*yield*/, this.modalController.create({
+                                component: _share_share_page__WEBPACK_IMPORTED_MODULE_4__["SharePage"],
+                                componentProps: { canvas: this.canvas }
+                            })];
+                    case 2:
+                        _a.modalCtrl = _b.sent();
+                        return [4 /*yield*/, this.modalCtrl.present()];
+                    case 3:
+                        _b.sent();
+                        return [4 /*yield*/, this.modalCtrl.onDidDismiss()];
+                    case 4:
+                        _b.sent();
+                        _b.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
@@ -3117,7 +3325,6 @@ var StorageService = /** @class */ (function () {
                         value = _a.sent();
                         cleaned = atob(this.Clean(value));
                         if (cleaned && cleaned !== 'ée') {
-                            console.log(cleaned);
                             endDate = new Date(cleaned);
                             return [2 /*return*/, endDate];
                         }
@@ -3191,7 +3398,6 @@ var StripeService = /** @class */ (function () {
                             }).toPromise()];
                     case 1:
                         data = _a.sent();
-                        console.log(data);
                         this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
                         return [2 /*return*/];
                 }
