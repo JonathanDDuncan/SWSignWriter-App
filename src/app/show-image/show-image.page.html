@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>
+    <ion-title><ion-button (click)="socialShare()">Share</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary"   (click)="close()">
         <ion-icon name="close-circle"></ion-icon>
