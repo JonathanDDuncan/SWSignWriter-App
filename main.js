@@ -2709,7 +2709,7 @@ var ShowImagePage = /** @class */ (function () {
                             var obj1 = {
                                 // blob: blob,
                                 // mimeType: 'image/png',
-                                url: _this.canvas.toDataURL()
+                                url: 'url(' + _this.canvas.toDataURL() + ')'
                             };
                             console.log(obj1);
                             navShare.share(obj1).then(function () {
