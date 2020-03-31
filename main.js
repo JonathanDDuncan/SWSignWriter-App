@@ -2705,18 +2705,20 @@ var ShowImagePage = /** @class */ (function () {
                             // for (const newfile of fd.getAll('file')) {
                             //   files.push(newfile);
                             // }
-                            var file1 = new File([blob], 'signwriting.png');
+                            var files = [new File([blob], 'signwriting.png')];
                             var obj1 = {
                                 // blob: blob,
                                 // mimeType: 'image/png',
                                 text: 'abc',
-                                files: [file1]
+                                files: files
                                 // url: 'url(' + this.canvas.toDataURL() + ')'
                             };
-                            console.log(obj1);
-                            navShare.share(obj1).then(function () {
-                                console.log('Thanks for sharing!');
-                            }).catch(console.error);
+                            if (navShare.canShare({ files: files })) {
+                                console.log(obj1);
+                                navShare.share(obj1).then(function () {
+                                    console.log('Thanks for sharing!');
+                                }).catch(console.error);
+                            }
                         }, 'image/png');
                         return [3 /*break*/, 5];
                     case 1:
