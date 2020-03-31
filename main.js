@@ -2691,7 +2691,6 @@ var ShowImagePage = /** @class */ (function () {
     ShowImagePage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var navShare, _a;
-            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -2706,10 +2705,13 @@ var ShowImagePage = /** @class */ (function () {
                             // for (const newfile of fd.getAll('file')) {
                             //   files.push(newfile);
                             // }
+                            var file1 = new File([blob], 'signwriting.png');
                             var obj1 = {
                                 // blob: blob,
                                 // mimeType: 'image/png',
-                                url: 'url(' + _this.canvas.toDataURL() + ')'
+                                text: 'abc',
+                                files: [file1]
+                                // url: 'url(' + this.canvas.toDataURL() + ')'
                             };
                             console.log(obj1);
                             navShare.share(obj1).then(function () {
