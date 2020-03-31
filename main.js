@@ -2709,7 +2709,6 @@ var ShowImagePage = /** @class */ (function () {
                             var obj1 = {
                                 // blob: blob,
                                 // mimeType: 'image/png',
-                                text: 'abc',
                                 url: _this.canvas.toDataURL()
                             };
                             console.log(obj1);
