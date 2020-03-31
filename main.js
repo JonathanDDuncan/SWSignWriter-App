@@ -2633,7 +2633,7 @@ var ShowImagePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"socialShare()\">Share</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button *ngIf=\"canSocialShare\" (click)=\"socialShare()\">Share</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
 
 /***/ }),
 
@@ -2675,6 +2675,8 @@ var ShowImagePage = /** @class */ (function () {
     }
     ShowImagePage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
+        var navShare = window.navigator;
+        this.canSocialShare = navShare && navShare.share;
     };
     ShowImagePage.prototype.close = function () {
         this.modalController.dismiss({
@@ -2704,7 +2706,8 @@ var ShowImagePage = /** @class */ (function () {
                                 files.push(newfile);
                             }
                             navShare.share({
-                                files: files
+                                files: files,
+                                text: 'abc'
                             }).then(function () {
                                 console.log('Thanks for sharing!');
                             })
