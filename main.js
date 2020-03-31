@@ -2706,12 +2706,14 @@ var ShowImagePage = /** @class */ (function () {
                             // for (const newfile of fd.getAll('file')) {
                             //   files.push(newfile);
                             // }
-                            navShare.share({
+                            var obj1 = {
                                 // blob: blob,
                                 // mimeType: 'image/png',
                                 text: 'abc',
                                 url: _this.canvas.toDataURL()
-                            }).then(function () {
+                            };
+                            console.log(obj1);
+                            navShare.share(obj1).then(function () {
                                 console.log('Thanks for sharing!');
                             }).catch(console.error);
                         }, 'image/png');
