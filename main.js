@@ -2713,8 +2713,8 @@ var ShowImagePage = /** @class */ (function () {
                                 files: files
                                 // url: 'url(' + this.canvas.toDataURL() + ')'
                             };
-                            if (navShare.canShare({ files: files })) {
-                                console.log(obj1);
+                            console.log(obj1);
+                            if (navShare.canShare(obj1)) {
                                 navShare.share(obj1).then(function () {
                                     console.log('Thanks for sharing!');
                                 }).catch(console.error);
