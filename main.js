@@ -2716,7 +2716,6 @@ var ShowImagePage = /** @class */ (function () {
                                 //   files.push(newfile);
                                 // }
                                 console.log(obj1);
-                                obj1.title = 'SignWriting';
                                 navShare.share(obj1).then(function () {
                                     console.log('Thanks for sharing!');
                                 }).catch(console.error);
