@@ -2691,6 +2691,7 @@ var ShowImagePage = /** @class */ (function () {
     ShowImagePage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var navShare, _a;
+            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -2706,9 +2707,10 @@ var ShowImagePage = /** @class */ (function () {
                             //   files.push(newfile);
                             // }
                             navShare.share({
-                                blob: blob,
-                                mimeType: 'image/png',
-                                text: 'abc'
+                                // blob: blob,
+                                // mimeType: 'image/png',
+                                text: 'abc',
+                                url: _this.canvas.toDataURL()
                             }).then(function () {
                                 console.log('Thanks for sharing!');
                             }).catch(console.error);
