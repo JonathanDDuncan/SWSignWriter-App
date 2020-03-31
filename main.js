@@ -2697,22 +2697,22 @@ var ShowImagePage = /** @class */ (function () {
                         navShare = window.navigator;
                         if (!navShare.share) return [3 /*break*/, 1];
                         this.canvas.toBlob(function (blob) {
-                            var filename = 'signWriting.png';
-                            var fd = new FormData();
-                            var files = [];
-                            fd.append('SignWriting', blob, filename);
-                            for (var _i = 0, _a = fd.getAll('file'); _i < _a.length; _i++) {
-                                var newfile = _a[_i];
-                                files.push(newfile);
-                            }
+                            // {
+                            // const filename = 'signWriting.png';
+                            // const fd = new FormData();
+                            // const files = [];
+                            // fd.append('SignWriting', blob, filename);
+                            // for (const newfile of fd.getAll('file')) {
+                            //   files.push(newfile);
+                            // }
                             navShare.share({
-                                files: files,
+                                blob: blob,
+                                mimeType: 'image/png',
                                 text: 'abc'
                             }).then(function () {
                                 console.log('Thanks for sharing!');
-                            })
-                                .catch(console.error);
-                        });
+                            }).catch(console.error);
+                        }, 'image/png');
                         return [3 /*break*/, 5];
                     case 1:
                         _a = this;
