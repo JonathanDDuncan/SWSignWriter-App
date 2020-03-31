@@ -2690,54 +2690,57 @@ var ShowImagePage = /** @class */ (function () {
     };
     ShowImagePage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var navShare, _a;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        navShare = window.navigator;
-                        if (!navShare.share) return [3 /*break*/, 1];
-                        this.canvas.toBlob(function (blob) {
-                            // {
-                            // const filename = 'signWriting.png';
-                            // const fd = new FormData();
-                            // const files = [];
-                            // fd.append('SignWriting', blob, filename);
-                            // for (const newfile of fd.getAll('file')) {
-                            //   files.push(newfile);
-                            // }
-                            var files = [new File([blob], 'signwriting.png')];
-                            var obj1 = {
-                                // blob: blob,
-                                // mimeType: 'image/png',
-                                text: 'abc',
-                                files: files
-                                // url: 'url(' + this.canvas.toDataURL() + ')'
-                            };
-                            console.log(obj1);
-                            if (navShare.canShare(obj1)) {
+            var navShare;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                navShare = window.navigator;
+                this.canvas.toBlob(function (blob) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                    var files, obj1, _a;
+                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                files = [new File([blob], 'signwriting.png')];
+                                obj1 = {
+                                    // blob: blob,
+                                    // mimeType: 'image/png',
+                                    files: files
+                                    // url: 'url(' + this.canvas.toDataURL() + ')'
+                                };
+                                if (!(window.navigator && navShare.canShare && navShare.canShare(obj1))) return [3 /*break*/, 1];
+                                // {
+                                // const filename = 'signWriting.png';
+                                // const fd = new FormData();
+                                // const files = [];
+                                // fd.append('SignWriting', blob, filename);
+                                // for (const newfile of fd.getAll('file')) {
+                                //   files.push(newfile);
+                                // }
+                                console.log(obj1);
+                                obj1.title = 'SignWriting';
                                 navShare.share(obj1).then(function () {
                                     console.log('Thanks for sharing!');
                                 }).catch(console.error);
-                            }
-                        }, 'image/png');
-                        return [3 /*break*/, 5];
-                    case 1:
-                        _a = this;
-                        return [4 /*yield*/, this.modalController.create({
-                                component: _share_share_page__WEBPACK_IMPORTED_MODULE_4__["SharePage"],
-                                componentProps: { canvas: this.canvas }
-                            })];
-                    case 2:
-                        _a.modalCtrl = _b.sent();
-                        return [4 /*yield*/, this.modalCtrl.present()];
-                    case 3:
-                        _b.sent();
-                        return [4 /*yield*/, this.modalCtrl.onDidDismiss()];
-                    case 4:
-                        _b.sent();
-                        _b.label = 5;
-                    case 5: return [2 /*return*/];
-                }
+                                return [3 /*break*/, 5];
+                            case 1:
+                                _a = this;
+                                return [4 /*yield*/, this.modalController.create({
+                                        component: _share_share_page__WEBPACK_IMPORTED_MODULE_4__["SharePage"],
+                                        componentProps: { canvas: this.canvas }
+                                    })];
+                            case 2:
+                                _a.modalCtrl = _b.sent();
+                                return [4 /*yield*/, this.modalCtrl.present()];
+                            case 3:
+                                _b.sent();
+                                return [4 /*yield*/, this.modalCtrl.onDidDismiss()];
+                            case 4:
+                                _b.sent();
+                                _b.label = 5;
+                            case 5: return [2 /*return*/];
+                        }
+                    });
+                }); }, 'image/png');
+                return [2 /*return*/];
             });
         });
     };
