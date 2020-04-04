@@ -1,7 +1,11 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SharePage } from '../share/share.page';
+
+declare class ClipboardItem {
+  constructor(data: { [mimeType: string]: Blob });
+}
 
 @Component({
   selector: 'app-show-image',
@@ -15,7 +19,9 @@ export class ShowImagePage implements OnInit {
   public swCanvas: HTMLCanvasElement; // your canvas element
   public modalCtrl: HTMLIonModalElement;
   @Input() canvas: HTMLCanvasElement;
-  constructor(public modalController: ModalController, private sanitizer: DomSanitizer) { }
+  constructor(public modalController: ModalController,
+    public toastController: ToastController,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.swCanvas = this.canvas;
@@ -47,7 +53,8 @@ export class ShowImagePage implements OnInit {
           }
           navShare.share({
             files: files
-          }).then(() => {
+          }).then(async () => {
+            await this.presentToast('Thanks for sharing!');
             console.log('Thanks for sharing!');
           })
             .catch(console.error);
@@ -62,5 +69,53 @@ export class ShowImagePage implements OnInit {
       await this.modalCtrl.present();
       await this.modalCtrl.onDidDismiss();
     }
+  }
+
+  copyToClipboard(event) {
+    try {
+      const canvas = this.canvas;
+      this.canvas.toBlob(async function (blob) {
+        if (navigator['clipboard']) {
+          // Safe to use Async Clipboard API!
+          const clip = navigator['clipboard'] as any;
+          clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
+            await this.presentToast('Copied to clipboard successfully!');
+            console.log('Copied to clipboard successfully!');
+          }, async function (err) {
+            console.error(err);
+            await this.presentToast('Unable to write to clipboard. :-(');
+            console.error('Unable to write to clipboard. :-(');
+          });
+        } else {
+          const img = document.createElement('img');
+          img.src = canvas.toDataURL();
+          document.body.appendChild(img);
+          const r = document.createRange();
+          r.setStartBefore(img);
+          r.setEndAfter(img);
+          r.selectNode(img);
+          const sel = window.getSelection();
+          sel.addRange(r);
+          const wascopied = document.execCommand('Copy');
+          if (!wascopied) {
+            await this.presentToast('You need to right click or long press on image to copy it.');
+            alert('You need to right click or long press on image to copy it.');
+          } else {
+            await this.presentToast('Image was copied.');
+          }
+          img.remove();
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
+
   }
 }
