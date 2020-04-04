@@ -2633,7 +2633,7 @@ var ShowImagePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"socialShare()\">Share</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard($this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
 
 /***/ }),
 
@@ -2669,14 +2669,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ShowImagePage = /** @class */ (function () {
-    function ShowImagePage(modalController, sanitizer) {
+    function ShowImagePage(modalController, toastController, sanitizer) {
         this.modalController = modalController;
+        this.toastController = toastController;
         this.sanitizer = sanitizer;
     }
     ShowImagePage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
-        var navShare = window.navigator;
-        this.canSocialShare = navShare && navShare.share;
     };
     ShowImagePage.prototype.close = function () {
         this.modalController.dismiss({
@@ -2695,65 +2694,138 @@ var ShowImagePage = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         navShare = window.navigator;
-                        // this.canvas.toBlob(
-                        //   async blob => {
-                        // const files = [new File([blob], 'signwriting.png')];
-                        // const obj1: any = {
-                        //   // blob: blob,
-                        //   // mimeType: 'image/png',
-                        //   files: files
-                        //   // url: 'url(' + this.canvas.toDataURL() + ')'
-                        // };
-                        // if (window.navigator && navShare.canShare && navShare.canShare(obj1)) {
-                        // {
-                        // const filename = 'signWriting.png';
-                        // const fd = new FormData();
-                        // const files = [];
-                        // fd.append('SignWriting', blob, filename);
-                        // for (const newfile of fd.getAll('file')) {
-                        //   files.push(newfile);
-                        // }
-                        //   console.log(obj1);
-                        //   navShare.share(obj1).then(() => {
-                        //     console.log('Thanks for sharing!');
-                        //   }).catch(console.error);
-                        // } else {
+                        if (!navShare.share) return [3 /*break*/, 1];
+                        this.canvas.toBlob(function (blob) {
+                            var _this = this;
+                            var filename = 'signWriting.png';
+                            var fd = new FormData();
+                            var files = [];
+                            fd.append('SignWriting', blob, filename);
+                            for (var _i = 0, _a = fd.getAll('file'); _i < _a.length; _i++) {
+                                var newfile = _a[_i];
+                                files.push(newfile);
+                            }
+                            navShare.share({
+                                files: files
+                            }).then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, this.presentToast('Thanks for sharing!')];
+                                        case 1:
+                                            _a.sent();
+                                            console.log('Thanks for sharing!');
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); })
+                                .catch(console.error);
+                        });
+                        return [3 /*break*/, 5];
+                    case 1:
                         _a = this;
                         return [4 /*yield*/, this.modalController.create({
                                 component: _share_share_page__WEBPACK_IMPORTED_MODULE_4__["SharePage"],
                                 componentProps: { canvas: this.canvas }
                             })];
-                    case 1:
-                        // this.canvas.toBlob(
-                        //   async blob => {
-                        // const files = [new File([blob], 'signwriting.png')];
-                        // const obj1: any = {
-                        //   // blob: blob,
-                        //   // mimeType: 'image/png',
-                        //   files: files
-                        //   // url: 'url(' + this.canvas.toDataURL() + ')'
-                        // };
-                        // if (window.navigator && navShare.canShare && navShare.canShare(obj1)) {
-                        // {
-                        // const filename = 'signWriting.png';
-                        // const fd = new FormData();
-                        // const files = [];
-                        // fd.append('SignWriting', blob, filename);
-                        // for (const newfile of fd.getAll('file')) {
-                        //   files.push(newfile);
-                        // }
-                        //   console.log(obj1);
-                        //   navShare.share(obj1).then(() => {
-                        //     console.log('Thanks for sharing!');
-                        //   }).catch(console.error);
-                        // } else {
+                    case 2:
                         _a.modalCtrl = _b.sent();
                         return [4 /*yield*/, this.modalCtrl.present()];
-                    case 2:
-                        _b.sent();
-                        return [4 /*yield*/, this.modalCtrl.onDidDismiss()];
                     case 3:
                         _b.sent();
+                        return [4 /*yield*/, this.modalCtrl.onDidDismiss()];
+                    case 4:
+                        _b.sent();
+                        _b.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShowImagePage.prototype.copyToClipboard = function (event) {
+        try {
+            var canvas_1 = this.canvas;
+            this.canvas.toBlob(function (blob) {
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                    var clip, img, r, sel, wascopied;
+                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!navigator['clipboard']) return [3 /*break*/, 1];
+                                clip = navigator['clipboard'];
+                                clip.write([new ClipboardItem({ 'image/png': blob })]).then(function () {
+                                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                            switch (_a.label) {
+                                                case 0: return [4 /*yield*/, this.presentToast('Copied to clipboard successfully!')];
+                                                case 1:
+                                                    _a.sent();
+                                                    console.log('Copied to clipboard successfully!');
+                                                    return [2 /*return*/];
+                                            }
+                                        });
+                                    });
+                                }, function (err) {
+                                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                            switch (_a.label) {
+                                                case 0:
+                                                    console.error(err);
+                                                    return [4 /*yield*/, this.presentToast('Unable to write to clipboard. :-(')];
+                                                case 1:
+                                                    _a.sent();
+                                                    console.error('Unable to write to clipboard. :-(');
+                                                    return [2 /*return*/];
+                                            }
+                                        });
+                                    });
+                                });
+                                return [3 /*break*/, 6];
+                            case 1:
+                                img = document.createElement('img');
+                                img.src = canvas_1.toDataURL();
+                                document.body.appendChild(img);
+                                r = document.createRange();
+                                r.setStartBefore(img);
+                                r.setEndAfter(img);
+                                r.selectNode(img);
+                                sel = window.getSelection();
+                                sel.addRange(r);
+                                wascopied = document.execCommand('Copy');
+                                if (!!wascopied) return [3 /*break*/, 3];
+                                return [4 /*yield*/, this.presentToast('You need to right click or long press on image to copy it.')];
+                            case 2:
+                                _a.sent();
+                                alert('You need to right click or long press on image to copy it.');
+                                return [3 /*break*/, 5];
+                            case 3: return [4 /*yield*/, this.presentToast('Image was copied.')];
+                            case 4:
+                                _a.sent();
+                                _a.label = 5;
+                            case 5:
+                                img.remove();
+                                _a.label = 6;
+                            case 6: return [2 /*return*/];
+                        }
+                    });
+                });
+            });
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+    ShowImagePage.prototype.presentToast = function (message) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var toast;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.toastController.create({
+                            message: message,
+                            duration: 2000
+                        })];
+                    case 1:
+                        toast = _a.sent();
+                        toast.present();
                         return [2 /*return*/];
                 }
             });
@@ -2769,7 +2841,9 @@ var ShowImagePage = /** @class */ (function () {
             template: __webpack_require__(/*! ./show-image.page.html */ "./src/app/show-image/show-image.page.html"),
             styles: [__webpack_require__(/*! ./show-image.page.scss */ "./src/app/show-image/show-image.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]])
     ], ShowImagePage);
     return ShowImagePage;
 }());
