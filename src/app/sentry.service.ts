@@ -10,12 +10,9 @@ Sentry.init({
 
 export class SentryService {
 
-  constructor() { 
-    debugger;
-  }
+  constructor() {}
 
   sentryMessage(message) {
-    debugger;
     Sentry.captureMessage(message);
   }
 }

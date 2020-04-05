@@ -83,7 +83,6 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   accept() {
-    debugger;
     this.sentry.sentryMessage('Entered text : ' + this.documentService.getSearchSentence());
     return this.router.navigateByUrl('/view');
   }
