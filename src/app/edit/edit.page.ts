@@ -1,3 +1,4 @@
+import { SentryService } from './../sentry.service';
 import { SubscriptionService } from './../services/subscription.service';
 import { SettingsService } from './../settings.service';
 import { Router } from '@angular/router';
@@ -37,6 +38,7 @@ export class EditPage implements OnInit, AfterViewInit {
     private documentService: DocumentService,
     private settingsService: SettingsService,
     private subscriptionService: SubscriptionService,
+    private sentry: SentryService,
     private router: Router
   ) { }
 
@@ -81,6 +83,8 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   accept() {
+    debugger;
+    this.sentry.sentryMessage('Entered text : ' + this.documentService.getSearchSentence());
     return this.router.navigateByUrl('/view');
   }
 

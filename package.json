@@ -40,6 +40,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@rxjs/rx": "^4.1.0",
+    "@sentry/browser": "^5.15.4",
     "@sentry/cli": "^1.52.1",
     "ajv": "^6.10.2",
     "cordova-android": "8.0.0",

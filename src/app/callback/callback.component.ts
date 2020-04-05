@@ -1,3 +1,4 @@
+import { SentryService } from './../sentry.service';
 import { StripeService } from './../stripe.service';
 import { StorageService } from './../storage.service';
 import { Component, OnInit, PipeTransform } from '@angular/core';
@@ -12,13 +13,15 @@ export class CallbackComponent implements OnInit {
 
   constructor(private auth: AuthService,
     private storage: StorageService,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private sentry: SentryService
     ) { }
 
   ngOnInit() {
     this.auth.userProfile$.subscribe(async userProfile => {
 
       if (userProfile) {
+        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(userProfile));
         this.storage.SaveCurrentUserProfile(userProfile);
         this.stripeService.GetandSaveStripeSubscriptionData(userProfile.email);
         const trialDate = await this.storage.GetTrialStartDate(userProfile.email);

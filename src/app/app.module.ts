@@ -1,3 +1,5 @@
+import { SentryErrorHandler } from './sentry-error-handler';
+import { ErrorHandler } from '@angular/core';
 import { UserService } from './services/user.service';
 import { AuthorizationService } from './services/authorization.service';
 import { ProfileComponent } from './profile/profile.component';
@@ -26,7 +28,6 @@ import { SignsLookupService } from './signs-lookup.service';
 import { DocumentService } from './document.service';
 import { SocialSharingService } from './social-sharing.service';
 import { environment } from '../environments/environment';
-
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { environment } from '../environments/environment';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     SignsLookupService,
     DocumentService,
     SocialSharingService,
