@@ -17,6 +17,7 @@ export class ShowImagePage implements OnInit {
   public contentHeight: Number;
   public swCanvas: HTMLCanvasElement; // your canvas element
   public modalCtrl: HTMLIonModalElement;
+
   @Input() canvas: HTMLCanvasElement;
   constructor(public modalController: ModalController,
     public toastController: ToastController,
@@ -39,6 +40,7 @@ export class ShowImagePage implements OnInit {
   }
 
   async socialShare() {
+    const self = this;
     const navShare = (window.navigator as any);
     if (navShare.share) {
       this.canvas.toBlob(
@@ -53,18 +55,20 @@ export class ShowImagePage implements OnInit {
           navShare.share({
             files: files
           }).then(async () => {
-            await this.presentToast('Thanks for sharing!');
+            await self.presentToast('Thanks for sharing!');
             console.log('Thanks for sharing!');
           })
             .catch(console.error);
         });
 
     } else {
-      await this.presentToast('Share is not available.');
+      await self.presentToast('Share is not available.');
     }
   }
 
   copyToClipboard(event) {
+    const self = this;
+
     try {
       const canvas = this.canvas;
       this.canvas.toBlob(async function (blob) {
@@ -72,11 +76,11 @@ export class ShowImagePage implements OnInit {
           // Safe to use Async Clipboard API!
           const clip = navigator['clipboard'] as any;
           clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
-            await this.presentToast('Copied to clipboard successfully!');
+            await self.presentToast('Copied to clipboard successfully!');
             console.log('Copied to clipboard successfully!');
           }, async function (err) {
             console.error(err);
-            await this.presentToast('Unable to write to clipboard. :-(');
+            await self.presentToast('Unable to write to clipboard. :-(');
             console.error('Unable to write to clipboard. :-(');
           });
         } else {
@@ -91,10 +95,10 @@ export class ShowImagePage implements OnInit {
           sel.addRange(r);
           const wascopied = document.execCommand('Copy');
           if (!wascopied) {
-            await this.presentToast('You need to right click or long press on image to copy it.');
+            await self.presentToast('You need to right click or long press on image to copy it.');
             alert('You need to right click or long press on image to copy it.');
           } else {
-            await this.presentToast('Image was copied.');
+            await self.presentToast('Image was copied.');
           }
           img.remove();
         }
