@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SharePage } from '../share/share.page';
 
 declare class ClipboardItem {
   constructor(data: { [mimeType: string]: Blob });
@@ -61,13 +60,7 @@ export class ShowImagePage implements OnInit {
         });
 
     } else {
-      this.modalCtrl = await this.modalController.create({
-        component: SharePage,
-        componentProps: { canvas: this.canvas }
-      });
-
-      await this.modalCtrl.present();
-      await this.modalCtrl.onDidDismiss();
+      await this.presentToast('Share is not available.');
     }
   }
 
