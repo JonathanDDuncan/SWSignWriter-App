@@ -84,29 +84,36 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogoutPage", function() { return LogoutPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../storage.service */ "./src/app/storage.service.ts");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../auth.service */ "./src/app/auth.service.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _sentry_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../sentry.service */ "./src/app/sentry.service.ts");
+/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../auth.service */ "./src/app/auth.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
 
 
 
 
 var LogoutPage = /** @class */ (function () {
-    function LogoutPage(auth, storage) {
+    function LogoutPage(auth, storage, sentry) {
         this.auth = auth;
         this.storage = storage;
+        this.sentry = sentry;
     }
     LogoutPage.prototype.ngOnInit = function () {
         this.storage.SaveCurrentUserProfile(null);
+        var userProfile = this.storage.GetCurrentUserProfile();
+        this.sentry.sentryMessage('Logged out: ' + JSON.stringify(userProfile));
         this.auth.logout();
     };
     LogoutPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({
             selector: 'app-logout',
             template: __webpack_require__(/*! ./logout.page.html */ "./src/app/logout/logout.page.html"),
             styles: [__webpack_require__(/*! ./logout.page.scss */ "./src/app/logout/logout.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], _storage_service__WEBPACK_IMPORTED_MODULE_1__["StorageService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"],
+            _storage_service__WEBPACK_IMPORTED_MODULE_2__["StorageService"],
+            _sentry_service__WEBPACK_IMPORTED_MODULE_1__["SentryService"]])
     ], LogoutPage);
     return LogoutPage;
 }());
