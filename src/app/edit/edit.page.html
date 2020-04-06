@@ -5,19 +5,23 @@
     </ion-buttons>
     <ion-title>{{'Edit' | translate}}</ion-title>
   </ion-toolbar>
- 
+
   <ion-item>
     <ion-textarea
       #searchRef
       placeholder="{{'Enter sentence' | translate}}"
     ></ion-textarea>
     <ion-button style="display: none;" (click)="resetEntries()">
-      {{'Reset' | translate}} 
-      </ion-button>
+      {{'Reset' | translate}}
+    </ion-button>
   </ion-item>
   <ion-item>
     <div>
-      <ion-button *ngFor="let item of matchingWords" (click)="addWord(item)">
+      <ion-button
+        style="text-transform: none;"
+        *ngFor="let item of matchingWords"
+        (click)="addWord(item)"
+      >
         {{item}}
       </ion-button>
     </div>
