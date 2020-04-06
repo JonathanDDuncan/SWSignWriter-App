@@ -90,7 +90,6 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   getResults(availableWords: { gloss: string, normalized: string }[], keyword: string) {
-    keyword = 'nombre';
     if (availableWords && keyword && keyword !== '') {
       const maxResults = 12;
       const startsWith = [];
@@ -101,17 +100,13 @@ export class EditPage implements OnInit, AfterViewInit {
         if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
-          debugger;
         } else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
-          debugger;
         } else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
-          debugger;
         } else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
-          debugger;
         }
 
         if (i >= maxResults) {
