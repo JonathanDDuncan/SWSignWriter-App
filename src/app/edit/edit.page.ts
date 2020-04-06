@@ -30,7 +30,6 @@ interface EdittedDocument {
 export class EditPage implements OnInit, AfterViewInit {
   Lane = Lane;
   public editedDocument: EdittedDocument;
-  private availableWords: { gloss: string, normalized: string }[];
   public matchingWords: { gloss: string, normalized: string }[];
 
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
@@ -56,8 +55,6 @@ export class EditPage implements OnInit, AfterViewInit {
       return this.router.navigateByUrl('/settings');
     }
     this.documentService.clearDocument();
-    this.availableWords = this.documentService.editWordArray();
-
     this.showDocument(this.documentService.getDocument());
   }
 
@@ -82,58 +79,18 @@ export class EditPage implements OnInit, AfterViewInit {
       });
   }
 
-  showAvailableWords(text: string) {
-    const words = text.split(' ');
-
-    const keyword = words.length > 0 ? words[words.length - 1] : '';
-    this.matchingWords = this.getResults(this.availableWords, keyword);
-  }
-
-  getResults(availableWords: { gloss: string, normalized: string }[], keyword: string) {
-    if (availableWords && keyword && keyword !== '') {
-      const maxResults = 12;
-      const startsWith = [];
-      const contains = [];
-      const lwrCaseKeyword = keyword.toLowerCase();
-      let i = 0;
-      for (const element of availableWords) {
-        if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
-          startsWith.push(element);
-          i++;
-        } else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
-          startsWith.push(element);
-          i++;
-        } else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
-          contains.push(element);
-        } else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
-          contains.push(element);
-        }
-
-        if (i >= maxResults) {
-          break;
-        }
-      }
-
-      let result = [];
-      result = startsWith.slice(0, maxResults);
-      if (result.length < maxResults) {
-        result.concat(contains.slice(0, maxResults - result.length));
-      }
-
-      return result;
-    } else {
-      return [];
-    }
+  showAvailableWords(text) {
+    this.matchingWords = this.documentService.showAvailableWords(text);
   }
 
   showDocument(document: Document): void {
     this.editedDocument = <EdittedDocument>{ editedsigns: document.signs };
-
   }
 
   trackFound(index, foundSign: FoundSign) {
     return foundSign ? foundSign.id : undefined;
   }
+
   public addWord(word) {
     const sentence = this.documentService.getSearchSentence();
     let sentenceSplit = sentence.split(' ').filter(x => x !== '' && x !== ' ');
@@ -170,7 +127,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   scrollToBottom() {
     setTimeout(() => {
-      this.content.scrollToBottom(300);
+      this.content.scrollToBottom(200);
     }, 50);
   }
 

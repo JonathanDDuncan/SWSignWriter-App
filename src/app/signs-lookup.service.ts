@@ -31,6 +31,7 @@ export enum Lane {
 })
 export class SignsLookupService {
   private entrylist: any[];
+  private words: { gloss: string, normalized: string }[];
 
   constructor(
     private storage: Storage,
@@ -40,6 +41,7 @@ export class SignsLookupService {
   }
 
   loadSigns() {
+    const self = this;
     this.entrylist = [];
     this.storage.get('puddles').then(puddles => {
       if (puddles) {
@@ -55,6 +57,7 @@ export class SignsLookupService {
                 });
               });
             });
+            self.words = self.getAvailableWords();
           });
         });
       }
@@ -119,7 +122,7 @@ export class SignsLookupService {
     return this.entrylist.find(entry => entry.key === key);
   }
 
-  availableWords(): { gloss: string, normalized: string }[] {
+  getAvailableWords(): { gloss: string, normalized: string }[] {
     const uniqueWords = [];
     const map = new Map();
     for (let i = 0; i < this.entrylist.length; i++) {
@@ -130,6 +133,7 @@ export class SignsLookupService {
         uniqueWords.push({ gloss, normalized: entry.normalized });
       }
     }
+
     const sorted = uniqueWords.sort((x: { gloss: string, normalized: string }, y: { gloss: string, normalized: string }) => {
       if (x.gloss < y.gloss) {
         return -1;
@@ -140,5 +144,50 @@ export class SignsLookupService {
       }
     });
     return sorted;
+  }
+
+  // Available words
+  showAvailableWords(text: string) {
+    const words = text.split(' ');
+
+    const keyword = words.length > 0 ? words[words.length - 1] : '';
+    return this.getResults(this.words, keyword);
+  }
+
+  getResults(availableWords: { gloss: string, normalized: string }[], keyword: string) {
+    if (availableWords && keyword && keyword !== '') {
+      const maxResults = 12;
+      const startsWith = [];
+      const contains = [];
+      const lwrCaseKeyword = keyword.toLowerCase();
+      let i = 0;
+      for (const element of availableWords) {
+        if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
+          startsWith.push(element);
+          i++;
+        } else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
+          startsWith.push(element);
+          i++;
+        } else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+          contains.push(element);
+        } else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+          contains.push(element);
+        }
+
+        if (i >= maxResults) {
+          break;
+        }
+      }
+
+      let result = [];
+      result = startsWith.slice(0, maxResults);
+      if (result.length < maxResults) {
+        result.concat(contains.slice(0, maxResults - result.length));
+      }
+
+      return result;
+    } else {
+      return [];
+    }
   }
 }

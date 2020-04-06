@@ -252,8 +252,7 @@ export class DocumentService {
     return sentence;
   }
 
-  editWordArray(): {gloss: string, normalized: string}[] {
-    const words =  this.signsLookupService.availableWords();
-    return words;
+  showAvailableWords(text: string) {
+    return this.signsLookupService.showAvailableWords(text);
   }
 }
