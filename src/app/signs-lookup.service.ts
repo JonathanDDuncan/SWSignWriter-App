@@ -119,13 +119,13 @@ export class SignsLookupService {
     return this.entrylist.find(entry => entry.key === key);
   }
 
-  availableWords() {
+  availableWords(): {gloss: string, normalized: string}[] {
     const uniqueWords = [];
     for (let i = 0; i < this.entrylist.length; i++) {
       const entry = this.entrylist[i];
       const gloss = entry.gloss;
       if (uniqueWords.indexOf(gloss) === -1) {
-        uniqueWords.push(gloss);
+        uniqueWords.push({gloss, normalized: entry.normalized});
       }
     }
     return uniqueWords.sort( (x: string, y: string) => {

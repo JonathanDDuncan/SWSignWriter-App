@@ -30,8 +30,8 @@ interface EdittedDocument {
 export class EditPage implements OnInit, AfterViewInit {
   Lane = Lane;
   public editedDocument: EdittedDocument;
-  private availableWords: string[];
-  public matchingWords: string[];
+  private availableWords: { gloss: string, normalized: string }[];
+  public matchingWords: { gloss: string, normalized: string }[];
 
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
 
@@ -87,7 +87,7 @@ export class EditPage implements OnInit, AfterViewInit {
     this.matchingWords = this.getResults(this.availableWords, keyword);
   }
 
-  getResults(availableWords: string[], keyword: string) {
+  getResults(availableWords: { gloss: string, normalized: string }[], keyword: string) {
     if (availableWords && keyword && keyword !== '') {
       const maxResults = 12;
       const startsWith = [];
@@ -95,10 +95,15 @@ export class EditPage implements OnInit, AfterViewInit {
       const lwrCaseKeyword = keyword.toLowerCase();
       let i = 0;
       for (const element of availableWords) {
-        if (element.toLowerCase().startsWith(lwrCaseKeyword)) {
+        if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
-        } else if (element.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+        } else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
+          startsWith.push(element);
+          i++;
+        } else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+          contains.push(element);
+        } else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
         }
         if (i >= maxResults) {

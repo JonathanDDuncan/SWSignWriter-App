@@ -20,9 +20,9 @@
       <ion-button
         style="text-transform: none;"
         *ngFor="let item of matchingWords"
-        (click)="addWord(item)"
+        (click)="addWord(item.gloss)"
       >
-        {{item}}
+        {{item.gloss}}
       </ion-button>
     </div>
   </ion-item>
