@@ -34,6 +34,7 @@ export class EditPage implements OnInit, AfterViewInit {
   public matchingWords: { gloss: string, normalized: string }[];
 
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
+  @ViewChild('content') private content: any;
 
   constructor(
     public modalController: ModalController,
@@ -77,6 +78,7 @@ export class EditPage implements OnInit, AfterViewInit {
         this.showAvailableWords(text);
         this.documentService.searchFrase(text);
         this.showDocument(this.documentService.getDocument());
+        this.scrollToBottom();
       });
   }
 
@@ -88,6 +90,7 @@ export class EditPage implements OnInit, AfterViewInit {
   }
 
   getResults(availableWords: { gloss: string, normalized: string }[], keyword: string) {
+    keyword = 'nombre';
     if (availableWords && keyword && keyword !== '') {
       const maxResults = 12;
       const startsWith = [];
@@ -98,14 +101,19 @@ export class EditPage implements OnInit, AfterViewInit {
         if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
+          debugger;
         } else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
+          debugger;
         } else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
+          debugger;
         } else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
+          debugger;
         }
+
         if (i >= maxResults) {
           break;
         }
@@ -116,6 +124,7 @@ export class EditPage implements OnInit, AfterViewInit {
       if (result.length < maxResults) {
         result.concat(contains.slice(0, maxResults - result.length));
       }
+
       return result;
     } else {
       return [];
@@ -124,6 +133,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   showDocument(document: Document): void {
     this.editedDocument = <EdittedDocument>{ editedsigns: document.signs };
+
   }
 
   trackFound(index, foundSign: FoundSign) {
@@ -161,6 +171,12 @@ export class EditPage implements OnInit, AfterViewInit {
     this.documentService.replaceElement(index, data.result);
     this.showDocument(this.documentService.getDocument());
     this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom(300);
+    }, 50);
   }
 
   resetEntries() { }

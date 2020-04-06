@@ -124,12 +124,14 @@ export class SignsLookupService {
     for (let i = 0; i < this.entrylist.length; i++) {
       const entry = this.entrylist[i];
       const gloss = entry.gloss;
-      if (uniqueWords.indexOf(gloss) === -1) {
+      const matching = uniqueWords.filter(x => x.gloss === gloss);
+      const found = matching.length >= 1;
+      if (!found) {
         uniqueWords.push({gloss, normalized: entry.normalized});
       }
     }
-    return uniqueWords.sort( (x: string, y: string) => {
-      if (x < y) {
+    return uniqueWords.sort( (x: {gloss: string, normalized: string} , y: {gloss: string, normalized: string} ) => {
+      if (x.gloss < y.gloss) {
         return -1;
       } else if (x > y) {
         return 1;
