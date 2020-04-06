@@ -50,7 +50,7 @@ export class EditPage implements OnInit, AfterViewInit {
       editedsigns: []
     };
 
-    const isFirstTime  = await this.settingsService.getFirstTime();
+    const isFirstTime = await this.settingsService.getFirstTime();
     if (isFirstTime == null) {
       return this.router.navigateByUrl('/settings');
     }
@@ -84,14 +84,33 @@ export class EditPage implements OnInit, AfterViewInit {
     const words = text.split(' ');
 
     const keyword = words.length > 0 ? words[words.length - 1] : '';
-    this.matchingWords =  this.getResults(this.availableWords, keyword);
+    this.matchingWords = this.getResults(this.availableWords, keyword);
   }
 
   getResults(availableWords: string[], keyword: string) {
     if (availableWords && keyword && keyword !== '') {
-      const result = availableWords
-      .filter(item => item.toLowerCase().indexOf(keyword.toLowerCase()) !== -1 )
-      .slice(0, 12);
+      const maxResults = 12;
+      const startsWith = [];
+      const contains = [];
+      const lwrCaseKeyword = keyword.toLowerCase();
+      let i = 0;
+      for (const element of availableWords) {
+        if (element.toLowerCase().startsWith(lwrCaseKeyword)) {
+          startsWith.push(element);
+          i++;
+        } else if (element.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+          contains.push(element);
+        }
+        if (i >= maxResults) {
+          break;
+        }
+      }
+
+      let result = [];
+      result = startsWith.slice(0, maxResults);
+      if (result.length < maxResults) {
+        result.concat(contains.slice(0, maxResults - result.length));
+      }
       return result;
     } else {
       return [];
@@ -106,8 +125,8 @@ export class EditPage implements OnInit, AfterViewInit {
     return foundSign ? foundSign.id : undefined;
   }
   public addWord(word) {
-    const sentence = this.documentService.getSearchSentence() ;
-    let sentenceSplit = sentence.split(' ').filter( x => x !== '' && x !== ' ');
+    const sentence = this.documentService.getSearchSentence();
+    let sentenceSplit = sentence.split(' ').filter(x => x !== '' && x !== ' ');
     sentenceSplit = sentenceSplit.slice(0, -1);
 
     const allExceptLast = sentenceSplit.join(' ');
