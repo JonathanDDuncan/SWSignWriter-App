@@ -30,6 +30,8 @@ interface EdittedDocument {
 export class EditPage implements OnInit, AfterViewInit {
   Lane = Lane;
   public editedDocument: EdittedDocument;
+  private availableWords: string[];
+  public matchingWords: string[];
 
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
 
@@ -47,11 +49,14 @@ export class EditPage implements OnInit, AfterViewInit {
     this.editedDocument = {
       editedsigns: []
     };
+
     const isFirstTime  = await this.settingsService.getFirstTime();
     if (isFirstTime == null) {
       return this.router.navigateByUrl('/settings');
     }
     this.documentService.clearDocument();
+    this.availableWords = this.documentService.editWordArray();
+
     this.showDocument(this.documentService.getDocument());
   }
 
@@ -69,9 +74,28 @@ export class EditPage implements OnInit, AfterViewInit {
       )
       // subscription
       .subscribe((text: string) => {
+        this.showAvailableWords(text);
         this.documentService.searchFrase(text);
         this.showDocument(this.documentService.getDocument());
       });
+  }
+
+  showAvailableWords(text: string) {
+    const words = text.split(' ');
+
+    const keyword = words.length > 0 ? words[words.length - 1] : '';
+    this.matchingWords =  this.getResults(this.availableWords, keyword);
+  }
+
+  getResults(availableWords: string[], keyword: string) {
+    if (availableWords && keyword && keyword !== '') {
+      const result = availableWords
+      .filter(item => item.toLowerCase().indexOf(keyword.toLowerCase()) !== -1 )
+      .slice(0, 12);
+      return result;
+    } else {
+      return [];
+    }
   }
 
   showDocument(document: Document): void {
@@ -80,6 +104,17 @@ export class EditPage implements OnInit, AfterViewInit {
 
   trackFound(index, foundSign: FoundSign) {
     return foundSign ? foundSign.id : undefined;
+  }
+  public addWord(word) {
+    const sentence = this.documentService.getSearchSentence() ;
+    let sentenceSplit = sentence.split(' ').filter( x => x !== '' && x !== ' ');
+    sentenceSplit = sentenceSplit.slice(0, -1);
+
+    const allExceptLast = sentenceSplit.join(' ');
+    this.documentService.searchFrase(allExceptLast + ' ' + word);
+    this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+    this.showDocument(this.documentService.getDocument());
+    this.matchingWords = [];
   }
 
   accept() {

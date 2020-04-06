@@ -118,4 +118,25 @@ export class SignsLookupService {
   getsign(key: string) {
     return this.entrylist.find(entry => entry.key === key);
   }
+
+  availableWords() {
+    const uniqueWords = [];
+    for (let i = 0; i < this.entrylist.length; i++) {
+      const entry = this.entrylist[i];
+      const gloss = entry.gloss;
+      if (uniqueWords.indexOf(gloss) === -1) {
+        uniqueWords.push(gloss);
+      }
+    }
+    return uniqueWords.sort( (x: string, y: string) => {
+      if (x < y) {
+        return -1;
+      } else if (x > y) {
+        return 1;
+      } else {
+        return 0;
+      }
+
+    } );
+  }
 }

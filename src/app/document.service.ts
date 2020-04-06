@@ -251,4 +251,9 @@ export class DocumentService {
 
     return sentence;
   }
+
+  editWordArray(): string[] {
+    const words =  this.signsLookupService.availableWords();
+    return words;
+  }
 }
