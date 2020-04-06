@@ -65,7 +65,6 @@ export class SignsLookupService {
   }
 
   search(text: string): Sign[] {
-    const max = 25;
     let result = [];
     const substring = [];
     let count = 0;
@@ -89,11 +88,6 @@ export class SignsLookupService {
             result.push(entry);
             count++;
           }
-        }
-
-        // limit to max entries
-        if (count >= max) {
-          break;
         }
       }
     }
