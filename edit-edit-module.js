@@ -170,7 +170,6 @@ var EditPage = /** @class */ (function () {
         this.matchingWords = this.getResults(this.availableWords, keyword);
     };
     EditPage.prototype.getResults = function (availableWords, keyword) {
-        keyword = 'nombre';
         if (availableWords && keyword && keyword !== '') {
             var maxResults = 12;
             var startsWith = [];
@@ -182,20 +181,16 @@ var EditPage = /** @class */ (function () {
                 if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
                     startsWith.push(element);
                     i++;
-                    debugger;
                 }
                 else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
                     startsWith.push(element);
                     i++;
-                    debugger;
                 }
                 else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
                     contains.push(element);
-                    debugger;
                 }
                 else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
                     contains.push(element);
-                    debugger;
                 }
                 if (i >= maxResults) {
                     break;
