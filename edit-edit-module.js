@@ -141,7 +141,6 @@ var EditPage = /** @class */ (function () {
                             return [2 /*return*/, this.router.navigateByUrl('/settings')];
                         }
                         this.documentService.clearDocument();
-                        this.availableWords = this.documentService.editWordArray();
                         this.showDocument(this.documentService.getDocument());
                         return [2 /*return*/];
                 }
@@ -165,47 +164,7 @@ var EditPage = /** @class */ (function () {
         });
     };
     EditPage.prototype.showAvailableWords = function (text) {
-        var words = text.split(' ');
-        var keyword = words.length > 0 ? words[words.length - 1] : '';
-        this.matchingWords = this.getResults(this.availableWords, keyword);
-    };
-    EditPage.prototype.getResults = function (availableWords, keyword) {
-        if (availableWords && keyword && keyword !== '') {
-            var maxResults = 12;
-            var startsWith = [];
-            var contains = [];
-            var lwrCaseKeyword = keyword.toLowerCase();
-            var i = 0;
-            for (var _i = 0, availableWords_1 = availableWords; _i < availableWords_1.length; _i++) {
-                var element = availableWords_1[_i];
-                if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
-                    startsWith.push(element);
-                    i++;
-                }
-                else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
-                    startsWith.push(element);
-                    i++;
-                }
-                else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
-                    contains.push(element);
-                }
-                else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
-                    contains.push(element);
-                }
-                if (i >= maxResults) {
-                    break;
-                }
-            }
-            var result = [];
-            result = startsWith.slice(0, maxResults);
-            if (result.length < maxResults) {
-                result.concat(contains.slice(0, maxResults - result.length));
-            }
-            return result;
-        }
-        else {
-            return [];
-        }
+        this.matchingWords = this.documentService.showAvailableWords(text);
     };
     EditPage.prototype.showDocument = function (document) {
         this.editedDocument = { editedsigns: document.signs };
@@ -260,7 +219,7 @@ var EditPage = /** @class */ (function () {
     EditPage.prototype.scrollToBottom = function () {
         var _this = this;
         setTimeout(function () {
-            _this.content.scrollToBottom(300);
+            _this.content.scrollToBottom(200);
         }, 50);
     };
     EditPage.prototype.resetEntries = function () { };

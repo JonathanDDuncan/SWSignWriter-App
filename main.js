@@ -631,7 +631,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.97)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.98)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -1630,9 +1630,8 @@ var DocumentService = /** @class */ (function () {
         });
         return sentence;
     };
-    DocumentService.prototype.editWordArray = function () {
-        var words = this.signsLookupService.availableWords();
-        return words;
+    DocumentService.prototype.showAvailableWords = function (text) {
+        return this.signsLookupService.showAvailableWords(text);
     };
     DocumentService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -2803,6 +2802,7 @@ var SignsLookupService = /** @class */ (function () {
     }
     SignsLookupService.prototype.loadSigns = function () {
         var _this = this;
+        var self = this;
         this.entrylist = [];
         this.storage.get('puddles').then(function (puddles) {
             if (puddles) {
@@ -2818,6 +2818,7 @@ var SignsLookupService = /** @class */ (function () {
                                 });
                             });
                         });
+                        self.words = self.getAvailableWords();
                     });
                 });
             }
@@ -2876,22 +2877,18 @@ var SignsLookupService = /** @class */ (function () {
     SignsLookupService.prototype.getsign = function (key) {
         return this.entrylist.find(function (entry) { return entry.key === key; });
     };
-    SignsLookupService.prototype.availableWords = function () {
+    SignsLookupService.prototype.getAvailableWords = function () {
         var uniqueWords = [];
-        var _loop_1 = function (i) {
-            var entry = this_1.entrylist[i];
+        var map = new Map();
+        for (var i = 0; i < this.entrylist.length; i++) {
+            var entry = this.entrylist[i];
             var gloss = entry.gloss;
-            var matching = uniqueWords.filter(function (x) { return x.gloss === gloss; });
-            var found = matching.length >= 1;
-            if (!found) {
+            if (!map.has(gloss)) {
+                map.set(gloss, true);
                 uniqueWords.push({ gloss: gloss, normalized: entry.normalized });
             }
-        };
-        var this_1 = this;
-        for (var i = 0; i < this.entrylist.length; i++) {
-            _loop_1(i);
         }
-        return uniqueWords.sort(function (x, y) {
+        var sorted = uniqueWords.sort(function (x, y) {
             if (x.gloss < y.gloss) {
                 return -1;
             }
@@ -2902,6 +2899,51 @@ var SignsLookupService = /** @class */ (function () {
                 return 0;
             }
         });
+        return sorted;
+    };
+    // Available words
+    SignsLookupService.prototype.showAvailableWords = function (text) {
+        var words = text.split(' ');
+        var keyword = words.length > 0 ? words[words.length - 1] : '';
+        return this.getResults(this.words, keyword);
+    };
+    SignsLookupService.prototype.getResults = function (availableWords, keyword) {
+        if (availableWords && keyword && keyword !== '') {
+            var maxResults = 12;
+            var startsWith = [];
+            var contains = [];
+            var lwrCaseKeyword = keyword.toLowerCase();
+            var i = 0;
+            for (var _i = 0, availableWords_1 = availableWords; _i < availableWords_1.length; _i++) {
+                var element = availableWords_1[_i];
+                if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
+                    startsWith.push(element);
+                    i++;
+                }
+                else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
+                    startsWith.push(element);
+                    i++;
+                }
+                else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+                    contains.push(element);
+                }
+                else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+                    contains.push(element);
+                }
+                if (i >= maxResults) {
+                    break;
+                }
+            }
+            var result = [];
+            result = startsWith.slice(0, maxResults);
+            if (result.length < maxResults) {
+                result.concat(contains.slice(0, maxResults - result.length));
+            }
+            return result;
+        }
+        else {
+            return [];
+        }
     };
     SignsLookupService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
