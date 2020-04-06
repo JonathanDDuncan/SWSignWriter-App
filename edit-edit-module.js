@@ -65,7 +65,7 @@ var EditPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>{{'Edit' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n  <ion-item>\r\n    Available words\r\n  \r\n    <ion-button *ngFor=\"let item of matchingWords\"  (click)=\"addWord(item)\"> {{item}}</ion-button>\r\n    \r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-textarea #searchRef placeholder=\"{{'Enter word to search here' | translate}}\"></ion-textarea>\r\n    <ion-button style=\"display:none\" (click)=\"resetEntries()\"> {{'Reset' | translate}}</ion-button>\r\n  </ion-item>\r\n</ion-header>\r\n\r\n<ion-content padding class=\"vertical-center\">\r\n  <ion-list>\r\n    <ion-item *ngFor=\"let found of editedDocument.editedsigns; index as i; trackBy: trackFound \">\r\n      <ion-grid>\r\n        <ion-row justify-content-center>\r\n          <button class=\"editbutton\" [style.background-color]=\"found.color\" (click)=\"replace(i)\" type=\"button\">\r\n            <div [className]=\"laneStyle(found.lane)\">\r\n              <div class=\"sign\">\r\n                <span [innerHTML]=\"found.svg | safeHtml\"></span>\r\n                <ion-grid>\r\n                  <ion-row>\r\n                    <ion-col size=\"10\">\r\n                      <p>{{ (!found.sign ? (' sign not found' | translate) : found.sign.gloss ) }} </p>\r\n                    </ion-col>\r\n                    <ion-col size=\"1\">\r\n                      <ion-badge *ngIf=\"found.totalmatches > 1\" color=\"light\">{{ found.totalmatches }}</ion-badge>\r\n                    </ion-col>\r\n                  </ion-row>\r\n                </ion-grid>\r\n              </div>\r\n            </div>\r\n          </button>\r\n\r\n        </ion-row>\r\n        <ion-row justify-content-center>\r\n          <div class=\"lane-selector\">\r\n            <input id=\"{{found.id}}-left\" type=\"radio\" name=\"name{{found.id}}\" value=\"left\"\r\n              [checked]=\"Lane.Left === found.lane\" (change)=\"found.lane = Lane.Left\" />\r\n            <label class=\"label-background left\" for=\"{{found.id}}-left\"></label>\r\n            <input id=\"{{found.id}}-middle\" type=\"radio\" name=\"name{{found.id}}\" value=\"middle\"\r\n              [checked]=\"Lane.Middle === found.lane\" (change)=\"found.lane = Lane.Middle\" />\r\n            <label class=\"label-background middle\" for=\"{{found.id}}-middle\"></label>\r\n            <input id=\"{{found.id}}-right\" type=\"radio\" name=\"name{{found.id}}\" value=\"right\"\r\n              [checked]=\"Lane.Right === found.lane\" (change)=\"found.lane = Lane.Right\" />\r\n            <label class=\"label-background right\" for=\"{{found.id}}-right\"></label>\r\n          </div>\r\n        </ion-row>\r\n      </ion-grid>\r\n    </ion-item>\r\n  </ion-list>\r\n\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n      <ion-label>{{'Next' | translate}}</ion-label>\r\n      <ion-fab-button>\r\n          <ion-icon (click)=\"accept()\" name=\"arrow-dropright-circle\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button>\r\n  </ion-fab>\r\n</ion-content>"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>{{'Edit' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n\r\n  <ion-item>\r\n    <ion-textarea\r\n      #searchRef\r\n      placeholder=\"{{'Enter sentence' | translate}}\"\r\n    ></ion-textarea>\r\n    <ion-button style=\"display: none;\" (click)=\"resetEntries()\">\r\n      {{'Reset' | translate}}\r\n    </ion-button>\r\n  </ion-item>\r\n  <ion-item>\r\n    <div>\r\n      <ion-button\r\n        style=\"text-transform: none;\"\r\n        *ngFor=\"let item of matchingWords\"\r\n        (click)=\"addWord(item.gloss)\"\r\n      >\r\n        {{item.gloss}}\r\n      </ion-button>\r\n    </div>\r\n  </ion-item>\r\n</ion-header>\r\n\r\n<ion-content #content padding class=\"vertical-center\">\r\n  <ion-list>\r\n    <ion-item\r\n      *ngFor=\"let found of editedDocument.editedsigns; index as i; trackBy: trackFound \"\r\n    >\r\n      <ion-grid>\r\n        <ion-row justify-content-center>\r\n          <button\r\n            class=\"editbutton\"\r\n            [style.background-color]=\"found.color\"\r\n            (click)=\"replace(i)\"\r\n            type=\"button\"\r\n          >\r\n            <div [className]=\"laneStyle(found.lane)\">\r\n              <div class=\"sign\">\r\n                <span [innerHTML]=\"found.svg | safeHtml\"></span>\r\n                <ion-grid>\r\n                  <ion-row>\r\n                    <ion-col size=\"10\">\r\n                      <p>\r\n                        {{ (!found.sign ? (' sign not found' | translate) :\r\n                        found.sign.gloss ) }}\r\n                      </p>\r\n                    </ion-col>\r\n                    <ion-col size=\"1\">\r\n                      <ion-badge *ngIf=\"found.totalmatches > 1\" color=\"light\"\r\n                        >{{ found.totalmatches }}</ion-badge\r\n                      >\r\n                    </ion-col>\r\n                  </ion-row>\r\n                </ion-grid>\r\n              </div>\r\n            </div>\r\n          </button>\r\n        </ion-row>\r\n        <ion-row justify-content-center>\r\n          <div class=\"lane-selector\">\r\n            <input\r\n              id=\"{{found.id}}-left\"\r\n              type=\"radio\"\r\n              name=\"name{{found.id}}\"\r\n              value=\"left\"\r\n              [checked]=\"Lane.Left === found.lane\"\r\n              (change)=\"found.lane = Lane.Left\"\r\n            />\r\n            <label\r\n              class=\"label-background left\"\r\n              for=\"{{found.id}}-left\"\r\n            ></label>\r\n            <input\r\n              id=\"{{found.id}}-middle\"\r\n              type=\"radio\"\r\n              name=\"name{{found.id}}\"\r\n              value=\"middle\"\r\n              [checked]=\"Lane.Middle === found.lane\"\r\n              (change)=\"found.lane = Lane.Middle\"\r\n            />\r\n            <label\r\n              class=\"label-background middle\"\r\n              for=\"{{found.id}}-middle\"\r\n            ></label>\r\n            <input\r\n              id=\"{{found.id}}-right\"\r\n              type=\"radio\"\r\n              name=\"name{{found.id}}\"\r\n              value=\"right\"\r\n              [checked]=\"Lane.Right === found.lane\"\r\n              (change)=\"found.lane = Lane.Right\"\r\n            />\r\n            <label\r\n              class=\"label-background right\"\r\n              for=\"{{found.id}}-right\"\r\n            ></label>\r\n          </div>\r\n        </ion-row>\r\n      </ion-grid>\r\n    </ion-item>\r\n  </ion-list>\r\n\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n    <ion-label>{{'Next' | translate}}</ion-label>\r\n    <ion-fab-button>\r\n      <ion-icon\r\n        (click)=\"accept()\"\r\n        name=\"arrow-dropright-circle\"\r\n        style=\"zoom: 2;\"\r\n      ></ion-icon>\r\n    </ion-fab-button>\r\n  </ion-fab>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -161,6 +161,7 @@ var EditPage = /** @class */ (function () {
             _this.showAvailableWords(text);
             _this.documentService.searchFrase(text);
             _this.showDocument(_this.documentService.getDocument());
+            _this.scrollToBottom();
         });
     };
     EditPage.prototype.showAvailableWords = function (text) {
@@ -169,10 +170,42 @@ var EditPage = /** @class */ (function () {
         this.matchingWords = this.getResults(this.availableWords, keyword);
     };
     EditPage.prototype.getResults = function (availableWords, keyword) {
+        keyword = 'nombre';
         if (availableWords && keyword && keyword !== '') {
-            var result = availableWords
-                .filter(function (item) { return item.toLowerCase().indexOf(keyword.toLowerCase()) !== -1; })
-                .slice(0, 12);
+            var maxResults = 12;
+            var startsWith = [];
+            var contains = [];
+            var lwrCaseKeyword = keyword.toLowerCase();
+            var i = 0;
+            for (var _i = 0, availableWords_1 = availableWords; _i < availableWords_1.length; _i++) {
+                var element = availableWords_1[_i];
+                if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
+                    startsWith.push(element);
+                    i++;
+                    debugger;
+                }
+                else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
+                    startsWith.push(element);
+                    i++;
+                    debugger;
+                }
+                else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+                    contains.push(element);
+                    debugger;
+                }
+                else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+                    contains.push(element);
+                    debugger;
+                }
+                if (i >= maxResults) {
+                    break;
+                }
+            }
+            var result = [];
+            result = startsWith.slice(0, maxResults);
+            if (result.length < maxResults) {
+                result.concat(contains.slice(0, maxResults - result.length));
+            }
             return result;
         }
         else {
@@ -229,6 +262,12 @@ var EditPage = /** @class */ (function () {
             });
         });
     };
+    EditPage.prototype.scrollToBottom = function () {
+        var _this = this;
+        setTimeout(function () {
+            _this.content.scrollToBottom(300);
+        }, 50);
+    };
     EditPage.prototype.resetEntries = function () { };
     EditPage.prototype.laneStyle = function (lane) {
         switch (lane) {
@@ -241,6 +280,10 @@ var EditPage = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ViewChild"])('searchRef', { read: _angular_core__WEBPACK_IMPORTED_MODULE_5__["ElementRef"] }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ElementRef"])
     ], EditPage.prototype, "searchRef", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ViewChild"])('content'),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], EditPage.prototype, "content", void 0);
     EditPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["Component"])({
             selector: 'app-edit',

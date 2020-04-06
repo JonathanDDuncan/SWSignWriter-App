@@ -631,7 +631,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.96)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.97)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -2878,15 +2878,21 @@ var SignsLookupService = /** @class */ (function () {
     };
     SignsLookupService.prototype.availableWords = function () {
         var uniqueWords = [];
-        for (var i = 0; i < this.entrylist.length; i++) {
-            var entry = this.entrylist[i];
+        var _loop_1 = function (i) {
+            var entry = this_1.entrylist[i];
             var gloss = entry.gloss;
-            if (uniqueWords.indexOf(gloss) === -1) {
-                uniqueWords.push(gloss);
+            var matching = uniqueWords.filter(function (x) { return x.gloss === gloss; });
+            var found = matching.length >= 1;
+            if (!found) {
+                uniqueWords.push({ gloss: gloss, normalized: entry.normalized });
             }
+        };
+        var this_1 = this;
+        for (var i = 0; i < this.entrylist.length; i++) {
+            _loop_1(i);
         }
         return uniqueWords.sort(function (x, y) {
-            if (x < y) {
+            if (x.gloss < y.gloss) {
                 return -1;
             }
             else if (x > y) {
