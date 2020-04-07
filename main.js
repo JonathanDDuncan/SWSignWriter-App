@@ -631,7 +631,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.99)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.100)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -2561,7 +2561,7 @@ var ShowImagePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard($this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n  <hr>\r\n  <img [src]=\"getRemoteImage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
 
 /***/ }),
 
@@ -2587,21 +2587,49 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowImagePage", function() { return ShowImagePage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+
 
 
 
 
 var ShowImagePage = /** @class */ (function () {
-    function ShowImagePage(modalController, toastController, sanitizer) {
+    function ShowImagePage(modalController, toastController, sanitizer, http) {
         this.modalController = modalController;
         this.toastController = toastController;
         this.sanitizer = sanitizer;
+        this.http = http;
     }
     ShowImagePage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
+        this.saveToRemote(this.imagebase64);
+    };
+    ShowImagePage.prototype.uuidv4 = function () {
+        return eval("([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>\n      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)\n    )");
+    };
+    ShowImagePage.prototype.saveToRemote = function (imagebase64) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var serverUrl, path, requestBody;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                this.imageId = this.uuidv4();
+                serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+                path = 'api/image/save';
+                requestBody = {
+                    'imageId': this.imageId,
+                    'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+                    'dataUrl': imagebase64
+                };
+                this.http.post(serverUrl + path, requestBody)
+                    .toPromise()
+                    .then(function () { }, function (error) {
+                    console.log(error);
+                });
+                return [2 /*return*/];
+            });
+        });
     };
     ShowImagePage.prototype.close = function () {
         this.modalController.dismiss({
@@ -2612,6 +2640,11 @@ var ShowImagePage = /** @class */ (function () {
         this.contentHeight = this.swCanvas.height / 4;
         this.contentWidth = this.swCanvas.width / 4;
         return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+    };
+    ShowImagePage.prototype.getRemoteImage = function () {
+        var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+        // const serverUrl = 'https://localhost:44309/';
+        return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
     };
     ShowImagePage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -2749,18 +2782,19 @@ var ShowImagePage = /** @class */ (function () {
         });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Input"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLCanvasElement)
     ], ShowImagePage.prototype, "canvas", void 0);
     ShowImagePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-show-image',
             template: __webpack_require__(/*! ./show-image.page.html */ "./src/app/show-image/show-image.page.html"),
             styles: [__webpack_require__(/*! ./show-image.page.scss */ "./src/app/show-image/show-image.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"],
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ToastController"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], ShowImagePage);
     return ShowImagePage;
 }());
