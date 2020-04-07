@@ -631,7 +631,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.101)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.102)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -2591,6 +2591,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -2607,14 +2610,11 @@ var ShowImagePage = /** @class */ (function () {
         this.swCanvas = this.canvas;
         this.saveToRemote(this.imagebase64);
     };
-    ShowImagePage.prototype.uuidv4 = function () {
-        return eval("([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>\n      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)\n    )");
-    };
     ShowImagePage.prototype.saveToRemote = function (imagebase64) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var serverUrl, path, requestBody;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.imageId = this.uuidv4();
+                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_5__["uuid"])();
                 serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
                 path = 'api/image/save';
                 requestBody = {
@@ -2898,7 +2898,15 @@ var SignsLookupService = /** @class */ (function () {
         if (count === 0 && substringcount > 0) {
             result = substring;
         }
-        return this.arrayUnique(result);
+        var finalresult;
+        var unique = this.arrayUnique(result);
+        if (unique.length > 25) {
+            finalresult = unique.filter(function (x) { return x.gloss.length === text.length; });
+        }
+        else {
+            finalresult = unique;
+        }
+        return finalresult;
     };
     SignsLookupService.prototype.arrayUnique = function (arr) {
         var existingkeys = [];
@@ -3164,8 +3172,14 @@ var SpmlService = /** @class */ (function () {
         }
     };
     SpmlService.prototype.cleangloss = function (gloss) {
+        if (gloss.indexOf('SWS-TAG') !== -1) {
+            gloss = '';
+        }
         if (gloss) {
-            return gloss.trim().replace('  ', ' ').replace(/\s+/g, '-');
+            return gloss.trim().replace('  ', ' ').replace('   ', ' ').replace('    ', ' ').replace('     ', ' ')
+                .replace(',', '').replace('.', '').replace('?', '')
+                .replace('!', '').replace('(', '').replace(')', '').replace('"', '').replace(/\s+/g, '-')
+                .replace('--', '-').replace('---', '-').replace('----', '-');
         }
         else {
             return gloss;
