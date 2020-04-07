@@ -67,7 +67,16 @@ export class ShowImagePage implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
   }
 
+  sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+
   getRemoteImage() {
+    this.sleep(200);
     const serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
     // const serverUrl = 'https://localhost:44309/';
     return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
