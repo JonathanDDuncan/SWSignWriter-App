@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,14 +18,41 @@ export class ShowImagePage implements OnInit {
   public contentHeight: Number;
   public swCanvas: HTMLCanvasElement; // your canvas element
   public modalCtrl: HTMLIonModalElement;
+  public imageId: string;
 
   @Input() canvas: HTMLCanvasElement;
   constructor(public modalController: ModalController,
     public toastController: ToastController,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private http: HttpClient) { }
 
   ngOnInit() {
     this.swCanvas = this.canvas;
+    this.saveToRemote(this.imagebase64);
+  }
+  uuidv4() {
+    return  eval(`([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )`);
+  }
+
+  async saveToRemote(imagebase64: string) {
+    this.imageId = this.uuidv4();
+    const serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+
+    // const serverUrl = 'https://localhost:44309/';
+    const path = 'api/image/save';
+    const requestBody = {
+      'imageId': this.imageId,
+      'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+      'dataUrl': imagebase64
+    };
+
+    this.http.post(serverUrl + path, requestBody)
+      .toPromise()
+      .then(() => {},
+        error => {
+          console.log(error); });
   }
 
   close() {
@@ -37,6 +65,12 @@ export class ShowImagePage implements OnInit {
     this.contentHeight = this.swCanvas.height / 4;
     this.contentWidth = this.swCanvas.width / 4;
     return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+  }
+
+  getRemoteImage() {
+    const serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+    // const serverUrl = 'https://localhost:44309/';
+    return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
   }
 
   async socialShare() {
