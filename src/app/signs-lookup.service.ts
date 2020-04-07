@@ -96,8 +96,16 @@ export class SignsLookupService {
     if (count === 0 && substringcount > 0) {
       result = substring;
     }
+    let finalresult: Sign[];
+    const unique = this.arrayUnique(result);
 
-    return this.arrayUnique(result);
+    if (unique.length > 25) {
+      finalresult = unique.filter(x => x.gloss.length === text.length);
+    } else {
+      finalresult = unique;
+    }
+
+    return finalresult;
   }
 
   private arrayUnique(arr: Sign[]): Sign[] {
