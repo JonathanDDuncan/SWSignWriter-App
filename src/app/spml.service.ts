@@ -107,8 +107,14 @@ export class SpmlService {
   }
 
   private cleangloss(gloss: string): string {
+    if (gloss.indexOf('SWS-TAG') !== -1) {
+      gloss = '';
+    }
     if (gloss) {
-      return gloss.trim().replace('  ', ' ').replace(/\s+/g, '-');
+      return gloss.trim().replace('  ', ' ').replace('   ', ' ').replace('    ', ' ').replace('     ', ' ')
+      .replace(',', '').replace('.', '').replace('?', '')
+      .replace('!', '').replace('(', '').replace(')', '').replace('"', '').replace(/\s+/g, '-')
+      .replace('--', '-').replace('---', '-').replace('----', '-');
     } else {
       return gloss;
     }
