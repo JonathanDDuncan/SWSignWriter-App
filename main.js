@@ -2649,7 +2649,7 @@ var ShowImagePage = /** @class */ (function () {
         } while (currentDate - date < milliseconds);
     };
     ShowImagePage.prototype.getRemoteImage = function () {
-        this.sleep(500);
+        this.sleep(100);
         var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
         // const serverUrl = 'https://localhost:44309/';
         return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
