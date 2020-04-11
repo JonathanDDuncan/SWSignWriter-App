@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile) {
+    if (!profile || profile === null) {
       this.router.navigate(['/login']);
     }
     this.daysleft = await this.trial.GetTrialDaysLeft(profile.email);

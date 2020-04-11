@@ -25,7 +25,7 @@ export class SubscribePage implements OnInit {
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile) {
+    if (!profile || profile === null) {
       this.router.navigate(['/login']);
     }
     const subscription = await this.storage.GetSubscription(profile.email);

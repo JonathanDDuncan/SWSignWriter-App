@@ -22,7 +22,7 @@ export class StripesuccessPage implements OnInit {
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile) {
+    if (!profile || profile === null) {
       this.router.navigate(['/login']);
     }
     await this.getSubscriptionInfo();
