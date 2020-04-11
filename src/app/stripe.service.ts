@@ -30,10 +30,12 @@ export class StripeService {
         })
       }).toPromise();
 
+      if (data) {
         this.storage.SaveSubscription(
           data.Email,
           data.SubscriptionEndDate,
           data.CancelAtPeriodEnd
         );
+      }
   }
 }

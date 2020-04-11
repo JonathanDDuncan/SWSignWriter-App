@@ -36,8 +36,9 @@ export class SubscriptionService {
   async CanUse(email: string = null) {
    if (!email) {
      const profile = await this.storage.GetCurrentUserProfile();
-     email = profile ? profile.email : null;
+     email = profile && profile !== null ? profile.email : null;
    }
+
    const isSubscribedOrTrial = this.IsSubscribedOrTrial(email);
     if (!isSubscribedOrTrial ) {
       this.router.navigate(['/subscribe']);

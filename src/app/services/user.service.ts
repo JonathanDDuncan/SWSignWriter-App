@@ -17,7 +17,7 @@ export class UserService {
 
   async GetCurrenUserRoles(): Promise<Array<string>> {
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
-    if (currentUserProfile) {
+    if (currentUserProfile && currentUserProfile != null) {
       const roles = await this.GetRoles(currentUserProfile.email);
       return roles;
     }
