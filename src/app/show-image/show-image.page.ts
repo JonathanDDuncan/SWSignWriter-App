@@ -105,7 +105,7 @@ export class ShowImagePage implements OnInit {
     }
   }
 
-  copyToClipboard(event) {
+  async copyToClipboard(event) {
     const self = this;
 
     try {
@@ -114,14 +114,18 @@ export class ShowImagePage implements OnInit {
         if (navigator['clipboard']) {
           // Safe to use Async Clipboard API!
           const clip = navigator['clipboard'] as any;
-          clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
-            await self.presentToast('Copied to clipboard successfully!');
-            console.log('Copied to clipboard successfully!');
-          }, async function (err) {
-            console.error(err);
-            await self.presentToast('Unable to write to clipboard. :-(');
-            console.error('Unable to write to clipboard. :-(');
-          });
+          try {
+            clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
+              await self.presentToast('Copied to clipboard successfully!');
+              console.log('Copied to clipboard successfully!');
+            }, async function (err) {
+              console.error(err);
+              await self.presentToast('Unable to write to clipboard. :-(');
+              console.error('Unable to write to clipboard. :-(');
+            });
+          } catch (error) {
+            clip.setImageData( blob, 'image/png');
+          }
         } else {
           const img = document.createElement('img');
           img.src = canvas.toDataURL();
@@ -132,7 +136,7 @@ export class ShowImagePage implements OnInit {
           r.selectNode(img);
           const sel = window.getSelection();
           sel.addRange(r);
-          const wascopied = document.execCommand('Copy');
+          const wascopied = document.execCommand('copy');
           if (!wascopied) {
             await self.presentToast('You need to right click or long press on image to copy it.');
             alert('You need to right click or long press on image to copy it.');
@@ -143,6 +147,8 @@ export class ShowImagePage implements OnInit {
         }
       });
     } catch (error) {
+      await self.presentToast('Unable to write to clipboard. :-(');
+      console.error('Unable to write to clipboard. :-(');
       console.error(error);
     }
   }
