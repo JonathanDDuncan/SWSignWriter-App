@@ -60,13 +60,15 @@ export class ViewPage implements OnInit {
 
   public async copy() {
     const fsw = this.documentService.getFSW();
-    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
-    const modal = await this.modalController.create({
-      component: ShowImagePage,
-      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
-    });
-    await modal.present();
-    await modal.onDidDismiss();
+    if (fsw && fsw !== null) {
+      const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+      const modal = await this.modalController.create({
+        component: ShowImagePage,
+        componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+      });
+      await modal.present();
+      await modal.onDidDismiss();
+    }
   }
 
   heightChange(ev: any) {
