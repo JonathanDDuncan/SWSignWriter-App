@@ -631,7 +631,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.104)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.105)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -1124,7 +1124,7 @@ var CallbackComponent = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!userProfile) return [3 /*break*/, 2];
+                        if (!(userProfile && userProfile !== null)) return [3 /*break*/, 2];
                         this.sentry.sentryMessage('Logged in: ' + JSON.stringify(userProfile));
                         this.storage.SaveCurrentUserProfile(userProfile);
                         this.stripeService.GetandSaveStripeSubscriptionData(userProfile.email);
@@ -1234,7 +1234,7 @@ module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>{{ 'Choose S
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".sign {\n  min-width: 100px;\n  padding: 10px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY2hvb3NlLXNpZ24vSTpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcY2hvb3NlLXNpZ25cXGNob29zZS1zaWduLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFnQjtFQUNoQixhQUFhLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9jaG9vc2Utc2lnbi9jaG9vc2Utc2lnbi5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc2lnbiB7XHJcbiAgbWluLXdpZHRoOiAxMDBweDtcclxuICBwYWRkaW5nOiAxMHB4O1xyXG59XHJcbiJdfQ== */"
+module.exports = ".sign {\n  min-width: 100px;\n  padding: 10px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY2hvb3NlLXNpZ24vSDpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcY2hvb3NlLXNpZ25cXGNob29zZS1zaWduLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFnQjtFQUNoQixhQUFhLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9jaG9vc2Utc2lnbi9jaG9vc2Utc2lnbi5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc2lnbiB7XHJcbiAgbWluLXdpZHRoOiAxMDBweDtcclxuICBwYWRkaW5nOiAxMHB4O1xyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -1558,7 +1558,7 @@ var DocumentService = /** @class */ (function () {
     DocumentService.prototype.findmatchingresult = function (founds, searchText) {
         var normalized = this.normalize.normalizeForSearch(searchText);
         var type = 'exact';
-        var foundexacts = founds.filter(function (item) { return item.gloss.toLowerCase() === searchText.toLowerCase(); });
+        var foundexacts = founds.filter(function (item) { return item && item.gloss && searchText && item.gloss.toLowerCase() === searchText.toLowerCase(); });
         var exactCount = foundexacts.length;
         var foundexact;
         if (exactCount > 0) {
@@ -1721,7 +1721,7 @@ var NormalizationService = /** @class */ (function () {
         }
         var normalized = '';
         var i, l;
-        s = s.toLowerCase();
+        s = s ? s.toLowerCase() : '';
         for (i = 0, l = s.length; i < l; i = i + 1) {
             normalized = normalized + filter(s.charAt(i));
         }
@@ -1893,7 +1893,7 @@ var SentryErrorHandler = /** @class */ (function () {
     function SentryErrorHandler() {
     }
     SentryErrorHandler.prototype.handleError = function (error) {
-        var eventId = _sentry_browser__WEBPACK_IMPORTED_MODULE_2__["captureException"](error.originalError || error);
+        var eventId = _sentry_browser__WEBPACK_IMPORTED_MODULE_2__["captureException"](error.originalError || error.error || error);
         _sentry_browser__WEBPACK_IMPORTED_MODULE_2__["showReportDialog"]({ eventId: eventId });
     };
     SentryErrorHandler.prototype.sentryMessage = function (message) {
@@ -2068,7 +2068,7 @@ var SubscriptionService = /** @class */ (function () {
                         return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        email = profile ? profile.email : null;
+                        email = profile && profile !== null ? profile.email : null;
                         _a.label = 2;
                     case 2:
                         isSubscribedOrTrial = this.IsSubscribedOrTrial(email);
@@ -2192,38 +2192,41 @@ var UserService = /** @class */ (function () {
     }
     UserService.prototype.GetCurrenUserRoles = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.CreateRoles()];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/, this.roles];
-                }
-            });
-        });
-    };
-    UserService.prototype.CreateRoles = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var currentUserProfile, trialDaysLeft, subscriptionDaysLeft;
+            var currentUserProfile, roles;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         currentUserProfile = _a.sent();
-                        return [4 /*yield*/, this.trial.GetTrialDaysLeft(currentUserProfile.email)];
+                        if (!(currentUserProfile && currentUserProfile != null)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.GetRoles(currentUserProfile.email)];
                     case 2:
+                        roles = _a.sent();
+                        return [2 /*return*/, roles];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserService.prototype.GetRoles = function (email) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var trialDaysLeft, subscriptionDaysLeft, roles;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.trial.GetTrialDaysLeft(email)];
+                    case 1:
                         trialDaysLeft = _a.sent();
-                        subscriptionDaysLeft = this.subscriptions.GetSubscriptionDaysLeft(currentUserProfile.email);
-                        this.roles = [];
-                        return [4 /*yield*/, subscriptionDaysLeft];
-                    case 3:
-                        if ((_a.sent()) > 0) {
-                            this.roles.push('subscribed');
+                        return [4 /*yield*/, this.subscriptions.GetSubscriptionDaysLeft(email)];
+                    case 2:
+                        subscriptionDaysLeft = _a.sent();
+                        roles = [];
+                        if (subscriptionDaysLeft && subscriptionDaysLeft > 0) {
+                            roles.push('subscribed');
                         }
-                        else if (trialDaysLeft > 0) {
-                            this.roles.push('trial');
+                        else if (trialDaysLeft && trialDaysLeft > 0) {
+                            roles.push('trial');
                         }
-                        return [2 /*return*/];
+                        return [2 /*return*/, roles];
                 }
             });
         });
@@ -2699,78 +2702,99 @@ var ShowImagePage = /** @class */ (function () {
         });
     };
     ShowImagePage.prototype.copyToClipboard = function (event) {
-        var self = this;
-        try {
-            var canvas_1 = this.canvas;
-            this.canvas.toBlob(function (blob) {
-                return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-                    var clip, img, r, sel, wascopied;
-                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                        switch (_a.label) {
-                            case 0:
-                                if (!navigator['clipboard']) return [3 /*break*/, 1];
-                                clip = navigator['clipboard'];
-                                clip.write([new ClipboardItem({ 'image/png': blob })]).then(function () {
-                                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0: return [4 /*yield*/, self.presentToast('Copied to clipboard successfully!')];
-                                                case 1:
-                                                    _a.sent();
-                                                    console.log('Copied to clipboard successfully!');
-                                                    return [2 /*return*/];
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var self, canvas_1, error_1;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 2, , 4]);
+                        canvas_1 = this.canvas;
+                        this.canvas.toBlob(function (blob) {
+                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                                var clip, img, r, sel, wascopied;
+                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!navigator['clipboard']) return [3 /*break*/, 1];
+                                            clip = navigator['clipboard'];
+                                            try {
+                                                clip.write([new ClipboardItem({ 'image/png': blob })]).then(function () {
+                                                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                                            switch (_a.label) {
+                                                                case 0: return [4 /*yield*/, self.presentToast('Copied to clipboard successfully!')];
+                                                                case 1:
+                                                                    _a.sent();
+                                                                    console.log('Copied to clipboard successfully!');
+                                                                    return [2 /*return*/];
+                                                            }
+                                                        });
+                                                    });
+                                                }, function (err) {
+                                                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                                            switch (_a.label) {
+                                                                case 0:
+                                                                    console.error(err);
+                                                                    return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
+                                                                case 1:
+                                                                    _a.sent();
+                                                                    console.error('Unable to write to clipboard. :-(');
+                                                                    return [2 /*return*/];
+                                                            }
+                                                        });
+                                                    });
+                                                });
                                             }
-                                        });
-                                    });
-                                }, function (err) {
-                                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    console.error(err);
-                                                    return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
-                                                case 1:
-                                                    _a.sent();
-                                                    console.error('Unable to write to clipboard. :-(');
-                                                    return [2 /*return*/];
+                                            catch (error) {
+                                                clip.setImageData(blob, 'image/png');
                                             }
-                                        });
-                                    });
+                                            return [3 /*break*/, 6];
+                                        case 1:
+                                            img = document.createElement('img');
+                                            img.src = canvas_1.toDataURL();
+                                            document.body.appendChild(img);
+                                            r = document.createRange();
+                                            r.setStartBefore(img);
+                                            r.setEndAfter(img);
+                                            r.selectNode(img);
+                                            sel = window.getSelection();
+                                            sel.addRange(r);
+                                            wascopied = document.execCommand('copy');
+                                            if (!!wascopied) return [3 /*break*/, 3];
+                                            return [4 /*yield*/, self.presentToast('You need to right click or long press on image to copy it.')];
+                                        case 2:
+                                            _a.sent();
+                                            alert('You need to right click or long press on image to copy it.');
+                                            return [3 /*break*/, 5];
+                                        case 3: return [4 /*yield*/, self.presentToast('Image was copied.')];
+                                        case 4:
+                                            _a.sent();
+                                            _a.label = 5;
+                                        case 5:
+                                            img.remove();
+                                            _a.label = 6;
+                                        case 6: return [2 /*return*/];
+                                    }
                                 });
-                                return [3 /*break*/, 6];
-                            case 1:
-                                img = document.createElement('img');
-                                img.src = canvas_1.toDataURL();
-                                document.body.appendChild(img);
-                                r = document.createRange();
-                                r.setStartBefore(img);
-                                r.setEndAfter(img);
-                                r.selectNode(img);
-                                sel = window.getSelection();
-                                sel.addRange(r);
-                                wascopied = document.execCommand('Copy');
-                                if (!!wascopied) return [3 /*break*/, 3];
-                                return [4 /*yield*/, self.presentToast('You need to right click or long press on image to copy it.')];
-                            case 2:
-                                _a.sent();
-                                alert('You need to right click or long press on image to copy it.');
-                                return [3 /*break*/, 5];
-                            case 3: return [4 /*yield*/, self.presentToast('Image was copied.')];
-                            case 4:
-                                _a.sent();
-                                _a.label = 5;
-                            case 5:
-                                img.remove();
-                                _a.label = 6;
-                            case 6: return [2 /*return*/];
-                        }
-                    });
-                });
+                            });
+                        });
+                        return [3 /*break*/, 4];
+                    case 2:
+                        error_1 = _a.sent();
+                        return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
+                    case 3:
+                        _a.sent();
+                        console.error('Unable to write to clipboard. :-(');
+                        console.error(error_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
             });
-        }
-        catch (error) {
-            console.error(error);
-        }
+        });
     };
     ShowImagePage.prototype.presentToast = function (message) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -2961,18 +2985,18 @@ var SignsLookupService = /** @class */ (function () {
             var i = 0;
             for (var _i = 0, availableWords_1 = availableWords; _i < availableWords_1.length; _i++) {
                 var element = availableWords_1[_i];
-                if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
+                if (element && element.gloss && element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
                     startsWith.push(element);
                     i++;
                 }
-                else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
+                else if (element && element.normalized && element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
                     startsWith.push(element);
                     i++;
                 }
-                else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+                else if (element && element.gloss && element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
                     contains.push(element);
                 }
-                else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+                else if (element && element.normalized && element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
                     contains.push(element);
                 }
                 if (i >= maxResults) {
@@ -3151,7 +3175,7 @@ var SpmlService = /** @class */ (function () {
         return newEntry;
     };
     SpmlService.prototype.addFswGlosses = function (element, newEntry) {
-        var _this = this;
+        var self = this;
         // iterate over spmljs.elements[1].elements[].elements
         if (element && element.elements) {
             element.elements.forEach(function (entryelement) {
@@ -3164,7 +3188,7 @@ var SpmlService = /** @class */ (function () {
                             newEntry.fsw = node.text;
                         }
                         else if ((node.type = 'cdata')) {
-                            newEntry.glosses.push(_this.cleangloss(node.cdata));
+                            newEntry.glosses.push(self.cleangloss(node.cdata));
                         }
                     });
                 }
@@ -3538,7 +3562,9 @@ var StripeService = /** @class */ (function () {
                             }).toPromise()];
                     case 1:
                         data = _a.sent();
-                        this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
+                        if (data) {
+                            this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
+                        }
                         return [2 /*return*/];
                 }
             });
@@ -3750,7 +3776,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! I:\SWSignWriter\SWSignWriter-App\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! H:\SWSignWriter\SWSignWriter-App\src\main.ts */"./src/main.ts");
 
 
 /***/ })

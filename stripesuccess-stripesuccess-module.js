@@ -114,7 +114,7 @@ var StripesuccessPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        if (!profile) {
+                        if (!profile || profile === null) {
                             this.router.navigate(['/login']);
                         }
                         return [4 /*yield*/, this.getSubscriptionInfo()];
@@ -134,27 +134,29 @@ var StripesuccessPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        this.route.queryParamMap.subscribe(function (params) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                            var sessionid, subscription, d, ye, mo, da;
-                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        sessionid = params.params['session_id'];
-                                        return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid)];
-                                    case 1:
-                                        _a.sent();
-                                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
-                                    case 2:
-                                        subscription = _a.sent();
-                                        d = new Date(subscription.endDate);
-                                        ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-                                        mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-                                        da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-                                        this.subscriptionEndDate = da + "-" + mo + "-" + ye;
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
+                        if (profile && profile !== null) {
+                            this.route.queryParamMap.subscribe(function (params) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                var sessionid, subscription, d, ye, mo, da;
+                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            sessionid = params.params['session_id'];
+                                            return [4 /*yield*/, this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid)];
+                                        case 1:
+                                            _a.sent();
+                                            return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
+                                        case 2:
+                                            subscription = _a.sent();
+                                            d = new Date(subscription.endDate);
+                                            ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                                            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                                            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                                            this.subscriptionEndDate = da + "-" + mo + "-" + ye;
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); });
+                        }
                         return [2 /*return*/];
                 }
             });

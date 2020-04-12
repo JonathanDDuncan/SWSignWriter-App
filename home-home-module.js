@@ -110,7 +110,7 @@ var HomePage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _b.sent();
-                        if (!profile) {
+                        if (!profile || profile === null) {
                             this.router.navigate(['/login']);
                         }
                         _a = this;

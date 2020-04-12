@@ -118,7 +118,7 @@ var SubscribePage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        if (!profile) {
+                        if (!profile || profile === null) {
                             this.router.navigate(['/login']);
                         }
                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
@@ -180,6 +180,9 @@ var SubscribePage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
+                        if (!profile || profile === null) {
+                            this.router.navigate(['/login']);
+                        }
                         return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                     case 2:
                         subscription = _a.sent();
@@ -251,8 +254,13 @@ var SubscribePage = /** @class */ (function () {
                                                 case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                                                 case 1:
                                                     profile = _a.sent();
-                                                    request = { privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-                                                        email: profile.email };
+                                                    if (!profile || profile === null) {
+                                                        this.router.navigate(['/login']);
+                                                    }
+                                                    request = {
+                                                        privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+                                                        email: profile.email
+                                                    };
                                                     return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/cancelrenewal', request, {
                                                             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
                                                                 'Accept': 'application/json',

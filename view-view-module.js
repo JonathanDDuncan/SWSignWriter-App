@@ -75,7 +75,7 @@ module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"sta
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".document {\n  width: 100%;\n  height: 100%;\n  overflow: auto; }\n  .document div {\n    height: 100%; }\n  .preloadFonts {\n  width: 0px;\n  height: 0px;\n  display: inline-block;\n  overflow: hidden; }\n  ion-range {\n  padding-top: 0; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlldy9JOlxcU1dTaWduV3JpdGVyXFxTV1NpZ25Xcml0ZXItQXBwL3NyY1xcYXBwXFx2aWV3XFx2aWV3LnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQVc7RUFDWCxZQUFZO0VBQ1osY0FBYyxFQUFBO0VBSGxCO0lBTVEsWUFBWSxFQUFBO0VBSXBCO0VBQ0ksVUFBVTtFQUNWLFdBQVc7RUFDWCxxQkFBcUI7RUFDckIsZ0JBQWdCLEVBQUE7RUFHcEI7RUFDSSxjQUFjLEVBQUEiLCJmaWxlIjoic3JjL2FwcC92aWV3L3ZpZXcucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmRvY3VtZW50IHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgb3ZlcmZsb3c6IGF1dG87XHJcblxyXG4gICAgZGl2IHtcclxuICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICB9XHJcbn1cclxuXHJcbi5wcmVsb2FkRm9udHMge1xyXG4gICAgd2lkdGg6IDBweDtcclxuICAgIGhlaWdodDogMHB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxufVxyXG5cclxuaW9uLXJhbmdlIHtcclxuICAgIHBhZGRpbmctdG9wOiAwO1xyXG59XHJcbiJdfQ== */"
+module.exports = ".document {\n  width: 100%;\n  height: 100%;\n  overflow: auto; }\n  .document div {\n    height: 100%; }\n  .preloadFonts {\n  width: 0px;\n  height: 0px;\n  display: inline-block;\n  overflow: hidden; }\n  ion-range {\n  padding-top: 0; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdmlldy9IOlxcU1dTaWduV3JpdGVyXFxTV1NpZ25Xcml0ZXItQXBwL3NyY1xcYXBwXFx2aWV3XFx2aWV3LnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQVc7RUFDWCxZQUFZO0VBQ1osY0FBYyxFQUFBO0VBSGxCO0lBTVEsWUFBWSxFQUFBO0VBSXBCO0VBQ0ksVUFBVTtFQUNWLFdBQVc7RUFDWCxxQkFBcUI7RUFDckIsZ0JBQWdCLEVBQUE7RUFHcEI7RUFDSSxjQUFjLEVBQUEiLCJmaWxlIjoic3JjL2FwcC92aWV3L3ZpZXcucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmRvY3VtZW50IHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgb3ZlcmZsb3c6IGF1dG87XHJcblxyXG4gICAgZGl2IHtcclxuICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICB9XHJcbn1cclxuXHJcbi5wcmVsb2FkRm9udHMge1xyXG4gICAgd2lkdGg6IDBweDtcclxuICAgIGhlaWdodDogMHB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxufVxyXG5cclxuaW9uLXJhbmdlIHtcclxuICAgIHBhZGRpbmctdG9wOiAwO1xyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -147,6 +147,7 @@ var ViewPage = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         fsw = this.documentService.getFSW();
+                        if (!(fsw && fsw !== null)) return [3 /*break*/, 4];
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
                                 component: _show_image_show_image_page__WEBPACK_IMPORTED_MODULE_7__["ShowImagePage"],
@@ -160,7 +161,8 @@ var ViewPage = /** @class */ (function () {
                         return [4 /*yield*/, modal.onDidDismiss()];
                     case 3:
                         _a.sent();
-                        return [2 /*return*/];
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });

@@ -600,7 +600,7 @@ module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"sta
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".hr-margin-bottom {\n  margin-bottom: 16px; }\n\n.hr-black {\n  border: 0;\n  clear: both;\n  display: block;\n  width: 96%;\n  background-color: black;\n  height: 1px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2V0dGluZ3MvSTpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcc2V0dGluZ3NcXHNldHRpbmdzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG1CQUFtQixFQUFBOztBQUd2QjtFQUNJLFNBQVM7RUFDVCxXQUFVO0VBQ1YsY0FBYTtFQUNiLFVBQVU7RUFDVix1QkFBc0I7RUFDdEIsV0FBVyxFQUFBIiwiZmlsZSI6InNyYy9hcHAvc2V0dGluZ3Mvc2V0dGluZ3MucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhyLW1hcmdpbi1ib3R0b20ge1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxufVxyXG5cclxuLmhyLWJsYWNrIHtcclxuICAgIGJvcmRlcjogMDtcclxuICAgIGNsZWFyOmJvdGg7XHJcbiAgICBkaXNwbGF5OmJsb2NrO1xyXG4gICAgd2lkdGg6IDk2JTsgICAgICAgICAgICAgICBcclxuICAgIGJhY2tncm91bmQtY29sb3I6YmxhY2s7XHJcbiAgICBoZWlnaHQ6IDFweDtcclxufSJdfQ== */"
+module.exports = ".hr-margin-bottom {\n  margin-bottom: 16px; }\n\n.hr-black {\n  border: 0;\n  clear: both;\n  display: block;\n  width: 96%;\n  background-color: black;\n  height: 1px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2V0dGluZ3MvSDpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcc2V0dGluZ3NcXHNldHRpbmdzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG1CQUFtQixFQUFBOztBQUd2QjtFQUNJLFNBQVM7RUFDVCxXQUFVO0VBQ1YsY0FBYTtFQUNiLFVBQVU7RUFDVix1QkFBc0I7RUFDdEIsV0FBVyxFQUFBIiwiZmlsZSI6InNyYy9hcHAvc2V0dGluZ3Mvc2V0dGluZ3MucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhyLW1hcmdpbi1ib3R0b20ge1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxufVxyXG5cclxuLmhyLWJsYWNrIHtcclxuICAgIGJvcmRlcjogMDtcclxuICAgIGNsZWFyOmJvdGg7XHJcbiAgICBkaXNwbGF5OmJsb2NrO1xyXG4gICAgd2lkdGg6IDk2JTsgICAgICAgICAgICAgICBcclxuICAgIGJhY2tncm91bmQtY29sb3I6YmxhY2s7XHJcbiAgICBoZWlnaHQ6IDFweDtcclxufSJdfQ== */"
 
 /***/ }),
 
@@ -670,7 +670,7 @@ var SettingsPage = /** @class */ (function () {
             if (droppedFile.fileEntry.isFile) {
                 var fileEntry = droppedFile.fileEntry;
                 fileEntry.file(function (file) {
-                    if (droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
+                    if (droppedFile && droppedFile.relativePath && droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
                         _this.settingsService.loadFile(file);
                     }
                 });
