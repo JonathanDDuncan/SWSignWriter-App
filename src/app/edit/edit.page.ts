@@ -119,10 +119,12 @@ export class EditPage implements OnInit, AfterViewInit {
 
     await modal.present();
     const { data } = await modal.onDidDismiss();
-    // Replace existing item in list
-    this.documentService.replaceElement(index, data.result);
-    this.showDocument(this.documentService.getDocument());
-    this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+    if (data) {
+      // Replace existing item in list
+      this.documentService.replaceElement(index, data.result);
+      this.showDocument(this.documentService.getDocument());
+      this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+    }
   }
 
   scrollToBottom() {
