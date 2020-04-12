@@ -78,6 +78,7 @@ export class SpmlService {
     element: { attributes?: any; elements?: any },
     newEntry: Entry
   ) {
+    const self = this;
     // iterate over spmljs.elements[1].elements[].elements
     if (element && element.elements) {
       element.elements.forEach(entryelement => {
@@ -97,7 +98,7 @@ export class SpmlService {
               if (node.type === 'text') {
                 newEntry.fsw = node.text;
               } else if ((node.type = 'cdata')) {
-                newEntry.glosses.push(this.cleangloss(node.cdata));
+                newEntry.glosses.push(self.cleangloss(node.cdata));
               }
             }
           );
