@@ -164,15 +164,15 @@ export class SignsLookupService {
       const lwrCaseKeyword = keyword.toLowerCase();
       let i = 0;
       for (const element of availableWords) {
-        if (element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
+        if (element && element.gloss && element.gloss.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
-        } else if (element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
+        } else if (element && element.normalized && element.normalized.toLowerCase().startsWith(lwrCaseKeyword)) {
           startsWith.push(element);
           i++;
-        } else if (element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+        } else if (element && element.gloss && element.gloss.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
-        } else if (element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
+        } else if (element && element.normalized && element.normalized.toLowerCase().indexOf(lwrCaseKeyword) !== -1) {
           contains.push(element);
         }
 

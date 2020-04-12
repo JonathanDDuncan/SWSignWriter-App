@@ -177,7 +177,7 @@ export class DocumentService {
     const normalized = this.normalize.normalizeForSearch(searchText);
 
     let type = 'exact';
-    const foundexacts = founds.filter(item => item.gloss.toLowerCase() === searchText.toLowerCase());
+    const foundexacts = founds.filter(item => item && item.gloss && searchText && item.gloss.toLowerCase() === searchText.toLowerCase());
     const exactCount = foundexacts.length;
     let foundexact: Sign;
     if (exactCount > 0) { foundexact = foundexacts[0]; }

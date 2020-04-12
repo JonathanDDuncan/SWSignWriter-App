@@ -34,6 +34,7 @@ export class SubscriptionService {
   }
 
   async CanUse(email: string = null) {
+    // TODO what is this for?
    if (!email) {
      const profile = await this.storage.GetCurrentUserProfile();
      email = profile && profile !== null ? profile.email : null;

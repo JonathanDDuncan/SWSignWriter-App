@@ -50,7 +50,7 @@ export class SettingsPage implements OnInit {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          if (droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
+          if (droppedFile && droppedFile.relativePath && droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
             this.settingsService.loadFile(file);
           }
         });
