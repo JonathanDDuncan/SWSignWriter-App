@@ -111,7 +111,7 @@ export class StorageService {
     this.storage.set(key, subscription);
   }
 
-  async GetSubscription(email: string): Promise<{endDate: Date, cancelatperiodend: boolean }> {
+  async GetSubscription(email: string): Promise<{endDate: Date, cancelatperiodend: boolean } | undefined> {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
     const value = await this.storage.get(key);
     let subscription: {endDate: Date, cancelatperiodend: boolean };
