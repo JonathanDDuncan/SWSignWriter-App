@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
 
     this.initializeApp();
     platform.ready().then(() => {
-      this.settingsService.loadDefaultPuddles();
+    //  initialize
     });
 
 

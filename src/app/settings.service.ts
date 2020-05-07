@@ -24,21 +24,6 @@ export class SettingsService {
     private translateService: TranslateService,
     private http: HttpClient) { }
 
-  async loadDefaultPuddles() {
-    const puddlesExists = await this.storageService.puddlesExists();
-    if (!puddlesExists) {
-      const filename = 'assets/spml/' + 'sgn2000.spml';
-
-      return this.http.get(filename, { responseType: 'text' })
-        .subscribe(async xml => {
-          const saveresult = await this.saveSpml(xml);
-          await this.presentToast(saveresult);
-          this.signsLookupService.loadSigns();
-          this.storageService.setDefaultPuddleLoaded(true);
-        });
-    }
-  }
-
   async loadFile(file: File) {
     const defaultLoaded: string = await this.storageService.getDefaultPuddleLoaded();
     if (defaultLoaded) {
