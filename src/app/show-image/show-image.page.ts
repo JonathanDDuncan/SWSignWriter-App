@@ -58,8 +58,8 @@ export class ShowImagePage implements OnInit {
   }
 
   getimage() {
-    this.contentHeight = this.swCanvas.height / 4;
-    this.contentWidth = this.swCanvas.width / 4;
+    this.contentHeight = this.swCanvas.height / 1;
+    this.contentWidth = this.swCanvas.width / 1;
     return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
   }
 
