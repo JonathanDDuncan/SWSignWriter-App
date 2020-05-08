@@ -49,6 +49,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
         this.showResult(result);
       });
   }
+
   accept() {
     this.modalController.dismiss({
       result: this.selectedkey

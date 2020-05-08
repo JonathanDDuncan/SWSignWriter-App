@@ -104,7 +104,16 @@ export class SignsLookupService {
     } else {
       finalresult = unique;
     }
-
+    finalresult.sort(function (a, b) {
+      if (a.gloss > b.gloss) {
+        return 1;
+      }
+      if (a.gloss < b.gloss) {
+        return -1;
+      }
+      // a must be equal to b
+      return 0;
+    });
     return finalresult;
   }
 
