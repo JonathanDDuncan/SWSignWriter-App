@@ -109,9 +109,11 @@ export class DocumentService {
       { f: ':', t: ' : ' }, { f: ';', t: ' ; ' }, { f: '\t', t: ' ' },
       { f: '   ', t: ' ' }, { f: '  ', t: ' ' }];
 
-    replaceArr.forEach(repl => {
-      tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
-    });
+    if (tobereplaced && tobereplaced.length > 1) {
+      replaceArr.forEach(repl => {
+        tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
+      });
+    }
     return tobereplaced;
   }
 

@@ -111,7 +111,7 @@ export class SpmlService {
     if (gloss.indexOf('SWS-TAG') !== -1) {
       gloss = '';
     }
-    if (gloss) {
+    if (gloss && gloss.length > 1) {
       return gloss.trim().replace('  ', ' ').replace('   ', ' ').replace('    ', ' ').replace('     ', ' ')
       .replace(',', '').replace('.', '').replace('?', '')
       .replace('!', '').replace('(', '').replace(')', '').replace('"', '').replace(/\s+/g, '-')
