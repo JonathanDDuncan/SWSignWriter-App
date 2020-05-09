@@ -14,7 +14,7 @@ import { ShowImagePage } from '../show-image/show-image.page';
   styleUrls: ['./view.page.scss']
 })
 export class ViewPage implements OnInit {
-  public imageheight = 199;
+  public imageheight = 900;
   public document: string;
   public preloadFonts: string;
   public signtextHeight: number;
