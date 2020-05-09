@@ -132,6 +132,7 @@ export class SettingsPage implements OnInit {
 
   onPuddleChange(event) {
     this.puddleID = event.detail.value;
+    this.downloadPuddle();
   }
 
   async showToast(message, duration) {
