@@ -631,7 +631,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.105)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.106)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -1283,8 +1283,10 @@ var ChooseSignPage = /** @class */ (function () {
         });
     };
     ChooseSignPage.prototype.accept = function () {
+        var _this = this;
+        var element = this.elements.find(function (x) { return x.key === _this.selectedkey; });
         this.modalController.dismiss({
-            result: this.selectedkey
+            result: element
         });
     };
     ChooseSignPage.prototype.cancel = function () {
@@ -1493,9 +1495,11 @@ var DocumentService = /** @class */ (function () {
             { f: '!', t: ' ! ' }, { f: '¡', t: ' ¡ ' }, { f: '\\?', t: ' ? ' }, { f: '¿', t: ' ¿ ' },
             { f: ':', t: ' : ' }, { f: ';', t: ' ; ' }, { f: '\t', t: ' ' },
             { f: '   ', t: ' ' }, { f: '  ', t: ' ' }];
-        replaceArr.forEach(function (repl) {
-            tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
-        });
+        if (tobereplaced && tobereplaced.length > 1) {
+            replaceArr.forEach(function (repl) {
+                tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
+            });
+        }
         return tobereplaced;
     };
     DocumentService.prototype.findSign = function (text) {
@@ -1596,19 +1600,19 @@ var DocumentService = /** @class */ (function () {
     DocumentService.prototype.resetEntries = function () {
         this.signsLookupService.loadSigns();
     };
-    DocumentService.prototype.replaceElement = function (index, key) {
+    DocumentService.prototype.replaceElement = function (index, result) {
         var signs = this.document.signs;
         var toChange = signs[index];
-        var changeWith = this.signsLookupService.getsign(key);
+        var changeWith = this.signsLookupService.getsign(result.key);
         if (toChange && changeWith) {
             var toChangeindex = signs.indexOf(toChange);
             if (toChangeindex >= 0) {
                 signs[toChangeindex] = {
                     sign: changeWith,
-                    text: changeWith.gloss,
+                    text: result.gloss,
                     id: changeWith.key + changeWith.gloss,
                     svg: ssw.svg(changeWith.fsw),
-                    totalmatches: 1,
+                    totalmatches: toChange.totalmatches,
                     color: this.color.hexcolor(this.color.green),
                     lane: toChange.lane
                 };
@@ -2304,8 +2308,12 @@ var SettingsService = /** @class */ (function () {
                                                 return [4 /*yield*/, this.presentToast(saveresult)];
                                             case 2:
                                                 _a.sent();
-                                                this.signsLookupService.loadSigns();
-                                                this.storageService.setDefaultPuddleLoaded(true);
+                                                return [4 /*yield*/, this.signsLookupService.loadSigns()];
+                                            case 3:
+                                                _a.sent();
+                                                return [4 /*yield*/, this.storageService.setDefaultPuddleLoaded(true)];
+                                            case 4:
+                                                _a.sent();
                                                 return [2 /*return*/];
                                         }
                                     });
@@ -2339,7 +2347,7 @@ var SettingsService = /** @class */ (function () {
     SettingsService.prototype.readFile = function (file) {
         var _this = this;
         var reader = new FileReader();
-        reader.onload = function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+        reader.onload = (function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
             var xml;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
@@ -2351,7 +2359,7 @@ var SettingsService = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
-        }); };
+        }); });
         reader.readAsText(file);
     };
     SettingsService.prototype.loadPuddle = function (xml) {
@@ -2366,7 +2374,9 @@ var SettingsService = /** @class */ (function () {
                     case 2:
                         _a.sent();
                         this.signsLookupService.loadSigns();
-                        this.storageService.setDefaultPuddleLoaded(false);
+                        return [4 /*yield*/, this.storageService.setDefaultPuddleLoaded(false)];
+                    case 3:
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -2399,7 +2409,9 @@ var SettingsService = /** @class */ (function () {
                         })];
                     case 1:
                         toast = _a.sent();
-                        toast.present();
+                        return [4 /*yield*/, toast.present()];
+                    case 2:
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -2864,30 +2876,59 @@ var SignsLookupService = /** @class */ (function () {
     function SignsLookupService(storage, normalize) {
         this.storage = storage;
         this.normalize = normalize;
-        this.loadSigns();
     }
+    SignsLookupService.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadSigns()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SignsLookupService.prototype.loadSigns = function () {
-        var _this = this;
-        var self = this;
-        this.entrylist = [];
-        this.storage.get('puddles').then(function (puddles) {
-            if (puddles) {
-                puddles.forEach(function (puddle) {
-                    _this.storage.get(puddle).then(function (puddleentries) {
-                        puddleentries.entries.forEach(function (entry) {
-                            entry.glosses.forEach(function (gloss) {
-                                _this.entrylist.push({
-                                    normalized: _this.normalize.normalizeForSearch(gloss),
-                                    gloss: gloss,
-                                    key: entry.key,
-                                    fsw: entry.fsw
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var self, puddles;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        this.entrylist = [];
+                        return [4 /*yield*/, this.storage.get('puddles')];
+                    case 1:
+                        puddles = _a.sent();
+                        if (puddles) {
+                            puddles.forEach(function (puddle) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                var puddleentries;
+                                var _this = this;
+                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, this.storage.get(puddle)];
+                                        case 1:
+                                            puddleentries = _a.sent();
+                                            puddleentries.entries.forEach(function (entry) {
+                                                entry.glosses.forEach(function (gloss) {
+                                                    _this.entrylist.push({
+                                                        normalized: _this.normalize.normalizeForSearch(gloss),
+                                                        gloss: gloss,
+                                                        key: entry.key,
+                                                        fsw: entry.fsw
+                                                    });
+                                                });
+                                            });
+                                            this.words = this.getAvailableWords();
+                                            return [2 /*return*/];
+                                    }
                                 });
-                            });
-                        });
-                        self.words = self.getAvailableWords();
-                    });
-                });
-            }
+                            }); });
+                        }
+                        return [2 /*return*/];
+                }
+            });
         });
     };
     SignsLookupService.prototype.search = function (text) {
@@ -2930,6 +2971,16 @@ var SignsLookupService = /** @class */ (function () {
         else {
             finalresult = unique;
         }
+        finalresult.sort(function (a, b) {
+            if (a.gloss > b.gloss) {
+                return 1;
+            }
+            if (a.gloss < b.gloss) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
         return finalresult;
     };
     SignsLookupService.prototype.arrayUnique = function (arr) {
@@ -3181,13 +3232,13 @@ var SpmlService = /** @class */ (function () {
             element.elements.forEach(function (entryelement) {
                 // iterate over spmljs.elements[1].elements[].elements[].elements
                 if (entryelement &&
-                    (entryelement.name === 'term' || entryelement.name === 'text') &&
+                    (entryelement.name === 'term') &&
                     entryelement.elements) {
                     entryelement.elements.forEach(function (node) {
                         if (node.type === 'text') {
                             newEntry.fsw = node.text;
                         }
-                        else if ((node.type = 'cdata')) {
+                        else if (node.type === 'cdata') {
                             newEntry.glosses.push(self.cleangloss(node.cdata));
                         }
                     });
@@ -3199,7 +3250,7 @@ var SpmlService = /** @class */ (function () {
         if (gloss.indexOf('SWS-TAG') !== -1) {
             gloss = '';
         }
-        if (gloss) {
+        if (gloss && gloss.length > 1) {
             return gloss.trim().replace('  ', ' ').replace('   ', ' ').replace('    ', ' ').replace('     ', ' ')
                 .replace(',', '').replace('.', '').replace('?', '')
                 .replace('!', '').replace('(', '').replace(')', '').replace('"', '').replace(/\s+/g, '-')
@@ -3306,7 +3357,14 @@ var StorageService = /** @class */ (function () {
         });
     };
     StorageService.prototype.setDefaultPuddleLoaded = function (defaultPuddle) {
-        this.storage.set(this.defaultkey, defaultPuddle);
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.storage.set(this.defaultkey, defaultPuddle)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
     };
     StorageService.prototype.getDefaultPuddleLoaded = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {

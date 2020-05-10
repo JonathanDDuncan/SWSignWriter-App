@@ -589,7 +589,7 @@ var SettingsPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>{{'Settings' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding=\"padding\">\r\n  <ion-item>\r\n    <ion-label>{{'UI Language' | translate}}</ion-label>\r\n    <ion-select\r\n      (ionChange)=\"onLanguageChange($event)\"\r\n      [(ngModel)]=\"UILanguage\"\r\n      interface=\"popover\"\r\n    >\r\n      <ion-select-option value=\"en\">English</ion-select-option>\r\n      <ion-select-option value=\"es\">español</ion-select-option>\r\n      <ion-select-option value=\"pt\">português</ion-select-option>\r\n    </ion-select>\r\n  </ion-item>\r\n  <hr class=\"hr-margin-bottom hr-black\" />\r\n  <ion-item>\r\n    <ion-label>{{'Sign Language Puddle' | translate}}</ion-label>\r\n    <ion-select\r\n      (ionChange)=\"onPuddleChange($event)\"\r\n      [(ngModel)]=\"puddleID\"\r\n      interface=\"popover\"\r\n    >\r\n      <ion-select-option value=\"106\">Dictionary Afghanistan</ion-select-option>\r\n      <ion-select-option value=\"82\">Dictionary Albania</ion-select-option>\r\n      <ion-select-option value=\"41\">Dictionary Argentina</ion-select-option>\r\n      <ion-select-option value=\"4\"\r\n        >Dictionary ASL - USA & Canada</ion-select-option\r\n      >\r\n      <ion-select-option value=\"29\">Dictionary AT</ion-select-option>\r\n      <ion-select-option value=\"42\">Dictionary Australia</ion-select-option>\r\n      <ion-select-option value=\"43\"\r\n        >Dictionary French Belgium</ion-select-option\r\n      >\r\n      <ion-select-option value=\"44\"\r\n        >Dictionary Flanders, Belgium</ion-select-option\r\n      >\r\n      <ion-select-option value=\"134\">Dictionary Bulgaria</ion-select-option>\r\n      <ion-select-option value=\"45\">Dictionary Bolivia</ion-select-option>\r\n      <ion-select-option value=\"46\"\r\n        >Dictionary LIBRAS - Brazil</ion-select-option\r\n      >\r\n      <ion-select-option value=\"47\">Dictionary Quebec</ion-select-option>\r\n      <ion-select-option value=\"48\"\r\n        >Dictionary German Switzerland</ion-select-option\r\n      >\r\n      <ion-select-option value=\"49\"\r\n        >Dictionary French-Switzerland</ion-select-option\r\n      >\r\n      <ion-select-option value=\"50\">Dictionary CH-it</ion-select-option>\r\n      <ion-select-option value=\"135\">Dictionary Chile</ion-select-option>\r\n      <ion-select-option value=\"83\">Dictionary China</ion-select-option>\r\n      <ion-select-option value=\"51\">Dictionary Colombia</ion-select-option>\r\n      <ion-select-option value=\"52\"\r\n        >Dictionary Czech Republic</ion-select-option\r\n      >\r\n      <ion-select-option value=\"53\"\r\n        >Dictionary Deutschland, Germany</ion-select-option\r\n      >\r\n      <ion-select-option value=\"30\">Dictionary Denmark</ion-select-option>\r\n      <ion-select-option value=\"136\">Dictionary Ecuador</ion-select-option>\r\n      <ion-select-option value=\"109\">Dictionary Estonia</ion-select-option>\r\n      <ion-select-option value=\"84\">Dictionary Egypt</ion-select-option>\r\n      <ion-select-option value=\"54\">Dictionary Vortaro</ion-select-option>\r\n      <ion-select-option value=\"55\">Dictionary España, Spain</ion-select-option>\r\n      <ion-select-option value=\"56\"\r\n        >Dictionary Catalonia, Barcelona</ion-select-option\r\n      >\r\n      <ion-select-option value=\"18\">Dictionary Ethiopia</ion-select-option>\r\n      <ion-select-option value=\"57\">Dictionary Finland</ion-select-option>\r\n      <ion-select-option value=\"58\">Dictionary France</ion-select-option>\r\n      <ion-select-option value=\"59\">Dictionary Great Britain</ion-select-option>\r\n      <ion-select-option value=\"60\"\r\n        >Dictionary Northern Ireland</ion-select-option\r\n      >\r\n      <ion-select-option value=\"61\">Dictionary Greece</ion-select-option>\r\n      <ion-select-option value=\"112\">Dictionary Guatemala</ion-select-option>\r\n      <ion-select-option value=\"16\"\r\n        >Dictionary LESHO - Honduras</ion-select-option\r\n      >\r\n      <ion-select-option value=\"113\">Dictionary Haiti</ion-select-option>\r\n      <ion-select-option value=\"122\">Dictionary Hungary</ion-select-option>\r\n      <ion-select-option value=\"62\">Dictionary Ireland</ion-select-option>\r\n      <ion-select-option value=\"110\">Dictionary Israel</ion-select-option>\r\n      <ion-select-option value=\"2\">Dictionary India</ion-select-option>\r\n      <ion-select-option value=\"131\">Dictionary IS</ion-select-option>\r\n      <ion-select-option value=\"63\">Dictionary IT</ion-select-option>\r\n      <ion-select-option value=\"86\">Dictionary Jordan</ion-select-option>\r\n      <ion-select-option value=\"64\">Dictionary Japan</ion-select-option>\r\n      <ion-select-option value=\"79\">Dictionary Kenya</ion-select-option>\r\n      <ion-select-option value=\"78\">Dictionary Korea</ion-select-option>\r\n      <ion-select-option value=\"107\">Dictionary Lithuania</ion-select-option>\r\n      <ion-select-option value=\"108\">Dictionary Latvia</ion-select-option>\r\n      <ion-select-option value=\"2\">Dictionary Myanmar</ion-select-option>\r\n      <ion-select-option value=\"31\">Dictionary Malta</ion-select-option>\r\n      <ion-select-option value=\"128\">Dictionary Malawi</ion-select-option>\r\n      <ion-select-option value=\"65\">Malawi Mexico</ion-select-option>\r\n      <ion-select-option value=\"66\">Dictionary Malaysia</ion-select-option>\r\n      <ion-select-option value=\"32\">Dictionary Nigeria</ion-select-option>\r\n      <ion-select-option value=\"67\">Dictionary Nicaragua</ion-select-option>\r\n      <ion-select-option value=\"68\">Dictionary NL</ion-select-option>\r\n      <ion-select-option value=\"69\">Dictionary Norge, Norway</ion-select-option>\r\n      <ion-select-option value=\"133\">Dictionary Nepal</ion-select-option>\r\n      <ion-select-option value=\"70\">Dictionary New Zealand</ion-select-option>\r\n      <ion-select-option value=\"71\">Diccionario Peru</ion-select-option>\r\n      <ion-select-option value=\"72\">Dictionary Philippines</ion-select-option>\r\n      <ion-select-option value=\"87\">Dictionary Pakistan</ion-select-option>\r\n      <ion-select-option value=\"19\">Dictionary Poland</ion-select-option>\r\n      <ion-select-option value=\"33\">Dictionary Portugal</ion-select-option>\r\n      <ion-select-option value=\"129\">Dictionary Paraguay</ion-select-option>\r\n      <ion-select-option value=\"132\">Dictionary Romania</ion-select-option>\r\n      <ion-select-option value=\"88\">Dictionary Russia</ion-select-option>\r\n      <ion-select-option value=\"40\"\r\n        >Dictionary Kingdom Saudi Arabia</ion-select-option\r\n      >\r\n      <ion-select-option value=\"73\">Dictionary Sverige</ion-select-option>\r\n      <ion-select-option value=\"74\">Dictionary Slovenia</ion-select-option>\r\n      <ion-select-option value=\"89\">Dictionary Slovakia</ion-select-option>\r\n      <ion-select-option value=\"137\">Dictionary El Salvador</ion-select-option>\r\n      <ion-select-option value=\"34\">Dictionary Thailand</ion-select-option>\r\n      <ion-select-option value=\"104\">Dictionary Tunisia</ion-select-option>\r\n      <ion-select-option value=\"90\">Dictionary Turkey</ion-select-option>\r\n      <ion-select-option value=\"75\">Dictionary Taiwan</ion-select-option>\r\n      <ion-select-option value=\"143\">Dictionary Uruguay</ion-select-option>\r\n      <ion-select-option value=\"76\">Dictionary Venezuela</ion-select-option>\r\n      <ion-select-option value=\"153\">Dictionary Vietnam</ion-select-option>\r\n      <ion-select-option value=\"35\"\r\n        >Dictionary Signs Used Worldwide</ion-select-option\r\n      >\r\n      <ion-select-option value=\"77\">Dictionary South Africa</ion-select-option>\r\n    </ion-select>\r\n  </ion-item>\r\n\r\n  <ion-item>\r\n    <ion-button (click)=\"downloadPuddle()\">\r\n      {{'Install Puddle' | translate}}\r\n    </ion-button>\r\n  </ion-item>\r\n  <hr class=\"hr-margin-bottom hr-black\" />\r\n  <div class=\"center\">\r\n    <file-drop\r\n      dropZoneLabel=\"{{'Drop SPML file here to add signs' | translate}}\"\r\n      (onFileDrop)=\"dropped($event)\"\r\n      (onFileOver)=\"fileOver($event)\"\r\n      (onFileLeave)=\"fileLeave($event)\"\r\n    ></file-drop>\r\n    <input (change)=\"upload($event)\" type=\"file\" />\r\n    <!-- <input #uploader=\"ngModel\" [(ngModel)]=\"uploaderInput\" (change)=\"upload($event)\" type=\"file\"/> -->\r\n    <!-- <ion-button (click)=\"uploader.click()\">\r\n                                                            {{'Choose SPML file' | translate}}\r\n                                                        </ion-button> -->\r\n    <hr class=\"hr-margin-bottom hr-black\" />\r\n    <ion-button (click)=\"clearSigns()\">\r\n      {{'Clear Signs' | translate}}\r\n    </ion-button>\r\n  </div>\r\n  <hr class=\"hr-margin-bottom hr-black\" />\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n    <ion-label>{{'Next' | translate}}</ion-label>\r\n    <ion-fab-button>\r\n      <ion-icon\r\n        (click)=\"next()\"\r\n        name=\"arrow-dropright-circle\"\r\n        style=\"zoom:2.0;\"\r\n      ></ion-icon>\r\n    </ion-fab-button>\r\n  </ion-fab>\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>{{'Settings' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding=\"padding\">\r\n  <ion-item>\r\n    <ion-label>{{'UI Language' | translate}}</ion-label>\r\n    <ion-select\r\n      (ionChange)=\"onLanguageChange($event)\"\r\n      [(ngModel)]=\"UILanguage\"\r\n      interface=\"popover\"\r\n    >\r\n      <ion-select-option value=\"en\">English</ion-select-option>\r\n      <ion-select-option value=\"es\">español</ion-select-option>\r\n      <ion-select-option value=\"pt\">português</ion-select-option>\r\n    </ion-select>\r\n  </ion-item>\r\n  <hr class=\"hr-margin-bottom hr-black\" />\r\n  <ion-item>\r\n    <ion-label>{{'Install Signs from SignLanguage Puddle' | translate}}</ion-label>\r\n    <ion-select\r\n      (ionChange)=\"onPuddleChange($event)\"\r\n      [(ngModel)]=\"puddleID\"\r\n      interface=\"popover\"\r\n    >\r\n      <ion-select-option value=\"106\">Dictionary Afghanistan</ion-select-option>\r\n      <ion-select-option value=\"82\">Dictionary Albania</ion-select-option>\r\n      <ion-select-option value=\"41\">Dictionary Argentina</ion-select-option>\r\n      <ion-select-option value=\"4\"\r\n        >Dictionary ASL - USA & Canada</ion-select-option\r\n      >\r\n      <ion-select-option value=\"29\">Dictionary AT</ion-select-option>\r\n      <ion-select-option value=\"42\">Dictionary Australia</ion-select-option>\r\n      <ion-select-option value=\"43\"\r\n        >Dictionary French Belgium</ion-select-option\r\n      >\r\n      <ion-select-option value=\"44\"\r\n        >Dictionary Flanders, Belgium</ion-select-option\r\n      >\r\n      <ion-select-option value=\"134\">Dictionary Bulgaria</ion-select-option>\r\n      <ion-select-option value=\"45\">Dictionary Bolivia</ion-select-option>\r\n      <ion-select-option value=\"46\"\r\n        >Dictionary LIBRAS - Brazil</ion-select-option\r\n      >\r\n      <ion-select-option value=\"47\">Dictionary Quebec</ion-select-option>\r\n      <ion-select-option value=\"48\"\r\n        >Dictionary German Switzerland</ion-select-option\r\n      >\r\n      <ion-select-option value=\"49\"\r\n        >Dictionary French-Switzerland</ion-select-option\r\n      >\r\n      <ion-select-option value=\"50\">Dictionary CH-it</ion-select-option>\r\n      <ion-select-option value=\"135\">Dictionary Chile</ion-select-option>\r\n      <ion-select-option value=\"83\">Dictionary China</ion-select-option>\r\n      <ion-select-option value=\"51\">Dictionary Colombia</ion-select-option>\r\n      <ion-select-option value=\"52\"\r\n        >Dictionary Czech Republic</ion-select-option\r\n      >\r\n      <ion-select-option value=\"53\"\r\n        >Dictionary Deutschland, Germany</ion-select-option\r\n      >\r\n      <ion-select-option value=\"30\">Dictionary Denmark</ion-select-option>\r\n      <ion-select-option value=\"136\">Dictionary Ecuador</ion-select-option>\r\n      <ion-select-option value=\"109\">Dictionary Estonia</ion-select-option>\r\n      <ion-select-option value=\"84\">Dictionary Egypt</ion-select-option>\r\n      <ion-select-option value=\"54\">Dictionary Vortaro</ion-select-option>\r\n      <ion-select-option value=\"55\">Dictionary España, Spain</ion-select-option>\r\n      <ion-select-option value=\"56\"\r\n        >Dictionary Catalonia, Barcelona</ion-select-option\r\n      >\r\n      <ion-select-option value=\"18\">Dictionary Ethiopia</ion-select-option>\r\n      <ion-select-option value=\"57\">Dictionary Finland</ion-select-option>\r\n      <ion-select-option value=\"58\">Dictionary France</ion-select-option>\r\n      <ion-select-option value=\"59\">Dictionary Great Britain</ion-select-option>\r\n      <ion-select-option value=\"60\"\r\n        >Dictionary Northern Ireland</ion-select-option\r\n      >\r\n      <ion-select-option value=\"61\">Dictionary Greece</ion-select-option>\r\n      <ion-select-option value=\"112\">Dictionary Guatemala</ion-select-option>\r\n      <ion-select-option value=\"16\"\r\n        >Dictionary LESHO - Honduras</ion-select-option\r\n      >\r\n      <ion-select-option value=\"113\">Dictionary Haiti</ion-select-option>\r\n      <ion-select-option value=\"122\">Dictionary Hungary</ion-select-option>\r\n      <ion-select-option value=\"62\">Dictionary Ireland</ion-select-option>\r\n      <ion-select-option value=\"110\">Dictionary Israel</ion-select-option>\r\n      <ion-select-option value=\"2\">Dictionary India</ion-select-option>\r\n      <ion-select-option value=\"131\">Dictionary IS</ion-select-option>\r\n      <ion-select-option value=\"63\">Dictionary IT</ion-select-option>\r\n      <ion-select-option value=\"86\">Dictionary Jordan</ion-select-option>\r\n      <ion-select-option value=\"64\">Dictionary Japan</ion-select-option>\r\n      <ion-select-option value=\"79\">Dictionary Kenya</ion-select-option>\r\n      <ion-select-option value=\"78\">Dictionary Korea</ion-select-option>\r\n      <ion-select-option value=\"107\">Dictionary Lithuania</ion-select-option>\r\n      <ion-select-option value=\"108\">Dictionary Latvia</ion-select-option>\r\n      <ion-select-option value=\"2\">Dictionary Myanmar</ion-select-option>\r\n      <ion-select-option value=\"31\">Dictionary Malta</ion-select-option>\r\n      <ion-select-option value=\"128\">Dictionary Malawi</ion-select-option>\r\n      <ion-select-option value=\"65\">Malawi Mexico</ion-select-option>\r\n      <ion-select-option value=\"66\">Dictionary Malaysia</ion-select-option>\r\n      <ion-select-option value=\"32\">Dictionary Nigeria</ion-select-option>\r\n      <ion-select-option value=\"67\">Dictionary Nicaragua</ion-select-option>\r\n      <ion-select-option value=\"68\">Dictionary NL</ion-select-option>\r\n      <ion-select-option value=\"69\">Dictionary Norge, Norway</ion-select-option>\r\n      <ion-select-option value=\"133\">Dictionary Nepal</ion-select-option>\r\n      <ion-select-option value=\"70\">Dictionary New Zealand</ion-select-option>\r\n      <ion-select-option value=\"71\">Diccionario Peru</ion-select-option>\r\n      <ion-select-option value=\"72\">Dictionary Philippines</ion-select-option>\r\n      <ion-select-option value=\"87\">Dictionary Pakistan</ion-select-option>\r\n      <ion-select-option value=\"19\">Dictionary Poland</ion-select-option>\r\n      <ion-select-option value=\"33\">Dictionary Portugal</ion-select-option>\r\n      <ion-select-option value=\"129\">Dictionary Paraguay</ion-select-option>\r\n      <ion-select-option value=\"132\">Dictionary Romania</ion-select-option>\r\n      <ion-select-option value=\"88\">Dictionary Russia</ion-select-option>\r\n      <ion-select-option value=\"40\"\r\n        >Dictionary Kingdom Saudi Arabia</ion-select-option\r\n      >\r\n      <ion-select-option value=\"73\">Dictionary Sverige</ion-select-option>\r\n      <ion-select-option value=\"74\">Dictionary Slovenia</ion-select-option>\r\n      <ion-select-option value=\"89\">Dictionary Slovakia</ion-select-option>\r\n      <ion-select-option value=\"137\">Dictionary El Salvador</ion-select-option>\r\n      <ion-select-option value=\"34\">Dictionary Thailand</ion-select-option>\r\n      <ion-select-option value=\"104\">Dictionary Tunisia</ion-select-option>\r\n      <ion-select-option value=\"90\">Dictionary Turkey</ion-select-option>\r\n      <ion-select-option value=\"75\">Dictionary Taiwan</ion-select-option>\r\n      <ion-select-option value=\"143\">Dictionary Uruguay</ion-select-option>\r\n      <ion-select-option value=\"76\">Dictionary Venezuela</ion-select-option>\r\n      <ion-select-option value=\"153\">Dictionary Vietnam</ion-select-option>\r\n      <ion-select-option value=\"35\"\r\n        >Dictionary Signs Used Worldwide</ion-select-option\r\n      >\r\n      <ion-select-option value=\"77\">Dictionary South Africa</ion-select-option>\r\n    </ion-select>\r\n  </ion-item>\r\n  <hr class=\"hr-margin-bottom hr-black\" />\r\n\r\n  <ion-list>\r\n\r\n    <ion-list-header  spmldropExpanded (click)=\"expandItem()\" >\r\n      <ion-label>Install with SPML File</ion-label>\r\n    </ion-list-header>\r\n\r\n    <ion-item [class.collapsed]=\"!spmldropExpanded\" height=\"200px;\">\r\n\r\n      <div class=\"center\">\r\n        <file-drop\r\n          dropZoneLabel=\"{{'Drop SPML file here to add signs' | translate}}\"\r\n          (onFileDrop)=\"dropped($event)\"\r\n          (onFileOver)=\"fileOver($event)\"\r\n          (onFileLeave)=\"fileLeave($event)\"\r\n        ></file-drop>\r\n        <input (change)=\"upload($event)\" type=\"file\" />\r\n        <!-- <input #uploader=\"ngModel\" [(ngModel)]=\"uploaderInput\" (change)=\"upload($event)\" type=\"file\"/> -->\r\n        <!-- <ion-button (click)=\"uploader.click()\">\r\n                                                                {{'Choose SPML file' | translate}}\r\n                                                            </ion-button> -->\r\n       \r\n      </div>\r\n\r\n    </ion-item>\r\n    <hr class=\"hr-margin-bottom hr-black\" />\r\n  \r\n  </ion-list>\r\n\r\n  <ion-item>\r\n   \r\n    <div>\r\n    <ion-button (click)=\"clearSigns()\">\r\n      {{'Clear All Signs' | translate}}\r\n    </ion-button>\r\n  </div>\r\n  </ion-item>\r\n  \r\n  <hr class=\"hr-margin-bottom hr-black\" />\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n    <ion-label>{{'Next' | translate}}</ion-label>\r\n    <ion-fab-button>\r\n      <ion-icon\r\n        (click)=\"next()\"\r\n        name=\"arrow-dropright-circle\"\r\n        style=\"zoom:2.0;\"\r\n      ></ion-icon>\r\n    </ion-fab-button>\r\n  </ion-fab>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -600,7 +600,7 @@ module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"sta
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".hr-margin-bottom {\n  margin-bottom: 16px; }\n\n.hr-black {\n  border: 0;\n  clear: both;\n  display: block;\n  width: 96%;\n  background-color: black;\n  height: 1px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2V0dGluZ3MvSDpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcc2V0dGluZ3NcXHNldHRpbmdzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG1CQUFtQixFQUFBOztBQUd2QjtFQUNJLFNBQVM7RUFDVCxXQUFVO0VBQ1YsY0FBYTtFQUNiLFVBQVU7RUFDVix1QkFBc0I7RUFDdEIsV0FBVyxFQUFBIiwiZmlsZSI6InNyYy9hcHAvc2V0dGluZ3Mvc2V0dGluZ3MucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhyLW1hcmdpbi1ib3R0b20ge1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxufVxyXG5cclxuLmhyLWJsYWNrIHtcclxuICAgIGJvcmRlcjogMDtcclxuICAgIGNsZWFyOmJvdGg7XHJcbiAgICBkaXNwbGF5OmJsb2NrO1xyXG4gICAgd2lkdGg6IDk2JTsgICAgICAgICAgICAgICBcclxuICAgIGJhY2tncm91bmQtY29sb3I6YmxhY2s7XHJcbiAgICBoZWlnaHQ6IDFweDtcclxufSJdfQ== */"
+module.exports = ".hr-margin-bottom {\n  margin-bottom: 16px; }\n\n.hr-black {\n  border: 0;\n  clear: both;\n  display: block;\n  width: 96%;\n  background-color: black;\n  height: 1px; }\n\n.collapsed {\n  height: 0 !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2V0dGluZ3MvSDpcXFNXU2lnbldyaXRlclxcU1dTaWduV3JpdGVyLUFwcC9zcmNcXGFwcFxcc2V0dGluZ3NcXHNldHRpbmdzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG1CQUFtQixFQUFBOztBQUd2QjtFQUNJLFNBQVM7RUFDVCxXQUFVO0VBQ1YsY0FBYTtFQUNiLFVBQVU7RUFDVix1QkFBc0I7RUFDdEIsV0FBVyxFQUFBOztBQUdmO0VBQ0ksb0JBQW9CLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9zZXR0aW5ncy9zZXR0aW5ncy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaHItbWFyZ2luLWJvdHRvbSB7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxNnB4O1xyXG59XHJcblxyXG4uaHItYmxhY2sge1xyXG4gICAgYm9yZGVyOiAwO1xyXG4gICAgY2xlYXI6Ym90aDtcclxuICAgIGRpc3BsYXk6YmxvY2s7XHJcbiAgICB3aWR0aDogOTYlOyAgICAgICAgICAgICAgIFxyXG4gICAgYmFja2dyb3VuZC1jb2xvcjpibGFjaztcclxuICAgIGhlaWdodDogMXB4O1xyXG59XHJcblxyXG4uY29sbGFwc2VkIHtcclxuICAgIGhlaWdodDogMCAhaW1wb3J0YW50O1xyXG59Il19 */"
 
 /***/ }),
 
@@ -630,14 +630,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SettingsPage = /** @class */ (function () {
-    function SettingsPage(settingsService, alertController, translate, toastController, translateService, subscriptionService, router) {
+    function SettingsPage(settingsService, alertController, translate, toastController, translateService, subscriptionService, loadingController, router) {
         this.settingsService = settingsService;
         this.alertController = alertController;
         this.translate = translate;
         this.toastController = toastController;
         this.translateService = translateService;
         this.subscriptionService = subscriptionService;
+        this.loadingController = loadingController;
         this.router = router;
+        this.spmldropExpanded = false;
     }
     SettingsPage.prototype.upload = function (event) {
         var file = event.target.files[0];
@@ -669,11 +671,22 @@ var SettingsPage = /** @class */ (function () {
         var _loop_1 = function (droppedFile) {
             if (droppedFile.fileEntry.isFile) {
                 var fileEntry = droppedFile.fileEntry;
-                fileEntry.file(function (file) {
-                    if (droppedFile && droppedFile.relativePath && droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
-                        _this.settingsService.loadFile(file);
-                    }
-                });
+                fileEntry.file(function (file) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!(droppedFile && droppedFile.relativePath && droppedFile.relativePath.toLowerCase().endsWith('.spml'))) return [3 /*break*/, 3];
+                                return [4 /*yield*/, this.presentLoading()];
+                            case 1:
+                                _a.sent();
+                                return [4 /*yield*/, this.settingsService.loadFile(file)];
+                            case 2:
+                                _a.sent();
+                                _a.label = 3;
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                }); });
             }
             else {
                 // It was a directory (empty directories are added, otherwise only files)
@@ -686,7 +699,11 @@ var SettingsPage = /** @class */ (function () {
         }
     };
     SettingsPage.prototype.fileOver = function (event) {
-        // console.log(event);
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                return [2 /*return*/];
+            });
+        });
     };
     SettingsPage.prototype.fileLeave = function (event) {
         // console.log(event);
@@ -752,6 +769,9 @@ var SettingsPage = /** @class */ (function () {
                         return [4 /*yield*/, this.showToast(this.translateService.instant('This may take a few minutes'), 3000)];
                     case 2:
                         _a.sent();
+                        return [4 /*yield*/, this.presentLoading()];
+                    case 3:
+                        _a.sent();
                         this.xhrDownloadPuddle();
                         return [2 /*return*/];
                 }
@@ -770,17 +790,43 @@ var SettingsPage = /** @class */ (function () {
         xhr.withCredentials = false;
         var thispage = this;
         xhr.addEventListener('readystatechange', function () {
-            if (this.readyState === 4) {
-                thispage.settingsService.loadPuddle(this.responseText);
-            }
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (!(this.readyState === 4)) return [3 /*break*/, 3];
+                            return [4 /*yield*/, thispage.settingsService.loadPuddle(this.responseText)];
+                        case 1:
+                            _a.sent();
+                            return [4 /*yield*/, thispage.signsLoaded()];
+                        case 2:
+                            _a.sent();
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
         });
         xhr.open('POST', url);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader('Accept', 'application/xml');
         xhr.send(data);
     };
+    SettingsPage.prototype.signsLoaded = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loading.dismiss()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SettingsPage.prototype.onPuddleChange = function (event) {
         this.puddleID = event.detail.value;
+        this.downloadPuddle();
     };
     SettingsPage.prototype.showToast = function (message, duration) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -799,6 +845,57 @@ var SettingsPage = /** @class */ (function () {
             });
         });
     };
+    SettingsPage.prototype.expandItem = function () {
+        this.spmldropExpanded = !this.spmldropExpanded;
+    };
+    SettingsPage.prototype.presentLoading = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.loadingController.create({
+                                message: 'Please wait...',
+                                backdropDismiss: false
+                            })];
+                    case 1:
+                        _a.loading = _b.sent();
+                        this.loading.present();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    SettingsPage.prototype.presentLoadingWithOptions = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a, _b, role, data;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.loadingController.create({
+                                spinner: null,
+                                duration: 5000,
+                                message: 'Click the backdrop to dismiss early...',
+                                translucent: true,
+                                cssClass: 'custom-class custom-loading',
+                                backdropDismiss: true
+                            })];
+                    case 1:
+                        _a.loading = _c.sent();
+                        return [4 /*yield*/, this.loading.present()];
+                    case 2:
+                        _c.sent();
+                        return [4 /*yield*/, this.loading.onDidDismiss()];
+                    case 3:
+                        _b = _c.sent(), role = _b.role, data = _b.data;
+                        console.log('Loading dismissed with role:', role);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SettingsPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-settings',
@@ -811,6 +908,7 @@ var SettingsPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
             _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__["SubscriptionService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["LoadingController"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], SettingsPage);
     return SettingsPage;

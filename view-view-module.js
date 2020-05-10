@@ -113,7 +113,7 @@ var ViewPage = /** @class */ (function () {
         this.subscriptionService = subscriptionService;
         this.translate = translate;
         this.router = router;
-        this.imageheight = 199;
+        this.imageheight = 900;
         // Force fonts to load before anything is shown
         this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
         this.router.events.subscribe(function (event) {
