@@ -128,7 +128,6 @@ export class SettingsPage implements OnInit {
     const thispage = this;
     xhr.addEventListener('readystatechange', async function () {
       if (this.readyState === 4) {
-        debugger;
         await thispage.settingsService.loadPuddle(this.responseText);
         await thispage.signsLoaded();
       }
@@ -140,7 +139,6 @@ export class SettingsPage implements OnInit {
   }
 
   async signsLoaded() {
-    debugger;
     await this.loading.dismiss();
   }
 
@@ -164,12 +162,11 @@ export class SettingsPage implements OnInit {
   async presentLoading() {
     this.loading = await this.loadingController.create({
       message: 'Please wait...',
-      duration: 2000,
       backdropDismiss: false
     });
-    await this.loading.present();
-    const { role, data } = await this.loading.onDidDismiss();
-    console.log('Loading dismissed!');
+    this.loading.present();
+    // const { role, data } = await this.loading.onDidDismiss();
+    // console.log('Loading dismissed!');
   }
 
   async presentLoadingWithOptions() {
