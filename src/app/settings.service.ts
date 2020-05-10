@@ -33,8 +33,8 @@ export class SettingsService {
         .subscribe(async xml => {
           const saveresult = await this.saveSpml(xml);
           await this.presentToast(saveresult);
-          this.signsLookupService.loadSigns();
-          this.storageService.setDefaultPuddleLoaded(true);
+          await this.signsLookupService.loadSigns();
+          await this.storageService.setDefaultPuddleLoaded(true);
         });
     }
   }
@@ -50,10 +50,10 @@ export class SettingsService {
 
   private readFile(file: File) {
     const reader = new FileReader();
-    reader.onload = async () => {
+    reader.onload = (async () => {
       const xml: string | ArrayBuffer = reader.result as string;
       await this.loadPuddle(xml);
-    };
+    });
     reader.readAsText(file);
   }
 
@@ -61,7 +61,7 @@ export class SettingsService {
     const saveresult = await this.saveSpml(xml);
     await this.presentToast(saveresult);
     this.signsLookupService.loadSigns();
-    this.storageService.setDefaultPuddleLoaded(false);
+    await this.storageService.setDefaultPuddleLoaded(false);
   }
 
   async saveSpml(spml: string): Promise<{ puddlename: string, entries: number }> {
@@ -78,7 +78,7 @@ export class SettingsService {
       message: saved.entries + this.translateService.instant('entries saved To') + saved.puddlename,
       duration: 2000
     });
-    toast.present();
+    await toast.present();
   }
 
   async removeAllSigns() {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { NormalizationService } from './normalization.service';
 import { Storage } from '@ionic/storage';
 
@@ -29,25 +29,29 @@ export enum Lane {
 @Injectable({
   providedIn: 'root'
 })
-export class SignsLookupService {
+export class SignsLookupService implements OnInit {
   private entrylist: any[];
   private words: { gloss: string, normalized: string }[];
 
-  constructor(
+ constructor(
     private storage: Storage,
     private normalize: NormalizationService
-  ) {
-    this.loadSigns();
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    await this.loadSigns();
   }
 
-  loadSigns() {
+  async loadSigns() {
     const self = this;
     this.entrylist = [];
-    this.storage.get('puddles').then(puddles => {
+    const puddles = await this.storage.get('puddles');
+
       if (puddles) {
-        puddles.forEach(puddle => {
-          this.storage.get(puddle).then(puddleentries => {
-            puddleentries.entries.forEach(entry => {
+        puddles.forEach(async puddle => {
+          const puddleentries = await this.storage.get(puddle);
+
+          puddleentries.entries.forEach(entry => {
               entry.glosses.forEach(gloss => {
                 this.entrylist.push({
                   normalized: this.normalize.normalizeForSearch(gloss),
@@ -57,11 +61,9 @@ export class SignsLookupService {
                 });
               });
             });
-            self.words = self.getAvailableWords();
+            this.words = this.getAvailableWords();
           });
-        });
       }
-    });
   }
 
   search(text: string): Sign[] {

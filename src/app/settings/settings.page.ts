@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 
 import { SettingsService } from '../settings.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 
@@ -21,6 +21,7 @@ export class SettingsPage implements OnInit {
   public UILanguage: string;
   public puddleID: string;
   public spmldropExpanded: boolean;
+  public loading: HTMLIonLoadingElement;
 
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
@@ -28,6 +29,7 @@ export class SettingsPage implements OnInit {
     public toastController: ToastController,
     private translateService: TranslateService,
     private subscriptionService: SubscriptionService,
+    public loadingController: LoadingController,
     private router: Router) {
     this.spmldropExpanded = false;
   }
@@ -52,9 +54,10 @@ export class SettingsPage implements OnInit {
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
+        fileEntry.file(async (file: File) => {
           if (droppedFile && droppedFile.relativePath && droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
-            this.settingsService.loadFile(file);
+            await this.presentLoading();
+            await this.settingsService.loadFile(file);
           }
         });
       } else {
@@ -64,8 +67,8 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  fileOver(event) {
-    // console.log(event);
+  async fileOver(event) {
+        // console.log(event);
   }
 
   fileLeave(event) {
@@ -108,6 +111,7 @@ export class SettingsPage implements OnInit {
   async downloadPuddle() {
     await this.showToast(this.translateService.instant('Downloading'), 3000);
     await this.showToast(this.translateService.instant('This may take a few minutes'), 3000);
+    await this.presentLoading();
     this.xhrDownloadPuddle();
   }
 
@@ -122,15 +126,22 @@ export class SettingsPage implements OnInit {
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
     const thispage = this;
-    xhr.addEventListener('readystatechange', function () {
+    xhr.addEventListener('readystatechange', async function () {
       if (this.readyState === 4) {
-        thispage.settingsService.loadPuddle(this.responseText);
+        debugger;
+        await thispage.settingsService.loadPuddle(this.responseText);
+        await thispage.signsLoaded();
       }
     });
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader('Accept', 'application/xml');
     xhr.send(data);
+  }
+
+  async signsLoaded() {
+    debugger;
+    await this.loading.dismiss();
   }
 
   onPuddleChange(event) {
@@ -148,5 +159,31 @@ export class SettingsPage implements OnInit {
 
   expandItem() {
     this.spmldropExpanded = !this.spmldropExpanded;
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000,
+      backdropDismiss: false
+    });
+    await this.loading.present();
+    const { role, data } = await this.loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
+  async presentLoadingWithOptions() {
+    this.loading = await this.loadingController.create({
+      spinner: null,
+      duration: 5000,
+      message: 'Click the backdrop to dismiss early...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
   }
 }

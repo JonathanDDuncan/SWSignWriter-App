@@ -48,8 +48,8 @@ export class StorageService {
     return;
   }
 
-  setDefaultPuddleLoaded(defaultPuddle: boolean): void {
-    this.storage.set(this.defaultkey, defaultPuddle);
+  async setDefaultPuddleLoaded(defaultPuddle: boolean): Promise<any> {
+    return await this.storage.set(this.defaultkey, defaultPuddle);
   }
 
   async getDefaultPuddleLoaded(): Promise<string> {
