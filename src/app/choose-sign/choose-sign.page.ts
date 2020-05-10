@@ -51,8 +51,9 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   }
 
   accept() {
+    const element = this.elements.find( x => x.key === this.selectedkey);
     this.modalController.dismiss({
-      result: this.selectedkey
+      result: element
     });
   }
 

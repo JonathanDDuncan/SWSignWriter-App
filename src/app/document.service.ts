@@ -217,10 +217,10 @@ export class DocumentService {
     this.signsLookupService.loadSigns();
   }
 
-  replaceElement(index: number, key: string): void {
+  replaceElement(index: number, result: {sign: string, key: string, gloss: string}): void {
     const signs = this.document.signs;
     const toChange = signs[index];
-    const changeWith = this.signsLookupService.getsign(key);
+    const changeWith = this.signsLookupService.getsign(result.key);
 
     if (toChange && changeWith) {
       const toChangeindex = signs.indexOf(toChange);
@@ -228,10 +228,10 @@ export class DocumentService {
       if (toChangeindex >= 0) {
         signs[toChangeindex] = {
           sign: changeWith,
-          text: changeWith.gloss,
+          text: result.gloss,
           id: changeWith.key + changeWith.gloss,
           svg: ssw.svg(changeWith.fsw),
-          totalmatches: 1,
+          totalmatches: toChange.totalmatches,
           color: this.color.hexcolor(this.color.green),
           lane: toChange.lane
         };
