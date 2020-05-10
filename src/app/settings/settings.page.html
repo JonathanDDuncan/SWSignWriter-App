@@ -138,23 +138,44 @@
     </ion-select>
   </ion-item>
   <hr class="hr-margin-bottom hr-black" />
-  <div class="center">
-    <file-drop
-      dropZoneLabel="{{'Drop SPML file here to add signs' | translate}}"
-      (onFileDrop)="dropped($event)"
-      (onFileOver)="fileOver($event)"
-      (onFileLeave)="fileLeave($event)"
-    ></file-drop>
-    <input (change)="upload($event)" type="file" />
-    <!-- <input #uploader="ngModel" [(ngModel)]="uploaderInput" (change)="upload($event)" type="file"/> -->
-    <!-- <ion-button (click)="uploader.click()">
-                                                            {{'Choose SPML file' | translate}}
-                                                        </ion-button> -->
+
+  <ion-list>
+
+    <ion-list-header  spmldropExpanded (click)="expandItem()" >
+      <ion-label>Install with SPML File</ion-label>
+    </ion-list-header>
+
+    <ion-item [class.collapsed]="!spmldropExpanded" height="200px;">
+
+      <div class="center">
+        <file-drop
+          dropZoneLabel="{{'Drop SPML file here to add signs' | translate}}"
+          (onFileDrop)="dropped($event)"
+          (onFileOver)="fileOver($event)"
+          (onFileLeave)="fileLeave($event)"
+        ></file-drop>
+        <input (change)="upload($event)" type="file" />
+        <!-- <input #uploader="ngModel" [(ngModel)]="uploaderInput" (change)="upload($event)" type="file"/> -->
+        <!-- <ion-button (click)="uploader.click()">
+                                                                {{'Choose SPML file' | translate}}
+                                                            </ion-button> -->
+       
+      </div>
+
+    </ion-item>
     <hr class="hr-margin-bottom hr-black" />
+  
+  </ion-list>
+
+  <ion-item>
+   
+    <div>
     <ion-button (click)="clearSigns()">
       {{'Clear All Signs' | translate}}
     </ion-button>
   </div>
+  </ion-item>
+  
   <hr class="hr-margin-bottom hr-black" />
   <ion-fab horizontal="end" slot="fixed" vertical="bottom">
     <ion-label>{{'Next' | translate}}</ion-label>

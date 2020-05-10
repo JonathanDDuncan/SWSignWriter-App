@@ -20,14 +20,17 @@ import { ToastController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
   public UILanguage: string;
   public puddleID: string;
+  public spmldropExpanded: boolean;
 
   constructor(private settingsService: SettingsService,
-  private alertController: AlertController,
-  private translate: TranslateService,
-  public toastController: ToastController,
-  private translateService: TranslateService,
-  private subscriptionService: SubscriptionService,
-  private router: Router) { }
+    private alertController: AlertController,
+    private translate: TranslateService,
+    public toastController: ToastController,
+    private translateService: TranslateService,
+    private subscriptionService: SubscriptionService,
+    private router: Router) {
+    this.spmldropExpanded = false;
+  }
 
   upload(event) {
     const file = event.target.files[0];
@@ -111,7 +114,7 @@ export class SettingsPage implements OnInit {
   private xhrDownloadPuddle() {
     const data = 'action=Download&ex_source=All';
     let puddle = 0;
-     puddle = parseInt(this.puddleID, 10);
+    puddle = parseInt(this.puddleID, 10);
     if (isNaN(puddle)) {
       puddle = 4;
     }
@@ -141,5 +144,9 @@ export class SettingsPage implements OnInit {
       duration: duration
     });
     toast.present();
+  }
+
+  expandItem() {
+    this.spmldropExpanded = !this.spmldropExpanded;
   }
 }
