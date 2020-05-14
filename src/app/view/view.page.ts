@@ -1,3 +1,4 @@
+import { BrowserTypeService } from './../browser-type.service';
 import { ShareDesktopPage } from './../share-desktop/share-desktop.page';
 import { ShareAndroidPage } from './../share-android/share-android.page';
 import { SubscriptionService } from './../services/subscription.service';
@@ -27,6 +28,7 @@ export class ViewPage implements OnInit {
     private documentService: DocumentService,
     private subscriptionService: SubscriptionService,
     public translate: TranslateService,
+    public btUtil: BrowserTypeService,
     private router: Router
   ) {
     // Force fonts to load before anything is shown
@@ -63,13 +65,14 @@ export class ViewPage implements OnInit {
 
   public async share() {
     const fsw = this.documentService.getFSW();
-    const shareType = false ? (false ?  'ios' : 'desktop') : 'android';
+    const btUtils = this.btUtil.utils();
+    debugger;
     if (fsw && fsw !== null) {
-      if (shareType === 'android') {
+      if (btUtils.Android()) {
         await this.ShareAndroid(fsw);
-      } else if (shareType === 'ios') {
+      } else if (btUtils.iOS() || btUtils.iPad() || btUtils.iPhone() || btUtils.iPod()) {
         await this.ShareIOS(fsw);
-      } else if (shareType === 'desktop') {
+      } else {
         await this.ShareDesktop(fsw);
       }
     }
