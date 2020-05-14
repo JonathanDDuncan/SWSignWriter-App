@@ -20,6 +20,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { ShowImagePageModule } from './show-image/show-image.module';
+import { ShareIOSPageModule } from './share-ios/share-ios.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ChooseSignPageModule } from './choose-sign/choose-sign.module';
@@ -52,6 +53,7 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     ChooseSignPageModule,
     ShowImagePageModule,
+    ShareIOSPageModule,
     PipesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

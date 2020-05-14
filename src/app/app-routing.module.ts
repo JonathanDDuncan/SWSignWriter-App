@@ -90,6 +90,7 @@ const routes: Routes = [
     loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule'
   },  { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
   { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
+  { path: 'share-ios', loadChildren: './share-ios/share-ios.module#ShareIOSPageModule' },
 
 
 

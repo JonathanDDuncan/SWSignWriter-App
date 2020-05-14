@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { DocumentService } from '../document.service';
 import { ShowImagePage } from '../show-image/show-image.page';
+import { ShareIOSPage } from '../share-ios/share-ios.page';
 
 
 @Component({
@@ -51,24 +52,42 @@ export class ViewPage implements OnInit {
     this.document = ssw.paragraph(fsw);
   }
 
-  public share() {
+  public share1() {
     const fsw = this.documentService.getFSW();
     this.document = ssw.paragraph(fsw);
 
-    requestAnimationFrame(() => this.sharecontinuation(fsw));
+    requestAnimationFrame(() => this.sharecontinuation1(fsw));
   }
 
-  public async copy() {
+  public async share() {
     const fsw = this.documentService.getFSW();
+    const shareType = false ? 'ios' : 'android' ;
     if (fsw && fsw !== null) {
-      const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
-      const modal = await this.modalController.create({
-        component: ShowImagePage,
-        componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
-      });
-      await modal.present();
-      await modal.onDidDismiss();
+      if (shareType === 'android') {
+        await this.ShareAndroid(fsw);
+      } else  if (shareType === 'ios') {
+        await this.ShareIOS(fsw);
+      }
     }
+  }
+  private async ShareIOS(fsw: string) {
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+    const modal = await this.modalController.create({
+      component: ShareIOSPage,
+      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+    });
+    await modal.present();
+    await modal.onDidDismiss();
+  }
+
+  private async ShareAndroid(fsw: string) {
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+    const modal = await this.modalController.create({
+      component: ShowImagePage,
+      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+    });
+    await modal.present();
+    await modal.onDidDismiss();
   }
 
   heightChange(ev: any) {
@@ -79,7 +98,7 @@ export class ViewPage implements OnInit {
     return this.router.navigateByUrl('/edit');
   }
 
-  private async sharecontinuation(fsw: string) { }
+  private async sharecontinuation1(fsw: string) { }
 
   isCordova() {
     return !!window.cordova;
