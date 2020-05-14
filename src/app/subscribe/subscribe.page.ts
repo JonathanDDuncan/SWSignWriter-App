@@ -47,12 +47,12 @@ export class SubscribePage implements OnInit {
   }
 
   async SubscribeMonthly() {
-    const planId = 'prod_HHKPaXMDpNzDSc';
+    const planId = 'plan_HHKPHgsv5Vdy49';
     await this.createSession(planId);
   }
 
   async SubscribeYearly() {
-    const planId = 'prod_HHKPkE0OshYQiJ';
+    const planId = 'plan_HHKPf6K2bmpeN7';
     await this.createSession(planId);
   }
 
