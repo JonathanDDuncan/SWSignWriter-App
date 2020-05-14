@@ -1132,7 +1132,6 @@ var CallbackComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(userProfile && userProfile !== null)) return [3 /*break*/, 2];
-                        debugger;
                         this.sentry.sentryMessage('Logged in: ' + JSON.stringify(userProfile));
                         this.storage.SaveCurrentUserProfile(userProfile);
                         this.stripeService.GetandSaveStripeSubscriptionData(userProfile.email);
@@ -1644,6 +1643,18 @@ var DocumentService = /** @class */ (function () {
     };
     DocumentService.prototype.showAvailableWords = function (text) {
         return this.signsLookupService.showAvailableWords(text);
+    };
+    DocumentService.prototype.loadSigns = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.signsLookupService.loadSigns()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     DocumentService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -2544,7 +2555,7 @@ var ShareIOSPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share iOS</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <!-- <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n  <hr>\n  <img [src]=\"getRemoteImage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n  <hr> -->\n  <a target=\"_blank\" [href]=\"getimage()\">New Image 1</a>\n  <hr>\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">New Image 2</a>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share iOS</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <a target=\"_blank\" [href]=\"getimage()\">Open Share Social Media</a>\n  <hr>\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">Open Share Emails</a>\n</ion-content>"
 
 /***/ }),
 
@@ -2636,126 +2647,6 @@ var ShareIOSPage = /** @class */ (function () {
         var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
         // const serverUrl = 'https://localhost:44309/';
         return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
-    };
-    ShareIOSPage.prototype.socialShare = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var self, navShare;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        navShare = window.navigator;
-                        if (!navShare.share) return [3 /*break*/, 1];
-                        this.canvas.toBlob(function (blob) {
-                            var _this = this;
-                            var filename = 'signWriting.png';
-                            var fd = new FormData();
-                            var files = [];
-                            fd.append('SignWriting', blob, filename);
-                            for (var _i = 0, _a = fd.getAll('file'); _i < _a.length; _i++) {
-                                var newfile = _a[_i];
-                                files.push(newfile);
-                            }
-                            navShare.share({
-                                files: files
-                            }).then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, self.presentToast('Thanks for sharing!')];
-                                        case 1:
-                                            _a.sent();
-                                            console.log('Thanks for sharing!');
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            }); })
-                                .catch(console.error);
-                        });
-                        return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, self.presentToast('Share is not available.')];
-                    case 2:
-                        _a.sent();
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ShareIOSPage.prototype.copyToClipboard = function (event) {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var self, canvas_1, error_1;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 2, , 4]);
-                        canvas_1 = this.canvas;
-                        this.canvas.toBlob(function (blob) {
-                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-                                var clip, img, r, sel, wascopied;
-                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0:
-                                            if (!navigator['clipboard']) return [3 /*break*/, 1];
-                                            clip = navigator['clipboard'];
-                                            try {
-                                                // clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
-                                                //   await self.presentToast('Copied to clipboard successfully!');
-                                                //   console.log('Copied to clipboard successfully!');
-                                                // }, async function (err) {
-                                                //   console.error(err);
-                                                //   await self.presentToast('Unable to write to clipboard. :-(');
-                                                //   console.error('Unable to write to clipboard. :-(');
-                                                // });
-                                            }
-                                            catch (error) {
-                                                clip.setImageData(blob, 'image/png');
-                                            }
-                                            return [3 /*break*/, 6];
-                                        case 1:
-                                            img = document.createElement('img');
-                                            img.src = canvas_1.toDataURL();
-                                            document.body.appendChild(img);
-                                            r = document.createRange();
-                                            r.setStartBefore(img);
-                                            r.setEndAfter(img);
-                                            r.selectNode(img);
-                                            sel = window.getSelection();
-                                            sel.addRange(r);
-                                            wascopied = document.execCommand('copy');
-                                            if (!!wascopied) return [3 /*break*/, 3];
-                                            return [4 /*yield*/, self.presentToast('You need to right click or long press on image to copy it.')];
-                                        case 2:
-                                            _a.sent();
-                                            alert('You need to right click or long press on image to copy it.');
-                                            return [3 /*break*/, 5];
-                                        case 3: return [4 /*yield*/, self.presentToast('Image was copied.')];
-                                        case 4:
-                                            _a.sent();
-                                            _a.label = 5;
-                                        case 5:
-                                            img.remove();
-                                            _a.label = 6;
-                                        case 6: return [2 /*return*/];
-                                    }
-                                });
-                            });
-                        });
-                        return [3 /*break*/, 4];
-                    case 2:
-                        error_1 = _a.sent();
-                        return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
-                    case 3:
-                        _a.sent();
-                        console.error('Unable to write to clipboard. :-(');
-                        console.error(error_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
     };
     ShareIOSPage.prototype.presentToast = function (message) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -3924,30 +3815,31 @@ var StripeService = /** @class */ (function () {
     StripeService.prototype.GetandSaveStripeSubscriptionData = function (email, sessionId) {
         if (sessionId === void 0) { sessionId = null; }
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var subscriptionData, data;
+            var subscriptionData, observer;
+            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        subscriptionData = {
-                            privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-                            email: email,
-                            sessionId: sessionId
-                        };
-                        debugger;
-                        return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
-                                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
-                                    Accept: 'application/json',
-                                    'Content-Type': 'application/json'
-                                })
-                            }).toPromise()];
-                    case 1:
-                        data = _a.sent();
-                        debugger;
-                        if (data) {
-                            this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
+                subscriptionData = {
+                    privatekey: '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+                    email: email,
+                    sessionId: sessionId
+                };
+                debugger;
+                observer = {
+                    next: function (data) {
+                        if ((data)) {
+                            _this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
                         }
-                        return [2 /*return*/];
-                }
+                    },
+                    error: function (err) { return console.error('Error occured: ' + err); },
+                    complete: function () { return console.log('Execution completed'); }
+                };
+                this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
+                    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    })
+                }).subscribe(observer);
+                return [2 /*return*/];
             });
         });
     };

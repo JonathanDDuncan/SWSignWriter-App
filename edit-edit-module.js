@@ -140,6 +140,9 @@ var EditPage = /** @class */ (function () {
                         if (isFirstTime == null) {
                             return [2 /*return*/, this.router.navigateByUrl('/settings')];
                         }
+                        return [4 /*yield*/, this.documentService.loadSigns()];
+                    case 2:
+                        _a.sent();
                         this.documentService.clearDocument();
                         this.showDocument(this.documentService.getDocument());
                         return [2 /*return*/];

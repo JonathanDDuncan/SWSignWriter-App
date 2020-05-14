@@ -149,7 +149,7 @@ var ViewPage = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         fsw = this.documentService.getFSW();
-                        shareType = false ? undefined : 'android';
+                        shareType = true ? 'ios' : undefined;
                         if (!(fsw && fsw !== null)) return [3 /*break*/, 4];
                         if (!(shareType === 'android')) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.ShareAndroid(fsw)];
