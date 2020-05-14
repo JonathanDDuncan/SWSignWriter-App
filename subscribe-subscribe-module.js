@@ -148,7 +148,7 @@ var SubscribePage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        planId = 'prod_HHKPaXMDpNzDSc';
+                        planId = 'plan_HHKPHgsv5Vdy49';
                         return [4 /*yield*/, this.createSession(planId)];
                     case 1:
                         _a.sent();
@@ -163,7 +163,7 @@ var SubscribePage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        planId = 'prod_HHKPkE0OshYQiJ';
+                        planId = 'plan_HHKPf6K2bmpeN7';
                         return [4 /*yield*/, this.createSession(planId)];
                     case 1:
                         _a.sent();
