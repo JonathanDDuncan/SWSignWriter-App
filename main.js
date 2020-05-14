@@ -461,6 +461,9 @@ var map = {
 		"./src/app/settings/settings.module.ts",
 		"settings-settings-module"
 	],
+	"./share-ios/share-ios.module": [
+		"./src/app/share-ios/share-ios.module.ts"
+	],
 	"./stripecancel/stripecancel.module": [
 		"./src/app/stripecancel/stripecancel.module.ts",
 		"stripecancel-stripecancel-module"
@@ -607,6 +610,7 @@ var routes = [
     },
     { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
     { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
+    { path: 'share-ios', loadChildren: './share-ios/share-ios.module#ShareIOSPageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -631,7 +635,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.107)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.108)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -780,14 +784,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 /* harmony import */ var _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/social-sharing/ngx */ "./node_modules/@ionic-native/social-sharing/ngx/index.js");
 /* harmony import */ var _show_image_show_image_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./show-image/show-image.module */ "./src/app/show-image/show-image.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./choose-sign/choose-sign.module */ "./src/app/choose-sign/choose-sign.module.ts");
-/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
-/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./signs-lookup.service */ "./src/app/signs-lookup.service.ts");
-/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./document.service */ "./src/app/document.service.ts");
-/* harmony import */ var _social_sharing_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./social-sharing.service */ "./src/app/social-sharing.service.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _share_ios_share_ios_module__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./share-ios/share-ios.module */ "./src/app/share-ios/share-ios.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./choose-sign/choose-sign.module */ "./src/app/choose-sign/choose-sign.module.ts");
+/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
+/* harmony import */ var _signs_lookup_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./signs-lookup.service */ "./src/app/signs-lookup.service.ts");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./document.service */ "./src/app/document.service.ts");
+/* harmony import */ var _social_sharing_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./social-sharing.service */ "./src/app/social-sharing.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+
 
 
 
@@ -822,7 +828,7 @@ var AppModule = /** @class */ (function () {
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_19__["AppComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_20__["AppComponent"],
                 _callback_callback_component__WEBPACK_IMPORTED_MODULE_6__["CallbackComponent"],
                 _profile_profile_component__WEBPACK_IMPORTED_MODULE_5__["ProfileComponent"]
             ],
@@ -841,11 +847,12 @@ var AppModule = /** @class */ (function () {
                 _ionic_storage__WEBPACK_IMPORTED_MODULE_16__["IonicStorageModule"].forRoot({
                     name: '__swsignwriterdb'
                 }),
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_20__["AppRoutingModule"],
-                _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_21__["ChooseSignPageModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_21__["AppRoutingModule"],
+                _choose_sign_choose_sign_module__WEBPACK_IMPORTED_MODULE_22__["ChooseSignPageModule"],
                 _show_image_show_image_module__WEBPACK_IMPORTED_MODULE_18__["ShowImagePageModule"],
-                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_22__["PipesModule"],
-                _angular_service_worker__WEBPACK_IMPORTED_MODULE_10__["ServiceWorkerModule"].register('ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_26__["environment"].production })
+                _share_ios_share_ios_module__WEBPACK_IMPORTED_MODULE_19__["ShareIOSPageModule"],
+                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_23__["PipesModule"],
+                _angular_service_worker__WEBPACK_IMPORTED_MODULE_10__["ServiceWorkerModule"].register('ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_27__["environment"].production })
             ],
             exports: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"]],
             providers: [
@@ -853,14 +860,14 @@ var AppModule = /** @class */ (function () {
                 _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_14__["SplashScreen"],
                 { provide: _angular_router__WEBPACK_IMPORTED_MODULE_8__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__["IonicRouteStrategy"] },
                 { provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["ErrorHandler"], useClass: _sentry_error_handler__WEBPACK_IMPORTED_MODULE_1__["SentryErrorHandler"] },
-                _signs_lookup_service__WEBPACK_IMPORTED_MODULE_23__["SignsLookupService"],
-                _document_service__WEBPACK_IMPORTED_MODULE_24__["DocumentService"],
-                _social_sharing_service__WEBPACK_IMPORTED_MODULE_25__["SocialSharingService"],
+                _signs_lookup_service__WEBPACK_IMPORTED_MODULE_24__["SignsLookupService"],
+                _document_service__WEBPACK_IMPORTED_MODULE_25__["DocumentService"],
+                _social_sharing_service__WEBPACK_IMPORTED_MODULE_26__["SocialSharingService"],
                 _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_17__["SocialSharing"],
                 _services_authorization_service__WEBPACK_IMPORTED_MODULE_4__["AuthorizationService"],
                 _services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"]
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_19__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_20__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -1125,6 +1132,7 @@ var CallbackComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(userProfile && userProfile !== null)) return [3 /*break*/, 2];
+                        debugger;
                         this.sentry.sentryMessage('Logged in: ' + JSON.stringify(userProfile));
                         this.storage.SaveCurrentUserProfile(userProfile);
                         this.stripeService.GetandSaveStripeSubscriptionData(userProfile.email);
@@ -2475,6 +2483,319 @@ var SettingsService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/share-ios/share-ios.module.ts":
+/*!***********************************************!*\
+  !*** ./src/app/share-ios/share-ios.module.ts ***!
+  \***********************************************/
+/*! exports provided: ShareIOSPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShareIOSPageModule", function() { return ShareIOSPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _share_ios_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./share-ios.page */ "./src/app/share-ios/share-ios.page.ts");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
+
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: '',
+        component: _share_ios_page__WEBPACK_IMPORTED_MODULE_6__["ShareIOSPage"]
+    }
+];
+var ShareIOSPageModule = /** @class */ (function () {
+    function ShareIOSPageModule() {
+    }
+    ShareIOSPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes),
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_7__["SharedModule"]
+            ],
+            declarations: [_share_ios_page__WEBPACK_IMPORTED_MODULE_6__["ShareIOSPage"]]
+        })
+    ], ShareIOSPageModule);
+    return ShareIOSPageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/share-ios/share-ios.page.html":
+/*!***********************************************!*\
+  !*** ./src/app/share-ios/share-ios.page.html ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share iOS</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <!-- <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n  <hr>\n  <img [src]=\"getRemoteImage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n  <hr> -->\n  <a target=\"_blank\" [href]=\"getimage()\">New Image 1</a>\n  <hr>\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">New Image 2</a>\n</ion-content>"
+
+/***/ }),
+
+/***/ "./src/app/share-ios/share-ios.page.scss":
+/*!***********************************************!*\
+  !*** ./src/app/share-ios/share-ios.page.scss ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlLWlvcy9zaGFyZS1pb3MucGFnZS5zY3NzIn0= */"
+
+/***/ }),
+
+/***/ "./src/app/share-ios/share-ios.page.ts":
+/*!*********************************************!*\
+  !*** ./src/app/share-ios/share-ios.page.ts ***!
+  \*********************************************/
+/*! exports provided: ShareIOSPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShareIOSPage", function() { return ShareIOSPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+var ShareIOSPage = /** @class */ (function () {
+    function ShareIOSPage(modalController, toastController, sanitizer, http) {
+        this.modalController = modalController;
+        this.toastController = toastController;
+        this.sanitizer = sanitizer;
+        this.http = http;
+    }
+    ShareIOSPage.prototype.ngOnInit = function () {
+        this.swCanvas = this.canvas;
+        this.saveToRemote(this.imagebase64);
+    };
+    ShareIOSPage.prototype.saveToRemote = function (imagebase64) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var serverUrl, path, requestBody;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_5__["uuid"])();
+                serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+                path = 'api/image/save';
+                requestBody = {
+                    'imageId': this.imageId,
+                    'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
+                    'dataUrl': imagebase64
+                };
+                this.http.post(serverUrl + path, requestBody)
+                    .toPromise()
+                    .then(function () { }, function (error) {
+                    console.log(error);
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    ShareIOSPage.prototype.close = function () {
+        this.modalController.dismiss({
+            result: 'cancel'
+        });
+    };
+    ShareIOSPage.prototype.getimage = function () {
+        this.contentHeight = this.swCanvas.height / 4;
+        this.contentWidth = this.swCanvas.width / 4;
+        return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+    };
+    ShareIOSPage.prototype.sleep = function (milliseconds) {
+        var date = Date.now();
+        var currentDate = null;
+        do {
+            currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
+    };
+    ShareIOSPage.prototype.getRemoteImage = function () {
+        this.sleep(200);
+        var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+        // const serverUrl = 'https://localhost:44309/';
+        return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
+    };
+    ShareIOSPage.prototype.socialShare = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var self, navShare;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        navShare = window.navigator;
+                        if (!navShare.share) return [3 /*break*/, 1];
+                        this.canvas.toBlob(function (blob) {
+                            var _this = this;
+                            var filename = 'signWriting.png';
+                            var fd = new FormData();
+                            var files = [];
+                            fd.append('SignWriting', blob, filename);
+                            for (var _i = 0, _a = fd.getAll('file'); _i < _a.length; _i++) {
+                                var newfile = _a[_i];
+                                files.push(newfile);
+                            }
+                            navShare.share({
+                                files: files
+                            }).then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, self.presentToast('Thanks for sharing!')];
+                                        case 1:
+                                            _a.sent();
+                                            console.log('Thanks for sharing!');
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); })
+                                .catch(console.error);
+                        });
+                        return [3 /*break*/, 3];
+                    case 1: return [4 /*yield*/, self.presentToast('Share is not available.')];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShareIOSPage.prototype.copyToClipboard = function (event) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var self, canvas_1, error_1;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 2, , 4]);
+                        canvas_1 = this.canvas;
+                        this.canvas.toBlob(function (blob) {
+                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+                                var clip, img, r, sel, wascopied;
+                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!navigator['clipboard']) return [3 /*break*/, 1];
+                                            clip = navigator['clipboard'];
+                                            try {
+                                                // clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
+                                                //   await self.presentToast('Copied to clipboard successfully!');
+                                                //   console.log('Copied to clipboard successfully!');
+                                                // }, async function (err) {
+                                                //   console.error(err);
+                                                //   await self.presentToast('Unable to write to clipboard. :-(');
+                                                //   console.error('Unable to write to clipboard. :-(');
+                                                // });
+                                            }
+                                            catch (error) {
+                                                clip.setImageData(blob, 'image/png');
+                                            }
+                                            return [3 /*break*/, 6];
+                                        case 1:
+                                            img = document.createElement('img');
+                                            img.src = canvas_1.toDataURL();
+                                            document.body.appendChild(img);
+                                            r = document.createRange();
+                                            r.setStartBefore(img);
+                                            r.setEndAfter(img);
+                                            r.selectNode(img);
+                                            sel = window.getSelection();
+                                            sel.addRange(r);
+                                            wascopied = document.execCommand('copy');
+                                            if (!!wascopied) return [3 /*break*/, 3];
+                                            return [4 /*yield*/, self.presentToast('You need to right click or long press on image to copy it.')];
+                                        case 2:
+                                            _a.sent();
+                                            alert('You need to right click or long press on image to copy it.');
+                                            return [3 /*break*/, 5];
+                                        case 3: return [4 /*yield*/, self.presentToast('Image was copied.')];
+                                        case 4:
+                                            _a.sent();
+                                            _a.label = 5;
+                                        case 5:
+                                            img.remove();
+                                            _a.label = 6;
+                                        case 6: return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        });
+                        return [3 /*break*/, 4];
+                    case 2:
+                        error_1 = _a.sent();
+                        return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
+                    case 3:
+                        _a.sent();
+                        console.error('Unable to write to clipboard. :-(');
+                        console.error(error_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShareIOSPage.prototype.presentToast = function (message) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var toast;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.toastController.create({
+                            message: message,
+                            duration: 2000
+                        })];
+                    case 1:
+                        toast = _a.sent();
+                        toast.present();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLCanvasElement)
+    ], ShareIOSPage.prototype, "canvas", void 0);
+    ShareIOSPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+            selector: 'app-share-ios',
+            template: __webpack_require__(/*! ./share-ios.page.html */ "./src/app/share-ios/share-ios.page.html"),
+            styles: [__webpack_require__(/*! ./share-ios.page.scss */ "./src/app/share-ios/share-ios.page.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ToastController"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], ShareIOSPage);
+    return ShareIOSPage;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/shared.module.ts":
 /*!*****************************************!*\
   !*** ./src/app/shared/shared.module.ts ***!
@@ -2576,7 +2897,7 @@ var ShowImagePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n  <hr>\r\n  <img [src]=\"getRemoteImage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n  <hr>\r\n  <a target=\"_blank\" [href]=\"getimage()\">New Image 1</a>\r\n  <hr>\r\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">New Image 2</a>\r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
 
 /***/ }),
 
@@ -3612,6 +3933,7 @@ var StripeService = /** @class */ (function () {
                             email: email,
                             sessionId: sessionId
                         };
+                        debugger;
                         return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
                                 headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                                     Accept: 'application/json',
@@ -3620,6 +3942,7 @@ var StripeService = /** @class */ (function () {
                             }).toPromise()];
                     case 1:
                         data = _a.sent();
+                        debugger;
                         if (data) {
                             this.storage.SaveSubscription(data.Email, data.SubscriptionEndDate, data.CancelAtPeriodEnd);
                         }

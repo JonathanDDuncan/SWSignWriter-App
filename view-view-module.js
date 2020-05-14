@@ -64,7 +64,7 @@ var ViewPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>\r\n      {{'Document' | translate}}\r\n    </ion-title> \r\n    <ion-item>\r\n      <ion-grid>\r\n        <ion-row justify-content-center >\r\n          <ion-label>{{'Image height' | translate}}</ion-label>\r\n        </ion-row>\r\n        <ion-row>\r\n          <ion-range min=\"50\" max=\"900\" step=\"10\" [(ngModel)]=\"imageheight\" pin=\"true\"\r\n            (ionChange)=\"heightChange($event)\">\r\n            <ion-icon size=\"small\" slot=\"start\" name=\"resize\"></ion-icon>\r\n            <ion-icon slot=\"end\" name=\"resize\"></ion-icon>\r\n          </ion-range>\r\n        </ion-row>\r\n      </ion-grid>\r\n    </ion-item>\r\n\r\n    <!-- <ion-buttons slot=\"end\">\r\n\r\n      <ion-button *ngIf=\"isCordova()\" color=\"primary\" fill=\"solid\" (click)=\"share()\">\r\n         {{'Share' | translate}}<ion-icon name=\"share\"></ion-icon>\r\n      </ion-button>\r\n      <ion-button *ngIf=\"!isCordova()\" color=\"primary\" fill=\"solid\" (click)=\"copy()\">\r\n        <ion-icon name=\"copy\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons> -->\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <div id=\"document\" class=\"document\">\r\n    <div class=\"signtext\" [style.height.px]=\"signtextHeight\">\r\n      <span [innerHTML]=\"document | safeHtml\"></span>\r\n    </div>\r\n  </div>\r\n  <!-- <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\r\n    <ion-fab-button>\r\n      <ion-icon (click)=\"edit()\" name=\"create\"></ion-icon>\r\n    </ion-fab-button>\r\n  </ion-fab> \r\n\r\n  <div>\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n      <ion-label>Edit</ion-label>\r\n      <ion-fab-button>\r\n          <ion-icon (click)=\"edit()\" name=\"arrow-dropright-circle\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button>\r\n  </ion-fab>\r\n</div>\r\n  -->\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n       <ion-label>{{'Share' | translate}}</ion-label>\r\n      <ion-fab-button (click)=\"share()\" *ngIf=\"isCordova()\">\r\n          <ion-icon  name=\"arrow-dropright-circle\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button>\r\n      <ion-fab-button (click)=\"copy()\" *ngIf=\"!isCordova()\" >\r\n          <ion-icon  name=\"share\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button>\r\n  </ion-fab>\r\n \r\n\r\n  <canvas id='canvas'></canvas>\r\n  <span class=\"preloadFonts\" [innerHTML]=\"preloadFonts | safeHtml\"></span>\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-title>\r\n      {{'Document' | translate}}\r\n    </ion-title>\r\n    <ion-item>\r\n      <ion-grid>\r\n        <ion-row justify-content-center>\r\n          <ion-label>{{'Image height' | translate}}</ion-label>\r\n        </ion-row>\r\n        <ion-row>\r\n          <ion-range\r\n            min=\"50\"\r\n            max=\"900\"\r\n            step=\"10\"\r\n            [(ngModel)]=\"imageheight\"\r\n            pin=\"true\"\r\n            (ionChange)=\"heightChange($event)\"\r\n          >\r\n            <ion-icon size=\"small\" slot=\"start\" name=\"resize\"></ion-icon>\r\n            <ion-icon slot=\"end\" name=\"resize\"></ion-icon>\r\n          </ion-range>\r\n        </ion-row>\r\n      </ion-grid>\r\n    </ion-item>\r\n\r\n    <!-- <ion-buttons slot=\"end\">\r\n\r\n      <ion-button *ngIf=\"isCordova()\" color=\"primary\" fill=\"solid\" (click)=\"share()\">\r\n         {{'Share' | translate}}<ion-icon name=\"share\"></ion-icon>\r\n      </ion-button>\r\n      <ion-button *ngIf=\"!isCordova()\" color=\"primary\" fill=\"solid\" (click)=\"copy()\">\r\n        <ion-icon name=\"copy\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons> -->\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <div id=\"document\" class=\"document\">\r\n    <div class=\"signtext\" [style.height.px]=\"signtextHeight\">\r\n      <span [innerHTML]=\"document | safeHtml\"></span>\r\n    </div>\r\n  </div>\r\n  <!-- <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\r\n    <ion-fab-button>\r\n      <ion-icon (click)=\"edit()\" name=\"create\"></ion-icon>\r\n    </ion-fab-button>\r\n  </ion-fab> \r\n\r\n  <div>\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n      <ion-label>Edit</ion-label>\r\n      <ion-fab-button>\r\n          <ion-icon (click)=\"edit()\" name=\"arrow-dropright-circle\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button>\r\n  </ion-fab>\r\n</div>\r\n  -->\r\n  <ion-fab horizontal=\"end\" slot=\"fixed\" vertical=\"bottom\">\r\n    <ion-label>{{'Share' | translate}}</ion-label>\r\n    <!-- <ion-fab-button (click)=\"share1()\" *ngIf=\"isCordova()\">\r\n          <ion-icon  name=\"arrow-dropright-circle\" style=\"zoom:2.0;\"></ion-icon>\r\n      </ion-fab-button> -->\r\n    <ion-fab-button (click)=\"share()\">\r\n      <!-- *ngIf=\"!isCordova()\"  -->\r\n      <ion-icon name=\"share\" style=\"zoom: 2;\"></ion-icon>\r\n    </ion-fab-button>\r\n  </ion-fab>\r\n\r\n  <canvas id=\"canvas\"></canvas>\r\n  <span class=\"preloadFonts\" [innerHTML]=\"preloadFonts | safeHtml\"></span>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -97,6 +97,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 /* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
 /* harmony import */ var _show_image_show_image_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../show-image/show-image.page */ "./src/app/show-image/show-image.page.ts");
+/* harmony import */ var _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../share-ios/share-ios.page */ "./src/app/share-ios/share-ios.page.ts");
+
 
 
 
@@ -134,20 +136,67 @@ var ViewPage = /** @class */ (function () {
         var fsw = this.documentService.getFSW();
         this.document = ssw.paragraph(fsw);
     };
-    ViewPage.prototype.share = function () {
+    ViewPage.prototype.share1 = function () {
         var _this = this;
         var fsw = this.documentService.getFSW();
         this.document = ssw.paragraph(fsw);
-        requestAnimationFrame(function () { return _this.sharecontinuation(fsw); });
+        requestAnimationFrame(function () { return _this.sharecontinuation1(fsw); });
     };
-    ViewPage.prototype.copy = function () {
+    ViewPage.prototype.share = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var fsw, canvas1, modal;
+            var fsw, shareType;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         fsw = this.documentService.getFSW();
+                        shareType = false ? undefined : 'android';
                         if (!(fsw && fsw !== null)) return [3 /*break*/, 4];
+                        if (!(shareType === 'android')) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.ShareAndroid(fsw)];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 2:
+                        if (!(shareType === 'ios')) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.ShareIOS(fsw)];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ViewPage.prototype.ShareIOS = function (fsw) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var canvas1, modal;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
+                        return [4 /*yield*/, this.modalController.create({
+                                component: _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_8__["ShareIOSPage"],
+                                componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+                            })];
+                    case 1:
+                        modal = _a.sent();
+                        return [4 /*yield*/, modal.present()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, modal.onDidDismiss()];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ViewPage.prototype.ShareAndroid = function (fsw) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var canvas1, modal;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
                                 component: _show_image_show_image_page__WEBPACK_IMPORTED_MODULE_7__["ShowImagePage"],
@@ -161,8 +210,7 @@ var ViewPage = /** @class */ (function () {
                         return [4 /*yield*/, modal.onDidDismiss()];
                     case 3:
                         _a.sent();
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        return [2 /*return*/];
                 }
             });
         });
@@ -173,7 +221,7 @@ var ViewPage = /** @class */ (function () {
     ViewPage.prototype.edit = function () {
         return this.router.navigateByUrl('/edit');
     };
-    ViewPage.prototype.sharecontinuation = function (fsw) {
+    ViewPage.prototype.sharecontinuation1 = function (fsw) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
             return [2 /*return*/];
         }); });
