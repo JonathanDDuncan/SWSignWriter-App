@@ -54,6 +54,7 @@ export class EditPage implements OnInit, AfterViewInit {
     if (isFirstTime == null) {
       return this.router.navigateByUrl('/settings');
     }
+    await this.documentService.loadSigns();
     this.documentService.clearDocument();
     this.showDocument(this.documentService.getDocument());
   }

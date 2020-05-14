@@ -257,4 +257,8 @@ export class DocumentService {
   showAvailableWords(text: string) {
     return this.signsLookupService.showAvailableWords(text);
   }
+
+  async loadSigns() {
+    await this.signsLookupService.loadSigns();
+  }
 }
