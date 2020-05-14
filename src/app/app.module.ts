@@ -1,3 +1,5 @@
+import { ShareDesktopPageModule } from './share-desktop/share-desktop.module';
+import { ShareAndroidPageModule } from './share-android/share-android.module';
 import { SentryErrorHandler } from './sentry-error-handler';
 import { ErrorHandler } from '@angular/core';
 import { UserService } from './services/user.service';
@@ -54,6 +56,8 @@ import { environment } from '../environments/environment';
     ChooseSignPageModule,
     ShowImagePageModule,
     ShareIOSPageModule,
+    ShareAndroidPageModule,
+    ShareDesktopPageModule,
     PipesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

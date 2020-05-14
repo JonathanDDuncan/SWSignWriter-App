@@ -1,3 +1,5 @@
+import { ShareDesktopPage } from './../share-desktop/share-desktop.page';
+import { ShareAndroidPage } from './../share-android/share-android.page';
 import { SubscriptionService } from './../services/subscription.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -61,15 +63,18 @@ export class ViewPage implements OnInit {
 
   public async share() {
     const fsw = this.documentService.getFSW();
-    const shareType = false ? 'ios' : 'android' ;
+    const shareType = false ? (false ?  'ios' : 'desktop') : 'android';
     if (fsw && fsw !== null) {
       if (shareType === 'android') {
         await this.ShareAndroid(fsw);
-      } else  if (shareType === 'ios') {
+      } else if (shareType === 'ios') {
         await this.ShareIOS(fsw);
+      } else if (shareType === 'desktop') {
+        await this.ShareDesktop(fsw);
       }
     }
   }
+
   private async ShareIOS(fsw: string) {
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
     const modal = await this.modalController.create({
@@ -83,7 +88,17 @@ export class ViewPage implements OnInit {
   private async ShareAndroid(fsw: string) {
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
     const modal = await this.modalController.create({
-      component: ShowImagePage,
+      component: ShareAndroidPage,
+      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+    });
+    await modal.present();
+    await modal.onDidDismiss();
+  }
+
+  private async ShareDesktop(fsw: string) {
+    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+    const modal = await this.modalController.create({
+      component: ShareDesktopPage,
       componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
     });
     await modal.present();
