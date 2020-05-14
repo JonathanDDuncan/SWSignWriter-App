@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="pro.jonathanduncan.swsignwriter" version="0.0.107" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="pro.jonathanduncan.swsignwriter" version="0.0.108" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Quick Sign Document</name>
     <description>Quickly write SignWriting documents</description>
     <author email="duncanjonathan@yahoo.ca" href="https://www.upwork.com/o/profiles/users/_~015c11075498b5d53e/">Jonathan Duncan</author>
