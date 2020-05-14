@@ -1,5 +1,83 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["view-view-module"],{
 
+/***/ "./src/app/browser-type.service.ts":
+/*!*****************************************!*\
+  !*** ./src/app/browser-type.service.ts ***!
+  \*****************************************/
+/*! exports provided: BrowserTypeService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserTypeService", function() { return BrowserTypeService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var BrowserTypeService = /** @class */ (function () {
+    function BrowserTypeService() {
+    }
+    //  * @summary
+    //  * utils.isMobile
+    //  * --------------
+    //  * @desc
+    //  * Creates a global object with member functions that test if the client's browser
+    //  * belongs to a specific family of devices.
+    //  * @function utils.isMobile
+    //  * @return {Boolean}
+    //  * @see {@link https://stackoverflow.com/questions/32570067/how-to-detect-whether-browser-is-ios-android-or-desktop-using-jquery},
+    //  * {@link https://bitsrc.io/tomlandau/simple-js/global/is-mobile/code#src/global/isMobile.js}
+    BrowserTypeService.prototype.utils = function () {
+        return {
+            getUserAgent: function () {
+                return navigator.userAgent;
+            },
+            Android: function () {
+                return /Android/i.test(this.getUserAgent()) && !this.Windows();
+            },
+            BlackBerry: function () {
+                return /BlackBerry|BB10|PlayBook/i.test(this.getUserAgent());
+            },
+            iPhone: function () {
+                return /iPhone/i.test(this.getUserAgent()) && !this.iPad() && !this.Windows();
+            },
+            iPod: function () {
+                return /iPod/i.test(this.getUserAgent());
+            },
+            iPad: function () {
+                return /iPad/i.test(this.getUserAgent());
+            },
+            iOS: function () {
+                return (this.iPad() || this.iPod() || this.iPhone());
+            },
+            Opera: function () {
+                return /Opera Mini/i.test(this.getUserAgent());
+            },
+            Windows: function () {
+                return /Windows Phone|IEMobile|WPDesktop/i.test(this.getUserAgent());
+            },
+            KindleFire: function () {
+                return /Kindle Fire|Silk|KFAPWA|KFSOWI|KFJWA|KFJWI|KFAPWI|KFAPWI|KFOT|KFTT|KFTHWI|KFTHWA|KFASWI|KFTBWI|KFMEWI|KFFOWI|KFSAWA|KFSAWI|KFARWI/i
+                    .test(this.getUserAgent());
+            },
+            any: function () {
+                return (this.Android() || this.BlackBerry() || this.iOS() || this.Opera() || this.Windows());
+            }
+        };
+    };
+    BrowserTypeService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], BrowserTypeService);
+    return BrowserTypeService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/view/view.module.ts":
 /*!*************************************!*\
   !*** ./src/app/view/view.module.ts ***!
@@ -90,15 +168,17 @@ module.exports = ".document {\n  width: 100%;\n  height: 100%;\n  overflow: auto
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewPage", function() { return ViewPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _share_desktop_share_desktop_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../share-desktop/share-desktop.page */ "./src/app/share-desktop/share-desktop.page.ts");
-/* harmony import */ var _share_android_share_android_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../share-android/share-android.page */ "./src/app/share-android/share-android.page.ts");
-/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
-/* harmony import */ var _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../share-ios/share-ios.page */ "./src/app/share-ios/share-ios.page.ts");
+/* harmony import */ var _browser_type_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../browser-type.service */ "./src/app/browser-type.service.ts");
+/* harmony import */ var _share_desktop_share_desktop_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../share-desktop/share-desktop.page */ "./src/app/share-desktop/share-desktop.page.ts");
+/* harmony import */ var _share_android_share_android_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../share-android/share-android.page */ "./src/app/share-android/share-android.page.ts");
+/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
+/* harmony import */ var _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../share-ios/share-ios.page */ "./src/app/share-ios/share-ios.page.ts");
+
 
 
 
@@ -110,23 +190,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ViewPage = /** @class */ (function () {
-    function ViewPage(modalController, documentService, subscriptionService, translate, router) {
+    function ViewPage(modalController, documentService, subscriptionService, translate, btUtil, router) {
         var _this = this;
         this.modalController = modalController;
         this.documentService = documentService;
         this.subscriptionService = subscriptionService;
         this.translate = translate;
+        this.btUtil = btUtil;
         this.router = router;
         this.imageheight = 900;
         // Force fonts to load before anything is shown
         this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
         this.router.events.subscribe(function (event) {
-            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationStart"]) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["NavigationStart"]) {
                 var fsw = _this.documentService.getFSW();
                 _this.document = ssw.paragraph(fsw);
                 _this.imageheight = 200;
             }
-            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["NavigationEnd"]) {
                 // Hide loading indicator
             }
         });
@@ -146,27 +227,26 @@ var ViewPage = /** @class */ (function () {
     };
     ViewPage.prototype.share = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var fsw, shareType;
+            var fsw, btUtils;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         fsw = this.documentService.getFSW();
-                        shareType = false ? (undefined) : 'android';
+                        btUtils = this.btUtil.utils();
+                        debugger;
                         if (!(fsw && fsw !== null)) return [3 /*break*/, 6];
-                        if (!(shareType === 'android')) return [3 /*break*/, 2];
+                        if (!btUtils.Android()) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.ShareAndroid(fsw)];
                     case 1:
                         _a.sent();
                         return [3 /*break*/, 6];
                     case 2:
-                        if (!(shareType === 'ios')) return [3 /*break*/, 4];
+                        if (!(btUtils.iOS() || btUtils.iPad() || btUtils.iPhone() || btUtils.iPod())) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.ShareIOS(fsw)];
                     case 3:
                         _a.sent();
                         return [3 /*break*/, 6];
-                    case 4:
-                        if (!(shareType === 'desktop')) return [3 /*break*/, 6];
-                        return [4 /*yield*/, this.ShareDesktop(fsw)];
+                    case 4: return [4 /*yield*/, this.ShareDesktop(fsw)];
                     case 5:
                         _a.sent();
                         _a.label = 6;
@@ -183,7 +263,7 @@ var ViewPage = /** @class */ (function () {
                     case 0:
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
-                                component: _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_9__["ShareIOSPage"],
+                                component: _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_10__["ShareIOSPage"],
                                 componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
                             })];
                     case 1:
@@ -207,7 +287,7 @@ var ViewPage = /** @class */ (function () {
                     case 0:
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
-                                component: _share_android_share_android_page__WEBPACK_IMPORTED_MODULE_2__["ShareAndroidPage"],
+                                component: _share_android_share_android_page__WEBPACK_IMPORTED_MODULE_3__["ShareAndroidPage"],
                                 componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
                             })];
                     case 1:
@@ -231,7 +311,7 @@ var ViewPage = /** @class */ (function () {
                     case 0:
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
-                                component: _share_desktop_share_desktop_page__WEBPACK_IMPORTED_MODULE_1__["ShareDesktopPage"],
+                                component: _share_desktop_share_desktop_page__WEBPACK_IMPORTED_MODULE_2__["ShareDesktopPage"],
                                 componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
                             })];
                     case 1:
@@ -262,16 +342,17 @@ var ViewPage = /** @class */ (function () {
         return !!window.cordova;
     };
     ViewPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_6__["Component"])({
             selector: 'app-view',
             template: __webpack_require__(/*! ./view.page.html */ "./src/app/view/view.page.html"),
             styles: [__webpack_require__(/*! ./view.page.scss */ "./src/app/view/view.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_6__["ModalController"],
-            _document_service__WEBPACK_IMPORTED_MODULE_8__["DocumentService"],
-            _services_subscription_service__WEBPACK_IMPORTED_MODULE_3__["SubscriptionService"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_7__["ModalController"],
+            _document_service__WEBPACK_IMPORTED_MODULE_9__["DocumentService"],
+            _services_subscription_service__WEBPACK_IMPORTED_MODULE_4__["SubscriptionService"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"],
+            _browser_type_service__WEBPACK_IMPORTED_MODULE_1__["BrowserTypeService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
     ], ViewPage);
     return ViewPage;
 }());
