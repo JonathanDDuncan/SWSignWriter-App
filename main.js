@@ -643,7 +643,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 0.0.110)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: 1.0.0)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -2569,7 +2569,7 @@ var ShareAndroidPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share Android<ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share Android - {{'Long Press on image to share'| translate}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n</ion-content>"
 
 /***/ }),
 
@@ -2901,7 +2901,7 @@ var ShareDesktopPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share Desktop <ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share Desktop <ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click on image to share'| translate}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n</ion-content>"
 
 /***/ }),
 
@@ -3233,7 +3233,7 @@ var ShareIOSPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share iOS</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <a target=\"_blank\" [href]=\"getimage()\">Open Share Social Media</a>\n  <hr>\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">Open Share Emails</a>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share iOS</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <a target=\"_blank\" [href]=\"getimage()\">Open Share Social Media</a> \n  <hr />\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">Open Share Email</a> \n\n  <ul>\n    <ol>1. Click on one of the above.</ol>\n\n    <ol>2. The sentence in SignWriting now shows up on its own screen.</ol>\n\n    <ol>3. Push the Upload Button at the bottom of the screen.</ol>\n\n    <ol>4. IMPORTANT: Click on PNG Image \"Options\" button.</ol>\n\n    <ol>\n      5. CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to\n      the word \"Image\". Click Done.\n    </ol>\n\n    <ol>\n      6. Now choose where you want to send it. Scroll down for many choices. Or\n      Scroll to the Right for Facebook.\n    </ol>\n\n    <ol>\n      7. If you choose Facebook, choose your News Feed or Your Story. Write your\n      English header and click Post.\n    </ol>\n  </ul>\n</ion-content>\n"
 
 /***/ }),
 

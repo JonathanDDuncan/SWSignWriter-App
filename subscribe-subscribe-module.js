@@ -206,7 +206,7 @@ var SubscribePage = /** @class */ (function () {
                             .subscribe(function (data) {
                             console.log(data);
                             var CHECKOUT_SESSION_ID = data;
-                            var stripe = Stripe('pk_test_l5XnhomUyeQmxzROJWndWDXD00M33eN4jl');
+                            var stripe = Stripe('pk_live_Q4UaSLy3gZtg16efKx9JUhCh009AFVCrne');
                             stripe.redirectToCheckout({
                                 sessionId: CHECKOUT_SESSION_ID
                             }).then(function (result) {

@@ -233,7 +233,6 @@ var ViewPage = /** @class */ (function () {
                     case 0:
                         fsw = this.documentService.getFSW();
                         btUtils = this.btUtil.utils();
-                        debugger;
                         if (!(fsw && fsw !== null)) return [3 /*break*/, 6];
                         if (!btUtils.Android()) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.ShareAndroid(fsw)];
