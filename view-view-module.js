@@ -90,14 +90,16 @@ module.exports = ".document {\n  width: 100%;\n  height: 100%;\n  overflow: auto
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewPage", function() { return ViewPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
-/* harmony import */ var _show_image_show_image_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../show-image/show-image.page */ "./src/app/show-image/show-image.page.ts");
-/* harmony import */ var _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../share-ios/share-ios.page */ "./src/app/share-ios/share-ios.page.ts");
+/* harmony import */ var _share_desktop_share_desktop_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../share-desktop/share-desktop.page */ "./src/app/share-desktop/share-desktop.page.ts");
+/* harmony import */ var _share_android_share_android_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../share-android/share-android.page */ "./src/app/share-android/share-android.page.ts");
+/* harmony import */ var _services_subscription_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../services/subscription.service */ "./src/app/services/subscription.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _document_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../document.service */ "./src/app/document.service.ts");
+/* harmony import */ var _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../share-ios/share-ios.page */ "./src/app/share-ios/share-ios.page.ts");
+
 
 
 
@@ -119,12 +121,12 @@ var ViewPage = /** @class */ (function () {
         // Force fonts to load before anything is shown
         this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
         this.router.events.subscribe(function (event) {
-            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationStart"]) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationStart"]) {
                 var fsw = _this.documentService.getFSW();
                 _this.document = ssw.paragraph(fsw);
                 _this.imageheight = 200;
             }
-            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__["NavigationEnd"]) {
                 // Hide loading indicator
             }
         });
@@ -149,20 +151,26 @@ var ViewPage = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         fsw = this.documentService.getFSW();
-                        shareType = true ? 'ios' : undefined;
-                        if (!(fsw && fsw !== null)) return [3 /*break*/, 4];
+                        shareType = false ? (undefined) : 'android';
+                        if (!(fsw && fsw !== null)) return [3 /*break*/, 6];
                         if (!(shareType === 'android')) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.ShareAndroid(fsw)];
                     case 1:
                         _a.sent();
-                        return [3 /*break*/, 4];
+                        return [3 /*break*/, 6];
                     case 2:
                         if (!(shareType === 'ios')) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.ShareIOS(fsw)];
                     case 3:
                         _a.sent();
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 4:
+                        if (!(shareType === 'desktop')) return [3 /*break*/, 6];
+                        return [4 /*yield*/, this.ShareDesktop(fsw)];
+                    case 5:
+                        _a.sent();
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -175,7 +183,7 @@ var ViewPage = /** @class */ (function () {
                     case 0:
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
-                                component: _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_8__["ShareIOSPage"],
+                                component: _share_ios_share_ios_page__WEBPACK_IMPORTED_MODULE_9__["ShareIOSPage"],
                                 componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
                             })];
                     case 1:
@@ -199,7 +207,31 @@ var ViewPage = /** @class */ (function () {
                     case 0:
                         canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
                         return [4 /*yield*/, this.modalController.create({
-                                component: _show_image_show_image_page__WEBPACK_IMPORTED_MODULE_7__["ShowImagePage"],
+                                component: _share_android_share_android_page__WEBPACK_IMPORTED_MODULE_2__["ShareAndroidPage"],
+                                componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
+                            })];
+                    case 1:
+                        modal = _a.sent();
+                        return [4 /*yield*/, modal.present()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, modal.onDidDismiss()];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ViewPage.prototype.ShareDesktop = function (fsw) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var canvas1, modal;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight);
+                        return [4 /*yield*/, this.modalController.create({
+                                component: _share_desktop_share_desktop_page__WEBPACK_IMPORTED_MODULE_1__["ShareDesktopPage"],
                                 componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
                             })];
                     case 1:
@@ -230,16 +262,16 @@ var ViewPage = /** @class */ (function () {
         return !!window.cordova;
     };
     ViewPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["Component"])({
             selector: 'app-view',
             template: __webpack_require__(/*! ./view.page.html */ "./src/app/view/view.page.html"),
             styles: [__webpack_require__(/*! ./view.page.scss */ "./src/app/view/view.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"],
-            _document_service__WEBPACK_IMPORTED_MODULE_6__["DocumentService"],
-            _services_subscription_service__WEBPACK_IMPORTED_MODULE_1__["SubscriptionService"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_6__["ModalController"],
+            _document_service__WEBPACK_IMPORTED_MODULE_8__["DocumentService"],
+            _services_subscription_service__WEBPACK_IMPORTED_MODULE_3__["SubscriptionService"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], ViewPage);
     return ViewPage;
 }());
