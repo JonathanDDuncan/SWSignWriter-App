@@ -66,7 +66,6 @@ export class ViewPage implements OnInit {
   public async share() {
     const fsw = this.documentService.getFSW();
     const btUtils = this.btUtil.utils();
-    debugger;
     if (fsw && fsw !== null) {
       if (btUtils.Android()) {
         await this.ShareAndroid(fsw);
