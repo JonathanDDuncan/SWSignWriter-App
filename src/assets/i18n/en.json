@@ -47,6 +47,7 @@
 	"version": "version",
 	"whatsapp sent": "whatsapp sent",
 	"Welcome": "Welcome",
+	
 	"Your subscription is valid until and will renew on": "Your subscription is valid until and will renew on",
 	"Cancel Automatic Renewal":  "Cancel Automatic Renewal",
 	"Your subscription is valid until": "Your subscription is valid until",
@@ -54,5 +55,24 @@
 	"$5/month for 11 months": "$5/month for 11 months",
 	"$5/month": "$5/month",
 	"Subscribe Yearly": "Subscribe Yearly",
-	"Subscribe Monthly": "Subscribe Monthly"
+	"Subscribe Monthly": "Subscribe Monthly",
+
+	"Share Desktop": "Share Desktop",
+	"Copy":"Copy",
+	"Right-click on image to share": "Right-click on image to share",
+
+	"Share iOS": "Share iOS",
+	"Open Share Social Media": "Open Share Social Media",
+	"Open Share Email": "Open Share Email",
+	"Click on one of the above." : "Click on one of the above.",
+	"The sentence in SignWriting now shows up on its own screen.": "The sentence in SignWriting now shows up on its own screen.",
+	"Push the Upload Button at the bottom of the screen.": "Push the Upload Button at the bottom of the screen.",
+	"IMPORTANT: Click on PNG Image Options button.": "IMPORTANT: Click on PNG Image \"Options\" button.",
+	"CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.": "CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word \"Image\". Click Done." ,
+	"Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.": "Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.",
+	"If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.": "If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post."
+
+	, "Share Android": "Share Android"
+	,"Long Press on image to share": "Long Press on image to share",
+
 }

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Share iOS</ion-title>
+    <ion-title>{{'Share iOS'| translate}} </ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="close()">
         <ion-icon name="close-circle"></ion-icon>
@@ -10,32 +10,29 @@
 </ion-header>
 
 <ion-content padding>
-  <a target="_blank" [href]="getimage()">Open Share Social Media</a> 
+  <a target="_blank" [href]="getimage()">{{'Open Share Social Media'| translate}}</a> 
   <hr />
-  <a target="_blank" [href]="getRemoteImage()">Open Share Email</a> 
+  <a target="_blank" [href]="getRemoteImage()">{{'Open Share Email'| translate}}</a> 
 
   <ul>
-    <ol>1. Click on one of the above.</ol>
+    <ol>1. {{'Click on one of the above.'| translate}}</ol>
 
-    <ol>2. The sentence in SignWriting now shows up on its own screen.</ol>
+    <ol>2. {{'The sentence in SignWriting now shows up on its own screen.'| translate}}</ol>
 
-    <ol>3. Push the Upload Button at the bottom of the screen.</ol>
+    <ol>3. {{'Push the Upload Button at the bottom of the screen.'| translate}}</ol>
 
-    <ol>4. IMPORTANT: Click on PNG Image "Options" button.</ol>
+    <ol>4. {{'IMPORTANT: Click on PNG Image Options button."'| translate}}</ol>
 
     <ol>
-      5. CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to
-      the word "Image". Click Done.
+      5. {{'CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.'| translate}}
     </ol>
 
     <ol>
-      6. Now choose where you want to send it. Scroll down for many choices. Or
-      Scroll to the Right for Facebook.
+      6. {{'Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.'| translate}}
     </ol>
 
     <ol>
-      7. If you choose Facebook, choose your News Feed or Your Story. Write your
-      English header and click Post.
+      7. {{'If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.'| translate}}
     </ol>
   </ul>
 </ion-content>
