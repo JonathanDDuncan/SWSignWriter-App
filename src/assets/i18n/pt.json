@@ -55,7 +55,26 @@
 	"$5/month for 11 months": "US $ 5 por mês por 11 meses",
 	"$5/month": "US $ 5 por mês",
 	"Subscribe Yearly": "Inscrever-se anualmente",
-	"Subscribe Monthly": "Inscrever-se mensalmente"
+	"Subscribe Monthly": "Inscrever-se mensalmente",
 
 	
+	
+	"Share Desktop": "Compartilhar no computador",
+	"Copy":"Copiar",
+	"Right-click on image to share": "Clique com o botão direito na imagem para compartilhar",
+
+	"Share iOS": "Compartilhar no iOS",
+	"Open Share Social Media": "Compartilhar nas redes sociais",
+	"Open Share Email": "Compartilhar por email",
+	"Click on one of the above." : "Clique em uma das opções acima.",
+	"The sentence in SignWriting now shows up on its own screen.": "A frase no SignWriting agora aparece em sua própria tela.",
+	"Push the Upload Button at the bottom of the screen.": "Pressione o botão Upload na parte inferior da tela.",
+	"IMPORTANT: Click on PNG Image Options button.": "IMPORTANTE: Clique no botão Imagem \" Opções \" de PNG",
+	"CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.": "MUDE DE SELEÇÃO DE AUTOMÁTICO PARA IMAGEM. Verifique se há uma marca de seleção ao lado da palavra \" Imagem \" Clique em Concluído" ,
+	"Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.": "Agora escolha para onde deseja enviá-lo. Role para baixo para muitas opções. Ou role para a direita no Facebook.",
+	"If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.": "Se você escolher o Facebook, escolha sua fonte ou história de notícias. Digite seu cabeçalho em português e clique em Publicar"
+
+	, "Share Android": "Compartilhar no Android"
+	,"Long Press on image to share": "Pressione e segure na imagem para compartilhar"
+
 }

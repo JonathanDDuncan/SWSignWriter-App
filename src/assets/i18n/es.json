@@ -58,22 +58,22 @@
 	"Subscribe Monthly": "Suscríbase mensualmente",
 
 	
-	"Share Desktop": "Share Desktop",
-	"Copy":"Copy",
-	"Right-click on image to share": "Right-click on image to share",
+	"Share Desktop": "Compartir desde  escritorio",
+	"Copy":"Copiar",
+	"Right-click on image to share": "Haga clic derecho en la imagen para compartir",
 
-	"Share iOS": "Share iOS",
-	"Open Share Social Media": "Open Share Social Media",
-	"Open Share Email": "Open Share Email",
-	"Click on one of the above." : "Click on one of the above.",
-	"The sentence in SignWriting now shows up on its own screen.": "The sentence in SignWriting now shows up on its own screen.",
-	"Push the Upload Button at the bottom of the screen.": "Push the Upload Button at the bottom of the screen.",
-	"IMPORTANT: Click on PNG Image Options button.": "IMPORTANT: Click on PNG Image \"Options\" button.",
-	"CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.": "CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word \"Image\". Click Done." ,
-	"Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.": "Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.",
-	"If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.": "If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post."
+	"Share iOS": "Compartir en iOS",
+	"Open Share Social Media": "Compartir en redes sociales",
+	"Open Share Email": "Compartir por correo electrónico",
+	"Click on one of the above." : "Haga clic en uno de los anteriores.",
+	"The sentence in SignWriting now shows up on its own screen.": "La oración en SignWriting ahora aparece en su propia pantalla.",
+	"Push the Upload Button at the bottom of the screen.": "Toque el botón para subir foto en la parte inferior de la pantalla",
+	"IMPORTANT: Click on PNG Image Options button.": "IMPORTANTE: Haga clic en el botón Imagen \" Opciones \"de PNG",
+	"CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.": "CAMBIAR LA SELECCIÓN DE AUTOMÁTICO A IMAGEN. Asegúrese de que haya una marca de verificación junto a la palabra \" Imagen \". Haga clic en Hecho" ,
+	"Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.": "Ahora elija dónde desea enviarlo. Desplácese hacia abajo para ver muchas más opciones. O Desplácese hacia la derecha para Facebook.",
+	"If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.": "Si elige Facebook, elija su fuente de noticias o su historia. Escriba su encabezado en inglés y haga clic en Publicar."
 
-	, "Share Android": "Share Android"
-	,"Long Press on image to share": "Long Press on image to share"
+	, "Share Android": "Compartir en Android"
+	,"Long Press on image to share": "Pulsación larga en la imagen para compartir"
 
 }
