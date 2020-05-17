@@ -643,7 +643,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: v1.0.7)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: v1.0.8)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -2018,8 +2018,14 @@ var AuthorizationService = /** @class */ (function () {
                         return [4 /*yield*/, this.userService.GetCurrenUserRoles()];
                     case 1:
                         roles = _a.sent();
-                        // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
-                        return [2 /*return*/, roles.some(function (role) { return allowedRoles.includes(role); })];
+                        if (roles) {
+                            // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
+                            return [2 /*return*/, roles.some(function (role) { return allowedRoles.includes(role); })];
+                        }
+                        else {
+                            return [2 /*return*/, false];
+                        }
+                        return [2 /*return*/];
                 }
             });
         });

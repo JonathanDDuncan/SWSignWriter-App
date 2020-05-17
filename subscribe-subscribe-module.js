@@ -118,11 +118,11 @@ var SubscribePage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.storage.GetCurrentUserProfile()];
                     case 1:
                         profile = _a.sent();
-                        if (!profile || profile === null) {
-                            this.router.navigate(['/login']);
-                        }
-                        return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
-                    case 2:
+                        if (!(!profile || profile === null)) return [3 /*break*/, 2];
+                        this.router.navigate(['/login']);
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
+                    case 3:
                         subscription = _a.sent();
                         if (subscription) {
                             this.SetButtonDisabled(subscription.endDate);
@@ -133,7 +133,8 @@ var SubscribePage = /** @class */ (function () {
                             this.subscriptionEndDate = da + "-" + mo + "-" + ye;
                             this.autoRenewal = !subscription.cancelatperiodend;
                         }
-                        return [2 /*return*/];
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
