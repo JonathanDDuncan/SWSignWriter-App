@@ -36,11 +36,13 @@ export class StripesuccessPage implements OnInit {
 
         await this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid);
         const subscription: any = await this.storage.GetSubscription(profile.email);
-        const d = new Date(subscription.endDate);
-        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-        this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+        if (subscription) {
+          const d = new Date(subscription.endDate);
+          const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+          const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+          const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+          this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+        }
       });
     }
   }
