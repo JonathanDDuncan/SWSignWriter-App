@@ -61,7 +61,7 @@ var HomePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Welcome' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-button (click)=\"goSettings()\">Settings</ion-button>\r\n  <br />\r\n  <div *ngIf=\"subscribed\">\r\n    <p>You have an active subscription.</p>\r\n    <ion-button (click)=\"goEdit()\">Continue</ion-button>\r\n  </div>\r\n  <div *ngIf=\"!subscribed\">\r\n    <ion-button (click)=\"goSubscribe()\">Subscribe</ion-button>\r\n    <br />\r\n    <ion-button (click)=\"goEdit()\">Continue using free trial</ion-button>\r\n    {{ daysleft }} days left.\r\n  </div>\r\n</ion-content>\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-toggle>\r\n        <ion-button>\r\n          <ion-icon slot=\"icon-only\" name=\"menu\"></ion-icon>\r\n        </ion-button>\r\n      </ion-menu-toggle>\r\n    </ion-buttons>\r\n    <ion-title>{{'Welcome' | translate}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <div *ngIf=\"subscribed\">\r\n    <p>You have an active subscription.</p>\r\n    <ion-button (click)=\"goEdit()\">Continue</ion-button>\r\n  </div>\r\n  <div *ngIf=\"!subscribed\">\r\n    <ion-button (click)=\"goSettings()\">Settings</ion-button>\r\n    <br />\r\n    <ion-button (click)=\"goSubscribe()\">Subscribe</ion-button>\r\n    <br />\r\n    <div *ngIf=\"daysleft > 0\">\r\n      <ion-button (click)=\"goEdit()\">Continue using free trial</ion-button>\r\n      {{ daysleft }} days left.\r\n    </div>\r\n  </div>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -121,16 +121,11 @@ var HomePage = /** @class */ (function () {
                     case 3:
                         subscription = _b.sent();
                         this.subscribed = false;
-                        console.log(subscription);
-                        console.log(new Date(subscription.endDate));
-                        console.log(new Date());
-                        console.log(subscription.endDate > new Date());
                         if (subscription) {
                             if (new Date(subscription.endDate) > new Date()) {
                                 this.subscribed = true;
                             }
                         }
-                        console.log(this.subscribed);
                         return [2 /*return*/];
                 }
             });
