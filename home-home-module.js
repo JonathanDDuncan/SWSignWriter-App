@@ -121,10 +121,8 @@ var HomePage = /** @class */ (function () {
                     case 3:
                         subscription = _b.sent();
                         this.subscribed = false;
-                        if (subscription) {
-                            if (new Date(subscription.endDate) > new Date()) {
-                                this.subscribed = true;
-                            }
+                        if (subscription && new Date(subscription.endDate) >= new Date()) {
+                            this.subscribed = true;
                         }
                         return [2 /*return*/];
                 }

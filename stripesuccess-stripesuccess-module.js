@@ -147,11 +147,13 @@ var StripesuccessPage = /** @class */ (function () {
                                             return [4 /*yield*/, this.storage.GetSubscription(profile.email)];
                                         case 2:
                                             subscription = _a.sent();
-                                            d = new Date(subscription.endDate);
-                                            ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-                                            mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-                                            da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-                                            this.subscriptionEndDate = da + "-" + mo + "-" + ye;
+                                            if (subscription) {
+                                                d = new Date(subscription.endDate);
+                                                ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                                                mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                                                da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                                                this.subscriptionEndDate = da + "-" + mo + "-" + ye;
+                                            }
                                             return [2 /*return*/];
                                     }
                                 });
