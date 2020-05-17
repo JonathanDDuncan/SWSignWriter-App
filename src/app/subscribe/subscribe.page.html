@@ -13,24 +13,24 @@
 <ion-content>
   <ion-row *ngIf="subscriptionEndDate">
     <ion-col *ngIf="autoRenewal; else validuntil">
-      Your subscription is valid until and will renew on {{subscriptionEndDate}}  <ion-button (click)="CancelRenewal()"> Cancel Automatic Renewal</ion-button>
+      {{'Your subscription is valid until and will renew on' | translate}} {{subscriptionEndDate}}  <ion-button (click)="CancelRenewal()">  {{'Cancel Automatic Renewal' | translate}}</ion-button>
     </ion-col>
     <ng-template #validuntil>
       <ion-col>
-        Your subscription is valid until {{subscriptionEndDate}}
+        {{'Your subscription is valid until' | translate}} {{subscriptionEndDate}}
       </ion-col>
     </ng-template>
     
   </ion-row>
   <ion-row>
     <ion-col>
-      <p>1 Month FREE</p>
-      <p>+ $5/month for 11 months</p>
-      <ion-button [disabled]="buttonDisabled" (click)="SubscribeYearly()"> Subscribe Yearly</ion-button>
+      <p>1 {{'Month FREE' | translate}}</p>
+      <p>+ {{'$5/month for 11 months' | translate}}</p>
+      <ion-button [disabled]="buttonDisabled" (click)="SubscribeYearly()">{{'Subscribe Yearly' | translate}}</ion-button>
     <hr/>
      
-      <p>$5/month</p>
-      <ion-button  [disabled]="buttonDisabled" (click)="SubscribeMonthly()">Subscribe Monthly</ion-button>
+      <p> {{'$5/month' | translate}}</p>
+      <ion-button  [disabled]="buttonDisabled" (click)="SubscribeMonthly()">{{'Subscribe Monthly' | translate}}</ion-button>
     </ion-col>
     
   </ion-row>

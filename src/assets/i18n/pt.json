@@ -23,6 +23,7 @@
 	"Menu": "Menu",
 	"Next": "Próximo",
 	"No": "Não",
+	"Logout": "Sair",
 	"Portuguese": "português",
 	"Reset": "Reset",
 	"Right-click or Long Press on image to copy or share": "Clique com o botão direito ou pressione e segure a imagem para copiar ou compartilhar",
@@ -38,13 +39,22 @@
 	"Stripe Canceled": "Stripe Cancelado",
 	"Stripe Success": "Stripe êxito",
 	"Subject": "Assunto",
-	"Subscribe": "Subscrever",
+	"Subscribe": "Inscrição",
+	"Subscription": "Inscrição",
 	"This may take a few minutes": "Isso pode levar alguns minutos",
 	"Yes": "Sim",
 	"email sent": "email enviado",
 	"UI Language": "Idioma da interface do usuário",
 	"version": "versão",
 	"whatsapp sent": "Whatsapp enviado",
-	"Welcome": "Bem vinda"
+	"Welcome": "Bem vinda",
+	"Your subscription is valid until and will renew on": "Sua assinatura é válida até e será renovada em",
+	"Cancel Automatic Renewal":  "Cancelar renovação automática",
+	"Your subscription is valid until": "Sua inscrição é válida até",
+	"Month FREE": "Mês GRÁTIS",
+	"$5/month for 11 months": "US $ 5 por mês por 11 meses",
+	"$5/month": "US $ 5 por mês",
+	"Subscribe Yearly": "Inscrever-se anualmente",
+	"Subscribe Monthly": "Inscrever-se mensalmente"
 
 }

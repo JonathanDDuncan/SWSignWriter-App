@@ -40,10 +40,19 @@
 	"Stripe Success": "Stripe Success",
 	"Subject": "Subject",
 	"Subscribe": "Subscribe",
+	"Subscription": "Subscription",
 	"This may take a few minutes": "This may take a few minutes",
 	"Yes": "Yes",
 	"UI Language": "UI Language",
 	"version": "version",
 	"whatsapp sent": "whatsapp sent",
-	"Welcome": "Welcome"
+	"Welcome": "Welcome",
+	"Your subscription is valid until and will renew on": "Your subscription is valid until and will renew on",
+	"Cancel Automatic Renewal":  "Cancel Automatic Renewal",
+	"Your subscription is valid until": "Your subscription is valid until",
+	"Month FREE": "Month FREE",
+	"$5/month for 11 months": "$5/month for 11 months",
+	"$5/month": "$5/month",
+	"Subscribe Yearly": "Subscribe Yearly",
+	"Subscribe Monthly": "Subscribe Monthly"
 }
