@@ -18,9 +18,12 @@ export class AuthorizationService {
 
 
     const roles = await this.userService.GetCurrenUserRoles();
-
-  // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
-    return roles.some((role) => allowedRoles.includes(role));
+    if (roles) {
+      // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
+      return roles.some((role) => allowedRoles.includes(role));
+    } else {
+      return false;
+    }
   }
 }
 
