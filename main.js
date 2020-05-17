@@ -4501,7 +4501,6 @@ var StripeService = /** @class */ (function () {
                     email: email,
                     sessionId: sessionId
                 };
-                debugger;
                 observer = {
                     next: function (data) {
                         if ((data)) {
