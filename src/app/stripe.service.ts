@@ -22,7 +22,7 @@ export class StripeService {
       email: email,
       sessionId: sessionId
     };
-    debugger;
+
     const observer = {
       next: (data: any) => {
         if ((data)) {

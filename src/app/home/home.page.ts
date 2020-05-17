@@ -10,6 +10,7 @@ import { StorageService } from '../storage.service';
 })
 export class HomePage implements OnInit {
   public daysleft: number;
+  public subscribed: boolean;
   constructor(
     public router: Router,
     private trial: TrialService,
@@ -22,6 +23,14 @@ export class HomePage implements OnInit {
       this.router.navigate(['/login']);
     }
     this.daysleft = await this.trial.GetTrialDaysLeft(profile.email);
+
+    const subscription = await this.storage.GetSubscription(profile.email);
+    this.subscribed = false;
+    if (subscription) {
+      if (subscription.endDate > new Date()) {
+        this.subscribed = true;
+      }
+    }
   }
 
   goSettings() {

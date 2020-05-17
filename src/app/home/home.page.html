@@ -1,21 +1,27 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-toggle>
-          <ion-button>
-            <ion-icon slot="icon-only" name="menu"></ion-icon>
-          </ion-button>
-        </ion-menu-toggle>
-      </ion-buttons>
-      <ion-title>{{'Welcome' | translate}}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>{{'Welcome' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-    <ion-button (click)="goSettings()" >Settings</ion-button>
-    <br/>
-    <ion-button (click)="goSubscribe()" >Subscribe</ion-button>
-    <br/>
+  <ion-button (click)="goSettings()">Settings</ion-button>
+  <br />
+  <div *ngIf="subscribed">
+    <p>You have an active subscription.</p>
+    <ion-button (click)="goEdit()">Continue</ion-button>
+  </div>
+  <div *ngIf="!subscribed">
+    <ion-button (click)="goSubscribe()">Subscribe</ion-button>
+    <br />
     <ion-button (click)="goEdit()">Continue using free trial</ion-button>
-    {{ daysleft }} days left. 
+    {{ daysleft }} days left.
+  </div>
 </ion-content>
