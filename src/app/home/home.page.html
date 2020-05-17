@@ -12,13 +12,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="goSettings()">Settings</ion-button>
-  <br />
   <div *ngIf="subscribed">
     <p>You have an active subscription.</p>
     <ion-button (click)="goEdit()">Continue</ion-button>
   </div>
   <div *ngIf="!subscribed">
+    <ion-button (click)="goSettings()">Settings</ion-button>
+    <br />
     <ion-button (click)="goSubscribe()">Subscribe</ion-button>
     <br />
     <ion-button (click)="goEdit()">Continue using free trial</ion-button>
