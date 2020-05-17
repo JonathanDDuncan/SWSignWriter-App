@@ -26,10 +26,8 @@ export class HomePage implements OnInit {
 
     const subscription = await this.storage.GetSubscription(profile.email);
     this.subscribed = false;
-    if (subscription) {
-      if (new Date(subscription.endDate)  > new Date()) {
-        this.subscribed = true;
-      }
+    if (subscription && new Date(subscription.endDate) >= new Date()) {
+      this.subscribed = true;
     }
   }
 
