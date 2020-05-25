@@ -73,5 +73,33 @@
   "If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.": "Si elige Facebook, elija su fuente de noticias o su historia. Escriba su encabezado en inglés y haga clic en Publicar.",
 
   "Share Android": "Compartir en Android",
-  "Long Press on image to share": "Pulsación larga en la imagen para compartir"
+  "Long Press on image to share": "Pulsación larga en la imagen para compartir",
+
+  
+  "app social media": "Esta aplicación es para crear textos de SignWriting y compartirlos en redes sociales.",
+  "Getting your info.": "Consiguiendo sus datos.",
+  "You have an active subscription.": "Tiene una suscripción activa.",
+  "Continue": "Continuar",
+  "Continue using free trial.": "Continuar usando la prueba gratuita.",
+  "days left.": "{{ daysleft }} días restantes.",
+  "SWSignWriter Login": "Inicio de sesión SWSignWriter",
+  "Log In": "Iniciar sesión",
+  "Log Out": "Cerrar sesión",
+  "Home": "Inicio",
+  "Profile": "Perfil",
+  "Signs Used Worldwide": "Señas utilizados en todo el mundo",
+   "Install with SPML File": "Instalar archivo SPML",
+   "Thanks for sharing!": "¡Gracias por compartir!",
+   "Share is not available.": "No es posible compartir.",
+   "Copied to clipboard successfully!": "¡Copiado al portapapeles éxitosamente!",
+   "Unable to write to clipboard. :-(": "No se puede escribir a los portapapeles. :-(",
+   "You need to right click or long press on image to copy it.')":"Debe hacer clic con el botón derecho o presionar prolongadamente la imagen para copiarla.')",
+   "Image was copied.": "Se copió la imagen.",
+   "Your Stripe purchase was canceled.": "Se canceló su compra en Stripe.",
+   "Your purchase was a success.": "Su compra se realizó éxitosamente.",
+   "Your subscription will renew on": "Su suscripción se renovará el",
+   "Cancel automatic renewal": "Cancelar renovación automática",
+   "Are you <strong>sure</strong> you want to remove automatic renewal?": "¿Está <strong> seguro </strong> de que desea parar la renovación automática?"
+   
+
 }

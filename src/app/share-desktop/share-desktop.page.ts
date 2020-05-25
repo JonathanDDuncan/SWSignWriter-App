@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
@@ -24,6 +25,7 @@ export class ShareDesktopPage implements OnInit {
   constructor(public modalController: ModalController,
     public toastController: ToastController,
     private sanitizer: DomSanitizer,
+    private translateService: TranslateService,
     private http: HttpClient) { }
 
   ngOnInit() {
@@ -94,14 +96,14 @@ export class ShareDesktopPage implements OnInit {
           navShare.share({
             files: files
           }).then(async () => {
-            await self.presentToast('Thanks for sharing!');
+            await self.presentToast(this.translateService.instant('Thanks for sharing!'));
             console.log('Thanks for sharing!');
           })
             .catch(console.error);
         });
 
     } else {
-      await self.presentToast('Share is not available.');
+      await self.presentToast(this.translateService.instant('Share is not available.'));
     }
   }
 
