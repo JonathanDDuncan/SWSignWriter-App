@@ -43,7 +43,6 @@ export class StripeService {
       error: err => console.error('Error occured: ' + err),
       complete: () => console.log('Execution completed')
     };
-    debugger;
     this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
       headers: new HttpHeaders({
         Accept: 'application/json',
