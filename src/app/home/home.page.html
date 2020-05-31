@@ -23,7 +23,7 @@
     <br />
     <div *ngIf="daysleft > 0">
       <ion-button (click)="goEdit()">{{'Continue using free trial.' | translate}}</ion-button>
-      {{'days left.' | translate}} 
+    {{ daysleft }} {{'days left.' | translate}} 
     </div>
   </div>
 </ion-content>

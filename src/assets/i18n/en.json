@@ -80,7 +80,7 @@
   "You have an active subscription.": "You have an active subscription.",
   "Continue": "Continue",
   "Continue using free trial.": "Continue using free trial.",
-  "days left.": "{{ daysleft }} days left.",
+  "days left.": " days left.",
   "SWSignWriter Login": "SWSignWriter Login",
   "Log In": "Log In",
   "Log Out": "Log Out",

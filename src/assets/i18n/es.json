@@ -81,7 +81,7 @@
   "You have an active subscription.": "Tiene una suscripción activa.",
   "Continue": "Continuar",
   "Continue using free trial.": "Continuar usando la prueba gratuita.",
-  "days left.": "{{ daysleft }} días restantes.",
+  "days left.": " días restantes.",
   "SWSignWriter Login": "Inicio de sesión SWSignWriter",
   "Log In": "Iniciar sesión",
   "Log Out": "Cerrar sesión",
