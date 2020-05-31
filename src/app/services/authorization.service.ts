@@ -1,6 +1,5 @@
 import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
-import { StorageService } from '../storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +13,6 @@ export class AuthorizationService {
     if (allowedRoles == null || allowedRoles.length === 0) {
       return true;
     }
-
-
 
     const roles = await this.userService.GetCurrenUserRoles();
     if (roles) {

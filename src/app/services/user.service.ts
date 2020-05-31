@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { StorageService } from '../storage.service';
 import { SubscriptionService } from './subscription.service';
 import { TrialService } from './trial.service';
-import { UserProfile } from '../user/user-profile';
 
 @Injectable({
   providedIn: 'root'

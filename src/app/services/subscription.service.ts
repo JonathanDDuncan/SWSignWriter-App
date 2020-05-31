@@ -2,14 +2,11 @@ import { Router } from '@angular/router';
 import { TrialService } from './trial.service';
 import { StorageService } from './../storage.service';
 import { Injectable } from '@angular/core';
-import { async } from 'rxjs/internal/scheduler/async';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscriptionService {
-
-
   constructor(
     private storage: StorageService,
     private trialService: TrialService,
