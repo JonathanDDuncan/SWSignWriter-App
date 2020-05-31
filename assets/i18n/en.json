@@ -73,5 +73,31 @@
   "If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.": "If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.",
 
   "Share Android": "Share Android",
-  "Long Press on image to share": "Long Press on image to share"
+  "Long Press on image to share": "Long Press on image to share",
+
+  "app social media": "This application is for creating SignWriting texts and sharing them other on social media.",
+  "Getting your info.": "Getting your info.",
+  "You have an active subscription.": "You have an active subscription.",
+  "Continue": "Continue",
+  "Continue using free trial.": "Continue using free trial.",
+  "days left.": " days left.",
+  "SWSignWriter Login": "SWSignWriter Login",
+  "Log In": "Log In",
+  "Log Out": "Log Out",
+  "Home": "Home",
+  "Profile": "Profile",
+  "Signs Used Worldwide": "Signs Used Worldwide",
+   "Install with SPML File": "Install with SPML File",
+   "Thanks for sharing!": "Thanks for sharing!",
+   "Share is not available.": "Share is not available.",
+   "Copied to clipboard successfully!": "Copied to clipboard successfully!",
+   "Unable to write to clipboard. :-(": "Unable to write to clipboard. :-(",
+   "You need to right click or long press on image to copy it.')":"You need to right click or long press on image to copy it.')",
+   "Image was copied.": "Image was copied.",
+   "Your Stripe purchase was canceled.": "Your Stripe purchase was canceled.",
+   "Your purchase was a success.": "Your purchase was a success.",
+   "Your subscription will renew on": "Your subscription will renew on",
+   "Cancel automatic renewal": "Cancel automatic renewal",
+   "Are you <strong>sure</strong> you want to remove automatic renewal?": "Are you <strong>sure</strong> you want to remove automatic renewal?"
+   
 }

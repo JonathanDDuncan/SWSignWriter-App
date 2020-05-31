@@ -643,7 +643,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: v1.0.10)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
+module.exports = "<ion-app>\r\n  <ion-split-pane>\r\n    <ion-menu>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-title>{{'Menu' | translate}} ({{'version' | translate}}: v1.0.11)</ion-title>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content>\r\n        <ion-list>\r\n          <ion-menu-toggle auto-hide=\"false\" *ngFor=\"let p of appPages\">\r\n            <ion-item [routerDirection]=\"'root'\" [routerLink]=\"[p.url]\">\r\n              <ion-icon slot=\"start\" [name]=\"p.icon\"></ion-icon>\r\n              <ion-label>\r\n                {{p.title}}\r\n              </ion-label>\r\n            </ion-item>\r\n          </ion-menu-toggle>\r\n        </ion-list>\r\n      </ion-content>\r\n    </ion-menu>\r\n    <ion-router-outlet main></ion-router-outlet>\r\n  </ion-split-pane>\r\n</ion-app>\r\n"
 
 /***/ }),
 
@@ -1094,7 +1094,7 @@ var AuthorizationGuard = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  Getting your info.\r\n</p>\r\n "
+module.exports = "<p>\r\n  {{'Getting your info.' | translate }} \r\n</p>\r\n "
 
 /***/ }),
 
@@ -2575,7 +2575,7 @@ var ShareAndroidPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Share Android - {{'Long Press on image to share'| translate}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n</ion-content>"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>{{'Share Android'| translate}} - {{'Long Press on image to share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>"
 
 /***/ }),
 
@@ -2601,12 +2601,14 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShareAndroidPage", function() { return ShareAndroidPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
-/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
-/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -2614,11 +2616,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ShareAndroidPage = /** @class */ (function () {
-    function ShareAndroidPage(modalController, toastController, sanitizer, http) {
+    function ShareAndroidPage(modalController, toastController, sanitizer, translateService, http) {
         this.modalController = modalController;
         this.toastController = toastController;
         this.sanitizer = sanitizer;
+        this.translateService = translateService;
         this.http = http;
+        this.serverUrl = (window.location
+            && window.location.hostname
+            && window.location.hostname.includes('localhost'))
+            ? 'https://localhost:44309/'
+            : 'https://swsignwriterapi.azurewebsites.net/';
     }
     ShareAndroidPage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
@@ -2626,17 +2634,16 @@ var ShareAndroidPage = /** @class */ (function () {
     };
     ShareAndroidPage.prototype.saveToRemote = function (imagebase64) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var serverUrl, path, requestBody;
+            var path, requestBody;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_5__["uuid"])();
-                serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_6__["uuid"])();
                 path = 'api/image/save';
                 requestBody = {
                     'imageId': this.imageId,
                     'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
                     'dataUrl': imagebase64
                 };
-                this.http.post(serverUrl + path, requestBody)
+                this.http.post(this.serverUrl + path, requestBody)
                     .toPromise()
                     .then(function () { }, function (error) {
                     console.log(error);
@@ -2664,9 +2671,7 @@ var ShareAndroidPage = /** @class */ (function () {
     };
     ShareAndroidPage.prototype.getRemoteImage = function () {
         this.sleep(200);
-        var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-        // const serverUrl = 'https://localhost:44309/';
-        return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
+        return this.serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
     };
     ShareAndroidPage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -2692,7 +2697,7 @@ var ShareAndroidPage = /** @class */ (function () {
                             }).then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                 return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                     switch (_a.label) {
-                                        case 0: return [4 /*yield*/, self.presentToast('Thanks for sharing!')];
+                                        case 0: return [4 /*yield*/, self.presentToast(this.translateService.instant('Thanks for sharing!'))];
                                         case 1:
                                             _a.sent();
                                             console.log('Thanks for sharing!');
@@ -2703,7 +2708,7 @@ var ShareAndroidPage = /** @class */ (function () {
                                 .catch(console.error);
                         });
                         return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, self.presentToast('Share is not available.')];
+                    case 1: return [4 /*yield*/, self.presentToast(this.translateService.instant('Share is not available.'))];
                     case 2:
                         _a.sent();
                         _a.label = 3;
@@ -2736,7 +2741,7 @@ var ShareAndroidPage = /** @class */ (function () {
                                                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
                                                         return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                                             switch (_a.label) {
-                                                                case 0: return [4 /*yield*/, self.presentToast('Copied to clipboard successfully!')];
+                                                                case 0: return [4 /*yield*/, self.presentToast(this.translateService.instant('Copied to clipboard successfully!'))];
                                                                 case 1:
                                                                     _a.sent();
                                                                     console.log('Copied to clipboard successfully!');
@@ -2750,7 +2755,7 @@ var ShareAndroidPage = /** @class */ (function () {
                                                             switch (_a.label) {
                                                                 case 0:
                                                                     console.error(err);
-                                                                    return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
+                                                                    return [4 /*yield*/, self.presentToast(this.translateService.instant('Unable to write to clipboard. :-('))];
                                                                 case 1:
                                                                     _a.sent();
                                                                     console.error('Unable to write to clipboard. :-(');
@@ -2776,12 +2781,12 @@ var ShareAndroidPage = /** @class */ (function () {
                                             sel.addRange(r);
                                             wascopied = document.execCommand('copy');
                                             if (!!wascopied) return [3 /*break*/, 3];
-                                            return [4 /*yield*/, self.presentToast('You need to right click or long press on image to copy it.')];
+                                            return [4 /*yield*/, self.presentToast(this.translateService.instant('You need to right click or long press on image to copy it.'))];
                                         case 2:
                                             _a.sent();
                                             alert('You need to right click or long press on image to copy it.');
                                             return [3 /*break*/, 5];
-                                        case 3: return [4 /*yield*/, self.presentToast('Image was copied.')];
+                                        case 3: return [4 /*yield*/, self.presentToast(this.translateService.instant('Image was copied.'))];
                                         case 4:
                                             _a.sent();
                                             _a.label = 5;
@@ -2796,7 +2801,7 @@ var ShareAndroidPage = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 2:
                         error_1 = _a.sent();
-                        return [4 /*yield*/, self.presentToast('Unable to write to clipboard. :-(')];
+                        return [4 /*yield*/, self.presentToast(this.translateService.instant('Unable to write to clipboard. :-('))];
                     case 3:
                         _a.sent();
                         console.error('Unable to write to clipboard. :-(');
@@ -2825,19 +2830,20 @@ var ShareAndroidPage = /** @class */ (function () {
         });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Input"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLCanvasElement)
     ], ShareAndroidPage.prototype, "canvas", void 0);
     ShareAndroidPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
             selector: 'app-share-android',
             template: __webpack_require__(/*! ./share-android.page.html */ "./src/app/share-android/share-android.page.html"),
             styles: [__webpack_require__(/*! ./share-android.page.scss */ "./src/app/share-android/share-android.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ToastController"],
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ToastController"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__["DomSanitizer"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], ShareAndroidPage);
     return ShareAndroidPage;
 }());
@@ -2907,7 +2913,7 @@ var ShareDesktopPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>{{'Share Desktop'| translate}} <ion-button (click)=\"copyToClipboard(this)\">{{'Copy'| translate}} </ion-button>{{'Right-click on image to share'| translate}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\"   (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\n</ion-content>"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>{{'Share Desktop'| translate}} <ion-button (click)=\"copyToClipboard(this)\">{{'Copy'| translate}} </ion-button>{{'Right-click on image to share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>"
 
 /***/ }),
 
@@ -2933,12 +2939,14 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShareDesktopPage", function() { return ShareDesktopPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
-/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
-/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -2946,11 +2954,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ShareDesktopPage = /** @class */ (function () {
-    function ShareDesktopPage(modalController, toastController, sanitizer, http) {
+    function ShareDesktopPage(modalController, toastController, sanitizer, translateService, http) {
         this.modalController = modalController;
         this.toastController = toastController;
         this.sanitizer = sanitizer;
+        this.translateService = translateService;
         this.http = http;
+        this.serverUrl = (window.location
+            && window.location.hostname
+            && window.location.hostname.includes('localhost'))
+            ? 'https://localhost:44309/'
+            : 'https://swsignwriterapi.azurewebsites.net/';
     }
     ShareDesktopPage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
@@ -2958,17 +2972,16 @@ var ShareDesktopPage = /** @class */ (function () {
     };
     ShareDesktopPage.prototype.saveToRemote = function (imagebase64) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var serverUrl, path, requestBody;
+            var path, requestBody;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_5__["uuid"])();
-                serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_6__["uuid"])();
                 path = 'api/image/save';
                 requestBody = {
                     'imageId': this.imageId,
                     'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
                     'dataUrl': imagebase64
                 };
-                this.http.post(serverUrl + path, requestBody)
+                this.http.post(this.serverUrl + path, requestBody)
                     .toPromise()
                     .then(function () { }, function (error) {
                     console.log(error);
@@ -2996,9 +3009,7 @@ var ShareDesktopPage = /** @class */ (function () {
     };
     ShareDesktopPage.prototype.getRemoteImage = function () {
         this.sleep(200);
-        var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-        // const serverUrl = 'https://localhost:44309/';
-        return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
+        return this.serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
     };
     ShareDesktopPage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -3024,7 +3035,7 @@ var ShareDesktopPage = /** @class */ (function () {
                             }).then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                 return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                     switch (_a.label) {
-                                        case 0: return [4 /*yield*/, self.presentToast('Thanks for sharing!')];
+                                        case 0: return [4 /*yield*/, self.presentToast(this.translateService.instant('Thanks for sharing!'))];
                                         case 1:
                                             _a.sent();
                                             console.log('Thanks for sharing!');
@@ -3035,7 +3046,7 @@ var ShareDesktopPage = /** @class */ (function () {
                                 .catch(console.error);
                         });
                         return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, self.presentToast('Share is not available.')];
+                    case 1: return [4 /*yield*/, self.presentToast(this.translateService.instant('Share is not available.'))];
                     case 2:
                         _a.sent();
                         _a.label = 3;
@@ -3157,19 +3168,20 @@ var ShareDesktopPage = /** @class */ (function () {
         });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Input"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLCanvasElement)
     ], ShareDesktopPage.prototype, "canvas", void 0);
     ShareDesktopPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
             selector: 'app-share-desktop',
             template: __webpack_require__(/*! ./share-desktop.page.html */ "./src/app/share-desktop/share-desktop.page.html"),
             styles: [__webpack_require__(/*! ./share-desktop.page.scss */ "./src/app/share-desktop/share-desktop.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ToastController"],
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ToastController"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__["DomSanitizer"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], ShareDesktopPage);
     return ShareDesktopPage;
 }());
@@ -3239,7 +3251,7 @@ var ShareIOSPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>{{'Share iOS'| translate}} </ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"close()\">\n        <ion-icon name=\"close-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <a target=\"_blank\" [href]=\"getimage()\">{{'Open Share Social Media'| translate}}</a> \n  <hr />\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">{{'Open Share Email'| translate}}</a> \n\n  <ul>\n    <ol>1. {{'Click on one of the above.'| translate}}</ol>\n\n    <ol>2. {{'The sentence in SignWriting now shows up on its own screen.'| translate}}</ol>\n\n    <ol>3. {{'Push the Upload Button at the bottom of the screen.'| translate}}</ol>\n\n    <ol>4. {{'IMPORTANT: Click on PNG Image Options button.\"'| translate}}</ol>\n\n    <ol>\n      5. {{'CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.'| translate}}\n    </ol>\n\n    <ol>\n      6. {{'Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.'| translate}}\n    </ol>\n\n    <ol>\n      7. {{'If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.'| translate}}\n    </ol>\n  </ul>\n</ion-content>\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>{{'Share iOS'| translate}} </ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\" (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <a target=\"_blank\" [href]=\"getimage()\">{{'Open Share Social Media'| translate}}</a> \r\n  <hr />\r\n  <a target=\"_blank\" [href]=\"getRemoteImage()\">{{'Open Share Email'| translate}}</a> \r\n\r\n  <ul>\r\n    <ol>1. {{'Click on one of the above.'| translate}}</ol>\r\n\r\n    <ol>2. {{'The sentence in SignWriting now shows up on its own screen.'| translate}}</ol>\r\n\r\n    <ol>3. {{'Push the Upload Button at the bottom of the screen.'| translate}}</ol>\r\n\r\n    <ol>4. {{'IMPORTANT: Click on PNG Image Options button.\"'| translate}}</ol>\r\n\r\n    <ol>\r\n      5. {{'CHANGE FROM AUTOMATIC TO IMAGE. Be sure there is a check mark next to the word Image. Click Done.'| translate}}\r\n    </ol>\r\n\r\n    <ol>\r\n      6. {{'Now choose where you want to send it. Scroll down for many choices. Or Scroll to the Right for Facebook.'| translate}}\r\n    </ol>\r\n\r\n    <ol>\r\n      7. {{'If you choose Facebook, choose your News Feed or Your Story. Write your English header and click Post.'| translate}}\r\n    </ol>\r\n  </ul>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -3283,6 +3295,11 @@ var ShareIOSPage = /** @class */ (function () {
         this.toastController = toastController;
         this.sanitizer = sanitizer;
         this.http = http;
+        this.serverUrl = (window.location
+            && window.location.hostname
+            && window.location.hostname.includes('localhost'))
+            ? 'https://localhost:44309/'
+            : 'https://swsignwriterapi.azurewebsites.net/';
     }
     ShareIOSPage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
@@ -3290,17 +3307,16 @@ var ShareIOSPage = /** @class */ (function () {
     };
     ShareIOSPage.prototype.saveToRemote = function (imagebase64) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var serverUrl, path, requestBody;
+            var path, requestBody;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_5__["uuid"])();
-                serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
                 path = 'api/image/save';
                 requestBody = {
                     'imageId': this.imageId,
                     'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
                     'dataUrl': imagebase64
                 };
-                this.http.post(serverUrl + path, requestBody)
+                this.http.post(this.serverUrl + path, requestBody)
                     .toPromise()
                     .then(function () { }, function (error) {
                     console.log(error);
@@ -3328,9 +3344,7 @@ var ShareIOSPage = /** @class */ (function () {
     };
     ShareIOSPage.prototype.getRemoteImage = function () {
         this.sleep(200);
-        var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-        // const serverUrl = 'https://localhost:44309/';
-        return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
+        return this.serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
     };
     ShareIOSPage.prototype.presentToast = function (message) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -3472,7 +3486,7 @@ var ShowImagePageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard(this)\">Copy</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title><ion-button (click)=\"copyToClipboard(this)\">{{'Copy'| translate}}</ion-button>{{'Right-click or Long Press on image to copy or share'| translate}}</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button color=\"primary\"   (click)=\"close()\">\r\n        <ion-icon name=\"close-circle\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content padding>\r\n  <img [src]=\"getimage()\" [style.height.px]=\"contentHeight\" [style.width.px]=\"contentWidth\" />\r\n</ion-content>\r\n\r\n"
 
 /***/ }),
 
@@ -3498,12 +3512,14 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowImagePage", function() { return ShowImagePage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
-/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
-/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuidv4 */ "./node_modules/uuidv4/build/lib/uuidv4.js");
+/* harmony import */ var uuidv4__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(uuidv4__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -3511,11 +3527,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ShowImagePage = /** @class */ (function () {
-    function ShowImagePage(modalController, toastController, sanitizer, http) {
+    function ShowImagePage(modalController, toastController, sanitizer, translateService, http) {
         this.modalController = modalController;
         this.toastController = toastController;
         this.sanitizer = sanitizer;
+        this.translateService = translateService;
         this.http = http;
+        this.serverUrl = (window.location
+            && window.location.hostname
+            && window.location.hostname.includes('localhost'))
+            ? 'https://localhost:44309/'
+            : 'https://swsignwriterapi.azurewebsites.net/';
     }
     ShowImagePage.prototype.ngOnInit = function () {
         this.swCanvas = this.canvas;
@@ -3523,17 +3545,16 @@ var ShowImagePage = /** @class */ (function () {
     };
     ShowImagePage.prototype.saveToRemote = function (imagebase64) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var serverUrl, path, requestBody;
+            var path, requestBody;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_5__["uuid"])();
-                serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+                this.imageId = Object(uuidv4__WEBPACK_IMPORTED_MODULE_6__["uuid"])();
                 path = 'api/image/save';
                 requestBody = {
                     'imageId': this.imageId,
                     'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
                     'dataUrl': imagebase64
                 };
-                this.http.post(serverUrl + path, requestBody)
+                this.http.post(this.serverUrl + path, requestBody)
                     .toPromise()
                     .then(function () { }, function (error) {
                     console.log(error);
@@ -3561,9 +3582,7 @@ var ShowImagePage = /** @class */ (function () {
     };
     ShowImagePage.prototype.getRemoteImage = function () {
         this.sleep(200);
-        var serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-        // const serverUrl = 'https://localhost:44309/';
-        return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
+        return this.serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
     };
     ShowImagePage.prototype.socialShare = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -3592,7 +3611,7 @@ var ShowImagePage = /** @class */ (function () {
                                         case 0: return [4 /*yield*/, self.presentToast('Thanks for sharing!')];
                                         case 1:
                                             _a.sent();
-                                            console.log('Thanks for sharing!');
+                                            console.log(this.translateService.instant('Thanks for sharing!'));
                                             return [2 /*return*/];
                                     }
                                 });
@@ -3600,7 +3619,7 @@ var ShowImagePage = /** @class */ (function () {
                                 .catch(console.error);
                         });
                         return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, self.presentToast('Share is not available.')];
+                    case 1: return [4 /*yield*/, self.presentToast(this.translateService.instant('Share is not available.'))];
                     case 2:
                         _a.sent();
                         _a.label = 3;
@@ -3722,19 +3741,20 @@ var ShowImagePage = /** @class */ (function () {
         });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Input"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLCanvasElement)
     ], ShowImagePage.prototype, "canvas", void 0);
     ShowImagePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
             selector: 'app-show-image',
             template: __webpack_require__(/*! ./show-image.page.html */ "./src/app/show-image/show-image.page.html"),
             styles: [__webpack_require__(/*! ./show-image.page.scss */ "./src/app/show-image/show-image.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ToastController"],
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["DomSanitizer"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ToastController"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__["DomSanitizer"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], ShowImagePage);
     return ShowImagePage;
 }());
@@ -4494,7 +4514,11 @@ var StripeService = /** @class */ (function () {
     function StripeService(http, storage) {
         this.http = http;
         this.storage = storage;
-        this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+        this.serverUrl = (window.location
+            && window.location.hostname
+            && window.location.hostname.includes('localhost'))
+            ? 'https://localhost:44309/'
+            : 'https://swsignwriterapi.azurewebsites.net/';
     }
     StripeService.prototype.GetandSaveStripeSubscriptionData = function (email, sessionId) {
         if (sessionId === void 0) { sessionId = null; }

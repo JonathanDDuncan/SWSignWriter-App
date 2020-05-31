@@ -87,12 +87,14 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscribePage", function() { return SubscribePage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _stripe_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../stripe.service */ "./src/app/stripe.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _stripe_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../stripe.service */ "./src/app/stripe.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _storage_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../storage.service */ "./src/app/storage.service.ts");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+
 
 
 
@@ -101,14 +103,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SubscribePage = /** @class */ (function () {
-    function SubscribePage(http, storage, alertController, stripeservice, router) {
+    function SubscribePage(http, storage, alertController, translateService, stripeservice, router) {
         this.http = http;
         this.storage = storage;
         this.alertController = alertController;
+        this.translateService = translateService;
         this.stripeservice = stripeservice;
         this.router = router;
         this.buttonDisabled = null;
-        this.serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+        this.serverUrl = (window.location
+            && window.location.hostname
+            && window.location.hostname.includes('localhost'))
+            ? 'https://localhost:44309/'
+            : 'https://swsignwriterapi.azurewebsites.net/';
     }
     SubscribePage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -199,7 +206,7 @@ var SubscribePage = /** @class */ (function () {
                         request.trialStartDate = trialStartDate;
                         request.subscriptionEndDate = subscriptionEndDate;
                         this.http.post(this.serverUrl + 'api/stripe/createsession', request, {
-                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpHeaders"]({
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
                             })
@@ -237,8 +244,8 @@ var SubscribePage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.alertController.create({
-                            header: 'Cancel automatic renewal',
-                            message: 'Are you <strong>sure</strong> you want to remove automatic renewal?',
+                            header: this.translateService.instant('Cancel automatic renewal'),
+                            message: this.translateService.instant('Are you <strong>sure</strong> you want to remove automatic renewal?'),
                             buttons: [
                                 {
                                     text: 'Disagree',
@@ -263,7 +270,7 @@ var SubscribePage = /** @class */ (function () {
                                                         email: profile.email
                                                     };
                                                     return [4 /*yield*/, this.http.post(this.serverUrl + 'api/stripe/cancelrenewal', request, {
-                                                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                                                            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpHeaders"]({
                                                                 'Accept': 'application/json',
                                                                 'Content-Type': 'application/json',
                                                             })
@@ -299,16 +306,17 @@ var SubscribePage = /** @class */ (function () {
         });
     };
     SubscribePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({
             selector: 'app-subscribe',
             template: __webpack_require__(/*! ./subscribe.page.html */ "./src/app/subscribe/subscribe.page.html"),
             styles: [__webpack_require__(/*! ./subscribe.page.scss */ "./src/app/subscribe/subscribe.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"],
-            _storage_service__WEBPACK_IMPORTED_MODULE_5__["StorageService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_6__["AlertController"],
-            _stripe_service__WEBPACK_IMPORTED_MODULE_1__["StripeService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],
+            _storage_service__WEBPACK_IMPORTED_MODULE_6__["StorageService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["AlertController"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"],
+            _stripe_service__WEBPACK_IMPORTED_MODULE_2__["StripeService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], SubscribePage);
     return SubscribePage;
 }());
