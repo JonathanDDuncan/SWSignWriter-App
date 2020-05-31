@@ -10,7 +10,14 @@ export class StripeService {
   constructor(private http: HttpClient,
     private storage: StorageService
   ) { }
-  private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+
+  private serverUrl =
+    (window.location
+      && window.location.hostname
+      && window.location.hostname.includes('localhost'))
+      ? 'https://localhost:44309/'
+      : 'https://swsignwriterapi.azurewebsites.net/';
+
   public async  GetandSaveStripeSubscriptionData(
     email: string,
     sessionId: string = null
@@ -36,6 +43,7 @@ export class StripeService {
       error: err => console.error('Error occured: ' + err),
       complete: () => console.log('Execution completed')
     };
+    debugger;
     this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
       headers: new HttpHeaders({
         Accept: 'application/json',

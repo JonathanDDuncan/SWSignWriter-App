@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { StripeService } from './../stripe.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -18,10 +19,16 @@ export class SubscribePage implements OnInit {
   constructor(private http: HttpClient,
     private storage: StorageService,
     private alertController: AlertController,
+    private translateService: TranslateService,
     private stripeservice: StripeService,
     private router: Router
   ) { }
-  private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+  private serverUrl =
+    (window.location
+      && window.location.hostname
+      && window.location.hostname.includes('localhost'))
+      ? 'https://localhost:44309/'
+      : 'https://swsignwriterapi.azurewebsites.net/';
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
@@ -104,8 +111,8 @@ export class SubscribePage implements OnInit {
   }
   async CancelRenewal() {
     const alert = await this.alertController.create({
-      header: 'Cancel automatic renewal',
-      message: 'Are you <strong>sure</strong> you want to remove automatic renewal?',
+      header: this.translateService.instant('Cancel automatic renewal'),
+      message: this.translateService.instant('Are you <strong>sure</strong> you want to remove automatic renewal?'),
       buttons: [
         {
           text: 'Disagree',

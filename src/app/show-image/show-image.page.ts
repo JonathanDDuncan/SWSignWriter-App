@@ -27,6 +27,12 @@ export class ShowImagePage implements OnInit {
     private sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private http: HttpClient) { }
+  private serverUrl =
+    (window.location
+      && window.location.hostname
+      && window.location.hostname.includes('localhost'))
+      ? 'https://localhost:44309/'
+      : 'https://swsignwriterapi.azurewebsites.net/';
 
   ngOnInit() {
     this.swCanvas = this.canvas;
@@ -35,9 +41,6 @@ export class ShowImagePage implements OnInit {
 
   async saveToRemote(imagebase64: string) {
     this.imageId = uuid();
-    const serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-
-    // const serverUrl = 'https://localhost:44309/';
     const path = 'api/image/save';
     const requestBody = {
       'imageId': this.imageId,
@@ -45,7 +48,7 @@ export class ShowImagePage implements OnInit {
       'dataUrl': imagebase64
     };
 
-    this.http.post(serverUrl + path, requestBody)
+    this.http.post(this.serverUrl + path, requestBody)
       .toPromise()
       .then(() => { },
         error => {
@@ -75,9 +78,8 @@ export class ShowImagePage implements OnInit {
 
   getRemoteImage() {
     this.sleep(200);
-    const serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-    // const serverUrl = 'https://localhost:44309/';
-    return serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
+
+    return this.serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
   }
 
   async socialShare() {
@@ -126,7 +128,7 @@ export class ShowImagePage implements OnInit {
               console.error('Unable to write to clipboard. :-(');
             });
           } catch (error) {
-            clip.setImageData( blob, 'image/png');
+            clip.setImageData(blob, 'image/png');
           }
         } else {
           const img = document.createElement('img');
