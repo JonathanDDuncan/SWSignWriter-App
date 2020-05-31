@@ -14,7 +14,7 @@
 <ion-content>
   <div *ngIf="subscribed">
     <p>{{'You have an active subscription.' | translate}}</p>
-    <ion-button (click)="goEdit()">{{'Continue' | translate}}Continue</ion-button>
+    <ion-button (click)="goEdit()">{{'Continue' | translate}}</ion-button>
   </div>
   <div *ngIf="!subscribed">
     <ion-button (click)="goSettings()">{{'Settings' | translate}}</ion-button>
