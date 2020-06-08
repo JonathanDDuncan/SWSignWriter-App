@@ -73,6 +73,10 @@ export class EditPage implements OnInit, AfterViewInit {
       )
       // subscription
       .subscribe((text: string) => {
+        if (text && text.includes('  ')) {
+          this.searchRef.nativeElement.value = this.searchRef.nativeElement.value.replace('  ', '-');
+          text = text.replace('  ', '-');
+        }
         this.showAvailableWords(text);
         this.documentService.searchFrase(text);
         this.showDocument(this.documentService.getDocument());
