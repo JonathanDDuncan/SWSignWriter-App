@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as convert from 'xml-js';
+import { elementStart } from '@angular/core/src/render3';
 
 export interface Entry {
   key: string;
@@ -10,6 +11,7 @@ export interface Entry {
 
 export interface PuddleInfo {
   puddle: number;
+  puddleName: string;
 }
 
 export interface Puddle {
@@ -28,7 +30,15 @@ export class SpmlService {
 
   convertspml(xml: string): Puddle {
     const spmljs: any = convert.xml2js(xml, { compact: false });
-    const puddleInfo: PuddleInfo = spmljs.elements[1].attributes;
+    const smpl = spmljs && spmljs.elements.length > 1 ? spmljs.elements[1] : undefined;
+    const puddleInfo: PuddleInfo = smpl ?  smpl.attributes : undefined;
+    debugger;
+    puddleInfo.puddleName  = smpl
+      && smpl.elements
+      && smpl.elements.length > 0
+      && smpl.elements[0].elements
+      && smpl.elements[0].elements.length > 0
+    ?  smpl.elements[0].elements[0].cdata : undefined;
     const result: Puddle = {
       puddleInfo: puddleInfo,
       entries: this.createEntries(spmljs, puddleInfo.puddle)

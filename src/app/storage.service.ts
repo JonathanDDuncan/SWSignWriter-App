@@ -27,12 +27,12 @@ export class StorageService {
     }
   }
 
-  async savePuddle(puddlename: string, result: Puddle): Promise<{ puddlename: string, entries: number }> {
+  async savePuddle(puddlename: string, result: Puddle): Promise<{name: string, puddlename: string, entries: number }> {
     await this.storage.set(puddlename, result);
-
+    const name = result.puddleInfo.puddleName;
     // Save to list of existing puddles
     await this.savePuddleName(puddlename);
-    return { puddlename: puddlename, entries: result.entries.length };
+    return { name: name, puddlename: puddlename, entries: result.entries.length };
   }
 
   private async savePuddleName(puddlename: string): Promise<void> {
