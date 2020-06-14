@@ -65,13 +65,11 @@ export class SettingsService {
   }
 
   async saveSpml(spml: string): Promise<{name: string, puddlename: string, entries: number }> {
-    debugger;
     const result: Puddle = this.spmlService.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 
     // Save spml
     const saveresult = await this.storageService.savePuddle(puddlename, result);
-    debugger;
     return saveresult;
   }
 

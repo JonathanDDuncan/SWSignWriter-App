@@ -32,8 +32,7 @@ export class SpmlService {
     const spmljs: any = convert.xml2js(xml, { compact: false });
     const smpl = spmljs && spmljs.elements.length > 1 ? spmljs.elements[1] : undefined;
     const puddleInfo: PuddleInfo = smpl ?  smpl.attributes : undefined;
-    debugger;
-    puddleInfo.puddleName  = smpl
+        puddleInfo.puddleName  = smpl
       && smpl.elements
       && smpl.elements.length > 0
       && smpl.elements[0].elements
