@@ -79,6 +79,7 @@ export class ViewPage implements OnInit {
 
   private async ShareIOS(fsw: string) {
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+    this.AddLink(canvas1);
     const modal = await this.modalController.create({
       component: ShareIOSPage,
       componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
@@ -87,8 +88,38 @@ export class ViewPage implements OnInit {
     await modal.onDidDismiss();
   }
 
+  private AddLink(canvas: HTMLCanvasElement) {
+    const temp_cnvs = this.tempCanvas(canvas);
+    const ctx = this.reSizeCanvas(canvas, temp_cnvs);
+    ctx.font = '30px Arial';
+    ctx.fillStyle = 'blue';
+    ctx.textAlign = 'center';
+    ctx.fillText('SWSW SwSignWriter.jonathanduncan.pro', canvas.width / 2, canvas.height - 10 );
+  }
+
+  private reSizeCanvas(canvas: HTMLCanvasElement, temp_cnvs: HTMLCanvasElement) {
+    canvas.height += 35;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(temp_cnvs, 0, 0);
+    return ctx;
+  }
+
+  private tempCanvas(canvas: HTMLCanvasElement) {
+    const temp_cnvs = document.createElement('canvas');
+    const temp_cntx = temp_cnvs.getContext('2d');
+    temp_cnvs.width = canvas.width;
+    temp_cnvs.height = canvas.height;
+    temp_cntx.fillStyle = 'white';
+    temp_cntx.fillRect(0, 0, canvas.width, canvas.height);
+    temp_cntx.drawImage(canvas, 0, 0);
+    return temp_cnvs;
+  }
+
   private async ShareAndroid(fsw: string) {
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+    this.AddLink(canvas1);
     const modal = await this.modalController.create({
       component: ShareAndroidPage,
       componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
@@ -99,6 +130,7 @@ export class ViewPage implements OnInit {
 
   private async ShareDesktop(fsw: string) {
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
+    this.AddLink(canvas1);
     const modal = await this.modalController.create({
       component: ShareDesktopPage,
       componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
