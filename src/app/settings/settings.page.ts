@@ -22,6 +22,7 @@ export class SettingsPage implements OnInit {
   public puddleID: string;
   public spmldropExpanded: boolean;
   public loading: HTMLIonLoadingElement;
+  public installedPuddles: Array<string>;
 
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
@@ -32,6 +33,10 @@ export class SettingsPage implements OnInit {
     public loadingController: LoadingController,
     private router: Router) {
     this.spmldropExpanded = false;
+  }
+
+  installedPuddlesNames() {
+
   }
 
   upload(event) {
@@ -47,6 +52,7 @@ export class SettingsPage implements OnInit {
     this.subscriptionService.CanUse();
     this.UILanguage = await this.currentUILanguage();
     this.settingsService.setFirstTime();
+    this.installedPuddlesNames();
   }
 
   dropped(event: UploadEvent) {
