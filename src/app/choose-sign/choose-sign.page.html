@@ -26,7 +26,7 @@
       <ion-row>
         <ion-col> </ion-col>
         <ion-col>
-          <ion-button (click)="accept()" color="primary">{{ 'Accept' | translate }}</ion-button>
+          <ion-button (click)="accept()" [disabled]="!isSelected" color="primary">{{ 'Accept' | translate }}</ion-button>
         </ion-col>
         <ion-col> </ion-col>
         <ion-col>
