@@ -7,6 +7,7 @@ import { TrialService } from './trial.service';
   providedIn: 'root'
 })
 export class UserService {
+  private roles: Array<string>;
 
   constructor(
     private storage: StorageService,
@@ -15,24 +16,24 @@ export class UserService {
   ) { }
 
   async GetCurrenUserRoles(): Promise<Array<string>> {
+    await this.CreateRoles();
+
+    return this.roles;
+  }
+
+  private async CreateRoles() {
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
-    if (currentUserProfile && currentUserProfile != null) {
-      const roles = await this.GetRoles(currentUserProfile.email);
-      return roles;
+
+    const trialDaysLeft = await this.trial.GetTrialDaysLeft(currentUserProfile.email);
+    const subscriptionDaysLeft = this.subscriptions.GetSubscriptionDaysLeft(currentUserProfile.email);
+
+    this.roles = [];
+
+    if (await subscriptionDaysLeft > 0) {
+      this.roles.push('subscribed');
+    } else if (trialDaysLeft > 0) {
+      this.roles.push('trial');
     }
   }
 
-  private async GetRoles(email: string): Promise<string[]> {
-    const trialDaysLeft = await this.trial.GetTrialDaysLeft(email);
-    const subscriptionDaysLeft = await this.subscriptions.GetSubscriptionDaysLeft(email);
-
-    const roles: string[] = [];
-
-    if (subscriptionDaysLeft && subscriptionDaysLeft > 0) {
-      roles.push('subscribed');
-    } else if (trialDaysLeft && trialDaysLeft > 0) {
-      roles.push('trial');
-    }
-    return roles;
-  }
 }

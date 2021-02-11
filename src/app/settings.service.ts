@@ -33,8 +33,8 @@ export class SettingsService {
         .subscribe(async xml => {
           const saveresult = await this.saveSpml(xml);
           await this.presentToast(saveresult);
-          await this.signsLookupService.loadSigns();
-          await this.storageService.setDefaultPuddleLoaded(true);
+          this.signsLookupService.loadSigns();
+          this.storageService.setDefaultPuddleLoaded(true);
         });
     }
   }
@@ -50,10 +50,10 @@ export class SettingsService {
 
   private readFile(file: File) {
     const reader = new FileReader();
-    reader.onload = (async () => {
+    reader.onload = async () => {
       const xml: string | ArrayBuffer = reader.result as string;
       await this.loadPuddle(xml);
-    });
+    };
     reader.readAsText(file);
   }
 
@@ -61,10 +61,10 @@ export class SettingsService {
     const saveresult = await this.saveSpml(xml);
     await this.presentToast(saveresult);
     this.signsLookupService.loadSigns();
-    await this.storageService.setDefaultPuddleLoaded(false);
+    this.storageService.setDefaultPuddleLoaded(false);
   }
 
-  async saveSpml(spml: string): Promise<{name: string, puddlename: string, entries: number }> {
+  async saveSpml(spml: string): Promise<{ puddlename: string, entries: number }> {
     const result: Puddle = this.spmlService.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 
@@ -73,12 +73,12 @@ export class SettingsService {
     return saveresult;
   }
 
-  async presentToast(saved: {name: string, puddlename: string, entries: number }) {
+  async presentToast(saved: { puddlename: string, entries: number }) {
     const toast = await this.toastController.create({
-      message: saved.entries + this.translateService.instant('entries saved To') + saved.name,
+      message: saved.entries + this.translateService.instant('entries saved To') + saved.puddlename,
       duration: 2000
     });
-    await toast.present();
+    toast.present();
   }
 
   async removeAllSigns() {

@@ -1,5 +1,6 @@
 import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
+import { StorageService } from '../storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,12 @@ export class AuthorizationService {
       return true;
     }
 
+
+
     const roles = await this.userService.GetCurrenUserRoles();
-    if (roles) {
-      // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
-      return roles.some((role) => allowedRoles.includes(role));
-    } else {
-      return false;
-    }
+
+  // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
+    return roles.some((role) => allowedRoles.includes(role));
   }
 }
 

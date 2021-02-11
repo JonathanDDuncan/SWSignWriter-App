@@ -12,8 +12,13 @@
 	"Document": "",
 	"Drop SPML file here to add signs": "",
 	"Edit": "",
-	"Enter word to search here":  "",
-	"Enter sentence":"",
+	"Enter word to search here": {
+		"0": {
+			"0": {
+				"0": ""
+			}
+		}
+	},
 	"Error sending email": "",
 	"Error sending whatsapp": "",
 	"Image height": "",

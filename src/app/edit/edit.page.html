@@ -5,102 +5,53 @@
     </ion-buttons>
     <ion-title>{{'Edit' | translate}}</ion-title>
   </ion-toolbar>
-
   <ion-item>
-    <ion-textarea
-      #searchRef
-      placeholder="{{'Enter sentence' | translate}}"
-    ></ion-textarea>
-    <ion-button style="display: none;" (click)="resetEntries()">
-      {{'Reset' | translate}}
-    </ion-button>
+    Available words
+  
+    <ion-button *ngFor="let item of matchingWords"  (click)="addWord(item)"> {{item}}</ion-button>
+    
   </ion-item>
   <ion-item>
-    <div>
-      <ion-button
-        style="text-transform: none;"
-        *ngFor="let item of matchingWords"
-        (click)="addWord(item.gloss)"
-      >
-        {{item.gloss}}
-      </ion-button>
-    </div>
+    <ion-textarea #searchRef placeholder="{{'Enter word to search here' | translate}}"></ion-textarea>
+    <ion-button style="display:none" (click)="resetEntries()"> {{'Reset' | translate}}</ion-button>
   </ion-item>
 </ion-header>
 
-<ion-content #content padding class="vertical-center">
+<ion-content padding class="vertical-center">
   <ion-list>
-    <ion-item
-      *ngFor="let found of editedDocument.editedsigns; index as i; trackBy: trackFound "
-    >
+    <ion-item *ngFor="let found of editedDocument.editedsigns; index as i; trackBy: trackFound ">
       <ion-grid>
         <ion-row justify-content-center>
-          <button
-            class="editbutton"
-            [style.background-color]="found.color"
-            (click)="replace(i)"
-            type="button"
-          >
+          <button class="editbutton" [style.background-color]="found.color" (click)="replace(i)" type="button">
             <div [className]="laneStyle(found.lane)">
               <div class="sign">
                 <span [innerHTML]="found.svg | safeHtml"></span>
                 <ion-grid>
                   <ion-row>
                     <ion-col size="10">
-                      <p>
-                        {{ (!found.sign ? (' sign not found' | translate) :
-                        found.sign.gloss ) }}
-                      </p>
+                      <p>{{ (!found.sign ? (' sign not found' | translate) : found.sign.gloss ) }} </p>
                     </ion-col>
                     <ion-col size="1">
-                      <ion-badge *ngIf="found.totalmatches > 1" color="light"
-                        >{{ found.totalmatches }}</ion-badge
-                      >
+                      <ion-badge *ngIf="found.totalmatches > 1" color="light">{{ found.totalmatches }}</ion-badge>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </div>
             </div>
           </button>
+
         </ion-row>
         <ion-row justify-content-center>
           <div class="lane-selector">
-            <input
-              id="{{found.id}}-left"
-              type="radio"
-              name="name{{found.id}}"
-              value="left"
-              [checked]="Lane.Left === found.lane"
-              (change)="found.lane = Lane.Left"
-            />
-            <label
-              class="label-background left"
-              for="{{found.id}}-left"
-            ></label>
-            <input
-              id="{{found.id}}-middle"
-              type="radio"
-              name="name{{found.id}}"
-              value="middle"
-              [checked]="Lane.Middle === found.lane"
-              (change)="found.lane = Lane.Middle"
-            />
-            <label
-              class="label-background middle"
-              for="{{found.id}}-middle"
-            ></label>
-            <input
-              id="{{found.id}}-right"
-              type="radio"
-              name="name{{found.id}}"
-              value="right"
-              [checked]="Lane.Right === found.lane"
-              (change)="found.lane = Lane.Right"
-            />
-            <label
-              class="label-background right"
-              for="{{found.id}}-right"
-            ></label>
+            <input id="{{found.id}}-left" type="radio" name="name{{found.id}}" value="left"
+              [checked]="Lane.Left === found.lane" (change)="found.lane = Lane.Left" />
+            <label class="label-background left" for="{{found.id}}-left"></label>
+            <input id="{{found.id}}-middle" type="radio" name="name{{found.id}}" value="middle"
+              [checked]="Lane.Middle === found.lane" (change)="found.lane = Lane.Middle" />
+            <label class="label-background middle" for="{{found.id}}-middle"></label>
+            <input id="{{found.id}}-right" type="radio" name="name{{found.id}}" value="right"
+              [checked]="Lane.Right === found.lane" (change)="found.lane = Lane.Right" />
+            <label class="label-background right" for="{{found.id}}-right"></label>
           </div>
         </ion-row>
       </ion-grid>
@@ -108,13 +59,9 @@
   </ion-list>
 
   <ion-fab horizontal="end" slot="fixed" vertical="bottom">
-    <ion-label>{{'Next' | translate}}</ion-label>
-    <ion-fab-button>
-      <ion-icon
-        (click)="accept()"
-        name="arrow-dropright-circle"
-        style="zoom: 2;"
-      ></ion-icon>
-    </ion-fab-button>
+      <ion-label>{{'Next' | translate}}</ion-label>
+      <ion-fab-button>
+          <ion-icon (click)="accept()" name="arrow-dropright-circle" style="zoom:2.0;"></ion-icon>
+      </ion-fab-button>
   </ion-fab>
 </ion-content>

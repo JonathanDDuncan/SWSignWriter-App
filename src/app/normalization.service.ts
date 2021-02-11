@@ -76,7 +76,7 @@ export class NormalizationService {
 
     let normalized = '';
     let i: number, l: number;
-    s = s ? s.toLowerCase() : '';
+    s = s.toLowerCase();
     for (i = 0, l = s.length; i < l; i = i + 1) {
       normalized = normalized + filter(s.charAt(i));
     }

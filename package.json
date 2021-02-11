@@ -1,6 +1,6 @@
 {
   "name": "pro.jonathanduncan.swsignwriter",
-  "version": "v1.0.15",
+  "version": "0.0.95",
   "author": "Jonathan Duncan",
   "homepage": "https://swsignwriter.jonathanduncan.pro/",
   "scripts": {
@@ -60,7 +60,6 @@
     "ngx-file-drop": "^6.0.1",
     "rxjs": "^6.5.0",
     "stream": "0.0.2",
-    "uuidv4": "^6.0.7",
     "xml-js": "^1.6.11",
     "zone.js": "~0.8.29"
   },

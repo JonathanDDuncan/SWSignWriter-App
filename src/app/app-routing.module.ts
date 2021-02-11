@@ -7,7 +7,7 @@ import { CallbackComponent } from './callback/callback.component';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './home/home.module#HomePageModule',
+    loadChildren: './login/login.module#LoginPageModule',
     canActivateChild: [AuthorizationGuard],
     pathMatch: 'full'
   },
@@ -88,12 +88,8 @@ const routes: Routes = [
   {
     path: 'stripecancel',
     loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule'
-  },
-  { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
+  },  { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
   { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
-  { path: 'share-ios', loadChildren: './share-ios/share-ios.module#ShareIOSPageModule' },
-  { path: 'share-desktop', loadChildren: './share-desktop/share-desktop.module#ShareDesktopPageModule' },
-  { path: 'share-android', loadChildren: './share-android/share-android.module#ShareAndroidPageModule' },
 
 
 

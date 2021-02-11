@@ -1,6 +1,3 @@
-import { BrowserTypeService } from './../browser-type.service';
-import { ShareDesktopPage } from './../share-desktop/share-desktop.page';
-import { ShareAndroidPage } from './../share-android/share-android.page';
 import { SubscriptionService } from './../services/subscription.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -9,7 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { DocumentService } from '../document.service';
 import { ShowImagePage } from '../show-image/show-image.page';
-import { ShareIOSPage } from '../share-ios/share-ios.page';
 
 
 @Component({
@@ -18,7 +14,7 @@ import { ShareIOSPage } from '../share-ios/share-ios.page';
   styleUrls: ['./view.page.scss']
 })
 export class ViewPage implements OnInit {
-  public imageheight = 900;
+  public imageheight = 199;
   public document: string;
   public preloadFonts: string;
   public signtextHeight: number;
@@ -28,7 +24,6 @@ export class ViewPage implements OnInit {
     private documentService: DocumentService,
     private subscriptionService: SubscriptionService,
     public translate: TranslateService,
-    public btUtil: BrowserTypeService,
     private router: Router
   ) {
     // Force fonts to load before anything is shown
@@ -56,83 +51,18 @@ export class ViewPage implements OnInit {
     this.document = ssw.paragraph(fsw);
   }
 
-  public share1() {
+  public share() {
     const fsw = this.documentService.getFSW();
     this.document = ssw.paragraph(fsw);
 
-    requestAnimationFrame(() => this.sharecontinuation1(fsw));
+    requestAnimationFrame(() => this.sharecontinuation(fsw));
   }
 
-  public async share() {
+  public async copy() {
     const fsw = this.documentService.getFSW();
-    const btUtils = this.btUtil.utils();
-    if (fsw && fsw !== null) {
-      if (btUtils.Android()) {
-        await this.ShareAndroid(fsw);
-      } else if (btUtils.iOS() || btUtils.iPad() || btUtils.iPhone() || btUtils.iPod()) {
-        await this.ShareIOS(fsw);
-      } else {
-        await this.ShareDesktop(fsw);
-      }
-    }
-  }
-
-  private async ShareIOS(fsw: string) {
     const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
-    this.AddLink(canvas1);
     const modal = await this.modalController.create({
-      component: ShareIOSPage,
-      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
-    });
-    await modal.present();
-    await modal.onDidDismiss();
-  }
-
-  private AddLink(canvas: HTMLCanvasElement) {
-    const temp_cnvs = this.tempCanvas(canvas);
-    const ctx = this.reSizeCanvas(canvas, temp_cnvs);
-    ctx.font = '30px Arial';
-    ctx.fillStyle = 'blue';
-    ctx.textAlign = 'center';
-    ctx.fillText('SWSW SwSignWriter.jonathanduncan.pro', canvas.width / 2, canvas.height - 10 );
-  }
-
-  private reSizeCanvas(canvas: HTMLCanvasElement, temp_cnvs: HTMLCanvasElement) {
-    canvas.height += 35;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(temp_cnvs, 0, 0);
-    return ctx;
-  }
-
-  private tempCanvas(canvas: HTMLCanvasElement) {
-    const temp_cnvs = document.createElement('canvas');
-    const temp_cntx = temp_cnvs.getContext('2d');
-    temp_cnvs.width = canvas.width;
-    temp_cnvs.height = canvas.height;
-    temp_cntx.fillStyle = 'white';
-    temp_cntx.fillRect(0, 0, canvas.width, canvas.height);
-    temp_cntx.drawImage(canvas, 0, 0);
-    return temp_cnvs;
-  }
-
-  private async ShareAndroid(fsw: string) {
-    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
-    this.AddLink(canvas1);
-    const modal = await this.modalController.create({
-      component: ShareAndroidPage,
-      componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
-    });
-    await modal.present();
-    await modal.onDidDismiss();
-  }
-
-  private async ShareDesktop(fsw: string) {
-    const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
-    this.AddLink(canvas1);
-    const modal = await this.modalController.create({
-      component: ShareDesktopPage,
+      component: ShowImagePage,
       componentProps: { canvas: canvas1, imagebase64: canvas1.toDataURL('image/png') }
     });
     await modal.present();
@@ -147,7 +77,7 @@ export class ViewPage implements OnInit {
     return this.router.navigateByUrl('/edit');
   }
 
-  private async sharecontinuation1(fsw: string) { }
+  private async sharecontinuation(fsw: string) { }
 
   isCordova() {
     return !!window.cordova;
