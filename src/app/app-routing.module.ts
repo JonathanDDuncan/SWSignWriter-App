@@ -80,17 +80,8 @@ const routes: Routes = [
   {
     path: 'callback',
     component: CallbackComponent
-  },
-  {
-    path: 'stripesuccess',
-    loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule'
-  },
-  {
-    path: 'stripecancel',
-    loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule'
-  },
-  { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
-  { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
+  }, 
+  
   { path: 'share-ios', loadChildren: './share-ios/share-ios.module#ShareIOSPageModule' },
   { path: 'share-desktop', loadChildren: './share-desktop/share-desktop.module#ShareDesktopPageModule' },
   { path: 'share-android', loadChildren: './share-android/share-android.module#ShareAndroidPageModule' },
