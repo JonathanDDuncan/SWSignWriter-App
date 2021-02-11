@@ -21,6 +21,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
   @Input() searchword: string;
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
   private selectedkey: string;
+  private isSelected = false;
   public elements: { sign: string; key: string; gloss: string }[];
   constructor(
         public modalController: ModalController,
@@ -63,6 +64,7 @@ export class ChooseSignPage implements OnInit, AfterViewInit {
 
   radioChecked(key: string) {
     this.selectedkey = key;
+    this.isSelected = true;
   }
 
   showResult(result) {
