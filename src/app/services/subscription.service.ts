@@ -2,14 +2,11 @@ import { Router } from '@angular/router';
 import { TrialService } from './trial.service';
 import { StorageService } from './../storage.service';
 import { Injectable } from '@angular/core';
-import { async } from 'rxjs/internal/scheduler/async';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscriptionService {
-
-
   constructor(
     private storage: StorageService,
     private trialService: TrialService,
@@ -34,10 +31,12 @@ export class SubscriptionService {
   }
 
   async CanUse(email: string = null) {
+    // TODO what is this for?
    if (!email) {
      const profile = await this.storage.GetCurrentUserProfile();
-     email = profile ? profile.email : null;
+     email = profile && profile !== null ? profile.email : null;
    }
+
    const isSubscribedOrTrial = this.IsSubscribedOrTrial(email);
     if (!isSubscribedOrTrial ) {
       this.router.navigate(['/subscribe']);

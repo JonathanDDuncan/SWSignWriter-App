@@ -1,4 +1,3 @@
-import { TrialService } from './../services/trial.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
@@ -9,30 +8,30 @@ import { StorageService } from '../storage.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  public daysleft: number;
+public loggedin: boolean;
   constructor(
     public router: Router,
-    private trial: TrialService,
     private storage: StorageService
   ) { }
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile) {
+    this.loggedin = !(!profile || profile === null);
+    if (this.loggedin) {
       this.router.navigate(['/login']);
     }
-    this.daysleft = await this.trial.GetTrialDaysLeft(profile.email);
   }
 
-  goSettings() {
-    this.router.navigate(['settings']);
+  goLogin() {
+    this.router.navigate(['/login']);
   }
 
-  goSubscribe() {
-    this.router.navigate(['subscribe']);
+  goAbout() {
+    this.router.navigate(['/about']);
   }
 
-  goEdit() {
-    this.router.navigate(['edit']);
+  goContinue() {
+    this.router.navigate(['/edit']);
   }
+
 }

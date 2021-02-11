@@ -30,10 +30,10 @@ interface EdittedDocument {
 export class EditPage implements OnInit, AfterViewInit {
   Lane = Lane;
   public editedDocument: EdittedDocument;
-  private availableWords: string[];
-  public matchingWords: string[];
+  public matchingWords: { gloss: string, normalized: string }[];
 
   @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
+  @ViewChild('content') private content: any;
 
   constructor(
     public modalController: ModalController,
@@ -50,13 +50,12 @@ export class EditPage implements OnInit, AfterViewInit {
       editedsigns: []
     };
 
-    const isFirstTime  = await this.settingsService.getFirstTime();
+    const isFirstTime = await this.settingsService.getFirstTime();
     if (isFirstTime == null) {
       return this.router.navigateByUrl('/settings');
     }
+    await this.documentService.loadSigns();
     this.documentService.clearDocument();
-    this.availableWords = this.documentService.editWordArray();
-
     this.showDocument(this.documentService.getDocument());
   }
 
@@ -74,28 +73,19 @@ export class EditPage implements OnInit, AfterViewInit {
       )
       // subscription
       .subscribe((text: string) => {
+        if (text && text.includes('  ')) {
+          this.searchRef.nativeElement.value = this.searchRef.nativeElement.value.replace('  ', '-');
+          text = text.replace('  ', '-');
+        }
         this.showAvailableWords(text);
         this.documentService.searchFrase(text);
         this.showDocument(this.documentService.getDocument());
+        this.scrollToBottom();
       });
   }
 
-  showAvailableWords(text: string) {
-    const words = text.split(' ');
-
-    const keyword = words.length > 0 ? words[words.length - 1] : '';
-    this.matchingWords =  this.getResults(this.availableWords, keyword);
-  }
-
-  getResults(availableWords: string[], keyword: string) {
-    if (availableWords && keyword && keyword !== '') {
-      const result = availableWords
-      .filter(item => item.toLowerCase().indexOf(keyword.toLowerCase()) !== -1 )
-      .slice(0, 12);
-      return result;
-    } else {
-      return [];
-    }
+  showAvailableWords(text) {
+    this.matchingWords = this.documentService.showAvailableWords(text);
   }
 
   showDocument(document: Document): void {
@@ -105,9 +95,10 @@ export class EditPage implements OnInit, AfterViewInit {
   trackFound(index, foundSign: FoundSign) {
     return foundSign ? foundSign.id : undefined;
   }
+
   public addWord(word) {
-    const sentence = this.documentService.getSearchSentence() ;
-    let sentenceSplit = sentence.split(' ').filter( x => x !== '' && x !== ' ');
+    const sentence = this.documentService.getSearchSentence();
+    let sentenceSplit = sentence.split(' ').filter(x => x !== '' && x !== ' ');
     sentenceSplit = sentenceSplit.slice(0, -1);
 
     const allExceptLast = sentenceSplit.join(' ');
@@ -133,10 +124,18 @@ export class EditPage implements OnInit, AfterViewInit {
 
     await modal.present();
     const { data } = await modal.onDidDismiss();
-    // Replace existing item in list
-    this.documentService.replaceElement(index, data.result);
-    this.showDocument(this.documentService.getDocument());
-    this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+    if (data) {
+      // Replace existing item in list
+      this.documentService.replaceElement(index, data.result);
+      this.showDocument(this.documentService.getDocument());
+      this.searchRef.nativeElement.value = this.documentService.getSearchSentence();
+    }
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom(200);
+    }, 50);
   }
 
   resetEntries() { }

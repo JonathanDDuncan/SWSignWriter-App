@@ -20,7 +20,7 @@ export class CallbackComponent implements OnInit {
   ngOnInit() {
     this.auth.userProfile$.subscribe(async userProfile => {
 
-      if (userProfile) {
+      if (userProfile && userProfile !== null) {
         this.sentry.sentryMessage('Logged in: ' + JSON.stringify(userProfile));
         this.storage.SaveCurrentUserProfile(userProfile);
         this.stripeService.GetandSaveStripeSubscriptionData(userProfile.email);

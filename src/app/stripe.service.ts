@@ -7,11 +7,18 @@ import { Injectable } from '@angular/core';
 })
 export class StripeService {
 
-  constructor( private http: HttpClient,
+  constructor(private http: HttpClient,
     private storage: StorageService
-   ) { }
-    private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
-    public async  GetandSaveStripeSubscriptionData(
+  ) { }
+
+  private serverUrl =
+    (window.location
+      && window.location.hostname
+      && window.location.hostname.includes('localhost'))
+      ? 'https://localhost:44309/'
+      : 'https://swsignwriterapi.azurewebsites.net/';
+
+  public async  GetandSaveStripeSubscriptionData(
     email: string,
     sessionId: string = null
   ) {
@@ -23,17 +30,24 @@ export class StripeService {
       sessionId: sessionId
     };
 
-    const data: any = await this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
-        headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        })
-      }).toPromise();
-
-        this.storage.SaveSubscription(
-          data.Email,
-          data.SubscriptionEndDate,
-          data.CancelAtPeriodEnd
-        );
+    const observer = {
+      next: (data: any) => {
+        if ((data)) {
+          this.storage.SaveSubscription(
+            data.Email,
+            data.SubscriptionEndDate,
+            data.CancelAtPeriodEnd
+          );
+        }
+      },
+      error: err => console.error('Error occured: ' + err),
+      complete: () => console.log('Execution completed')
+    };
+    this.http.post(this.serverUrl + 'api/stripe/session', subscriptionData, {
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      })
+    }).subscribe(observer);
   }
 }

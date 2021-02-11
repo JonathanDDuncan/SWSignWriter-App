@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 
 import { SettingsService } from '../settings.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 
@@ -20,14 +20,24 @@ import { ToastController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
   public UILanguage: string;
   public puddleID: string;
+  public spmldropExpanded: boolean;
+  public loading: HTMLIonLoadingElement;
+  public installedPuddles: Array<string>;
 
   constructor(private settingsService: SettingsService,
-  private alertController: AlertController,
-  private translate: TranslateService,
-  public toastController: ToastController,
-  private translateService: TranslateService,
-  private subscriptionService: SubscriptionService,
-  private router: Router) { }
+    private alertController: AlertController,
+    private translate: TranslateService,
+    public toastController: ToastController,
+    private translateService: TranslateService,
+    private subscriptionService: SubscriptionService,
+    public loadingController: LoadingController,
+    private router: Router) {
+    this.spmldropExpanded = false;
+  }
+
+  installedPuddlesNames() {
+
+  }
 
   upload(event) {
     const file = event.target.files[0];
@@ -42,6 +52,7 @@ export class SettingsPage implements OnInit {
     this.subscriptionService.CanUse();
     this.UILanguage = await this.currentUILanguage();
     this.settingsService.setFirstTime();
+    this.installedPuddlesNames();
   }
 
   dropped(event: UploadEvent) {
@@ -49,9 +60,10 @@ export class SettingsPage implements OnInit {
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          if (droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
-            this.settingsService.loadFile(file);
+        fileEntry.file(async (file: File) => {
+          if (droppedFile && droppedFile.relativePath && droppedFile.relativePath.toLowerCase().endsWith('.spml')) {
+            await this.presentLoading();
+            await this.settingsService.loadFile(file);
           }
         });
       } else {
@@ -61,8 +73,8 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  fileOver(event) {
-    // console.log(event);
+  async fileOver(event) {
+        // console.log(event);
   }
 
   fileLeave(event) {
@@ -105,13 +117,14 @@ export class SettingsPage implements OnInit {
   async downloadPuddle() {
     await this.showToast(this.translateService.instant('Downloading'), 3000);
     await this.showToast(this.translateService.instant('This may take a few minutes'), 3000);
+    await this.presentLoading();
     this.xhrDownloadPuddle();
   }
 
   private xhrDownloadPuddle() {
     const data = 'action=Download&ex_source=All';
     let puddle = 0;
-     puddle = parseInt(this.puddleID, 10);
+    puddle = parseInt(this.puddleID, 10);
     if (isNaN(puddle)) {
       puddle = 4;
     }
@@ -119,9 +132,10 @@ export class SettingsPage implements OnInit {
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
     const thispage = this;
-    xhr.addEventListener('readystatechange', function () {
+    xhr.addEventListener('readystatechange', async function () {
       if (this.readyState === 4) {
-        thispage.settingsService.loadPuddle(this.responseText);
+        await thispage.settingsService.loadPuddle(this.responseText);
+        await thispage.signsLoaded();
       }
     });
     xhr.open('POST', url);
@@ -130,8 +144,13 @@ export class SettingsPage implements OnInit {
     xhr.send(data);
   }
 
+  async signsLoaded() {
+    await this.loading.dismiss();
+  }
+
   onPuddleChange(event) {
     this.puddleID = event.detail.value;
+    this.downloadPuddle();
   }
 
   async showToast(message, duration) {
@@ -140,5 +159,34 @@ export class SettingsPage implements OnInit {
       duration: duration
     });
     toast.present();
+  }
+
+  expandItem() {
+    this.spmldropExpanded = !this.spmldropExpanded;
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Please wait...',
+      backdropDismiss: false
+    });
+    this.loading.present();
+    // const { role, data } = await this.loading.onDidDismiss();
+    // console.log('Loading dismissed!');
+  }
+
+  async presentLoadingWithOptions() {
+    this.loading = await this.loadingController.create({
+      spinner: null,
+      duration: 5000,
+      message: 'Click the backdrop to dismiss early...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
   }
 }

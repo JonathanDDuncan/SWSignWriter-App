@@ -22,7 +22,7 @@ export class StripesuccessPage implements OnInit {
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile) {
+    if (!profile || profile === null) {
       this.router.navigate(['/login']);
     }
     await this.getSubscriptionInfo();
@@ -30,16 +30,20 @@ export class StripesuccessPage implements OnInit {
 
   async getSubscriptionInfo() {
     const profile = await this.storage.GetCurrentUserProfile();
-    this.route.queryParamMap.subscribe(async (params: any) => {
-      const sessionid = params.params['session_id'];
+    if (profile && profile !== null) {
+      this.route.queryParamMap.subscribe(async (params: any) => {
+        const sessionid = params.params['session_id'];
 
-      await this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid);
-      const subscription: any = await this.storage.GetSubscription(profile.email);
-      const d = new  Date(subscription.endDate);
-      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-      const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-      this.subscriptionEndDate = `${da}-${mo}-${ye}`;
-    });
+        await this.stripeservice.GetandSaveStripeSubscriptionData(profile.email, sessionid);
+        const subscription: any = await this.storage.GetSubscription(profile.email);
+        if (subscription) {
+          const d = new Date(subscription.endDate);
+          const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+          const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+          const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+          this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+        }
+      });
+    }
   }
 }

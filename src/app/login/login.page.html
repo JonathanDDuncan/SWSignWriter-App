@@ -1,12 +1,27 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>SWSignWriter Login</ion-title>
+    <ion-title>{{'SWSignWriter Login' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <button (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
-  <button (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
-  <a routerLink="/">Home</a>&nbsp;
-  <a routerLink="profile" *ngIf="auth.loggedIn">Profile</a>
+  <div *ngIf="subscribed">
+    <p>{{'You have an active subscription.' | translate}}</p>
+    <ion-button (click)="goEdit()">{{'Continue' | translate}}</ion-button>
+  </div>
+  <div *ngIf="!subscribed">
+    <ion-button (click)="goSettings()">{{'Settings' | translate}}</ion-button>
+    <br />
+    <ion-button (click)="goSubscribe()">{{'Subscribe' | translate}}</ion-button>
+    <br />
+    <div *ngIf="daysleft > 0">
+      <ion-button (click)="goEdit()">{{'Continue using free trial.' | translate}}</ion-button>
+    {{ daysleft }} {{'days left.' | translate}} 
+    </div>
+  </div>
+
+  <!-- <button (click)="auth.login()" *ngIf="!auth.loggedIn">{{'Log In' | translate}}</button> -->
+  <button (click)="auth.logout()" *ngIf="auth.loggedIn">{{'Log Out' | translate}}</button>
+  <a routerLink="/">{{'Home' | translate}}Home</a>&nbsp;
+  <a routerLink="profile" *ngIf="auth.loggedIn">{{'Profile' | translate}}</a>
 </ion-content>

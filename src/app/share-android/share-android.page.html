@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'Share Android'| translate}} - {{'Long Press on image to share'| translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary"   (click)="close()">
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <img [src]="getimage()" [style.height.px]="contentHeight" [style.width.px]="contentWidth" />
+</ion-content>

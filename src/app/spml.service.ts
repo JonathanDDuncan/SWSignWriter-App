@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as convert from 'xml-js';
+import { elementStart } from '@angular/core/src/render3';
 
 export interface Entry {
   key: string;
@@ -10,6 +11,7 @@ export interface Entry {
 
 export interface PuddleInfo {
   puddle: number;
+  puddleName: string;
 }
 
 export interface Puddle {
@@ -28,7 +30,14 @@ export class SpmlService {
 
   convertspml(xml: string): Puddle {
     const spmljs: any = convert.xml2js(xml, { compact: false });
-    const puddleInfo: PuddleInfo = spmljs.elements[1].attributes;
+    const smpl = spmljs && spmljs.elements.length > 1 ? spmljs.elements[1] : undefined;
+    const puddleInfo: PuddleInfo = smpl ?  smpl.attributes : undefined;
+        puddleInfo.puddleName  = smpl
+      && smpl.elements
+      && smpl.elements.length > 0
+      && smpl.elements[0].elements
+      && smpl.elements[0].elements.length > 0
+    ?  smpl.elements[0].elements[0].cdata : undefined;
     const result: Puddle = {
       puddleInfo: puddleInfo,
       entries: this.createEntries(spmljs, puddleInfo.puddle)
@@ -78,13 +87,14 @@ export class SpmlService {
     element: { attributes?: any; elements?: any },
     newEntry: Entry
   ) {
+    const self = this;
     // iterate over spmljs.elements[1].elements[].elements
     if (element && element.elements) {
       element.elements.forEach(entryelement => {
         // iterate over spmljs.elements[1].elements[].elements[].elements
         if (
           entryelement &&
-          (entryelement.name === 'term' || entryelement.name === 'text') &&
+          (entryelement.name === 'term') &&
           entryelement.elements
         ) {
           entryelement.elements.forEach(
@@ -96,8 +106,8 @@ export class SpmlService {
             }) => {
               if (node.type === 'text') {
                 newEntry.fsw = node.text;
-              } else if ((node.type = 'cdata')) {
-                newEntry.glosses.push(this.cleangloss(node.cdata));
+              } else if (node.type === 'cdata') {
+                newEntry.glosses.push(self.cleangloss(node.cdata));
               }
             }
           );
@@ -107,8 +117,14 @@ export class SpmlService {
   }
 
   private cleangloss(gloss: string): string {
-    if (gloss) {
-      return gloss.trim().replace('  ', ' ').replace(/\s+/g, '-');
+    if (gloss.indexOf('SWS-TAG') !== -1) {
+      gloss = '';
+    }
+    if (gloss && gloss.length > 1) {
+      return gloss.trim().replace('  ', ' ').replace('   ', ' ').replace('    ', ' ').replace('     ', ' ')
+      .replace(',', '').replace('.', '').replace('?', '')
+      .replace('!', '').replace('(', '').replace(')', '').replace('"', '').replace(/\s+/g, '-')
+      .replace('--', '-').replace('---', '-').replace('----', '-');
     } else {
       return gloss;
     }

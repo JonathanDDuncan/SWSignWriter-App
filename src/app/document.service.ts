@@ -109,9 +109,11 @@ export class DocumentService {
       { f: ':', t: ' : ' }, { f: ';', t: ' ; ' }, { f: '\t', t: ' ' },
       { f: '   ', t: ' ' }, { f: '  ', t: ' ' }];
 
-    replaceArr.forEach(repl => {
-      tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
-    });
+    if (tobereplaced && tobereplaced.length > 1) {
+      replaceArr.forEach(repl => {
+        tobereplaced = tobereplaced.replace(new RegExp(repl.f, 'g'), repl.t);
+      });
+    }
     return tobereplaced;
   }
 
@@ -177,7 +179,7 @@ export class DocumentService {
     const normalized = this.normalize.normalizeForSearch(searchText);
 
     let type = 'exact';
-    const foundexacts = founds.filter(item => item.gloss.toLowerCase() === searchText.toLowerCase());
+    const foundexacts = founds.filter(item => item && item.gloss && searchText && item.gloss.toLowerCase() === searchText.toLowerCase());
     const exactCount = foundexacts.length;
     let foundexact: Sign;
     if (exactCount > 0) { foundexact = foundexacts[0]; }
@@ -215,10 +217,10 @@ export class DocumentService {
     this.signsLookupService.loadSigns();
   }
 
-  replaceElement(index: number, key: string): void {
+  replaceElement(index: number, result: {sign: string, key: string, gloss: string}): void {
     const signs = this.document.signs;
     const toChange = signs[index];
-    const changeWith = this.signsLookupService.getsign(key);
+    const changeWith = this.signsLookupService.getsign(result.key);
 
     if (toChange && changeWith) {
       const toChangeindex = signs.indexOf(toChange);
@@ -226,10 +228,10 @@ export class DocumentService {
       if (toChangeindex >= 0) {
         signs[toChangeindex] = {
           sign: changeWith,
-          text: changeWith.gloss,
+          text: result.gloss,
           id: changeWith.key + changeWith.gloss,
           svg: ssw.svg(changeWith.fsw),
-          totalmatches: 1,
+          totalmatches: toChange.totalmatches,
           color: this.color.hexcolor(this.color.green),
           lane: toChange.lane
         };
@@ -252,8 +254,11 @@ export class DocumentService {
     return sentence;
   }
 
-  editWordArray(): string[] {
-    const words =  this.signsLookupService.availableWords();
-    return words;
+  showAvailableWords(text: string) {
+    return this.signsLookupService.showAvailableWords(text);
+  }
+
+  async loadSigns() {
+    await this.signsLookupService.loadSigns();
   }
 }
