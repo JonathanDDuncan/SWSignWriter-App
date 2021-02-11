@@ -5,21 +5,15 @@
     </ion-buttons>
     <ion-title>
       {{'Document' | translate}}
-    </ion-title>
+    </ion-title> 
     <ion-item>
       <ion-grid>
-        <ion-row justify-content-center>
+        <ion-row justify-content-center >
           <ion-label>{{'Image height' | translate}}</ion-label>
         </ion-row>
         <ion-row>
-          <ion-range
-            min="50"
-            max="900"
-            step="10"
-            [(ngModel)]="imageheight"
-            pin="true"
-            (ionChange)="heightChange($event)"
-          >
+          <ion-range min="50" max="900" step="10" [(ngModel)]="imageheight" pin="true"
+            (ionChange)="heightChange($event)">
             <ion-icon size="small" slot="start" name="resize"></ion-icon>
             <ion-icon slot="end" name="resize"></ion-icon>
           </ion-range>
@@ -61,16 +55,16 @@
 </div>
   -->
   <ion-fab horizontal="end" slot="fixed" vertical="bottom">
-    <ion-label>{{'Share' | translate}}</ion-label>
-    <!-- <ion-fab-button (click)="share1()" *ngIf="isCordova()">
+       <ion-label>{{'Share' | translate}}</ion-label>
+      <ion-fab-button (click)="share()" *ngIf="isCordova()">
           <ion-icon  name="arrow-dropright-circle" style="zoom:2.0;"></ion-icon>
-      </ion-fab-button> -->
-    <ion-fab-button (click)="share()">
-      <!-- *ngIf="!isCordova()"  -->
-      <ion-icon name="share" style="zoom: 2;"></ion-icon>
-    </ion-fab-button>
+      </ion-fab-button>
+      <ion-fab-button (click)="copy()" *ngIf="!isCordova()" >
+          <ion-icon  name="share" style="zoom:2.0;"></ion-icon>
+      </ion-fab-button>
   </ion-fab>
+ 
 
-  <canvas id="canvas"></canvas>
+  <canvas id='canvas'></canvas>
   <span class="preloadFonts" [innerHTML]="preloadFonts | safeHtml"></span>
 </ion-content>

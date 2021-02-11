@@ -27,12 +27,12 @@ export class StorageService {
     }
   }
 
-  async savePuddle(puddlename: string, result: Puddle): Promise<{name: string, puddlename: string, entries: number }> {
+  async savePuddle(puddlename: string, result: Puddle): Promise<{ puddlename: string, entries: number }> {
     await this.storage.set(puddlename, result);
-    const name = result.puddleInfo.puddleName;
+
     // Save to list of existing puddles
     await this.savePuddleName(puddlename);
-    return { name: name, puddlename: puddlename, entries: result.entries.length };
+    return { puddlename: puddlename, entries: result.entries.length };
   }
 
   private async savePuddleName(puddlename: string): Promise<void> {
@@ -48,8 +48,8 @@ export class StorageService {
     return;
   }
 
-  async setDefaultPuddleLoaded(defaultPuddle: boolean): Promise<any> {
-    return await this.storage.set(this.defaultkey, defaultPuddle);
+  setDefaultPuddleLoaded(defaultPuddle: boolean): void {
+    this.storage.set(this.defaultkey, defaultPuddle);
   }
 
   async getDefaultPuddleLoaded(): Promise<string> {

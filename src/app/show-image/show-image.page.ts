@@ -1,9 +1,7 @@
-import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
-import { uuid } from 'uuidv4';
+
 declare class ClipboardItem {
   constructor(data: { [mimeType: string]: Blob });
 }
@@ -19,41 +17,14 @@ export class ShowImagePage implements OnInit {
   public contentHeight: Number;
   public swCanvas: HTMLCanvasElement; // your canvas element
   public modalCtrl: HTMLIonModalElement;
-  public imageId: string;
 
   @Input() canvas: HTMLCanvasElement;
   constructor(public modalController: ModalController,
     public toastController: ToastController,
-    private sanitizer: DomSanitizer,
-    private translateService: TranslateService,
-    private http: HttpClient) { }
-  private serverUrl =
-    (window.location
-      && window.location.hostname
-      && window.location.hostname.includes('localhost'))
-      ? 'https://localhost:44309/'
-      : 'https://swsignwriterapi.azurewebsites.net/';
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.swCanvas = this.canvas;
-    this.saveToRemote(this.imagebase64);
-  }
-
-  async saveToRemote(imagebase64: string) {
-    this.imageId = uuid();
-    const path = 'api/image/save';
-    const requestBody = {
-      'imageId': this.imageId,
-      'privatekey': '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
-      'dataUrl': imagebase64
-    };
-
-    this.http.post(this.serverUrl + path, requestBody)
-      .toPromise()
-      .then(() => { },
-        error => {
-          console.log(error);
-        });
   }
 
   close() {
@@ -66,20 +37,6 @@ export class ShowImagePage implements OnInit {
     this.contentHeight = this.swCanvas.height / 4;
     this.contentWidth = this.swCanvas.width / 4;
     return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
-  }
-
-  sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
-
-  getRemoteImage() {
-    this.sleep(200);
-
-    return this.serverUrl + 'Content/SignWriting/' + this.imageId + '.png';
   }
 
   async socialShare() {
@@ -99,17 +56,17 @@ export class ShowImagePage implements OnInit {
             files: files
           }).then(async () => {
             await self.presentToast('Thanks for sharing!');
-            console.log(this.translateService.instant('Thanks for sharing!'));
+            console.log('Thanks for sharing!');
           })
             .catch(console.error);
         });
 
     } else {
-      await self.presentToast(this.translateService.instant('Share is not available.'));
+      await self.presentToast('Share is not available.');
     }
   }
 
-  async copyToClipboard(event) {
+  copyToClipboard(event) {
     const self = this;
 
     try {
@@ -118,18 +75,14 @@ export class ShowImagePage implements OnInit {
         if (navigator['clipboard']) {
           // Safe to use Async Clipboard API!
           const clip = navigator['clipboard'] as any;
-          try {
-            clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
-              await self.presentToast('Copied to clipboard successfully!');
-              console.log('Copied to clipboard successfully!');
-            }, async function (err) {
-              console.error(err);
-              await self.presentToast('Unable to write to clipboard. :-(');
-              console.error('Unable to write to clipboard. :-(');
-            });
-          } catch (error) {
-            clip.setImageData(blob, 'image/png');
-          }
+          clip.write([new ClipboardItem({ 'image/png': blob })]).then(async function () {
+            await self.presentToast('Copied to clipboard successfully!');
+            console.log('Copied to clipboard successfully!');
+          }, async function (err) {
+            console.error(err);
+            await self.presentToast('Unable to write to clipboard. :-(');
+            console.error('Unable to write to clipboard. :-(');
+          });
         } else {
           const img = document.createElement('img');
           img.src = canvas.toDataURL();
@@ -140,7 +93,7 @@ export class ShowImagePage implements OnInit {
           r.selectNode(img);
           const sel = window.getSelection();
           sel.addRange(r);
-          const wascopied = document.execCommand('copy');
+          const wascopied = document.execCommand('Copy');
           if (!wascopied) {
             await self.presentToast('You need to right click or long press on image to copy it.');
             alert('You need to right click or long press on image to copy it.');
@@ -151,8 +104,6 @@ export class ShowImagePage implements OnInit {
         }
       });
     } catch (error) {
-      await self.presentToast('Unable to write to clipboard. :-(');
-      console.error('Unable to write to clipboard. :-(');
       console.error(error);
     }
   }
