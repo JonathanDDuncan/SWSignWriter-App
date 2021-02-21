@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
 import { AlertController } from '@ionic/angular';
+import { InAppPurchase2, IAPProduct } from '@ionic-native/in-app-purchase-2/ngx';
+import { profile } from 'console';
 
 @Component({
   selector: 'app-subscribe',
@@ -19,7 +21,8 @@ export class SubscribePage implements OnInit {
     private storage: StorageService,
     private alertController: AlertController,
     private translateService: TranslateService,    
-    private router: Router
+    private router: Router,
+    private store: InAppPurchase2
   ) { }
   private serverUrl =
     (window.location
@@ -55,13 +58,111 @@ export class SubscribePage implements OnInit {
   async SubscribeMonthly() {
     //const planId = 'plan_HHKPHgsv5Vdy49';
     //await this.createSession(planId);
+    this.purchase("AppleProductIdHere");
   }
 
   async SubscribeYearly() {
     //const planId = 'plan_HHKPf6K2bmpeN7';
     //await this.createSession(planId);
+    this.purchase("AppleProductIdHere");
+  }
+
+  async configurePurchasing(productId: string) {    
+
+    const profile = await this.storage.GetCurrentUserProfile();
+    if (!profile || profile === null) {
+      this.router.navigate(['/login']);
+    }
+
+    const subscription = await this.storage.GetSubscription(profile.email);
+    let subscriptionEndDate: Date = new Date();
+    if (subscription) {
+      subscriptionEndDate = subscription.endDate;
+    }
+
+    console.log('Starting Configurations');
+    
+    try {   
+      // Register Product
+      console.log('Registering Product ' + JSON.stringify(productId));
+      this.store.verbosity = this.store.DEBUG;
+      this.store.register({
+        id: productId,
+        alias: productId,
+        type: this.store.PAID_SUBSCRIPTION
+      });
+
+      // Handlers
+      this.store.when(productId).approved((product: IAPProduct) => {
+
+        // Purchase was approved
+        console.log('purchase_approved', /*{programId: this.program._id}*/);
+        product.finish();
+
+        this.subscribe(profile.email, subscriptionEndDate);        
+      });
+
+      this.store.when(productId).registered((product: IAPProduct) => {
+        console.log('Registered: ' + JSON.stringify(product));
+      });
+
+      this.store.when(productId).updated((product: IAPProduct) => {
+        console.log('Loaded' + JSON.stringify(product));
+      });
+
+      this.store.when(productId).cancelled((product) => {
+        console.log('purchase_cancelled', {});
+      });
+
+      this.store.error((err) => {
+        console.log('store_error', {});
+      });
+
+      this.store.ready((status) => {
+        console.log('store_ready', {});
+        console.log(JSON.stringify(this.store.get(productId)));
+        console.log('Store is Ready: ' + JSON.stringify(status));
+        console.log('Products: ' + JSON.stringify(this.store.products));
+      });
+
+      // Errors
+      this.store.when(productId).error((error) => {
+        console.log('An Error Occured' + JSON.stringify(error));
+      });
+
+      // Refresh Always
+      console.log('Refresh Store');
+      this.store.refresh();
+    } catch (err) {
+      console.log('Error On Store Issues' + JSON.stringify(err));
+    }
   }
   
+  async purchase(productId: string) {  
+
+    this.configurePurchasing(productId);        
+    
+    try {
+      let product = this.store.get(productId);
+      console.log('Product Info: ' + JSON.stringify(product));
+      this.store.order(productId).then( () => {       
+        console.log('Purchase Succesfull');      
+      }).catch( () => {
+        console.log('Error Ordering From Store');       
+      });
+    } catch (err) {
+      console.log('Error Ordering ' + JSON.stringify(err));      
+    }
+  }
+
+  subscribe(email: string, endDate: Date) {
+    this.storage.SaveSubscription(
+      email,
+      endDate,
+      false
+    );
+  }
+
   async CancelRenewal() {
     const alert = await this.alertController.create({
       header: this.translateService.instant('Cancel automatic renewal'),
