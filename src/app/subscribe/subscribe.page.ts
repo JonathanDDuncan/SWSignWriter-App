@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
 import { AlertController } from '@ionic/angular';
 import { InAppPurchase2, IAPProduct } from '@ionic-native/in-app-purchase-2/ngx';
-import { profile } from 'console';
 
 @Component({
   selector: 'app-subscribe',
@@ -65,6 +64,10 @@ export class SubscribePage implements OnInit {
     //const planId = 'plan_HHKPf6K2bmpeN7';
     //await this.createSession(planId);
     this.purchase("AppleProductIdHere");
+  }
+
+  async cancelSubscription(){
+    location.href = "https://apps.apple.com/account/subscriptions";
   }
 
   async configurePurchasing(productId: string) {    
