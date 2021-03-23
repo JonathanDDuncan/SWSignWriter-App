@@ -31,6 +31,7 @@ import { SignsLookupService } from './signs-lookup.service';
 import { DocumentService } from './document.service';
 import { SocialSharingService } from './social-sharing.service';
 import { environment } from '../environments/environment';
+import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { environment } from '../environments/environment';
     ShareAndroidPageModule,
     ShareDesktopPageModule,
     PipesModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),   
+    
   ],
   exports: [TranslateModule],
   providers: [
@@ -72,7 +74,8 @@ import { environment } from '../environments/environment';
     SocialSharingService,
     SocialSharing,
     AuthorizationService,
-    UserService
+    UserService,
+    InAppPurchase2
   ],
   bootstrap: [AppComponent]
 })
