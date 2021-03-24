@@ -36,6 +36,7 @@ export class SubscribePage implements OnInit {
       this.router.navigate(['/login']);
     } else {
       const subscription = await this.storage.GetSubscription(profile.email);
+      console.log(subscription);
       if (subscription) {
         this.SetButtonDisabled(subscription.endDate);
         const d = new Date(subscription.endDate);
@@ -43,6 +44,9 @@ export class SubscribePage implements OnInit {
         const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
         this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+
+        console.log(this.subscriptionEndDate);
+
         this.autoRenewal = !subscription.cancelatperiodend;
       }
     }
@@ -89,6 +93,8 @@ export class SubscribePage implements OnInit {
       // Register Product
       console.log('Registering Product ' + JSON.stringify(productId));
       this.store.verbosity = this.store.DEBUG;
+
+      
       this.store.register({
         id: productId,
         alias: productId,
@@ -189,6 +195,8 @@ export class SubscribePage implements OnInit {
                 '**GSew10o0uJiAg4qpTAvQ$KEMaCjC6P7@su2Dd1C9#a8Y$VISWXzYogPhYk&N6p5&cGb1k@nGFX',
               email: profile.email
             };
+            location.href = "https://apps.apple.com/account/subscriptions";
+
             //Stripe Code Was Here
           }
         }
