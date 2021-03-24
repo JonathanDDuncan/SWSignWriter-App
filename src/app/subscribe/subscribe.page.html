@@ -22,9 +22,16 @@
     </ng-template>
     
   </ion-row>
+  <ion-row *ngIf="!subscriptionEndDate">
+    <ion-col style="padding-top: 5%; color: red;">
+      {{'Your free trial or subscription has ended' | translate}}
+    </ion-col> 
+    
+  </ion-row>
+
   <ion-row>
     <ion-col>
-      <p>1 {{'Month FREE' | translate}}</p>
+      <p *ngIf="!subscriptionEndDate">1 {{'Month FREE' | translate}}</p>
       <p>+ {{'$5/month for 11 months' | translate}}</p>
       <ion-button [disabled]="buttonDisabled" (click)="SubscribeYearly()">{{'Subscribe Yearly' | translate}}</ion-button>
     <hr/>
@@ -34,9 +41,9 @@
     </ion-col>
     
   </ion-row>
-  <ion-row>
+  <!-- <ion-row>
       <ion-col>
-        <ion-button (click)="cancelSubscription()">{{'Cancel Subscriptions' | translate}}</ion-button>
+        <ion-button (click)="cancelSubscription()">{{'Cancel Subscription' | translate}}</ion-button>
       </ion-col>    
-  </ion-row>
+  </ion-row> -->
 </ion-content>
