@@ -19,7 +19,7 @@ import { SignsLookupService } from '../signs-lookup.service';
 export class ChooseSignPage implements OnInit, AfterViewInit {
   @Input() entrys: any[];
   @Input() searchword: string;
-  @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
+  @ViewChild('searchRef', { read: ElementRef, static: true }) searchRef: ElementRef;
   private selectedkey: string;
   public elements: { sign: string; key: string; gloss: string }[];
   constructor(
