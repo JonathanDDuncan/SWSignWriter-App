@@ -150,6 +150,6 @@ export class ViewPage implements OnInit {
   private async sharecontinuation1(fsw: string) { }
 
   isCordova() {
-    return !!window.cordova;
+    return !!window['cordova'];
   }
 }
