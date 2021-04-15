@@ -6,8 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SettingsPage } from './settings.page';
-//Pending to fix
-//import { FileDropModule } from 'ngx-file-drop';
+import { NgxFileDropModule } from 'ngx-file-drop';
 import { SharedModule } from '../shared/shared.module';
  
 const routes: Routes = [
@@ -23,7 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    //FileDropModule,
+    NgxFileDropModule,
     SharedModule
   ],
   declarations: [SettingsPage]
