@@ -1,3 +1,5 @@
+/// <reference path="./../../declarations.d.ts" />
+
 import { BrowserTypeService } from './../browser-type.service';
 import { ShareDesktopPage } from './../share-desktop/share-desktop.page';
 import { ShareAndroidPage } from './../share-android/share-android.page';
@@ -10,7 +12,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { DocumentService } from '../document.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 import { ShareIOSPage } from '../share-ios/share-ios.page';
-
 
 @Component({
   selector: 'app-view',

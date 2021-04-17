@@ -1,3 +1,5 @@
+/// <reference path="./../../declarations.d.ts" />
+
 import {
   Input,
   Component,

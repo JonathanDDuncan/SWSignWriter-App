@@ -1,3 +1,5 @@
+/// <reference path="./../declarations.d.ts" />
+
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 
