@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
 import { AlertController } from '@ionic/angular';
 import { InAppPurchase2, IAPProduct } from '@ionic-native/in-app-purchase-2/ngx';
+import { disableDebugTools } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-subscribe',
@@ -50,7 +51,7 @@ export class SubscribePage implements OnInit {
         this.autoRenewal = !subscription.cancelatperiodend;
       }
     }
-  }
+  } 
 
   private SetButtonDisabled(endDate: Date) {
     const subscribed = new Date(endDate) >= new Date();
@@ -61,7 +62,7 @@ export class SubscribePage implements OnInit {
   async SubscribeMonthly() {
     //const planId = 'plan_HHKPHgsv5Vdy49';
     //await this.createSession(planId);
-    this.purchase("AppleProductIdHere");
+    this.purchase("12345678");
   }
 
   async SubscribeYearly() {
@@ -93,7 +94,7 @@ export class SubscribePage implements OnInit {
       // Register Product
       console.log('Registering Product ' + JSON.stringify(productId));
       this.store.verbosity = this.store.DEBUG;
-
+      debugger;
       
       this.store.register({
         id: productId,
@@ -103,7 +104,7 @@ export class SubscribePage implements OnInit {
 
       // Handlers
       this.store.when(productId).approved((product: IAPProduct) => {
-
+        debugger;
         // Purchase was approved
         console.log('purchase_approved', /*{programId: this.program._id}*/);
         product.finish();
@@ -153,6 +154,8 @@ export class SubscribePage implements OnInit {
     
     try {
       let product = this.store.get(productId);
+      console.log(product)
+      debugger;
       console.log('Product Info: ' + JSON.stringify(product));
       this.store.order(productId).then( () => {       
         console.log('Purchase Succesfull');      
