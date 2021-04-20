@@ -32,8 +32,8 @@ export class EditPage implements OnInit, AfterViewInit {
   public editedDocument: EdittedDocument;
   public matchingWords: { gloss: string, normalized: string }[];
 
-  @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
-  @ViewChild('content') private content: any;
+  @ViewChild('searchRef', { read: ElementRef, static: true }) searchRef: ElementRef;
+  @ViewChild('content', { static: true }) private content: any;
 
   constructor(
     public modalController: ModalController,

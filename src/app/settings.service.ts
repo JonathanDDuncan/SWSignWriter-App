@@ -2,7 +2,7 @@ import { SignsLookupService } from './signs-lookup.service';
 import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
 
-import { UploadFile } from 'ngx-file-drop';
+import { NgxFileDropEntry } from 'ngx-file-drop';
 import { SpmlService, Puddle } from './spml.service';
 
 import { HttpClient } from '@angular/common/http';
@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SettingsService {
 
-    public files: UploadFile[] = [];
+    public files: NgxFileDropEntry[] = [];
   data: string;
 
   constructor(private spmlService: SpmlService,
