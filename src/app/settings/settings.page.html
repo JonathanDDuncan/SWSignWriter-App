@@ -162,12 +162,12 @@
     <ion-item [class.collapsed]="!spmldropExpanded" height="200px;">
 
       <div class="center">
-        <ngx-file-drop
+        <file-drop
           dropZoneLabel="{{'Drop SPML file here to add signs' | translate}}"
           (onFileDrop)="dropped($event)"
           (onFileOver)="fileOver($event)"
           (onFileLeave)="fileLeave($event)"
-        ></ngx-file-drop>
+        ></file-drop>
         <input (change)="upload($event)" type="file" />
         <!-- <input #uploader="ngModel" [(ngModel)]="uploaderInput" (change)="upload($event)" type="file"/> -->
         <!-- <ion-button (click)="uploader.click()">
