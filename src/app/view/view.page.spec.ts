@@ -5,7 +5,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { ModalController, AngularDelegate } from '@ionic/angular';
 import { PipesModule } from './../pipes/pipes.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewPage } from './view.page';
 
@@ -13,7 +13,7 @@ describe('ViewPage', () => {
   let component: ViewPage;
   let fixture: ComponentFixture<ViewPage>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [ModalController,
         AngularDelegate,

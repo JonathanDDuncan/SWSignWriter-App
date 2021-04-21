@@ -1,8 +1,8 @@
 import { SubscriptionService } from './../services/subscription.service';
 import { Component, OnInit } from '@angular/core';
 import {
-  NgxFileDropEntry, 
-  FileSystemFileEntry, 
+  UploadEvent,
+  FileSystemFileEntry,
   FileSystemDirectoryEntry
 } from 'ngx-file-drop';
 import { Router } from '@angular/router';
@@ -23,7 +23,6 @@ export class SettingsPage implements OnInit {
   public spmldropExpanded: boolean;
   public loading: HTMLIonLoadingElement;
   public installedPuddles: Array<string>;
-  public files: NgxFileDropEntry[] = [];
 
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
@@ -56,8 +55,8 @@ export class SettingsPage implements OnInit {
     this.installedPuddlesNames();
   }
 
-  dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
+  dropped(event: UploadEvent) {
+    const files = event.files;
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;

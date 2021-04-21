@@ -7,13 +7,13 @@ import { CallbackComponent } from './callback/callback.component';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+    loadChildren: './home/home.module#HomePageModule',
     canActivateChild: [AuthorizationGuard],
     pathMatch: 'full'
   },
   {
     path: 'view',
-    loadChildren: () => import('./view/view.module').then(m => m.ViewPageModule),
+    loadChildren: './view/view.module#ViewPageModule',
     canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'edit',
-    loadChildren: () => import('./edit/edit.module').then(m => m.EditPageModule),
+    loadChildren: './edit/edit.module#EditPageModule',
     canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule),
+    loadChildren: './settings/settings.module#SettingsPageModule',
     canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'choose-sign',
-    loadChildren: () => import('./choose-sign/choose-sign.module').then(m => m.ChooseSignPageModule),
+    loadChildren: './choose-sign/choose-sign.module#ChooseSignPageModule',
     canActivate: [AuthorizationGuard],
 
     data: {
@@ -46,7 +46,7 @@ const routes: Routes = [
   },
   {
     path: 'about',
-    loadChildren: () => import('./about/about.module').then(m => m.AboutPageModule),
+    loadChildren: './about/about.module#AboutPageModule',
     canActivate: [AuthorizationGuard],
     data: {
       allowedRoles: ['subscribed', 'trial']
@@ -63,35 +63,44 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: './home/home.module#HomePageModule'
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: './login/login.module#LoginPageModule'
   },
   {
     path: 'logout',
-    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule)
+    loadChildren: './logout/logout.module#LogoutPageModule'
   },
   {
     path: 'subscribe',
-    loadChildren: () => import('./subscribe/subscribe.module').then(m => m.SubscribePageModule)
+    loadChildren: './subscribe/subscribe.module#SubscribePageModule'
   },
   {
     path: 'callback',
     component: CallbackComponent
-  }, 
-  
-  { path: 'share-ios', loadChildren: () => import('./share-ios/share-ios.module').then(m => m.ShareIOSPageModule) },
-  { path: 'share-desktop', loadChildren: () => import('./share-desktop/share-desktop.module').then(m => m.ShareDesktopPageModule) },
-  { path: 'share-android', loadChildren: () => import('./share-android/share-android.module').then(m => m.ShareAndroidPageModule) },
+  },
+  {
+    path: 'stripesuccess',
+    loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule'
+  },
+  {
+    path: 'stripecancel',
+    loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule'
+  },
+  { path: 'stripesuccess', loadChildren: './stripesuccess/stripesuccess.module#StripesuccessPageModule' },
+  { path: 'stripecancel', loadChildren: './stripecancel/stripecancel.module#StripecancelPageModule' },
+  { path: 'share-ios', loadChildren: './share-ios/share-ios.module#ShareIOSPageModule' },
+  { path: 'share-desktop', loadChildren: './share-desktop/share-desktop.module#ShareDesktopPageModule' },
+  { path: 'share-android', loadChildren: './share-android/share-android.module#ShareAndroidPageModule' },
 
 
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

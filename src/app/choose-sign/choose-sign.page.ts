@@ -1,5 +1,3 @@
-/// <reference path="./../../declarations.d.ts" />
-
 import {
   Input,
   Component,
@@ -21,7 +19,7 @@ import { SignsLookupService } from '../signs-lookup.service';
 export class ChooseSignPage implements OnInit, AfterViewInit {
   @Input() entrys: any[];
   @Input() searchword: string;
-  @ViewChild('searchRef', { read: ElementRef, static: true }) searchRef: ElementRef;
+  @ViewChild('searchRef', { read: ElementRef }) searchRef: ElementRef;
   private selectedkey: string;
   public elements: { sign: string; key: string; gloss: string }[];
   constructor(

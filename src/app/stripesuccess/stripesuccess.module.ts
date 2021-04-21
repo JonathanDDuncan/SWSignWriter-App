@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -5,14 +6,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SettingsPage } from './settings.page';
-import { FileDropModule } from 'ngx-file-drop';
-import { SharedModule } from '../shared/shared.module';
- 
+import { StripesuccessPage } from './stripesuccess.page';
+
 const routes: Routes = [
   {
     path: '',
-    component: SettingsPage
+    component: StripesuccessPage
   }
 ];
 
@@ -21,10 +20,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    FileDropModule,
-    SharedModule
+    TranslateModule,
+    RouterModule.forChild(routes)
   ],
-  declarations: [SettingsPage]
+  declarations: [StripesuccessPage]
 })
-export class SettingsPageModule {}
+export class StripesuccessPageModule {}

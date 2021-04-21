@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareDesktopPage } from './share-desktop.page';
 
@@ -7,7 +7,7 @@ describe('ShareDesktopPage', () => {
   let component: ShareDesktopPage;
   let fixture: ComponentFixture<ShareDesktopPage>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ShareDesktopPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
