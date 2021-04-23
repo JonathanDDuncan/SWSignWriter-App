@@ -33,6 +33,9 @@ import { SocialSharingService } from './social-sharing.service';
 import { environment } from '../environments/environment';
 import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
+import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
+import { AuthService } from './services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +68,8 @@ import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
   ],
   exports: [TranslateModule],
   providers: [
+    AuthService,
+    SafariViewController,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

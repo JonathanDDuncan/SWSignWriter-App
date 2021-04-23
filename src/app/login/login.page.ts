@@ -1,5 +1,6 @@
 import { TrialService } from './../services/trial.service';
-import { AuthService } from './../auth.service';
+//import { AuthService } from './../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
@@ -19,8 +20,7 @@ export class LoginPage implements OnInit {
     private storage: StorageService
   ) { }
 
-  async ngOnInit() {
-    this.auth.localAuthSetup();
+  async ngOnInit() {    
 
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
 
