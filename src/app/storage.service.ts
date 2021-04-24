@@ -90,6 +90,7 @@ export class StorageService {
   }
 
   async GetCurrentUserProfile(): Promise<UserProfile> {
+    console.log(this.userCurrentProfilekey);
     return await this.storage.get(this.userCurrentProfilekey);
   }
 
