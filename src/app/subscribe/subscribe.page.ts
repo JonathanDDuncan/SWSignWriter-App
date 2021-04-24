@@ -33,6 +33,7 @@ export class SubscribePage implements OnInit {
 
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
+    console.log(profile);
     if (!profile || profile === null) {
       this.router.navigate(['/login']);
     } else {

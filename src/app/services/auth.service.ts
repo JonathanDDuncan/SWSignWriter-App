@@ -54,6 +54,7 @@ export class AuthService {
       this.loggedIn = true;
       // Fetch user's profile info
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
+        console.log("Authprofile", profile)
         if (err) {
           throw err;
         }
