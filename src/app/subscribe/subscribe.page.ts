@@ -32,27 +32,39 @@ export class SubscribePage implements OnInit {
       : 'https://swsignwriterapi.azurewebsites.net/';
 
   async ngOnInit() {
-    const profile = await this.storage.GetCurrentUserProfile();
-    console.log(profile);
-    if (!profile || profile === null) {
-      this.router.navigate(['/login']);
-    } else {
-      const subscription = await this.storage.GetSubscription(profile.email);
-      console.log(subscription);
-      if (subscription) {
-        this.SetButtonDisabled(subscription.endDate);
-        const d = new Date(subscription.endDate);
-        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-        this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+    // const profile = await this.storage.GetCurrentUserProfile();
+    // console.log(profile);
+    // if (!profile || profile === null) {
+    //   this.router.navigate(['/login']);
+    // } else {
+    //   const subscription = await this.storage.GetSubscription(profile.email);
+    //   console.log(subscription);
+    //   if (subscription) {
+    //     this.SetButtonDisabled(subscription.endDate);
+    //     const d = new Date(subscription.endDate);
+    //     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    //     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    //     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    //     this.subscriptionEndDate = `${da}-${mo}-${ye}`;
 
-        console.log(this.subscriptionEndDate);
+    //     console.log(this.subscriptionEndDate);
 
-        this.autoRenewal = !subscription.cancelatperiodend;
-      }
-    }
+    //     this.autoRenewal = !subscription.cancelatperiodend;
+    //  }
+    //}
   } 
+
+  async showAlert() {  
+    const alert = await this.alertController.create({  
+      header: 'Alert',  
+      subHeader: 'SubTitle',  
+      message: 'This is an alert message',  
+      buttons: ['OK']  
+    });  
+    await alert.present();  
+    const result = await alert.onDidDismiss();  
+    console.log(result);  
+  }  
 
   private SetButtonDisabled(endDate: Date) {
     const subscribed = new Date(endDate) >= new Date();
@@ -78,16 +90,16 @@ export class SubscribePage implements OnInit {
 
   async configurePurchasing(productId: string) {    
 
-    const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile || profile === null) {
-      this.router.navigate(['/login']);
-    }
+    // const profile = await this.storage.GetCurrentUserProfile();
+    // if (!profile || profile === null) {
+    //   this.router.navigate(['/login']);
+    // }
 
-    const subscription = await this.storage.GetSubscription(profile.email);
-    let subscriptionEndDate: Date = new Date();
-    if (subscription) {
-      subscriptionEndDate = subscription.endDate;
-    }
+    // const subscription = await this.storage.GetSubscription(profile.email);
+    // let subscriptionEndDate: Date = new Date();
+    // if (subscription) {
+    //   subscriptionEndDate = subscription.endDate;
+    // }
 
     console.log('Starting Configurations');
     
@@ -109,8 +121,8 @@ export class SubscribePage implements OnInit {
         // Purchase was approved
         console.log('purchase_approved', /*{programId: this.program._id}*/);
         product.finish();
-
-        this.subscribe(profile.email, subscriptionEndDate);        
+        this.showAlert();
+        //this.subscribe(profile.email, subscriptionEndDate);        
       });
 
       this.store.when(productId).registered((product: IAPProduct) => {
