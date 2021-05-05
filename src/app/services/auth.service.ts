@@ -2,6 +2,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
+import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 
 // Import AUTH_CONFIG, Auth0Cordova, and auth0.js
 import { AUTH_CONFIG } from './auth.config';
@@ -18,7 +19,7 @@ export class AuthService {
   user: any;
   loggedIn: boolean;
   loading = true;
-
+   
   constructor(
     public zone: NgZone,
     private storage: Storage,
@@ -44,10 +45,13 @@ export class AuthService {
         throw err;
       }
       // Set access token
+      console.log(authResult);
+      console.log(authResult.accessToken);
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
       // Set access token expiration
       const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+      console.log(expiresAt);
       this.storage.set('expires_at', expiresAt);
       // Set logged in
       this.loading = false;
@@ -66,9 +70,10 @@ export class AuthService {
   }
 
   logout() {
-      this.accessToken = null;
-      this.user = null;
-      this.loggedIn = false;
+    this.accessToken = null;
+    this.user = null;
+    this.loggedIn = false;
+    if (this.safariViewController) {
       this.safariViewController.isAvailable()
         .then((available: boolean) => {
           const domain = AUTH_CONFIG.domain;
@@ -78,9 +83,9 @@ export class AuthService {
 
           if (available) {
             this.safariViewController.show({ url })
-            .subscribe((result: any) => {
-                if(result.event === 'opened') console.log('Opened');
-                else if(result.event === 'closed') console.log('Closed');
+              .subscribe((result: any) => {
+                if (result.event === 'opened') console.log('Opened');
+                else if (result.event === 'closed') console.log('Closed');
 
                 if (result.event === 'loaded') {
                   console.log('Loaded');
@@ -90,13 +95,14 @@ export class AuthService {
                   this.safariViewController.hide();
                 }
               },
-              (error: any) => console.error(error)
-            );
+                (error: any) => console.error(error)
+              );
           } else {
             // use fallback browser
             cordova.InAppBrowser.open(url, '_system');
           }
         }
-      );
+        );
     }
+  }
 }
