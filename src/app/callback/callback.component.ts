@@ -44,6 +44,8 @@ export class CallbackComponent implements OnInit {
       debugger;
       this.storage.get('profile').then(user => this.user = user);
       console.log(this.user);
+      this.sentry.sentryMessage("User Callback");
+      this.sentry.sentryMessage(this.user);
       if (this.user && this.user !== null) {
         this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
          await this.storageService.SaveCurrentUserProfile(this.user);
