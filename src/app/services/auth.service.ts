@@ -3,6 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
+import { SentryService } from './../sentry.service';
 
 // Import AUTH_CONFIG, Auth0Cordova, and auth0.js
 import { AUTH_CONFIG } from './auth.config';
@@ -19,10 +20,11 @@ export class AuthService {
   user: any;
   loggedIn: boolean;
   loading = true;
-   
+
   constructor(
     public zone: NgZone,
     private storage: Storage,
+    private sentry: SentryService,
     private safariViewController: SafariViewController
   ) {
     this.storage.get('profile').then(user => this.user = user);
@@ -44,13 +46,19 @@ export class AuthService {
         this.zone.run(() => this.loading = false);
         throw err;
       }
+      debugger;
       // Set access token
+      this.sentry.sentryMessage("AuthResult" );
+      this.sentry.sentryMessage(authResult );
       console.log(authResult);
+      this.sentry.sentryMessage("access token" );
+      this.sentry.sentryMessage(authResult.accessToken );
       console.log(authResult.accessToken);
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
       // Set access token expiration
       const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+      this.sentry.sentryMessage(expiresAt);
       console.log(expiresAt);
       this.storage.set('expires_at', expiresAt);
       // Set logged in
@@ -58,6 +66,7 @@ export class AuthService {
       this.loggedIn = true;
       // Fetch user's profile info
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
+        this.sentry.sentryMessage(profile);
         console.log("Authprofile", profile)
         if (err) {
           throw err;
