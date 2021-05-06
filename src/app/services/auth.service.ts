@@ -36,13 +36,17 @@ export class AuthService {
   }
 
   login() {
+    this.sentry.sentryMessage("Starting Login" );
     this.loading = true;
     const options = {
       scope: 'openid profile offline_access'
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
+      this.sentry.sentryMessage("Authorize" );
       if (err) {
+        this.sentry.sentryMessage("err");
+        this.sentry.sentryMessage(err);
         this.zone.run(() => this.loading = false);
         throw err;
       }
