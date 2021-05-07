@@ -60,23 +60,42 @@ export class AuthService {
       console.log(authResult.accessToken);
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
+      this.sentry.sentryMessage("Get ExpiresAt");
+      console.log("Get ExpiresAt");
       // Set access token expiration
       const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       this.sentry.sentryMessage(expiresAt);
       console.log(expiresAt);
+      this.sentry.sentryMessage("Set ExpiresAt");
+      console.log("Set ExpiresAt");
       this.storage.set('expires_at', expiresAt);
       // Set logged in
       this.loading = false;
       this.loggedIn = true;
       // Fetch user's profile info
+      this.sentry.sentryMessage("FetchUserInfo");
+      console.log("FetchUserInfo");
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
+        this.sentry.sentryMessage("Start FetchUserInfo");
+        console.log("Start FetchUserInfo");
         this.sentry.sentryMessage(profile);
         console.log("Authprofile", profile)
         if (err) {
+          this.sentry.sentryMessage("error FetchUserInfo");
+        console.log("error FetchUserInfo");
+        this.sentry.sentryMessage(err);
+        console.log(err);
           throw err;
         }
-        this.storage.set('profile', profile).then(val =>
+        this.sentry.sentryMessage("set profile");
+        console.log("set profile");
+        this.storage.set('profile', profile).then(val =>{
+          this.sentry.sentryMessage("start profile");
+        console.log("start profile");
           this.zone.run(() => this.user = profile)
+          this.sentry.sentryMessage("end");
+          console.log("end");
+        }
         );
       });
     });
