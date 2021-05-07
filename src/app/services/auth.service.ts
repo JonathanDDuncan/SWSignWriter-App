@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 import { SentryService } from './../sentry.service';
+import {Router} from "@angular/router"
 
 // Import AUTH_CONFIG, Auth0Cordova, and auth0.js
 import { AUTH_CONFIG } from './auth.config';
@@ -25,7 +26,8 @@ export class AuthService {
     public zone: NgZone,
     private storage: Storage,
     private sentry: SentryService,
-    private safariViewController: SafariViewController
+    private safariViewController: SafariViewController,
+    private router: Router
   ) {
     this.storage.get('profile').then(user => this.user = user);
     this.storage.get('access_token').then(token => this.accessToken = token);
@@ -99,6 +101,8 @@ export class AuthService {
         );
       });
     });
+
+    this.router.navigate(['/callback'])
   }
 
   logout() {
