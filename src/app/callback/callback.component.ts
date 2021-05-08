@@ -24,6 +24,7 @@ export class CallbackComponent implements OnInit {
   //after this, it calls handleatuhcallback where it checks log in , emits new event with the logged in user, 
   //subscription receives it and it saves the data to storage, Am I right?
   ngOnInit() {
+    this.sentry.sentryMessage("Initiated Callback");
     async () => {
       // this.auth.userProfile$.subscribe(async userProfile => {
 
