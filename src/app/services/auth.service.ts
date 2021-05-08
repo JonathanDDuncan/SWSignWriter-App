@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 import { SentryService } from './../sentry.service';
-import {Router} from "@angular/router"
+import { Router } from "@angular/router"
 
 // Import AUTH_CONFIG, Auth0Cordova, and auth0.js
 import { AUTH_CONFIG } from './auth.config';
@@ -38,14 +38,14 @@ export class AuthService {
   }
 
   login() {
-    this.sentry.sentryMessage("Starting Login" );
+    this.sentry.sentryMessage("Starting Login");
     this.loading = true;
     const options = {
       scope: 'openid profile offline_access'
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
-      this.sentry.sentryMessage("Authorize" );
+      this.sentry.sentryMessage("Authorize");
       if (err) {
         this.sentry.sentryMessage("err");
         this.sentry.sentryMessage(err);
@@ -54,11 +54,11 @@ export class AuthService {
       }
       debugger;
       // Set access token
-      this.sentry.sentryMessage("AuthResult" );
-      this.sentry.sentryMessage(authResult );
+      this.sentry.sentryMessage("AuthResult");
+      this.sentry.sentryMessage(JSON.stringify(authResult));
       console.log(authResult);
-      this.sentry.sentryMessage("access token" );
-      this.sentry.sentryMessage(authResult.accessToken );
+      this.sentry.sentryMessage("access token");
+      this.sentry.sentryMessage(authResult.accessToken);
       console.log(authResult.accessToken);
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
@@ -71,6 +71,8 @@ export class AuthService {
       this.sentry.sentryMessage("Set ExpiresAt");
       console.log("Set ExpiresAt");
       this.storage.set('expires_at', expiresAt);
+      let expire = this.storage.get('expires_at');
+      this.sentry.sentryMessage(expire);
       // Set logged in
       this.loading = false;
       this.loggedIn = true;
@@ -80,29 +82,31 @@ export class AuthService {
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
         this.sentry.sentryMessage("Start FetchUserInfo");
         console.log("Start FetchUserInfo");
-        this.sentry.sentryMessage(profile);
+        this.sentry.sentryMessage(JSON.stringify(profile));
         console.log("Authprofile", profile)
         if (err) {
           this.sentry.sentryMessage("error FetchUserInfo");
-        console.log("error FetchUserInfo");
-        this.sentry.sentryMessage(err);
-        console.log(err);
+          console.log("error FetchUserInfo");
+          this.sentry.sentryMessage(JSON.stringify(err));
+          console.log(err);
           throw err;
         }
         this.sentry.sentryMessage("set profile");
         console.log("set profile");
-        this.storage.set('profile', profile).then(val =>{
+        this.storage.set('profile', profile).then(val => {
           this.sentry.sentryMessage("start profile");
-        console.log("start profile");
+          console.log("start profile");
           this.zone.run(() => this.user = profile)
           this.sentry.sentryMessage("end");
           console.log("end");
+          this.router.navigate(['/callback']);
         }
+        
         );
       });
     });
 
-    this.router.navigate(['/callback'])
+
   }
 
   logout() {
