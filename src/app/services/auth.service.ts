@@ -80,7 +80,7 @@ export class AuthService {
       // Fetch user's profile info
       this.sentry.sentryMessage("FetchUserInfo");
       console.log("FetchUserInfo");
-      this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
+      this.Auth0.client.userInfo(this.accessToken, async (err, profile) => {
         this.sentry.sentryMessage("Start FetchUserInfo");
         console.log("Start FetchUserInfo");
         this.sentry.sentryMessage(JSON.stringify(profile));
@@ -94,7 +94,7 @@ export class AuthService {
         }
         this.sentry.sentryMessage("set profile");
         console.log("set profile");
-        this.storage.set('profile', profile).then(val => {
+        this.storage.set('profile', profile).then(async val => {
           this.sentry.sentryMessage("start profile");
           console.log("start profile");
           this.zone.run(() => this.user = profile)
@@ -102,22 +102,32 @@ export class AuthService {
           console.log("end");
           //this.router.navigate(['/callback']);
         });
-      });
-      
-      //From Callback
-      this.storage.get('profile').then(user => this.user = user);
-      console.log(this.user);
-      this.sentry.sentryMessage("User Callback");
-      this.sentry.sentryMessage(this.user);
-      if (this.user && this.user !== null) {
-        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
-        await this.storageService.SaveCurrentUserProfile(this.user);
 
-        const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
-        if (!trialDate) {
-          this.storageService.SaveTrialStartDate(this.user.email, new Date());
+        if (this.user && this.user !== null) {
+          this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
+          await this.storageService.SaveCurrentUserProfile(this.user);
+  
+          const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
+          if (!trialDate) {
+            this.storageService.SaveTrialStartDate(this.user.email, new Date());
+          }
         }
-      }
+      });
+
+      //From Callback
+      // this.storage.get('profile').then(user => this.user = user);
+      // console.log(this.user);
+      // this.sentry.sentryMessage("User Callback");
+      // this.sentry.sentryMessage(this.user);
+      // if (this.user && this.user !== null) {
+      //   this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
+      //   await this.storageService.SaveCurrentUserProfile(this.user);
+
+      //   const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
+      //   if (!trialDate) {
+      //     this.storageService.SaveTrialStartDate(this.user.email, new Date());
+      //   }
+      // }
 
     });
 
