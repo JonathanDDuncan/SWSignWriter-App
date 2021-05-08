@@ -4,7 +4,8 @@ import { Storage } from '@ionic/storage';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { from, of, Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 import { SentryService } from './../sentry.service';
-import { Router } from "@angular/router"
+import { Router } from "@angular/router";
+import { StorageService } from './../storage.service';
 
 // Import AUTH_CONFIG, Auth0Cordova, and auth0.js
 import { AUTH_CONFIG } from './auth.config';
@@ -25,6 +26,7 @@ export class AuthService {
   constructor(
     public zone: NgZone,
     private storage: Storage,
+    private storageService: StorageService,
     private sentry: SentryService,
     private safariViewController: SafariViewController,
     private router: Router
@@ -37,7 +39,7 @@ export class AuthService {
     });
   }
 
-  login() {
+  async login() {
     this.sentry.sentryMessage("Starting Login");
     this.loading = true;
     const options = {
@@ -71,8 +73,7 @@ export class AuthService {
       this.sentry.sentryMessage("Set ExpiresAt");
       console.log("Set ExpiresAt");
       this.storage.set('expires_at', expiresAt);
-      let expire = this.storage.get('expires_at');
-      this.sentry.sentryMessage(expire);
+
       // Set logged in
       this.loading = false;
       this.loggedIn = true;
@@ -99,13 +100,27 @@ export class AuthService {
           this.zone.run(() => this.user = profile)
           this.sentry.sentryMessage("end");
           console.log("end");
-          this.router.navigate(['/callback']);
-        }
-        
-        );
+          //this.router.navigate(['/callback']);
+        });
       });
+
+
     });
 
+    //From Callback
+    this.storage.get('profile').then(user => this.user = user);
+    console.log(this.user);
+    this.sentry.sentryMessage("User Callback");
+    this.sentry.sentryMessage(this.user);
+    if (this.user && this.user !== null) {
+      this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
+      await this.storageService.SaveCurrentUserProfile(this.user);
+
+      const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
+      if (!trialDate) {
+        this.storageService.SaveTrialStartDate(this.user.email, new Date());
+      }
+    }
 
   }
 

@@ -25,7 +25,7 @@ export class CallbackComponent implements OnInit {
   //subscription receives it and it saves the data to storage, Am I right?
   ngOnInit() {
     this.sentry.sentryMessage("Initiated Callback");
-    async () => {
+   
       // this.auth.userProfile$.subscribe(async userProfile => {
 
       //   if (userProfile && userProfile !== null) {
@@ -42,20 +42,20 @@ export class CallbackComponent implements OnInit {
 
 
       // this.auth.handleAuthCallback();
-      debugger;
-      this.storage.get('profile').then(user => this.user = user);
-      console.log(this.user);
-      this.sentry.sentryMessage("User Callback");
-      this.sentry.sentryMessage(this.user);
-      if (this.user && this.user !== null) {
-        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
-         await this.storageService.SaveCurrentUserProfile(this.user);
+      // debugger;
+      // this.storage.get('profile').then(user => this.user = user);
+      // console.log(this.user);
+      // this.sentry.sentryMessage("User Callback");
+      // this.sentry.sentryMessage(this.user);
+      // if (this.user && this.user !== null) {
+      //   this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
+      //    await this.storageService.SaveCurrentUserProfile(this.user);
 
-        const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
-        if (!trialDate) {
-          this.storageService.SaveTrialStartDate(this.user.email, new Date());
-        }
-      }
-    }
+      //   const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
+      //   if (!trialDate) {
+      //     this.storageService.SaveTrialStartDate(this.user.email, new Date());
+        
+      // }
+    //}
   }
 }
