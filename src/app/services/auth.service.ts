@@ -46,7 +46,7 @@ export class AuthService {
       scope: 'openid profile offline_access'
     };
     // Authorize login request with Auth0: open login page and get auth results
-    this.Client.authorize(options, (err, authResult) => {
+    this.Client.authorize(options, async (err, authResult) => {
       this.sentry.sentryMessage("Authorize");
       if (err) {
         this.sentry.sentryMessage("err");
@@ -103,24 +103,25 @@ export class AuthService {
           //this.router.navigate(['/callback']);
         });
       });
+      
+      //From Callback
+      this.storage.get('profile').then(user => this.user = user);
+      console.log(this.user);
+      this.sentry.sentryMessage("User Callback");
+      this.sentry.sentryMessage(this.user);
+      if (this.user && this.user !== null) {
+        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
+        await this.storageService.SaveCurrentUserProfile(this.user);
 
+        const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
+        if (!trialDate) {
+          this.storageService.SaveTrialStartDate(this.user.email, new Date());
+        }
+      }
 
     });
 
-    //From Callback
-    this.storage.get('profile').then(user => this.user = user);
-    console.log(this.user);
-    this.sentry.sentryMessage("User Callback");
-    this.sentry.sentryMessage(this.user);
-    if (this.user && this.user !== null) {
-      this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
-      await this.storageService.SaveCurrentUserProfile(this.user);
 
-      const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
-      if (!trialDate) {
-        this.storageService.SaveTrialStartDate(this.user.email, new Date());
-      }
-    }
 
   }
 
