@@ -103,14 +103,21 @@ export class AuthService {
           //this.router.navigate(['/callback']);
         });
 
-        if (this.user && this.user !== null) {
-          this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
-          await this.storageService.SaveCurrentUserProfile(this.user);
+        this.sentry.sentryMessage("Profile IF");
+        if (profile && profile !== null) {
+
+          let user = profile;
+          this.sentry.sentryMessage("Save User");
+          await this.storageService.SaveCurrentUserProfile(user);
   
-          const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
+          this.sentry.sentryMessage("Trial Service");
+          const trialDate = await this.storageService.GetTrialStartDate(user.email);
+          this.sentry.sentryMessage(trialDate);
           if (!trialDate) {
-            this.storageService.SaveTrialStartDate(this.user.email, new Date());
+            this.sentry.sentryMessage("New Trial");
+            this.storageService.SaveTrialStartDate(user.email, new Date());
           }
+          this.sentry.sentryMessage('Logged in: ' + JSON.stringify(user));
         }
       });
 
