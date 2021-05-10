@@ -3,7 +3,7 @@
     <name>Quick Sign Document</name>
     <description>Quickly write SignWriting documents</description>
     <author email="duncanjonathan@yahoo.ca" href="https://www.upwork.com/o/profiles/users/_~015c11075498b5d53e/">Jonathan Duncan</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -98,4 +98,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <allow-navigation href="http://localhost:8100" sessionid="70e0660c" />
 </widget>
