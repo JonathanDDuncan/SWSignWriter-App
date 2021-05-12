@@ -40,14 +40,14 @@ export class AuthService {
   }
 
   async login() {
-    this.sentry.sentryMessage("Starting Login");
+    //this.sentry.sentryMessage("Starting Login");
     this.loading = true;
     const options = {
       scope: 'openid profile offline_access'
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, async (err, authResult) => {
-      this.sentry.sentryMessage("Authorize");
+      //this.sentry.sentryMessage("Authorize");
       if (err) {
         this.sentry.sentryMessage("err");
         this.sentry.sentryMessage(err);
@@ -56,21 +56,21 @@ export class AuthService {
       }
       debugger;
       // Set access token
-      this.sentry.sentryMessage("AuthResult");
+      //this.sentry.sentryMessage("AuthResult");
       this.sentry.sentryMessage(JSON.stringify(authResult));
       console.log(authResult);
-      this.sentry.sentryMessage("access token");
+      //this.sentry.sentryMessage("access token");
       this.sentry.sentryMessage(authResult.accessToken);
       console.log(authResult.accessToken);
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
-      this.sentry.sentryMessage("Get ExpiresAt");
+      //this.sentry.sentryMessage("Get ExpiresAt");
       console.log("Get ExpiresAt");
       // Set access token expiration
       const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-      this.sentry.sentryMessage(expiresAt);
+      //this.sentry.sentryMessage(expiresAt);
       console.log(expiresAt);
-      this.sentry.sentryMessage("Set ExpiresAt");
+      //this.sentry.sentryMessage("Set ExpiresAt");
       console.log("Set ExpiresAt");
       this.storage.set('expires_at', expiresAt);
 
@@ -78,43 +78,43 @@ export class AuthService {
       this.loading = false;
       this.loggedIn = true;
       // Fetch user's profile info
-      this.sentry.sentryMessage("FetchUserInfo");
-      console.log("FetchUserInfo");
+      //this.sentry.sentryMessage("FetchUserInfo");
+      //console.log("FetchUserInfo");
       this.Auth0.client.userInfo(this.accessToken, async (err, profile) => {
-        this.sentry.sentryMessage("Start FetchUserInfo");
+        //this.sentry.sentryMessage("Start FetchUserInfo");
         console.log("Start FetchUserInfo");
         this.sentry.sentryMessage(JSON.stringify(profile));
         console.log("Authprofile", profile)
         if (err) {
           this.sentry.sentryMessage("error FetchUserInfo");
-          console.log("error FetchUserInfo");
+          //console.log("error FetchUserInfo");
           this.sentry.sentryMessage(JSON.stringify(err));
           console.log(err);
           throw err;
         }
-        this.sentry.sentryMessage("set profile");
+        //this.sentry.sentryMessage("set profile");
         console.log("set profile");
         this.storage.set('profile', profile).then(async val => {
-          this.sentry.sentryMessage("start profile");
+          //this.sentry.sentryMessage("start profile");
           console.log("start profile");
           this.zone.run(() => this.user = profile)
-          this.sentry.sentryMessage("end");
+          //this.sentry.sentryMessage("end");
           console.log("end");
           //this.router.navigate(['/callback']);
         });
 
-        this.sentry.sentryMessage("Profile IF");
+        //this.sentry.sentryMessage("Profile IF");
         if (profile && profile !== null) {
 
           let user = profile;
-          this.sentry.sentryMessage("Save User");
+          //this.sentry.sentryMessage("Save User");
           await this.storageService.SaveCurrentUserProfile(user);
   
-          this.sentry.sentryMessage("Trial Service");
+          //this.sentry.sentryMessage("Trial Service");
           const trialDate = await this.storageService.GetTrialStartDate(user.email);
           this.sentry.sentryMessage(trialDate);
           if (!trialDate) {
-            this.sentry.sentryMessage("New Trial");
+            //this.sentry.sentryMessage("New Trial");
             this.storageService.SaveTrialStartDate(user.email, new Date());
           }
           this.sentry.sentryMessage('Logged in: ' + JSON.stringify(user));
