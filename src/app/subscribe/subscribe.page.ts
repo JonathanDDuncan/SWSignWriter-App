@@ -6,6 +6,7 @@ import { StorageService } from '../storage.service';
 import { AlertController } from '@ionic/angular';
 import { InAppPurchase2, IAPProduct } from '@ionic-native/in-app-purchase-2/ngx';
 import { SentryService } from './../sentry.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-subscribe',
@@ -23,6 +24,7 @@ export class SubscribePage implements OnInit {
     private translateService: TranslateService,    
     private router: Router,
     private sentry: SentryService,
+    public platform: Platform,
     private store: InAppPurchase2
   ) { }
   private serverUrl =
@@ -54,6 +56,14 @@ export class SubscribePage implements OnInit {
     //  }
     //}
   } 
+
+  ionViewDidEnter() {
+    this.platform.ready().then(() => {
+      this.sentry.sentryMessage("Configure Purchase");
+
+      this.configurePurchasing("12345678");      
+    });
+  }
 
   async showAlert() {  
     const alert = await this.alertController.create({  
@@ -182,9 +192,8 @@ export class SubscribePage implements OnInit {
   }
   
   async purchase(productId: string) {  
-    this.sentry.sentryMessage("Configure Purchase");
-
-    this.configurePurchasing(productId);        
+     
+    this.sentry.sentryMessage("Purchase");     
     
     try {
       let product = this.store.get(productId);
