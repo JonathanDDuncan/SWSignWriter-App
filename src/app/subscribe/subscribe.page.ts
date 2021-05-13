@@ -125,8 +125,7 @@ export class SubscribePage implements OnInit {
       debugger;
       
       this.store.register({
-        id: productId,
-        alias: productId,
+        id: productId,        
         type: this.store.NON_RENEWING_SUBSCRIPTION
       });
       this.sentry.sentryMessage('Registered');
