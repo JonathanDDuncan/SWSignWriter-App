@@ -127,7 +127,7 @@ export class SubscribePage implements OnInit {
       this.store.register({
         id: productId,
         alias: productId,
-        type: this.store.PAID_SUBSCRIPTION
+        type: this.store.NON_RENEWING_SUBSCRIPTION
       });
       this.sentry.sentryMessage('Registered');
       // Handlers
