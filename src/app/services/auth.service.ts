@@ -127,6 +127,7 @@ export class AuthServiceMobile {
     this.accessToken = null;
     this.user = null;
     this.loggedIn = false;
+    this.sentry.sentryMessage("if safariViewController");
     if (this.safariViewController) {
       this.safariViewController.isAvailable()
         .then((available: boolean) => {
@@ -147,7 +148,11 @@ export class AuthServiceMobile {
                   this.storage.remove('access_token');
                   this.storage.remove('expires_at');
                   this.safariViewController.hide();
+                  this.sentry.sentryMessage("removed tokens");
+
                 }
+                this.sentry.sentryMessage("finish");
+
               },
                 (error: any) => console.error(error)
               );
