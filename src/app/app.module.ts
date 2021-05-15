@@ -34,7 +34,7 @@ import { environment } from '../environments/environment';
 import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
-import { AuthService } from './services/auth.service';
+import { AuthServiceMobile } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -68,7 +68,7 @@ import { AuthService } from './services/auth.service';
   ],
   exports: [TranslateModule],
   providers: [
-    AuthService,
+    AuthServiceMobile,
     SafariViewController,
     StatusBar,
     SplashScreen,
