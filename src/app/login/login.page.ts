@@ -1,9 +1,10 @@
 import { TrialService } from './../services/trial.service';
-//import { AuthService } from './../auth.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './../auth.service';
+import { AuthServiceMobile } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -11,22 +12,34 @@ import { StorageService } from '../storage.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public authService;
   public daysleft: number;
   public subscribed: boolean;
   constructor(
     public auth: AuthService,
     private router: Router,
     private trial: TrialService,
-    private storage: StorageService
-  ) { }
+    private storage: StorageService,
+    private authMobile: AuthServiceMobile,
+    public platform: Platform
+  ) {
+    platform.ready().then(() => {
+      if (this.platform.is('cordova'))
+        this.authService = authMobile;
+      else
+        this.authService = auth;
+    });
+   }
 
   async ngOnInit() {    
+    if ( !(this.platform.is('cordova')) )
+      this.auth.localAuthSetup();
 
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
 
     debugger;
     if (!currentUserProfile || currentUserProfile == null) {
-      this.auth.login();
+      this.authService.login();
     }
     try {
       this.daysleft = await this.trial.GetTrialDaysLeft(currentUserProfile.email);
