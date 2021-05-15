@@ -15,7 +15,7 @@ import * as auth0 from 'auth0-js';
 declare let cordova: any;
 
 @Injectable()
-export class AuthService {
+export class AuthServiceMobile {
   Auth0 = new auth0.WebAuth(AUTH_CONFIG);
   Client = new Auth0Cordova(AUTH_CONFIG);
   accessToken: string;
@@ -119,33 +119,15 @@ export class AuthService {
           }
           this.sentry.sentryMessage('Logged in: ' + JSON.stringify(user));
         }
-      });
-
-      //From Callback
-      // this.storage.get('profile').then(user => this.user = user);
-      // console.log(this.user);
-      // this.sentry.sentryMessage("User Callback");
-      // this.sentry.sentryMessage(this.user);
-      // if (this.user && this.user !== null) {
-      //   this.sentry.sentryMessage('Logged in: ' + JSON.stringify(this.user));
-      //   await this.storageService.SaveCurrentUserProfile(this.user);
-
-      //   const trialDate = await this.storageService.GetTrialStartDate(this.user.email);
-      //   if (!trialDate) {
-      //     this.storageService.SaveTrialStartDate(this.user.email, new Date());
-      //   }
-      // }
-
+      });     
     });
-
-
-
   }
 
   logout() {
     this.accessToken = null;
     this.user = null;
     this.loggedIn = false;
+    this.sentry.sentryMessage("if safariViewController");
     if (this.safariViewController) {
       this.safariViewController.isAvailable()
         .then((available: boolean) => {
@@ -166,7 +148,11 @@ export class AuthService {
                   this.storage.remove('access_token');
                   this.storage.remove('expires_at');
                   this.safariViewController.hide();
+                  this.sentry.sentryMessage("removed tokens");
+
                 }
+                this.sentry.sentryMessage("finish");
+
               },
                 (error: any) => console.error(error)
               );
@@ -175,7 +161,7 @@ export class AuthService {
             cordova.InAppBrowser.open(url, '_system');
           }
         }
-        );
+      );
     }
   }
 }
