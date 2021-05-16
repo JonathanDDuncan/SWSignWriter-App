@@ -154,7 +154,7 @@ export class AuthServiceMobile {
                 this.sentry.sentryMessage("finish");
                 this.router.navigate(['/login'])
               },
-                (error: any) => console.error(error)
+                (error: any) => {console.error(error); this.sentry.sentryMessage(JSON.stringify(error));}
               );
           } else {
             // use fallback browser
