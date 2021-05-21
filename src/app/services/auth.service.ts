@@ -152,7 +152,7 @@ export class AuthServiceMobile {
 
                 }
                 this.sentry.sentryMessage("finish");
-                this.router.navigate(['/login'])
+                this.router.navigate(['/home'])
               },
                 (error: any) => {console.error(error); this.sentry.sentryMessage(JSON.stringify(error));}
               );
