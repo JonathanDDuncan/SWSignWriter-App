@@ -39,9 +39,10 @@ export class LoginPage implements OnInit {
 
     debugger;
     if (!currentUserProfile || currentUserProfile == null) {
-      this.authService.login();
+      await this.authService.login();
     }
     try {
+      debugger;
       this.daysleft = await this.trial.GetTrialDaysLeft(currentUserProfile.email);
     } catch { }
     let subscription;

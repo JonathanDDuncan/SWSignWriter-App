@@ -101,5 +101,11 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <plugin name="cordova-plugin-customurlscheme" spec="~4.2.0">
+        <variable name="URL_SCHEME" value="pro.jonathanduncan.swsignwriter" />
+        <variable name="ANDROID_SCHEME" value="pro.jonathanduncan.swsignwriter" />
+        <variable name="ANDROID_HOST" value="swsignwriter-dev.auth0.com" />
+        <variable name="ANDROID_PATHPREFIX" value="/cordova/pro.jonathanduncan.swsignwriter/callback" />
+    </plugin>
     <allow-navigation href="http://localhost:8100" sessionid="398e423b" />
 </widget>
