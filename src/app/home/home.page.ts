@@ -15,11 +15,11 @@ public loggedin: boolean;
   ) { }
 
   async ngOnInit() {
-    const profile = await this.storage.GetCurrentUserProfile();
-    this.loggedin = !(!profile || profile === null);
-    if (this.loggedin) {
-      this.router.navigate(['/login']);
-    }
+    //const profile = await this.storage.GetCurrentUserProfile();
+    //this.loggedin = !(!profile || profile === null);
+    // if (this.loggedin) {
+    //   this.router.navigate(['/login']);
+    // }
   }
 
   goLogin() {
