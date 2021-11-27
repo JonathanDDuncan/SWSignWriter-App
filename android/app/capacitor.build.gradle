@@ -9,6 +9,8 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-app')
+    implementation project(':capacitor-browser')
     implementation project(':capacitor-splash-screen')
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "com.android.billingclient:billing:3.0.3"

@@ -17,6 +17,7 @@ export class CallbackComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    debugger;
     this.auth.userProfile$.subscribe(async userProfile => {
 
       if (userProfile && userProfile !== null) {

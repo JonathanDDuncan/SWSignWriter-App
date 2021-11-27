@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 import { Platform } from '@ionic/angular';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-login',
@@ -23,12 +24,14 @@ export class LoginPage implements OnInit {
     private authMobile: AuthServiceMobile,
     public platform: Platform
   ) {
-    platform.ready().then(() => {
-      if (this.platform.is('cordova'))
-        this.authService = authMobile;
-      else
-        this.authService = auth;
-    });
+    // debugger;
+    // platform.ready().then(() => {    
+    //   debugger;  
+    //   if (Capacitor.isNativePlatform)
+    //     this.authService = authMobile;
+    //   else
+    //     this.authService = auth;
+    // });
    }
 
   async ngOnInit() {    
@@ -38,8 +41,18 @@ export class LoginPage implements OnInit {
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
 
     debugger;
+
+    this.platform.ready().then(() => {    
+      debugger;  
+      if (Capacitor.isNativePlatform)
+        var hello = "yes";
+      else
+       var hello1 = "no";
+    });
+
+
     if (!currentUserProfile || currentUserProfile == null) {
-      await this.authService.login();
+      await this.authMobile.login();
     }
     try {
       debugger;
