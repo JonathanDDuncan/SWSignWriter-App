@@ -23,46 +23,30 @@ export class LoginPage implements OnInit {
     private storage: StorageService,
     private authMobile: AuthServiceMobile,
     public platform: Platform
-  ) {
-    // debugger;
-    // platform.ready().then(() => {    
-    //   debugger;  
-    //   if (Capacitor.isNativePlatform)
-    //     this.authService = authMobile;
-    //   else
-    //     this.authService = auth;
-    // });
-   }
+  ) 
+  {    
+    if (Capacitor.isNativePlatform)
+      this.authService = authMobile;
+    else
+      this.authService = auth;    
+  }
 
-  async ngOnInit() {    
-    if ( !(this.platform.is('cordova')) )
-      this.auth.localAuthSetup();
-
+  async ngOnInit() {  
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
 
-    debugger;
-
-    this.platform.ready().then(() => {    
-      debugger;  
-      if (Capacitor.isNativePlatform)
-        var hello = "yes";
-      else
-       var hello1 = "no";
-    });
-
-
     if (!currentUserProfile || currentUserProfile == null) {
-      await this.authMobile.login();
+      await this.authService.login();
     }
-    try {
-      debugger;
+    
+    try {    
       this.daysleft = await this.trial.GetTrialDaysLeft(currentUserProfile.email);
     } catch { }
+    
     let subscription;
     try {
       subscription = await this.storage.GetSubscription(currentUserProfile.email);
-
     } catch { }
+
     this.subscribed = false;
     if (subscription && new Date(subscription.endDate) >= new Date()) {
       this.subscribed = true;
