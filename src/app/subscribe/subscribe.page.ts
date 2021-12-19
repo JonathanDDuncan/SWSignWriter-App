@@ -18,7 +18,7 @@ export class SubscribePage implements OnInit {
   public subscriptionEndDate: string;
   public autoRenewal: boolean;
 
-  constructor(private http: HttpClient,
+    constructor(private http: HttpClient,
     private storage: StorageService,
     private alertController: AlertController,
     private translateService: TranslateService,    
@@ -26,7 +26,34 @@ export class SubscribePage implements OnInit {
     private sentry: SentryService,
     public platform: Platform,
     private store: InAppPurchase2
-  ) { }
+  ) { 
+    debugger;
+    
+
+      this.store.verbosity = this.store.DEBUG;
+
+      this.registerProducts();
+
+      this.sentry.sentryMessage("Configure Purchase");
+      console.log("Configure Purchase");
+      debugger;
+      this.configurePurchasing("12345678");   
+
+      this.store.ready((status) => {
+        debugger;
+        console.log('store_ready', {});
+        this.sentry.sentryMessage('store_ready');
+        console.log(JSON.stringify(this.store.get("12345678")));
+        this.sentry.sentryMessage(JSON.stringify(this.store.get("12345678")));
+        console.log('Store is Ready: ' + JSON.stringify(status));
+        this.sentry.sentryMessage('Store is Ready: ' + JSON.stringify(status));
+        console.log('Products: ' + JSON.stringify(this.store.products));
+        this.sentry.sentryMessage('Products: ' + JSON.stringify(this.store.products));
+      });
+      
+    
+
+  }
   private serverUrl =
     (window.location
       && window.location.hostname
@@ -57,12 +84,28 @@ export class SubscribePage implements OnInit {
     }
   } 
 
-  ionViewDidEnter() {
-    this.platform.ready().then(() => {
-      this.sentry.sentryMessage("Configure Purchase");
+  // ionViewDidEnter() {
+  //   debugger;
+    
+  // }
 
-      this.configurePurchasing("12345678");      
+  registerProducts(){
+debugger;
+    // this.store.when('product').registered((product: IAPProduct) => {
+    //   console.log('Registered: ' + JSON.stringify(product));
+    //   this.sentry.sentryMessage('Registered: ' + JSON.stringify(product));
+    // });
+
+    // Register Product
+    console.log('Registering Product ' + JSON.stringify("12345678"));
+    this.sentry.sentryMessage('Registering Product ' + JSON.stringify("12345678"));
+
+    this.store.register({
+      id: "12345678",        
+      type: this.store.PAID_SUBSCRIPTION
     });
+
+    this.store.refresh();
   }
 
   async showAlert() {  
@@ -100,8 +143,8 @@ export class SubscribePage implements OnInit {
     location.href = "https://apps.apple.com/account/subscriptions";
   }
 
-  async configurePurchasing(productId: string) {    
-
+   configurePurchasing(productId: string) {    
+    debugger;
     // const profile = await this.storage.GetCurrentUserProfile();
     // if (!profile || profile === null) {
     //   this.router.navigate(['/login']);
@@ -117,39 +160,38 @@ export class SubscribePage implements OnInit {
     this.sentry.sentryMessage("Starting Configuration");
 
     try {   
-      // Register Product
-      console.log('Registering Product ' + JSON.stringify(productId));
-      this.sentry.sentryMessage('Registering Product ' + JSON.stringify(productId));
-
-      this.store.verbosity = this.store.DEBUG;
-      debugger;
       
-      this.store.register({
-        id: productId,        
-        type: this.store.NON_RENEWING_SUBSCRIPTION
-      });
+
+      
+      
+      
+      
       this.sentry.sentryMessage('Registered');
       // Handlers
-      this.store.when(productId).approved((product: IAPProduct) => {
+      this.store.when('product').approved((product: IAPProduct) => {
         debugger;
         // Purchase was approved
         console.log('purchase_approved', /*{programId: this.program._id}*/);
         this.sentry.sentryMessage('purchase_approved');
-        product.finish();
+        //product.finish();       
+        return product.verify();
+        //this.subscribe(profile.email, subscriptionEndDate);        
+      }).verified((p: IAPProduct) => { 
+        p.finish()
         this.sentry.sentryMessage('finished pa');
         this.showAlert();
-        //this.subscribe(profile.email, subscriptionEndDate);        
       });
 
-      this.store.when(productId).registered((product: IAPProduct) => {
-        console.log('Registered: ' + JSON.stringify(product));
-        this.sentry.sentryMessage('Registered: ' + JSON.stringify(product));
+      this.store.when("12345678").owned((p: IAPProduct) => {
+        debugger;
+        console.log('Owned' + JSON.stringify(p));
+        this.sentry.sentryMessage('Owned' + JSON.stringify(p));
       });
 
-      this.store.when(productId).updated((product: IAPProduct) => {
-        console.log('Loaded' + JSON.stringify(product));
-        this.sentry.sentryMessage('Loaded' + JSON.stringify(product));
-      });
+      // this.store.when(productId).updated((product: IAPProduct) => {
+      //   console.log('Loaded' + JSON.stringify(product));
+      //   this.sentry.sentryMessage('Loaded' + JSON.stringify(product));
+      // });
 
       this.store.when(productId).cancelled((product) => {
         console.log('purchase_cancelled', {});
@@ -157,24 +199,17 @@ export class SubscribePage implements OnInit {
       });
 
       this.store.error((err) => {
+        debugger;
         console.log('store_error', {});
         this.sentry.sentryMessage('store_error');
         this.sentry.sentryMessage(JSON.stringify(err));
       });
 
-      this.store.ready((status) => {
-        console.log('store_ready', {});
-        this.sentry.sentryMessage('store_ready');
-        console.log(JSON.stringify(this.store.get(productId)));
-        this.sentry.sentryMessage(JSON.stringify(this.store.get(productId)));
-        console.log('Store is Ready: ' + JSON.stringify(status));
-        this.sentry.sentryMessage('Store is Ready: ' + JSON.stringify(status));
-        console.log('Products: ' + JSON.stringify(this.store.products));
-        this.sentry.sentryMessage('Products: ' + JSON.stringify(this.store.products));
-      });
+      
 
       // Errors
       this.store.when(productId).error((error) => {
+        debugger;
         console.log('An Error Occured' + JSON.stringify(error));
         this.sentry.sentryMessage('An Error Occured' + JSON.stringify(error));
       });
@@ -191,24 +226,27 @@ export class SubscribePage implements OnInit {
   }
   
   async purchase(productId: string) {  
-     
+     debugger;
     this.sentry.sentryMessage("Purchase");     
     
     try {
       let product = this.store.get(productId);
-      console.log(product)
-      this.sentry.sentryMessage(JSON.stringify(product));
-      debugger;
+      
       console.log('Product Info: ' + JSON.stringify(product));
       this.sentry.sentryMessage('Product Info: ' + JSON.stringify(product));
-      this.store.order(productId).then( () => {       
+
+      this.store.order(product).then( () => {     
+        debugger  
+        console.log('Product Info: ' + JSON.stringify(product));
         console.log('Purchase Succesfull');  
         this.sentry.sentryMessage('Purchase Succesfull');    
-      }).catch( () => {
-        console.log('Error Ordering From Store');    
-        this.sentry.sentryMessage('Error Ordering From Store');       
-      });
+      }, e => {
+        debugger;
+        console.log('Error Ordering ', e);  
+        this.sentry.sentryMessage('Error Ordering ' + JSON.stringify(e));    
+      })
     } catch (err) {
+      debugger;
       console.log('Error Ordering ' + JSON.stringify(err)); 
       this.sentry.sentryMessage('Error Ordering ' + JSON.stringify(err));           
     }
