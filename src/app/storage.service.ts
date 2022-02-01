@@ -2,6 +2,10 @@ import { UserProfile } from './user/user-profile';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Puddle } from './spml.service';
+import { JWTService } from './services/jwt.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +18,11 @@ export class StorageService {
   private uiLanguagekey = 'uiLanguage';
   private userCurrentProfilekey = 'userCurrentProfile';
   private firstTimekey = 'firstTime';
+  private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage, 
+    private jwtService: JWTService,
+    private http: HttpClient) { }
 
   async puddlesExists(): Promise<boolean> {
     const puddles = await this.storage.get(this.puddleskey);
@@ -86,7 +93,34 @@ export class StorageService {
   }
 
   SaveCurrentUserProfile(userProfile: UserProfile) {
+    // Save locally
+    debugger;
     this.storage.set(this.userCurrentProfilekey, userProfile);
+
+    // Save in DB
+    this.SaveUserDB();
+
+  }
+
+  SaveUserDB(){
+
+    var token = environment.jwtToken;
+    var verifiedJWT = this.jwtService.getSignatureVerifyResult(environment.jwtToken);
+
+    if(verifiedJWT){
+      this.http.post(this.serverUrl + 'Authenticate/test', {
+        headers: new HttpHeaders({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': token
+        })
+      }).subscribe(response => {
+        console.log('response', response)
+        //this._jwtToken.next(response.json())
+      });
+    }
+    
+
   }
 
   async GetCurrentUserProfile(): Promise<UserProfile> {
