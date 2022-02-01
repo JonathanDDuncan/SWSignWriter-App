@@ -35,7 +35,7 @@ import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { AuthServiceMobile } from './services/auth.service';
-
+import { JWTService } from './services/jwt.service';
 import { AuthModule } from '@auth0/auth0-angular';
 
 const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
@@ -77,6 +77,7 @@ const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.co
   ],
   exports: [TranslateModule],
   providers: [
+    JWTService,
     AuthServiceMobile,
     SafariViewController,
     StatusBar,
