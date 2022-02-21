@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
-import { SubscriptionService } from '../services/subscription.service'; 
+//import { SubscriptionService } from '../services/subscription.service'; 
 import { AuthAngularService } from '../services/authAngular.service';
 
 @Component({
@@ -12,12 +12,12 @@ import { AuthAngularService } from '../services/authAngular.service';
 export class HomePage implements OnInit {
 public loggedin: boolean;
   constructor(
-    private subService : SubscriptionService,
+    //private subService : SubscriptionService,
     public router: Router,
     private storage: StorageService,
     private auth: AuthAngularService
   ) { 
-    this.subService.GetIAPSubscription();
+    //this.subService.GetIAPSubscription();
 
   }
 
