@@ -1,9 +1,10 @@
 import { SentryService } from './../sentry.service';
 import { StorageService } from './../storage.service';
-import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceMobile } from '../services/auth.service';
 import { Platform } from '@ionic/angular';
+import { Capacitor } from '@capacitor/core';
+import { AuthAngularService } from '../services/authAngular.service';
 
 @Component({
   selector: 'app-logout',
@@ -13,20 +14,23 @@ import { Platform } from '@ionic/angular';
 export class LogoutPage implements OnInit {
   authService;
 
-  constructor(private auth: AuthService,
+  constructor(
     private storage: StorageService,
     private sentry: SentryService,
     private authMobile: AuthServiceMobile,
-    public platform: Platform
-  ) {
-    if (this.platform.is('cordova'))
+    public platform: Platform,
+    public authAngular: AuthAngularService
+  ) {    
+      //this.authService = authAngular;    
+      //Detected Circular Dependency in AuthMobile
+      if (Capacitor.isNativePlatform()) {    
         this.authService = authMobile;
+      }
       else
-        this.authService = auth;
+        this.authService = authAngular;    
    }
 
   ngOnInit() {
-    this.storage.SaveCurrentUserProfile(null);
     const userProfile = this.storage.GetCurrentUserProfile();
     this.sentry.sentryMessage('Logged out: ' + JSON.stringify(userProfile));
     this.authService.logout();

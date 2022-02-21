@@ -1,11 +1,10 @@
 import { TrialService } from './../services/trial.service';
-import { AuthService } from './../auth.service';
 import { AuthServiceMobile } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
-import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
+import { AuthAngularService } from '../services/authAngular.service';
 
 @Component({
   selector: 'app-login',
@@ -17,21 +16,21 @@ export class LoginPage implements OnInit {
   public daysleft: number;
   public subscribed: boolean;
   constructor(
-    public auth: AuthService,
     private router: Router,
     private trial: TrialService,
     private storage: StorageService,
-    private authMobile: AuthServiceMobile,
-    public platform: Platform
+    public authMobile: AuthServiceMobile,
+    public authAngular: AuthAngularService,
   ) 
   {    
-    if (Capacitor.isNativePlatform)
+    if (Capacitor.isNativePlatform()) {    
       this.authService = authMobile;
+    }
     else
-      this.authService = auth;    
+      this.authService = authAngular;    
   }
 
-  async ngOnInit() {  
+  async ngOnInit() { 
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
 
     if (!currentUserProfile || currentUserProfile == null) {

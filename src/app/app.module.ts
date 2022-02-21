@@ -36,9 +36,13 @@ import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { AuthServiceMobile } from './services/auth.service';
 import { JWTService } from './services/jwt.service';
-import { AuthModule } from '@auth0/auth0-angular';
+import { AuthModule, AuthService } from '@auth0/auth0-angular';
+import { AuthAngularService } from './services/authAngular.service';
 
 const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
+const redirectUri2 = "http://localhost:4200/callback";
+
+
 
 @NgModule({
   declarations: [
@@ -62,8 +66,10 @@ const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.co
     }),
     AuthModule.forRoot({
       domain: "swsignwriter-dev.auth0.com",
-      clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-      redirectUri
+      clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
+      redirectUri: `${window.location.origin}/callback`
+      //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
+      //redirectUri
     }),
     AppRoutingModule,
     ChooseSignPageModule,
@@ -77,6 +83,7 @@ const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.co
   ],
   exports: [TranslateModule],
   providers: [
+    AuthAngularService,
     JWTService,
     AuthServiceMobile,
     SafariViewController,
@@ -90,7 +97,7 @@ const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.co
     SocialSharing,
     AuthorizationService,
     UserService,
-    InAppPurchase2
+    InAppPurchase2    
   ],
   bootstrap: [AppComponent]
 })

@@ -1,12 +1,9 @@
-import * as crypto from "crypto";
+import { createVerify } from 'crypto-browserify';
 import base64 from 'base64url';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from "src/environments/environment";
-import { IServerCredential } from "../core/models/serverCredential.models"
-
-// request
-
+import { JWKS } from '../jwk/jwk';
+import * as jwkToPem from 'jwk-to-pem';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -17,27 +14,15 @@ export class JWTService {
 
   constructor(private http: HttpClient) { }
 
-  private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
+  async getSignatureVerifyResult(JWT: string) {   
+   
+    var key = await this.getKey(JWT);    
+    var pubKey = jwkToPem(key);
 
-  fetchJWTToken(credentials: IServerCredential){
-    this.http.post(this.serverUrl + 'Authenticate/login', credentials , {
-        headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        })
-      }).subscribe(response => {
-        console.log('response', response)
-        //this._jwtToken.next(response.json())
-      });
-  }
-
-  getSignatureVerifyResult(JWT) {
     if (!JWT || JWT === '') return false;
   
-    const verifyFunction = crypto.createVerify('RSA-SHA256');
-  
-    const PUB_KEY = Buffer.from(environment.publicKey, 'utf-8').toString();
-  
+    const verifyFunction = createVerify('RSA-SHA256');
+    
     const jwtToken = JWT.split('.');
     const jwtHeader = jwtToken[0];
     const jwtPayload = jwtToken[1];
@@ -47,8 +32,27 @@ export class JWTService {
     verifyFunction.end();
   
     const jwtSignatureBase64 = base64.toBase64(jwtSignature);
-    const signatureIsValid = verifyFunction.verify(PUB_KEY, jwtSignatureBase64, 'base64');
+    const signatureIsValid = verifyFunction.verify(pubKey, jwtSignatureBase64, 'base64');
   
     return signatureIsValid; // true
   }
+
+  async getKey(token: string){
+    var stringHeader = atob(token.split(".")[0]);
+    var kid = JSON.parse(stringHeader).kid;
+    var keys = await this.fetchKeys();
+
+    return keys.keys.find(key => key.kid === kid);        
+  }
+
+  fetchKeys(): Promise<JWKS> {
+    return new Promise(resolve => {
+      this.http.get("https://swsignwriter-dev.auth0.com/.well-known/jwks.json" , {
+        headers: new HttpHeaders({
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        })
+      }).subscribe(response => resolve(response as JWKS));    
+    });  
+  } 
 }

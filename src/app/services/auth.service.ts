@@ -15,7 +15,8 @@ const returnTo = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/c
 export class AuthServiceMobile {
   constructor(public auth: AuthService, 
     public storage: StorageService,
-    public sentry: SentryService) {}
+    public sentry: SentryService
+    ) {}
 
   login() {
     this.auth
@@ -54,7 +55,7 @@ export class AuthServiceMobile {
     this.sentry.sentryMessage('Logged in: ' + JSON.stringify(token));
     console.log('tokenclaim: ', token);
     const profile = this.convertTokenToUserProfile(token);
-    this.storage.SaveCurrentUserProfile(profile);
+    this.storage.SaveCurrentUserProfile(token);
     return profile;
   }
 
@@ -63,7 +64,7 @@ export class AuthServiceMobile {
     if (!trialDate) {
       this.storage.SaveTrialStartDate(profile.email, new Date());
     }
-  }
+  }  
 
   convertTokenToUserProfile (token : IdToken): UserProfile {
     return {
@@ -77,6 +78,6 @@ export class AuthServiceMobile {
       picture: token.picture,
       sub: token.sub,
       updated_at: token.updated_at
-    };
+    }
   }
 }

@@ -21,7 +21,7 @@
   </div>
 
   <!-- <button (click)="auth.login()" *ngIf="!auth.loggedIn">{{'Log In' | translate}}</button> -->
-  <button (click)="auth.logout()" *ngIf="auth.loggedIn">{{'Log Out' | translate}}</button>
+  <button (click)="authService.logout()" *ngIf="authService.isAuthenticated$ | async;">{{'Log Out' | translate}}</button>
   <a routerLink="/">{{'Home' | translate}}Home</a>&nbsp;
-  <a routerLink="profile" *ngIf="auth.loggedIn">{{'Profile' | translate}}</a>
+  <a routerLink="profile" *ngIf="authService.isAuthenticated$ | async;">{{'Profile' | translate}}</a>
 </ion-content>

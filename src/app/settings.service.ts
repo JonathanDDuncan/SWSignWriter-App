@@ -58,6 +58,7 @@ export class SettingsService {
   }
 
   async loadPuddle(xml: string) {
+    debugger;
     const saveresult = await this.saveSpml(xml);
     await this.presentToast(saveresult);
     this.signsLookupService.loadSigns();
@@ -65,6 +66,7 @@ export class SettingsService {
   }
 
   async saveSpml(spml: string): Promise<{name: string, puddlename: string, entries: number }> {
+    debugger;
     const result: Puddle = this.spmlService.convertspml(spml);
     const puddlename = 'puddle_' + result.puddleInfo.puddle;
 

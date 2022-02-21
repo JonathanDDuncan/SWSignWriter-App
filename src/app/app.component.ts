@@ -60,7 +60,6 @@ export class AppComponent implements OnInit {
       // Must run inside an NgZone for Angular to pick up the changes
       // https://capacitorjs.com/docs/guides/angular
       this.ngZone.run(() => { 
-        debugger;       
         if (url?.startsWith(callbackUri)) {
           // If the URL is an authentication callback URL..
           if (
@@ -71,14 +70,7 @@ export class AppComponent implements OnInit {
             this.auth
               .handleRedirectCallback(url)
               .pipe()
-              .subscribe();
-
-
-
-            // debugger;
-            // console.log(this.auth.isAuthenticated$);
-            // console.log(this.auth.idTokenClaims$);
-            // debugger;
+              .subscribe();           
           } else {
             //Browser.close();
           }

@@ -1,38 +1,53 @@
 import { SentryService } from './../sentry.service';
 import { StorageService } from './../storage.service';
 import { Component, OnInit, PipeTransform } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthAngularService } from '../services/authAngular.service';
+import { AuthService, IdToken } from '@auth0/auth0-angular';
+import { UserProfile } from '../user/user-profile';
 
 @Component({
   selector: 'app-callback',
   templateUrl: './callback.component.html',
   styleUrls: ['./callback.component.scss']
 })
-export class CallbackComponent implements OnInit {
-
+export class CallbackComponent implements OnInit { 
   user: any;
   constructor(private auth: AuthService,
     private storage: StorageService,
-    private sentry: SentryService
-  ) { }
+    private sentry: SentryService,
+    private auth0: AuthAngularService){      
+     }
+    
 
   ngOnInit() {
-    debugger;
-    this.auth.userProfile$.subscribe(async userProfile => {
+    const tokenClaim = this.auth.idTokenClaims$.subscribe(async user => {      
+      if(user != null){
+        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(user));
+        var userProfile = this.convertTokenToUserProfile(user);
+        this.storage.SaveCurrentUserProfile(user);
+      
 
-      if (userProfile && userProfile !== null) {
-        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(userProfile));
-        this.storage.SaveCurrentUserProfile(userProfile);
-
-        const trialDate = await this.storage.GetTrialStartDate(userProfile.email);
-        if (!trialDate) {
-          this.storage.SaveTrialStartDate(userProfile.email, new Date());
-        }
+        this.storage.GetTrialStartDate(userProfile.email).then(trialDate => {
+          if (!trialDate) {
+            this.storage.SaveTrialStartDate(userProfile.email, new Date());
+          }
+        });
       }
+    });    
+  }  
+
+  convertTokenToUserProfile (token : IdToken): UserProfile {
+    return {
+      email: token.email,
+      email_verified: token.email_verified,
+      family_name: token.family_name,
+      given_name: token.given_name,
+      locale: token.locale,
+      name: token.name,
+      nickname: token.nickname,
+      picture: token.picture,
+      sub: token.sub,
+      updated_at: token.updated_at
     }
-    );
-
-    this.auth.handleAuthCallback();
-
   }
 }
