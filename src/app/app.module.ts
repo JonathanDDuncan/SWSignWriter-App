@@ -38,6 +38,7 @@ import { AuthServiceMobile } from './services/auth.service';
 import { JWTService } from './services/jwt.service';
 import { AuthModule, AuthService } from '@auth0/auth0-angular';
 import { AuthAngularService } from './services/authAngular.service';
+import { StripeService } from './stripe.service';
 
 const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 const redirectUri2 = "http://localhost:4200/callback";
@@ -97,7 +98,8 @@ const redirectUri2 = "http://localhost:4200/callback";
     SocialSharing,
     AuthorizationService,
     UserService,
-    InAppPurchase2    
+    InAppPurchase2,
+    StripeService
   ],
   bootstrap: [AppComponent]
 })
