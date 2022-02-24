@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": [ "node" ],
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -18,5 +19,8 @@
       "es2018",
       "dom"
     ]
-  }
+  },
+  "files": [
+    "./node_modules/@types/node/index.d.ts"
+  ]
 }

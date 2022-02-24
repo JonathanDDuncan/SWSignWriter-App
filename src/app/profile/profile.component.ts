@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { Capacitor } from '@capacitor/core';
+import { AuthAngularService } from '../services/authAngular.service';
+import { AuthServiceMobile } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,8 +9,15 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
-  constructor(public auth: AuthService) { }
+  authService;
+  constructor(private authMobile: AuthServiceMobile,    
+    public authAngular: AuthAngularService) { 
+    if (Capacitor.isNativePlatform()) {    
+      this.authService = authMobile;
+    }
+    else
+      this.authService = authAngular;    
+  }
 
   ngOnInit() {
   }

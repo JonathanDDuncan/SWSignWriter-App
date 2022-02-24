@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+import { IdToken } from '@auth0/auth0-spa-js';
+
 export interface UserProfile {
     email: string;
     email_verified: boolean;

@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+// import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './settings.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import Auth0Cordova from '@auth0/cordova';
+import {SplashScreen} from '@capacitor/splash-screen';
+
+import { AuthService } from '@auth0/auth0-angular';
+import { mergeMap } from 'rxjs/operators';
+import { Browser } from '@capacitor/browser';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { Router } from '@angular/router';
+
+const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
+
 export class AppComponent implements OnInit {
 
   public appPages: {
@@ -19,10 +30,13 @@ export class AppComponent implements OnInit {
   }[];
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
+    // private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private settingsService: SettingsService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public auth: AuthService, 
+    private ngZone: NgZone,
+    private router: Router
   ) {
     this.translate.setDefaultLang('en');
 
@@ -40,6 +54,30 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
+
+     // Use Capacitor's App plugin to subscribe to the `appUrlOpen` event
+     App.addListener('appUrlOpen', ({ url }) => {     
+      // Must run inside an NgZone for Angular to pick up the changes
+      // https://capacitorjs.com/docs/guides/angular
+      this.ngZone.run(() => { 
+        if (url?.startsWith(callbackUri)) {
+          // If the URL is an authentication callback URL..
+          if (
+            url.includes('state=') &&
+            (url.includes('error=') || url.includes('code='))
+          ) {        
+            // Call handleRedirectCallback and close the browser
+            this.auth
+              .handleRedirectCallback(url)
+              .pipe()
+              .subscribe();           
+          } else {
+            //Browser.close();
+          }
+        }
+      });
+    });
+
     this.translate.onLangChange.subscribe((params: LangChangeEvent) => {
       this.translateMenu();
     });
@@ -89,9 +127,17 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 2000);
     });
+
+    // Redirect back to app after authenticating
+    (window as any).handleOpenURL = (url: string) => {
+      Auth0Cordova.onRedirectUri(url);
+    }
   }
-
-
 }
+
+
+
