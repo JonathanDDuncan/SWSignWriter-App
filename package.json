@@ -49,6 +49,7 @@
     "@sentry/browser": "^5.30.0",
     "@sentry/cli": "^1.64.0",
     "ajv": "^6.12.6",
+    "angular-cli-ghpages": "^1.0.0",
     "auth0-js": "^9.15.0",
     "base64url": "^3.0.1",
     "cordova-plugin-device": "^2.0.3",
