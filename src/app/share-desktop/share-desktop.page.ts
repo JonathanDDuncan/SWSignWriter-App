@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { uuid } from 'uuidv4';
@@ -32,11 +32,16 @@ export class ShareDesktopPage implements OnInit {
     public toastController: ToastController,
     private sanitizer: DomSanitizer,
     private translateService: TranslateService,
+    private ref: ChangeDetectorRef,
     private http: HttpClient) { }
 
   ngOnInit() {
     this.swCanvas = this.canvas;
     this.saveToRemote(this.imagebase64);
+  }
+
+  ngAfterContentChecked() {
+    this.ref.detectChanges();
   }
 
   async saveToRemote(imagebase64: string) {

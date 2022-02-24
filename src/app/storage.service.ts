@@ -2,6 +2,10 @@ import { UserProfile } from './user/user-profile';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Puddle } from './spml.service';
+import { JWTService } from './services/jwt.service';
+import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
+import { IdToken } from '@auth0/auth0-spa-js';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +18,11 @@ export class StorageService {
   private uiLanguagekey = 'uiLanguage';
   private userCurrentProfilekey = 'userCurrentProfile';
   private firstTimekey = 'firstTime';
+  private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage, 
+    private jwtService: JWTService,
+    private http: HttpClient) { }
 
   async puddlesExists(): Promise<boolean> {
     const puddles = await this.storage.get(this.puddleskey);
@@ -85,11 +92,36 @@ export class StorageService {
     return await this.storage.get(this.uiLanguagekey);
   }
 
-  SaveCurrentUserProfile(userProfile: UserProfile) {
-    this.storage.set(this.userCurrentProfilekey, userProfile);
+  SaveCurrentUserProfile(token: IdToken) {
+    // Save locally  
+    this.storage.set(this.userCurrentProfilekey, this.convertTokenToUserProfile(token));
+
+    // Save in DB
+    this.SaveUserDB(token);
+
+  }
+
+  RemoveCurrentUserProfile() {  
+    this.storage.remove(this.userCurrentProfilekey);
+  }
+
+  SaveUserDB(token: IdToken){
+    var verifiedJWT = this.jwtService.getSignatureVerifyResult(token.__raw);
+    
+    if(verifiedJWT){           
+      
+        const options = {
+          headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json'),
+          params: new HttpParams().append('token', token.__raw)
+        }        
+
+      this.http.post(this.serverUrl + 'api/Users/SaveUser', { }, options)
+      .subscribe(response => console.log('response', response));    
+    }   
   }
 
   async GetCurrentUserProfile(): Promise<UserProfile> {
+    console.log(this.userCurrentProfilekey);
     return await this.storage.get(this.userCurrentProfilekey);
   }
 
@@ -165,5 +197,20 @@ export class StorageService {
     const key = this.Obfuscate(email + 'trialStartDate');
     const date = this.Obfuscate(startDate.toString());
     this.storage.set(key, date);
+  }
+
+  convertTokenToUserProfile (token : IdToken): UserProfile {
+    return {
+      email: token.email,
+      email_verified: token.email_verified,
+      family_name: token.family_name,
+      given_name: token.given_name,
+      locale: token.locale,
+      name: token.name,
+      nickname: token.nickname,
+      picture: token.picture,
+      sub: token.sub,
+      updated_at: token.updated_at
+    }
   }
 }

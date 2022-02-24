@@ -11,6 +11,7 @@ import { SettingsService } from '../settings.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-settings',
@@ -23,6 +24,8 @@ export class SettingsPage implements OnInit {
   public spmldropExpanded: boolean;
   public loading: HTMLIonLoadingElement;
   public installedPuddles: Array<string>;
+  public files: NgxFileDropEntry[] = [];
+  private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
 
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
@@ -31,7 +34,8 @@ export class SettingsPage implements OnInit {
     private translateService: TranslateService,
     private subscriptionService: SubscriptionService,
     public loadingController: LoadingController,
-    private router: Router) {
+    private router: Router,
+    private http: HttpClient) {
     this.spmldropExpanded = false;
   }
 
@@ -122,26 +126,29 @@ export class SettingsPage implements OnInit {
   }
 
   private xhrDownloadPuddle() {
-    const data = 'action=Download&ex_source=All';
-    let puddle = 0;
+    try {
+      let puddle = 0;
     puddle = parseInt(this.puddleID, 10);
     if (isNaN(puddle)) {
       puddle = 4;
     }
-    const url = 'https://cors-anywhere.herokuapp.com/http://www.signbank.org/signpuddle2.0/export.php?ui=1&sgn=' + puddle.toString();
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-    const thispage = this;
-    xhr.addEventListener('readystatechange', async function () {
-      if (this.readyState === 4) {
-        await thispage.settingsService.loadPuddle(this.responseText);
-        await thispage.signsLoaded();
+      const options = {        
+        params: new HttpParams().append('UI', "1").append("sign", puddle.toString())
+      }        
+
+    this.http.post(this.serverUrl + 'api/Puddle/GetPuddle', { }, options)
+    .subscribe(async response => { 
+      console.log('response', response);
+      try {
+        await this.settingsService.loadPuddle(response.toString());
+        await this.signsLoaded();
+      } catch (error) {
+        console.log(error);
       }
-    });
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('Accept', 'application/xml');
-    xhr.send(data);
+    });     
+  } catch (error) {
+    console.log(error);
+  }
   }
 
   async signsLoaded() {

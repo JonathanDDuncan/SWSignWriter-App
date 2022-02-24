@@ -1,7 +1,8 @@
 {
   "name": "SWSignWriter",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular",
   "id": "e919ffd2"

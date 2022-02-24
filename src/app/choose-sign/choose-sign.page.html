@@ -15,7 +15,7 @@
         <ion-label>{{ item.gloss }}</ion-label>
       </div>
       <ion-label> </ion-label>
-      <ion-radio [value]="item.key" (ionSelect)="radioChecked(item.key)" slot="start"></ion-radio>
+      <ion-radio [value]="item.key" (click)="radioChecked(item.key)" slot="start"></ion-radio>
     </ion-item>
   </ion-radio-group>
 </ion-content>

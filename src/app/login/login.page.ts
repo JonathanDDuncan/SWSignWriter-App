@@ -1,8 +1,10 @@
 import { TrialService } from './../services/trial.service';
-import { AuthService } from './../auth.service';
+import { AuthServiceMobile } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
+import { Capacitor } from '@capacitor/core';
+import { AuthAngularService } from '../services/authAngular.service';
 
 @Component({
   selector: 'app-login',
@@ -10,32 +12,40 @@ import { StorageService } from '../storage.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public authService;
   public daysleft: number;
   public subscribed: boolean;
   constructor(
-    public auth: AuthService,
     private router: Router,
     private trial: TrialService,
-    private storage: StorageService
-  ) { }
+    private storage: StorageService,
+    public authMobile: AuthServiceMobile,
+    public authAngular: AuthAngularService,
+  ) 
+  {    
+    if (Capacitor.isNativePlatform()) {    
+      this.authService = authMobile;
+    }
+    else
+      this.authService = authAngular;    
+  }
 
-  async ngOnInit() {
-    this.auth.localAuthSetup();
-
+  async ngOnInit() { 
     const currentUserProfile = await this.storage.GetCurrentUserProfile();
 
-    debugger;
     if (!currentUserProfile || currentUserProfile == null) {
-      this.auth.login();
+      await this.authService.login();
     }
-    try {
+    
+    try {    
       this.daysleft = await this.trial.GetTrialDaysLeft(currentUserProfile.email);
     } catch { }
+    
     let subscription;
     try {
       subscription = await this.storage.GetSubscription(currentUserProfile.email);
-
     } catch { }
+
     this.subscribed = false;
     if (subscription && new Date(subscription.endDate) >= new Date()) {
       this.subscribed = true;
