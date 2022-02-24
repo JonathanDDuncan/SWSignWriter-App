@@ -96,7 +96,7 @@ const redirectUri2 = "http://localhost:4200/callback";
     SocialSharing,
     AuthorizationService,
     UserService,
-    InAppPurchase2,
+    //InAppPurchase2,
     StripeService
   ],
   bootstrap: [AppComponent]
