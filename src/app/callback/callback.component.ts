@@ -22,10 +22,11 @@ export class CallbackComponent implements OnInit {
   ngOnInit() {
     const tokenClaim = this.auth.idTokenClaims$.subscribe(async user => {      
       if(user != null){
+        debugger;
         this.sentry.sentryMessage('Logged in: ' + JSON.stringify(user));
         var userProfile = this.convertTokenToUserProfile(user);
         this.storage.SaveCurrentUserProfile(user);
-      
+        this.storage.SaveJWTToken(user.__raw);
 
         this.storage.GetTrialStartDate(userProfile.email).then(trialDate => {
           if (!trialDate) {
