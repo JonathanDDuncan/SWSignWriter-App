@@ -97,8 +97,33 @@ export class StorageService {
     this.storage.set(this.userCurrentProfilekey, this.convertTokenToUserProfile(token));
 
     // Save in DB
-    this.SaveUserDB(token);
+    this.SaveUserDB(token);   
+  }
 
+  SaveJWTToken(token:string){
+    this.storage.set("JWTToken", token);
+  }
+
+  async GetJWTToken(): Promise<string> {
+    var token = await this.storage.get("JWTToken");
+    return token as string;
+  }
+
+  async SaveUserSubscription(isSubscribed: Boolean){
+    isSubscribed = true;
+    var token = await this.GetJWTToken();
+    var verifiedJWT = this.jwtService.getSignatureVerifyResult(token);
+    
+    if(verifiedJWT){           
+      
+        const options = {
+          headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json'),
+          params: new HttpParams().append('token', token).append('isSubscribed', isSubscribed.toString())
+        }        
+
+      this.http.post(this.serverUrl + 'api/Users/SaveUserSubscription', { }, options)
+      .subscribe(response => console.log('response', response));    
+    }   
   }
 
   RemoveCurrentUserProfile() {  

@@ -39,6 +39,7 @@ import { JWTService } from './services/jwt.service';
 import { AuthModule, AuthService } from '@auth0/auth0-angular';
 import { AuthAngularService } from './services/authAngular.service';
 import { StripeService } from './stripe.service';
+import { AndroidSubscriptionService } from './services/androidSubscription.service';
 
 const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 const redirectUri2 = "http://localhost:4200/callback";
@@ -84,6 +85,7 @@ const redirectUri2 = "http://localhost:4200/callback";
   ],
   exports: [TranslateModule],
   providers: [
+    AndroidSubscriptionService,
     AuthAngularService,
     JWTService,
     AuthServiceMobile,

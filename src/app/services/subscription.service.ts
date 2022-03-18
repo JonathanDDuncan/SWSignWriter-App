@@ -319,6 +319,7 @@ export class SubscriptionService {
     const isSubscribed = await this.GetSubscriptionDaysLeft(email) > 0;
 
     const isSubscribedOrTrial = isTrial || isSubscribed;
+    if(isSubscribed) await this.storage.SaveUserSubscription(isSubscribed);
 
    return isSubscribed;
   }

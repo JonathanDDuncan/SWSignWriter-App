@@ -17,7 +17,7 @@ export class AuthAngularService {
     }
 
     logout(){
-        this.auth.logout({ returnTo: "http://localhost:4200/" })
+        this.auth.logout({ returnTo: location.href })
         this.storage.RemoveCurrentUserProfile();
     }    
 
