@@ -166,6 +166,8 @@ export class StorageService {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
     const subscription = this.Obfuscate( JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend}) );
     this.storage.set(key, subscription);
+    //change in the future
+    this.SaveUserSubscription(true);
   }
 
   async GetSubscription(email: string): Promise<{endDate: Date, cancelatperiodend: boolean }> {

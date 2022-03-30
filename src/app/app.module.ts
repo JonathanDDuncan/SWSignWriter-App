@@ -14,6 +14,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -31,7 +33,7 @@ import { SignsLookupService } from './signs-lookup.service';
 import { DocumentService } from './document.service';
 import { SocialSharingService } from './social-sharing.service';
 import { environment } from '../environments/environment';
-import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
+import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { AuthServiceMobile } from './services/auth.service';
@@ -40,10 +42,11 @@ import { AuthModule, AuthService } from '@auth0/auth0-angular';
 import { AuthAngularService } from './services/authAngular.service';
 import { StripeService } from './stripe.service';
 import { AndroidSubscriptionService } from './services/androidSubscription.service';
+import { Capacitor } from '@capacitor/core';
 
 const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 const redirectUri2 = "http://localhost:4200/callback";
-
+const native = Capacitor.isNativePlatform();
 
 
 @NgModule({
@@ -66,7 +69,13 @@ const redirectUri2 = "http://localhost:4200/callback";
     IonicStorageModule.forRoot({
       name: '__swsignwriterdb'
     }),
-    AuthModule.forRoot({
+    AuthModule.forRoot(native ? {
+      domain: "swsignwriter-dev.auth0.com",
+      clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
+      redirectUri
+      //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
+      //redirectUri
+    } : {
       domain: "swsignwriter-dev.auth0.com",
       clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
       redirectUri: `${window.location.origin}/callback`
@@ -101,11 +110,12 @@ const redirectUri2 = "http://localhost:4200/callback";
     AuthorizationService,
     UserService,
     InAppPurchase2,
-    StripeService
+    StripeService,
+    HTTP
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

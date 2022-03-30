@@ -3,6 +3,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CallbackComponent } from './callback/callback.component';
+import { Capacitor } from '@capacitor/core';
 
 const routes: Routes = [
   {
@@ -75,7 +76,13 @@ const routes: Routes = [
   },
   {
     path: 'subscribe',
-    loadChildren: () => import('./subscribe/subscribe.module').then(m => m.SubscribePageModule)
+    loadChildren: () => { 
+      if (Capacitor.isNativePlatform()) {    
+        return import('./subscribeAndroid/subscribeAndroid.module').then(m => m.SubscribeAndroidPageModule)
+      }
+      else
+        return import('./subscribe/subscribe.module').then(m => m.SubscribePageModule)
+      }
   },
   {
     path: 'callback',
