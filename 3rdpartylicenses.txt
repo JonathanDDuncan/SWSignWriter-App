@@ -93,6 +93,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+@awesome-cordova-plugins/core
+MIT
+
+@awesome-cordova-plugins/http
+MIT
+
+@awesome-cordova-plugins/in-app-purchase-2
+MIT
+
 @babel/runtime
 MIT
 MIT License
@@ -227,9 +236,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 @ionic-native/core
-MIT
-
-@ionic-native/in-app-purchase-2
 MIT
 
 @ionic-native/safari-view-controller
