@@ -5,6 +5,7 @@ import { Puddle } from './spml.service';
 import { JWTService } from './services/jwt.service';
 import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
 import { IdToken } from '@auth0/auth0-spa-js';
+import { Capacitor } from '@capacitor/core';
 
 
 @Injectable({
@@ -115,10 +116,12 @@ export class StorageService {
     var verifiedJWT = this.jwtService.getSignatureVerifyResult(token);
     
     if(verifiedJWT){           
+
+      var type = Capacitor.isNativePlatform ? "android" : "stripe";
       
         const options = {
           headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json'),
-          params: new HttpParams().append('token', token).append('isSubscribed', isSubscribed.toString())
+          params: new HttpParams().append('token', token).append('isSubscribed', isSubscribed.toString()).append('subscriptionType', type)
         }        
 
       this.http.post(this.serverUrl + 'api/Users/SaveUserSubscription', { }, options)
@@ -166,6 +169,8 @@ export class StorageService {
     const key = this.Obfuscate(email + 'subscriptionEndDate');
     const subscription = this.Obfuscate( JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend}) );
     this.storage.set(key, subscription);
+    //change in the future
+    this.SaveUserSubscription(true);
   }
 
   async GetSubscription(email: string): Promise<{endDate: Date, cancelatperiodend: boolean }> {

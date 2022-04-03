@@ -12,6 +12,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { DocumentService } from '../document.service';
 import { ShowImagePage } from '../show-image/show-image.page';
 import { ShareIOSPage } from '../share-ios/share-ios.page';
+import { Capacitor } from '@capacitor/core';
+import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 
 @Component({
   selector: 'app-view',
@@ -23,11 +25,13 @@ export class ViewPage implements OnInit {
   public document: string;
   public preloadFonts: string;
   public signtextHeight: number;
+  public subscriptionService;
 
   constructor(
     public modalController: ModalController,
     private documentService: DocumentService,
-    private subscriptionService: SubscriptionService,
+    private subscriptionServiceNG: SubscriptionService,
+    private subscriptionServiceAndroid: AndroidSubscriptionService,
     public translate: TranslateService,
     public btUtil: BrowserTypeService,
     private router: Router
@@ -46,6 +50,12 @@ export class ViewPage implements OnInit {
         // Hide loading indicator
       }
     });
+
+    if (Capacitor.isNativePlatform()) {    
+      this.subscriptionService = subscriptionServiceAndroid;
+    }
+    else
+      this.subscriptionService = subscriptionServiceNG;   
   }
 
   ngOnInit() {

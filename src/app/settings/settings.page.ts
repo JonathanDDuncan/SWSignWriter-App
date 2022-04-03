@@ -12,6 +12,8 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Capacitor } from '@capacitor/core';
+import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 
 @Component({
   selector: 'app-settings',
@@ -26,17 +28,25 @@ export class SettingsPage implements OnInit {
   public installedPuddles: Array<string>;
   public files: NgxFileDropEntry[] = [];
   private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
+  public subscriptionService
 
   constructor(private settingsService: SettingsService,
     private alertController: AlertController,
     private translate: TranslateService,
     public toastController: ToastController,
     private translateService: TranslateService,
-    private subscriptionService: SubscriptionService,
+    private subscriptionServiceNG: SubscriptionService,
+    private subscriptionServiceAndroid: AndroidSubscriptionService,
     public loadingController: LoadingController,
     private router: Router,
     private http: HttpClient) {
     this.spmldropExpanded = false;
+
+    if (Capacitor.isNativePlatform()) {    
+      this.subscriptionService = subscriptionServiceAndroid;
+    }
+    else
+      this.subscriptionService = subscriptionServiceNG;   
   }
 
   installedPuddlesNames() {

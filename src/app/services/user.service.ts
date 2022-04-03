@@ -1,18 +1,32 @@
 import { Injectable } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { StorageService } from '../storage.service';
+import { AndroidSubscriptionService } from './androidSubscription.service';
 import { SubscriptionService } from './subscription.service';
 import { TrialService } from './trial.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class UserService {
+  public subscriptions;
 
   constructor(
     private storage: StorageService,
-    private subscriptions: SubscriptionService,
+    private subscriptionServiceNG: SubscriptionService,
+    private subscriptionServiceAndroid : AndroidSubscriptionService,
     private trial: TrialService
-  ) { }
+  ) {
+    
+    if (Capacitor.isNativePlatform()) {    
+      this.subscriptions = subscriptionServiceAndroid;
+    }
+    else
+      this.subscriptions = subscriptionServiceNG;   
+   }
 
   async GetCurrenUserRoles(): Promise<Array<string>> {
     const currentUserProfile = await this.storage.GetCurrentUserProfile();

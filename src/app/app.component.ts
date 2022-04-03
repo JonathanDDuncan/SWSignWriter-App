@@ -13,6 +13,7 @@ import { mergeMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Router } from '@angular/router';
+import { StorageService } from './storage.service';
 
 const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
@@ -36,7 +37,8 @@ export class AppComponent implements OnInit {
     public translate: TranslateService,
     public auth: AuthService, 
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private storage: StorageService,
   ) {
     this.translate.setDefaultLang('en');
 
@@ -89,8 +91,14 @@ export class AppComponent implements OnInit {
       this.translate.get('Settings').subscribe((settings) => {
         this.translate.get('About').subscribe((about) => {
           this.translate.get('Logout').subscribe((logout) => {
-            this.translate.get('Subscription').subscribe((subscription) => {
+            this.translate.get('Home').subscribe((home) => {
+            this.translate.get('Subscription').subscribe(async (subscription) => {
               this.appPages = [
+                {
+                  title: home,
+                  url: '/home',
+                  icon: 'home-outline'
+                },     
                 {
                   title: edit,
                   url: '/edit',
@@ -110,18 +118,23 @@ export class AppComponent implements OnInit {
                   title: about,
                   url: '/about',
                   icon: 'information-circle-outline'
-                },
-                {
+                }                 
+              ];
+
+              const profile = await this.storage.GetCurrentUserProfile();
+              if (profile || profile !== null) {
+                this.appPages.push({
                   title: logout,
                   url: '/logout',
                   icon: 'exit'
-                }
-              ];
+                });
+              }
             });
           });
         });
       });
     });
+  });
   }
 
   initializeApp() {

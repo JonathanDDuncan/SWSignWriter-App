@@ -17,6 +17,8 @@ import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { FoundSign, Lane } from '../signs-lookup.service';
 
 import { DocumentService, Document } from '../document.service';
+import { Capacitor } from '@capacitor/core';
+import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 
 interface EdittedDocument {
   editedsigns: FoundSign[];
@@ -31,6 +33,7 @@ export class EditPage implements OnInit, AfterViewInit {
   Lane = Lane;
   public editedDocument: EdittedDocument;
   public matchingWords: { gloss: string, normalized: string }[];
+  public subscriptionService;
 
   @ViewChild('searchRef', { read: ElementRef, static: true }) searchRef: ElementRef;
   @ViewChild('content', { static: true }) private content: any;
@@ -39,10 +42,17 @@ export class EditPage implements OnInit, AfterViewInit {
     public modalController: ModalController,
     private documentService: DocumentService,
     private settingsService: SettingsService,
-    private subscriptionService: SubscriptionService,
+    private subscriptionServiceNG: SubscriptionService,
     private sentry: SentryService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private subscriptionServiceAndroid : AndroidSubscriptionService
+  ) {
+      if (Capacitor.isNativePlatform()) {    
+      this.subscriptionService = subscriptionServiceAndroid;
+    }
+    else
+      this.subscriptionService = subscriptionServiceNG;   
+   } 
 
   async ngOnInit() {
     this.subscriptionService.CanUse();
