@@ -17,7 +17,7 @@ export class AuthAngularService {
     }
 
     logout(){
-        this.auth.logout({ returnTo: location.href })
+        this.auth.logout({ returnTo: 'https://swsignwriter.jonathanduncan.pro' })
         this.storage.RemoveCurrentUserProfile();
     }    
 

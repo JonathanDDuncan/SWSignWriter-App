@@ -10,6 +10,7 @@ import { profile } from 'console';
 import { UserProfile } from '../user/user-profile';
 import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
+import { Capacitor } from '@capacitor/core';
 
 
 @Injectable({
@@ -34,12 +35,16 @@ export class AndroidSubscriptionService {
 
     this.store.verbosity = this.store.DEBUG;
     // debugger;
-    this.registerProducts();
+    if(Capacitor.isNativePlatform()){
+      this.registerProducts();
+      this.configurePurchasing("12345678");   
+    }
+    
 
     // this.sentry.sentryMessage("Configure Purchase");
     // console.log("Configure Purchase");
     // debugger;
-    this.configurePurchasing("12345678");   
+    
 
     // this.store.ready(() => {
     //   debugger;               
@@ -51,9 +56,8 @@ export class AndroidSubscriptionService {
     // });   
 
 
-    debugger;
+   
     //platform.ready().then(() => {
-      debugger;
       //onsole.log("register");
       // this.store.register({
       //   id: "12345678",

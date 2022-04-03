@@ -323,7 +323,7 @@ export class SubscribePage implements OnInit {
   async ngOnInit() {
     const profile = await this.storage.GetCurrentUserProfile();
     if (!profile || profile === null) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     } else {
       const subscription = await this.storage.GetSubscription(profile.email);
       if (subscription) {
