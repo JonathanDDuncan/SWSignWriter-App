@@ -314,6 +314,7 @@ export class SubscriptionService {
     }
   }
 
+  //Change to Sub not email
   async IsSubscribedOrTrial (email: string): Promise<boolean> {
     const isTrial = await this.trialService.GetTrialDaysLeft(email) > 0;
     const isSubscribed = await this.GetSubscriptionDaysLeft(email) > 0;

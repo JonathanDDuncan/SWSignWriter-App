@@ -14,6 +14,7 @@ import { Browser } from '@capacitor/browser';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Router } from '@angular/router';
 import { StorageService } from './storage.service';
+import { AuthServiceMobile } from './services/auth.service';
 
 const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
@@ -39,6 +40,7 @@ export class AppComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private storage: StorageService,
+    private authService: AuthServiceMobile
   ) {
     this.translate.setDefaultLang('en');
 
@@ -119,10 +121,8 @@ export class AppComponent implements OnInit {
                   url: '/about',
                   icon: 'information-circle-outline'
                 }                 
-              ];
-
-              const profile = await this.storage.GetCurrentUserProfile();
-              if (profile || profile !== null) {
+              ];              
+              if (this.authService.isLoggedIn.getValue()) {
                 this.appPages.push({
                   title: logout,
                   url: '/logout',

@@ -55,7 +55,7 @@ export class EditPage implements OnInit, AfterViewInit {
    } 
 
   async ngOnInit() {
-    this.subscriptionService.CanUse();
+    //this.subscriptionService.CanUse();
     this.editedDocument = {
       editedsigns: []
     };

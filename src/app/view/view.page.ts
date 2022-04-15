@@ -59,7 +59,7 @@ export class ViewPage implements OnInit {
   }
 
   ngOnInit() {
-    this.subscriptionService.CanUse();
+    //this.subscriptionService.CanUse();
   }
 
   ionViewWillEnter() {

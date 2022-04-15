@@ -38,7 +38,7 @@ import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { AuthServiceMobile } from './services/auth.service';
 import { JWTService } from './services/jwt.service';
-import { AuthModule, AuthService } from '@auth0/auth0-angular';
+import { AuthModule, AuthService, LocalStorageCache } from '@auth0/auth0-angular';
 import { AuthAngularService } from './services/authAngular.service';
 import { StripeService } from './stripe.service';
 import { AndroidSubscriptionService } from './services/androidSubscription.service';
@@ -69,19 +69,24 @@ const native = Capacitor.isNativePlatform();
     IonicStorageModule.forRoot({
       name: '__swsignwriterdb'
     }),
-    AuthModule.forRoot(native ? {
+    AuthModule.forRoot(//native ? 
+      {
       domain: "swsignwriter-dev.auth0.com",
       clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-      redirectUri
+      redirectUri,
+      useRefreshTokens: true,
+      cacheLocation : 'localstorage'
       //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
       //redirectUri
-    } : {
-      domain: "swsignwriter-dev.auth0.com",
-      clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
-      redirectUri: `${window.location.origin}/callback`
-      //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-      //redirectUri
-    }),
+    }
+    //  : {
+    //   domain: "swsignwriter-dev.auth0.com",
+    //   clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
+    //   redirectUri: `${window.location.origin}/callback`
+    //   //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
+    //   //redirectUri
+    // }
+    ),
     AppRoutingModule,
     ChooseSignPageModule,
     ShowImagePageModule,

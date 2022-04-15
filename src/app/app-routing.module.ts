@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-    canActivateChild: [AuthorizationGuard],
+    //canActivateChild: [AuthorizationGuard],
     pathMatch: 'full'
   },
   {
@@ -48,7 +48,7 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () => import('./about/about.module').then(m => m.AboutPageModule),
-    canActivate: [AuthorizationGuard],
+    //canActivate: [AuthorizationGuard],
     // data: {
     //   allowedRoles: ['subscribed', 'trial']
     // }
@@ -59,7 +59,7 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthorizationGuard],
     data: {
-      allowedRoles: ['subscribed', 'trial']
+      allowedRoles: ['subscribed', 'trial', 'loggedIn']
     }
   },
   {
@@ -72,7 +72,11 @@ const routes: Routes = [
   },
   {
     path: 'logout',
-    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule)
+    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule),
+    canActivate: [AuthorizationGuard],
+    data: {
+      allowedRoles: ['loggedIn']
+    }
   },
   {
     path: 'subscribe',
@@ -82,11 +86,19 @@ const routes: Routes = [
       }
       else
         return import('./subscribe/subscribe.module').then(m => m.SubscribePageModule)
-      }
+    },
+    canActivate: [AuthorizationGuard],
+    data: {
+      allowedRoles: ['loggedIn']
+    }
   },
   {
     path: 'callback',
-    component: CallbackComponent
+    component: CallbackComponent,
+    canActivate: [AuthorizationGuard],
+    data: {
+      allowedRoles: ['loggedIn']
+    }
   }, 
   
   { path: 'share-ios', loadChildren: () => import('./share-ios/share-ios.module').then(m => m.ShareIOSPageModule) },

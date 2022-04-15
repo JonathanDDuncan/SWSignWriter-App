@@ -10,6 +10,7 @@ import { Platform } from '@ionic/angular';
 import { SubscriptionService } from '../services/subscription.service';
 import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 import { Capacitor } from '@capacitor/core';
+import { TrialService } from '../services/trial.service';
 
 @Component({
   selector: 'app-subscribeAndroid',
@@ -23,6 +24,7 @@ export class SubscribeAndroidPage implements OnInit {
   private profile : any;
   products: IAPProduct[] = [];
   public subsService;
+  public showTrialButton = false;
 
   constructor(private http: HttpClient,
   private storage: StorageService,
@@ -34,7 +36,8 @@ export class SubscribeAndroidPage implements OnInit {
   private store: InAppPurchase2,
   private ref: ChangeDetectorRef,
   private subscriptionServiceNG : SubscriptionService,
-  private subscriptionServiceAndroid : AndroidSubscriptionService
+  private subscriptionServiceAndroid : AndroidSubscriptionService,
+  private trialService : TrialService
   )   
   { 
     if (Capacitor.isNativePlatform()) {    
@@ -67,28 +70,51 @@ export class SubscribeAndroidPage implements OnInit {
   : 'https://swsignwriterapi.azurewebsites.net/';
 
   async ngOnInit() {
-    this.profile = await this.storage.GetCurrentUserProfile();
-    console.log(this.profile);
-    if (!this.profile || this.profile === null) {
-      this.router.navigate(['/login']);
-    }
-     else {
-      const subscription = await this.storage.GetSubscription(this.profile.email);
-      console.log(subscription);
-      if (subscription) {
-        this.SetButtonDisabled(subscription.endDate);
-        const d = new Date(subscription.endDate);
-        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-        this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+    debugger;
+    // this.profile = await this.storage.GetCurrentUserProfile();
+    // console.log(this.profile);
+    // if (!this.profile || this.profile === null) {
+    //   this.router.navigate(['/login']);
+    // }
+    //  else {
+    //   const subscription = await this.storage.GetSubscription(this.profile.email);
+    //   console.log(subscription);
+    //   if (subscription) {
+    //     this.SetButtonDisabled(subscription.endDate);
+    //     const d = new Date(subscription.endDate);
+    //     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    //     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    //     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    //     this.subscriptionEndDate = `${da}-${mo}-${ye}`;
 
-        console.log(this.subscriptionEndDate, "subscription endDate");
+    //     console.log(this.subscriptionEndDate, "subscription endDate");
 
-        this.autoRenewal = !subscription.cancelatperiodend;
-     }
-    }
+    //     this.autoRenewal = !subscription.cancelatperiodend;
+    //  }
+    //}
+    await this.ShowTrialButton();    
   } 
+
+  async ShowTrialButton(){
+    debugger;
+    var user = await this.storage.GetCurrentUserProfile();
+    this.showTrialButton = !this.subsService.isSubscribed && !(await this.trialService.HasStartedTrial(user.sub));
+    debugger;
+  }
+
+  async StartTrial(){
+    var user = await this.storage.GetCurrentUserProfile();
+    var trial = await this.trialService.StartTrial(user.sub);
+
+    if(trial.TrialStartDate !== null){
+      this.showAlert();
+      this.ShowTrialButton();
+    }   
+  }
+
+  async CheckSubscription(){
+      this.subscriptionServiceAndroid.checkSubscription();
+  }
 
 //   registerProducts(){
 // debugger;
@@ -233,6 +259,7 @@ export class SubscribeAndroidPage implements OnInit {
 
   async purchase(product: IAPProduct) {  
     this.subsService.purchase(product.id);
+    this.CheckSubscription();
   }
 
   

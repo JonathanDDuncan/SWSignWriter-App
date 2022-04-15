@@ -4,6 +4,9 @@ import { Component, OnInit, PipeTransform } from '@angular/core';
 import { AuthAngularService } from '../services/authAngular.service';
 import { AuthService, IdToken } from '@auth0/auth0-angular';
 import { UserProfile } from '../user/user-profile';
+import { SubscriptionService } from '../services/subscription.service';
+import { AndroidSubscriptionService } from '../services/androidSubscription.service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-callback',
@@ -12,27 +15,28 @@ import { UserProfile } from '../user/user-profile';
 })
 export class CallbackComponent implements OnInit { 
   user: any;
+  public subService;
   constructor(private auth: AuthService,
     private storage: StorageService,
     private sentry: SentryService,
-    private auth0: AuthAngularService){      
+    private auth0: AuthAngularService,
+    private subscriptionServiceNG: SubscriptionService,
+    private subscriptonServiceAndroid: AndroidSubscriptionService){   
+      if (Capacitor.isNativePlatform())    
+        this.subService = subscriptonServiceAndroid;      
+      else
+        this.subService = subscriptionServiceNG;     
      }
     
 
-  ngOnInit() {
+  ngOnInit() {   
+    debugger;
     const tokenClaim = this.auth.idTokenClaims$.subscribe(async user => {      
       if(user != null){
         debugger;
-        this.sentry.sentryMessage('Logged in: ' + JSON.stringify(user));
         var userProfile = this.convertTokenToUserProfile(user);
         this.storage.SaveCurrentUserProfile(user);
-        this.storage.SaveJWTToken(user.__raw);
-
-        this.storage.GetTrialStartDate(userProfile.email).then(trialDate => {
-          if (!trialDate) {
-            this.storage.SaveTrialStartDate(userProfile.email, new Date());
-          }
-        });
+        this.storage.SaveJWTToken(user.__raw);             
       }
     });    
   }  

@@ -7,24 +7,47 @@ import { mergeMap, tap } from 'rxjs/operators';
 import { StorageService } from './../storage.service';
 import { SentryService } from './../sentry.service';
 import { UserProfile } from '../user/user-profile';
-import { IdToken } from '@auth0/auth0-spa-js';
+import { GetTokenSilentlyOptions, IdToken, RedirectLoginOptions } from '@auth0/auth0-spa-js';
+import { BehaviorSubject } from 'rxjs';
 
 const returnTo = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
 @Injectable()
 export class AuthServiceMobile {
+  public isLoggedIn = new BehaviorSubject(false);
+
   constructor(public auth: AuthService, 
     public storage: StorageService,
-    public sentry: SentryService
-    ) {}
+    public sentry: SentryService    
+    ) {    
+      // this.auth.isLoading$.subscribe((loading) => {
+      //   if(!loading){
+      //     this.auth.isAuthenticated$.subscribe((loggedIn) =>{console.log('loggedin Constr' ,loggedIn); this.isLoggedIn.next(loggedIn)});       
+      //   }
+      // });  
+      // debugger;
+      this.auth.isAuthenticated$.subscribe((loggedIn) =>{console.log('loggedin Constr' ,loggedIn); this.isLoggedIn.next(loggedIn)});     
+      // var options : GetTokenSilentlyOptions = { timeoutInSeconds : 3000 };
+      // this.auth.getAccessTokenSilently(options).subscribe((token) => {
+      //   debugger;
+      //   console.log('silenttoken', token);
+        
+      // });
+      
+    }
 
   login() {
+    debugger;
+    var options: RedirectLoginOptions ={ redirect_uri : returnTo};
+    // options.redirect_uri = returnTo;
+    //this.auth.
     this.auth
-      .buildAuthorizeUrl()
+      .buildAuthorizeUrl(options)
       .pipe(mergeMap((url) => Browser.open({ url, windowName: '_self' })))
       .subscribe();
 
-      const tokenClaim = this.auth.idTokenClaims$.subscribe(async token => {      
+      const tokenClaim = this.auth.idTokenClaims$.subscribe(async token => {     
+        debugger; 
         await this.setupProfile(token);                      
       });       
   }   
@@ -45,9 +68,11 @@ export class AuthServiceMobile {
   }
 
   private async setupProfile(token: IdToken) {
+    debugger;
     if (token && token !== null) {
       const profile = this.saveProfile(token);
-      await this.setupTrial(profile);
+      this.storage.SaveJWTToken(token.__raw); 
+      //await this.setupTrial(profile);
     }
   }
 
@@ -59,12 +84,12 @@ export class AuthServiceMobile {
     return profile;
   }
 
-  private async setupTrial(profile: UserProfile) {
-    const trialDate = await this.storage.GetTrialStartDate(profile.email);
-    if (!trialDate) {
-      this.storage.SaveTrialStartDate(profile.email, new Date());
-    }
-  }  
+  // private async setupTrial(profile: UserProfile) {
+  //   const trialDate = await this.storage.GetTrialStartDate(profile.email);
+  //   if (!trialDate) {
+  //     this.storage.SaveTrialStartDate(profile.email, new Date());
+  //   }
+  // }  
 
   convertTokenToUserProfile (token : IdToken): UserProfile {
     return {

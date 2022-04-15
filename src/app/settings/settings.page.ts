@@ -63,7 +63,7 @@ export class SettingsPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.subscriptionService.CanUse();
+    //this.subscriptionService.CanUse();
     this.UILanguage = await this.currentUILanguage();
     this.settingsService.setFirstTime();
     this.installedPuddlesNames();
