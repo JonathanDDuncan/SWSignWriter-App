@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Capacitor } from '@capacitor/core';
+import { AuthServiceModel } from '../core/models/authService.model';
 import { StorageService } from '../storage.service';
 import { AndroidSubscriptionService } from './androidSubscription.service';
 import { AuthServiceMobile } from './auth.service';
@@ -16,7 +17,7 @@ import { TrialService } from './trial.service';
 
 export class UserService {
   public subscriptions;
-  private authService;
+  private authService: AuthServiceModel;
   constructor(
     private storage: StorageService,
     private subscriptionServiceNG: SubscriptionService,
@@ -39,7 +40,6 @@ export class UserService {
    }
 
   async GetCurrenUserRoles(): Promise<Array<string>> {
-    debugger;
     //change to behaviour subject
     var loggedIn = await this.authService.isLoggedIn.getValue();
     let roles: string[] = [];
@@ -48,17 +48,13 @@ export class UserService {
       const currentUserProfile = await this.storage.GetCurrentUserProfile();
       roles = roles.concat(await this.GetRoles(currentUserProfile.sub));     
     }
-   debugger;
     return roles;    
   }
 
   private async GetRoles(sub: string): Promise<string[]> {
-    const trialDaysLeft = await this.trial.GetTrialDaysLeft(sub);
-    
-    debugger;
+    const trialDaysLeft = await this.trial.GetTrialDaysLeft(sub);    
 
     const roles: string[] = [];
-
     //Maybe Replicate subscription behaviour to trial
     if (this.subscriptions.isSubscribed.getValue()) {
       roles.push('subscribed');

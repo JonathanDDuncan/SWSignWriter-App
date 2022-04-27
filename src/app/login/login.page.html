@@ -5,8 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="subscribed">
-    <p>{{'You have an active subscription.' | translate}}</p>
+  <!-- <div *ngIf="subscribed">   
     <ion-button (click)="goEdit()">{{'Continue' | translate}}</ion-button>
   </div>
   <div *ngIf="!subscribed">
@@ -14,14 +13,15 @@
     <br />
     <ion-button (click)="goSubscribe()">{{'Subscribe' | translate}}</ion-button>
     <br />
-    <!-- <div *ngIf="daysleft > 0">
+    <div *ngIf="daysleft > 0">
       <ion-button (click)="goEdit()">{{'Continue using free trial.' | translate}}</ion-button>
     {{ daysleft }} {{'days left.' | translate}} 
-    </div> -->
-  </div>
+    </div>
+  </div> -->
+  <p>You will be redirected to Auth0 Login, please fill your credentials.</p>
 
   <!-- <button (click)="auth.login()" *ngIf="!auth.loggedIn">{{'Log In' | translate}}</button> -->
-  <button (click)="authService.logout()" *ngIf="authService.isAuthenticated$ | async;">{{'Log Out' | translate}}</button>
+  <button (click)="authService.logout()" *ngIf="authService.isLoggedIn.getValue()">{{'Log Out' | translate}}</button>
   <a routerLink="/">{{'Home' | translate}}Home</a>&nbsp;
-  <a routerLink="profile" *ngIf="authService.isAuthenticated$ | async;">{{'Profile' | translate}}</a>
+  <a routerLink="profile" *ngIf="authService.isLoggedIn.getValue()">{{'Profile' | translate}}</a>
 </ion-content>

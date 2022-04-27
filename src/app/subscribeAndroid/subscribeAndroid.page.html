@@ -15,105 +15,29 @@
   <ion-row>
     <ion-col>
       <div>
-        <ion-button *ngIf="showTrialButton" (click)="StartTrial()">{{'Start Trial' | translate}} </ion-button>
+        <p *ngIf="showTrialButton">You can start a 15 day free trial</p>
+        <ion-button *ngIf="showTrialButton" (click)="StartTrial()">{{'Start Trial' | translate}} </ion-button>     
+        <p *ngIf="hasStartedTrial && trialDaysLeft > 0 && !subscriptionService.isSubscribed.getValue()">Your free trial has {{trialDaysLeft}} days left</p>   
+      </div>     
+      <div *ngIf="!(subscriptionService.subscriptionType === 'Stripe'); else stripeSubscribed">
+        <div *ngFor="let p of products" detail="false">
+          <p> {{ p.title }}</p>
+          <p>{{ p.description }}</p>
+          <p>{{ p.price }} {{ p.currency }}</p>
+          <ion-button *ngIf="!p.owned; else owned" (click)="purchase(p)">{{'Subscribe Now' | translate}}
+          </ion-button>
+          <ng-template #owned>
+            <p>You Own This Subscription</p>
+            <p>{{'Your subscription is valid until and will renew on' | translate}} {{p.expiryDate}} </p>
+          </ng-template>
+          <hr />
+        </div>
       </div>
-      <div>
-        <ion-button (click)="CheckSubscription()">{{'CHeck' | translate}} </ion-button>
-      </div>
-      <div *ngFor="let p of products" detail="false">
-        <p> {{ p.title }}</p>
-        <p>{{ p.description }}</p>
-        <p>{{ p.price }} {{ p.currency }}</p>
-        <ion-button *ngIf="!p.owned; else owned" (click)="purchase(p)">{{'Subscribe Now' | translate}}
-        </ion-button>
-        <ng-template #owned>
-          <p>You Own This Subscription</p>
-          <p>{{'Your subscription is valid until and will renew on' | translate}} {{p.expiryDate}} </p>
-        </ng-template>
-        <hr />
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-button expand="full" (click)="restore()">Restore</ion-button>'
-  <P>To cancel any subscriptions you may go to Play Store to the Payments And Subscriptions section</P>
-</ion-content> 
-
-
-<!-- <ion-content>
-  <ion-row *ngIf="subscriptionEndDate">
-    <ion-col *ngIf="autoRenewal; else validuntil">
-      {{'Your subscription is valid until and will renew on' | translate}} {{subscriptionEndDate}} <ion-button
-        (click)="CancelRenewal()"> {{'Cancel Automatic Renewal' | translate}}</ion-button>
-    </ion-col>
-    <ng-template #validuntil>
-      <ion-col>
-        {{'Your subscription is valid until' | translate}} {{subscriptionEndDate}}
-      </ion-col>
-    </ng-template>
-
-  </ion-row>
-  <ion-row *ngIf="!subscriptionEndDate">
-    <ion-col style="padding-top: 5%; color: red;">
-      {{'Your free trial or subscription has ended' | translate}}
-    </ion-col>
-
-  </ion-row> -->
-
-<!-- <ion-row>
-    <ion-col>
-      <p *ngIf="!subscriptionEndDate">1 {{'Month FREE' | translate}}</p>
-      <p>+ {{'$5/month for 11 months' | translate}}</p>
-      <ion-button [disabled]="buttonDisabled" (click)="SubscribeYearly()">{{'Subscribe Yearly' | translate}}
-      </ion-button>
-      <hr />
-
-      <p> {{'$5/month' | translate}}</p>
-      <ion-button [disabled]="buttonDisabled" (click)="SubscribeMonthly()">{{'Subscribe Monthly' | translate}}
-      </ion-button>
-    </ion-col>
-
-  </ion-row> -->
-<!-- <ion-row>
-      <ion-col>
-        <ion-button (click)="cancelSubscription()">{{'Cancel Subscription' | translate}}</ion-button>
-      </ion-col>    
-  </ion-row> -->
-<!-- </ion-content>
-
- <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-toggle>
-        <ion-button>
-          <ion-icon slot="icon-only" name="menu"></ion-icon>
-        </ion-button>
-      </ion-menu-toggle>
-    </ion-buttons>
-    <ion-title>{{'Subscribe' | translate}}</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-row *ngIf="subscriptionEndDate">
-    <ion-col *ngIf="autoRenewal; else validuntil">
-      {{'Your subscription is valid until and will renew on' | translate}} {{subscriptionEndDate}}  <ion-button (click)="CancelRenewal()">  {{'Cancel Automatic Renewal' | translate}}</ion-button>
-    </ion-col>
-    <ng-template #validuntil>
-      <ion-col>
-        {{'Your subscription is valid until' | translate}} {{subscriptionEndDate}}
-      </ion-col>
-    </ng-template>
-    
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <p>1 {{'Month FREE' | translate}}</p>
-      <p>+ {{'$5/month for 11 months' | translate}}</p>
-      <ion-button [disabled]="buttonDisabled" (click)="SubscribeYearly()">{{'Subscribe Yearly' | translate}}</ion-button>
-    <hr/>
+      <ng-template #stripeSubscribed>
+        <p>Yoou own a Stripe Subscription</p>
+      </ng-template>
      
-      <p> {{'$5/month' | translate}}</p>
-      <ion-button  [disabled]="buttonDisabled" (click)="SubscribeMonthly()">{{'Subscribe Monthly' | translate}}</ion-button>
     </ion-col>
-    
   </ion-row>
-</ion-content> -->
+  <ion-button *ngIf="!(subscriptionService.subscriptionType === 'Stripe')" expand="full" (click)="restore()">Refresh</ion-button>'
+</ion-content> 

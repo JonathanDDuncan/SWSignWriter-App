@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="isSubscribedTrial">
+  <div *ngIf="isSubscribedTrial && loggedin">
     <ion-button (click)="goContinue()">{{'Continue' | translate}}</ion-button>
   </div>
   <div *ngIf="!isSubscribedTrial">

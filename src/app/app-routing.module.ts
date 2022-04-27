@@ -79,6 +79,22 @@ const routes: Routes = [
     }
   },
   {
+    path: 'stripesuccess',
+    loadChildren: () => import('./stripesuccess/stripesuccess.module').then(m => m.StripesuccessPageModule),
+    canActivate: [AuthorizationGuard],
+    data: {
+      allowedRoles: ['loggedIn']
+    }
+  },
+  {
+    path: 'stripecancel',
+    loadChildren: () => import('./stripecancel/stripecancel.module').then(m => m.StripecancelPageModule),
+    canActivate: [AuthorizationGuard],
+    data: {
+      allowedRoles: ['loggedIn']
+    }
+  },
+  {
     path: 'subscribe',
     loadChildren: () => { 
       if (Capacitor.isNativePlatform()) {    
@@ -94,11 +110,7 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    component: CallbackComponent,
-    canActivate: [AuthorizationGuard],
-    data: {
-      allowedRoles: ['loggedIn']
-    }
+    component: CallbackComponent,        
   }, 
   
   { path: 'share-ios', loadChildren: () => import('./share-ios/share-ios.module').then(m => m.ShareIOSPageModule) },

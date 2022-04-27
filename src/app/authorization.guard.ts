@@ -11,7 +11,6 @@ export class AuthorizationGuard implements CanActivate, CanActivateChild {
   constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    debugger;
     const allowedRoles = next.data.allowedRoles as string[];
     //Refactor. Make different actions according to role, loggedIn, SubscribedTrial.
     var message: string;
@@ -25,25 +24,21 @@ export class AuthorizationGuard implements CanActivate, CanActivateChild {
       redirect = 'subscribe'
     }
         
-    const isAuthorized = await this.authorizationService.isAuthorized(allowedRoles);
-    debugger;
+    const isAuthorized = await this.authorizationService.isAuthorized(allowedRoles);    
     if (!isAuthorized) {
       this.router.navigate([`/${redirect}`]);
       window.alert(message); 
     }  
-
     return isAuthorized;
   }
 
   canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    debugger;
     const allowedRoles = next.data.allowedRoles;
     const isAuthorized = this.authorizationService.isAuthorized(allowedRoles);
 
     if (!isAuthorized) {
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/login']);
     }
-
     return isAuthorized;
   }
 }

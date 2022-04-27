@@ -295,6 +295,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../storage.service';
 import { AlertController } from '@ionic/angular';
+import { SubscriptionService } from '../services/subscription.service';
+import { TrialService } from '../services/trial.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -305,52 +307,100 @@ export class SubscribePage implements OnInit {
   public buttonDisabled: boolean | null = null;
   public subscriptionEndDate: string;
   public autoRenewal: boolean;
+  public showTrialButton = false;
+  public hasStartedTrial = false;
+  public trialDaysLeft = 0;
 
   constructor(private http: HttpClient,
     private storage: StorageService,
     private alertController: AlertController,
     private translateService: TranslateService,
     private stripeservice: StripeService,
-    private router: Router
+    private router: Router,
+    public subscriptionService: SubscriptionService,
+    private trialService : TrialService
   ) { }
-  private serverUrl =
-    (window.location
-      && window.location.hostname
-      && window.location.hostname.includes('localhost'))
-      ? 'https://localhost:44309/'
-      : 'https://swsignwriterapi.azurewebsites.net/';
+  private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+  // private serverUrl =
+  //   (window.location
+  //     && window.location.hostname
+  //     && window.location.hostname.includes('localhost'))
+  //     ? 'https://localhost:44309/'
+  //     : 'https://swsignwriterapi.azurewebsites.net/';
 
   async ngOnInit() {
-    const profile = await this.storage.GetCurrentUserProfile();
-    if (!profile || profile === null) {
-      this.router.navigate(['/home']);
-    } else {
-      const subscription = await this.storage.GetSubscription(profile.email);
-      if (subscription) {
-        this.SetButtonDisabled(subscription.endDate);
-        const d = new Date(subscription.endDate);
-        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-        this.subscriptionEndDate = `${da}-${mo}-${ye}`;
-        this.autoRenewal = !subscription.cancelatperiodend;
+    // const profile = await this.storage.GetCurrentUserProfile();
+    // if (!profile || profile === null) {
+    //   this.router.navigate(['/home']);
+    // } else {
+    //   const subscription = await this.storage.GetSubscription(profile.email);
+    //   if (subscription) {
+    //     this.SetButtonDisabled(subscription.endDate);
+    //     const d = new Date(subscription.endDate);
+    //     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    //     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    //     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    //     this.subscriptionEndDate = `${da}-${mo}-${ye}`;
+    //     this.autoRenewal = !subscription.cancelatperiodend;
+    //   }
+    // }
+    this.subscriptionService.autoRenewal.subscribe((autoRenewal) => this.autoRenewal = autoRenewal);
+    this.subscriptionService.subscriptionEndDate.subscribe((endDate) => {
+      if(endDate) {
+        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(endDate);
+        const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(endDate);
+        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(endDate);
+        this.subscriptionEndDate = `${da}-${mo}-${ye}`;    
       }
+    });
+    this.SetButtonDisabled();
+    await this.ShowTrialButton();    
+  }
+
+  async ShowTrialButton(){
+    var user = await this.storage.GetCurrentUserProfile();
+    this.hasStartedTrial = await this.trialService.HasStartedTrial(user.sub);
+    this.showTrialButton = !(this.subscriptionService.isSubscribed.getValue()) && !this.hasStartedTrial;
+    if(this.hasStartedTrial){
+      this.trialDaysLeft = await this.trialService.GetTrialDaysLeft(user.sub);
     }
   }
 
-  private SetButtonDisabled(endDate: Date) {
-    const subscribed = new Date(endDate) >= new Date();
+  async StartTrial(){
+    var user = await this.storage.GetCurrentUserProfile();
+    var trial = await this.trialService.StartTrial(user.sub);
 
-    this.buttonDisabled = subscribed;
+    if(trial.TrialStartDate !== null){  
+      this.showAlert();    
+      this.ShowTrialButton();
+    }   
+  }
+
+  async showAlert() {  
+    const alert = await this.alertController.create({  
+      header: 'Alert',  
+      subHeader: 'SubTitle',  
+      message: 'This is an alert message',  
+      buttons: ['OK']  
+    });  
+    await alert.present();  
+    const result = await alert.onDidDismiss();  
+    console.log(result);  
+  }
+
+  private SetButtonDisabled() {
+    this.subscriptionService.isSubscribed.subscribe((isSubscribed) => {
+      this.buttonDisabled = isSubscribed;  
+    });    
   }
 
   async SubscribeMonthly() {
-    const planId = 'plan_HHKPHgsv5Vdy49';
+    const planId = 'plan_GEcB3WZYgKsVER';
     await this.createSession(planId);
   }
 
   async SubscribeYearly() {
-    const planId = 'plan_HHKPf6K2bmpeN7';
+    const planId = 'plan_GEcEaSP0i9BI5L';
     await this.createSession(planId);
   }
 
@@ -371,7 +421,6 @@ export class SubscribePage implements OnInit {
     request.planId = planId;
     request.trialStartDate = trialStartDate;
     request.subscriptionEndDate = subscriptionEndDate;
-
     this.http.post(this.serverUrl + 'api/stripe/createsession', request, {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -381,7 +430,8 @@ export class SubscribePage implements OnInit {
       .subscribe(data => {
         console.log(data);
         const CHECKOUT_SESSION_ID = data;
-        const stripe = Stripe('pk_live_Q4UaSLy3gZtg16efKx9JUhCh009AFVCrne');
+        /* global Stripe */
+        const stripe = Stripe('pk_test_l5XnhomUyeQmxzROJWndWDXD00M33eN4jl');
         stripe.redirectToCheckout({
           sessionId: CHECKOUT_SESSION_ID
         }).then(function (result) {
@@ -429,14 +479,7 @@ export class SubscribePage implements OnInit {
               })
             }).toPromise();
             this.stripeservice.GetandSaveStripeSubscriptionData(profile.email);
-            const subscription: any = await this.storage.GetSubscription(profile.email);
-            const d = subscription.endDate;
-            const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-            const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-            const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-            this.subscriptionEndDate = `${da}-${mo}-${ye}`;
-            this.autoRenewal = subscription.CancelAtPeriodEnd;
-            this.SetButtonDisabled(subscription.endDate);
+            this.subscriptionService.checkSubscription();            
           }
         }
       ]
