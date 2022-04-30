@@ -23,14 +23,17 @@ export class SubscriptionService {
   ) {     
     this.authService.isLoggedIn.subscribe((loggedIn) => {
       if(loggedIn){
-      this.checkSubscription();
+        this.authService.user.subscribe((user) => {
+          if(user)
+            this.checkSubscription();
+        });      
       }
     });  
   }
 
   async checkSubscription(){
-    var jwt = await this.storage.GetJWTToken(); 
-    const profile = await this.storage.GetCurrentUserProfile();
+    var jwt = this.authService.user.getValue().__raw;
+    const profile =  this.authService.convertTokenToUserProfile(this.authService.user.getValue());
     this.httpService.IsUsersSubscribeRequest(jwt, profile, true).subscribe((response) => {
       this.isSubscribed.next(response.IsSubscribed);
       this.subscriptionType.next(response.Type);

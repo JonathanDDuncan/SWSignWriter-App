@@ -50,7 +50,10 @@ private authServiceLocal: AuthServiceModel;
         
     var user = await this.storage.GetCurrentUserProfile();
     if(user && user !== null)
+    setTimeout(async () => {
       this.isSubscribedTrial = await this.subscriptionService.IsSubscribedOrTrial(user.sub);    
+    }, 5000);
+      
 
     SplashScreen.hide();
   }

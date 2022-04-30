@@ -9,7 +9,8 @@ export class AuthorizationService {
   constructor(private userService: UserService) { }
 
   async isAuthorized(allowedRoles: string[]): Promise<boolean> {
-    // check if the list of allowed roles is empty, if empty, authorize the user to access the page   
+    // check if the list of allowed roles is empty, if empty, authorize the user to access the page 
+    console.log('allowedRoles', allowedRoles);  
     if (allowedRoles == null || allowedRoles.length === 0) {
       return true;
     }

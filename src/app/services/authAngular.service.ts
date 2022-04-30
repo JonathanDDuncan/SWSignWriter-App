@@ -11,19 +11,22 @@ import { AuthServiceModel } from '../core/models/authService.model';
 @Injectable()
 export class AuthAngularService implements AuthServiceModel {
   public isLoggedIn = new BehaviorSubject(false);
-  public user: IdToken;
+  public user = new BehaviorSubject<IdToken>(null);
 
   constructor(public auth: AuthService, 
     public storage: StorageService,
     public sentry: SentryService) {
-        this.auth.isAuthenticated$.subscribe((loggedIn) => this.isLoggedIn.next(loggedIn));     
+        this.auth.isAuthenticated$.subscribe((loggedIn) => this.isLoggedIn.next(loggedIn)); 
+        this.auth.idTokenClaims$.subscribe((user) => this.user.next(user));    
     }
 
     login() {
         this.auth.loginWithRedirect();    
-        this.auth.idTokenClaims$.subscribe(async token => {     
-            await this.setupProfile(token);                      
-          });   
+        // this.auth.idTokenClaims$.subscribe(async token => { 
+        //   debugger;   
+        //   this.user = token; 
+        //     await this.setupProfile(token);                      
+        //   });   
     }
 
     logout(){
@@ -32,12 +35,12 @@ export class AuthAngularService implements AuthServiceModel {
     }    
 
     getUser(): IdToken {
-        if(this.user == null){
-            const tokenClaim = this.auth.idTokenClaims$.subscribe(async userAuth0 => {      
-                this.user = userAuth0;                      
-            });  
-        }
-       return this.user;                
+        // if(this.user == null){
+        //     const tokenClaim = this.auth.idTokenClaims$.subscribe(async userAuth0 => {      
+        //         this.user = userAuth0;                      
+        //     });  
+        // }
+       return this.user.getValue();                
     }
 
     private async setupProfile(token: IdToken): Promise<void> {
@@ -56,7 +59,7 @@ export class AuthAngularService implements AuthServiceModel {
         return profile;
       }
 
-      private convertTokenToUserProfile (token : IdToken): UserProfile {
+      public convertTokenToUserProfile (token : IdToken): UserProfile {
         return {
           email: token.email,
           email_verified: token.email_verified,

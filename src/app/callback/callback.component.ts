@@ -39,13 +39,12 @@ export class CallbackComponent implements OnInit {
      }
     
 
-  ngOnInit() {      
+  ngOnInit() { 
     this.auth.isAuthenticated$.subscribe((loggedIn) =>{
       if(loggedIn) this.router.navigate(['/home']);       
     });     
     const tokenClaim = this.auth.idTokenClaims$.subscribe(async user => {      
       if(user != null){      
-        var userProfile = this.convertTokenToUserProfile(user);
         this.storage.SaveCurrentUserProfile(user);
         this.storage.SaveJWTToken(user.__raw);             
       }

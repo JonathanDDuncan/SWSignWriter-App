@@ -8,7 +8,7 @@ import { StorageService } from './../storage.service';
 import { SentryService } from './../sentry.service';
 import { UserProfile } from '../user/user-profile';
 import { IdToken} from '@auth0/auth0-spa-js';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthServiceModel } from '../core/models/authService.model';
 import { Router } from '@angular/router';
 
@@ -17,14 +17,15 @@ const returnTo = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/c
 @Injectable()
 export class AuthServiceMobile implements AuthServiceModel {
   public isLoggedIn = new BehaviorSubject(false);
-  public user: IdToken;
+  public user = new BehaviorSubject<IdToken>(null);
 
   constructor(public auth: AuthService, 
     public storage: StorageService,
     public sentry: SentryService,
     public router: Router    
-    ) {                
-      this.auth.isAuthenticated$.subscribe((loggedIn) => this.isLoggedIn.next(loggedIn));          
+    ) {  
+      this.auth.isAuthenticated$.subscribe((loggedIn) => this.isLoggedIn.next(loggedIn));       
+      this.auth.idTokenClaims$.subscribe((user) => this.user.next(user));   
     }
 
   login() {   
@@ -33,9 +34,9 @@ export class AuthServiceMobile implements AuthServiceModel {
       .pipe(mergeMap((url) => Browser.open({ url, windowName: '_self' })))
       .subscribe();
 
-      this.auth.idTokenClaims$.subscribe(async token => {     
-        await this.setupProfile(token);                      
-      });       
+      // this.auth.idTokenClaims$.subscribe(async token => {          
+      //   await this.setupProfile(token);                      
+      // });       
   }   
 
   logout() {
@@ -52,13 +53,8 @@ export class AuthServiceMobile implements AuthServiceModel {
       ).subscribe();          
   }
 
-  getUser() {
-    if(this.user == null){
-        const tokenClaim = this.auth.idTokenClaims$.subscribe(async userAuth0 => {      
-            this.user = userAuth0;                      
-        });  
-    }
-   return this.user;                
+  getUser() {   
+   return this.user.getValue();                
 }
 
   private async setupProfile(token: IdToken) {
@@ -77,7 +73,7 @@ export class AuthServiceMobile implements AuthServiceModel {
     return profile;
   }  
 
-  private convertTokenToUserProfile (token : IdToken): UserProfile {
+  public convertTokenToUserProfile (token : IdToken): UserProfile {
     return {
       email: token.email,
       email_verified: token.email_verified,

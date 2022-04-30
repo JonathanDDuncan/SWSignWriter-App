@@ -25,7 +25,6 @@ import { UserProfile } from "../user/user-profile";
     }
 
     IsUsersSubscribeRequest( jwt: string, user: UserProfile, checkAndroid: boolean ): Observable<IsUserSubscribedResponse>{   
-
       const options = {
         headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json').append('Authorization', jwt),
         params: new HttpParams().append('sub', user.sub).append('checkAndroid', String(checkAndroid))
@@ -53,13 +52,12 @@ import { UserProfile } from "../user/user-profile";
     }
 
     public GetTrial( sub: string, jwt: string ): Observable<TrialResponse>{   
+      const options = {
+        headers: new HttpHeaders({'Authorization' : jwt}),
+        params: new HttpParams().append('sub', sub)
+      }   
 
-        const options = {
-          headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json').append('Authorization', jwt),
-          params: new HttpParams().append('sub', sub)
-        }     
-        
-        return this.http.get<TrialResponse>(this.serverUrl + 'api/Users/GetTrial', options);
+      return this.http.get<TrialResponse>(this.serverUrl + 'api/Users/GetTrial', options);
     }
 
     public JWK(){
@@ -72,7 +70,6 @@ import { UserProfile } from "../user/user-profile";
     }
 
     public UserLinkRequest( jwt: string, sub: string, purchaseToken: string ): Observable<IsUserSubscribedResponse>{   
-
         const options = {
           headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json').append('Authorization', jwt),
           params: new HttpParams().append('sub', sub).append('purchaseToken', purchaseToken)
