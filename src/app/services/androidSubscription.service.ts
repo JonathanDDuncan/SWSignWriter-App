@@ -5,72 +5,42 @@ import { Injectable } from '@angular/core';
 import { InAppPurchase2, IAPProduct } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { SentryService } from '../sentry.service';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { profile } from 'console';
-import { UserProfile } from '../user/user-profile';
-import * as moment from 'moment';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
-
+import { AuthServiceMobile } from './auth.service';
+import { HttpService } from './httpService.service';
 
 @Injectable({
   providedIn: 'root'
 })
 //Fix auth url
 export class AndroidSubscriptionService {
-  public subscribed = new BehaviorSubject(false); 
-  private profile: UserProfile;
-
+  public isSubscribed = new BehaviorSubject(false);
+  public subscriptionType: string;
   constructor(
     private storage: StorageService,
     private trialService: TrialService,
-    private router: Router,
     private store: InAppPurchase2,
     private sentry : SentryService,
-    //private ref: ChangeDetectorRef,
     private alertController: AlertController,
-    public platform: Platform,
-    private http: HttpClient
+    public platform: Platform,   
+    private authServiceAndroid: AuthServiceMobile,  
+    private httpService: HttpService  
   ) { 
 
     this.store.verbosity = this.store.DEBUG;
-    // debugger;
+    
     if(Capacitor.isNativePlatform()){
+      
       this.registerProducts();
-      this.configurePurchasing("12345678");   
+      this.configurePurchasing("12345678");  
+
+      this.authServiceAndroid.isLoggedIn.subscribe((loggedIn) => {
+        if(loggedIn)
+        this.checkSubscription();
+      });     
     }
-    
-
-    // this.sentry.sentryMessage("Configure Purchase");
-    // console.log("Configure Purchase");
-    // debugger;
-    
-
-    // this.store.ready(() => {
-    //   debugger;               
-    //   console.log('Store is Ready');
-    //   this.sentry.sentryMessage('Store is Ready');        
-        
-    //   //this.products = this.store.products;
-    //   //this.ref.detectChanges();
-    // });   
-
-
-   
-    //platform.ready().then(() => {
-      //onsole.log("register");
-      // this.store.register({
-      //   id: "12345678",
-      //   type: this.store.PAID_SUBSCRIPTION,
-      // });
-      // this.store.when("12345678")
-      //   .approved(p => p.verify())
-      //   .verified(p => p.finish());
-      // this.store.refresh();
-     //});
-  }
-
-    
+  }  
   
 
   async GetSubscriptionEndDate(email: string): Promise<Date> {
@@ -90,114 +60,52 @@ export class AndroidSubscriptionService {
     return (daysLeft > 0) ? daysLeft : 0;
   }
 
-  async CanUse(email: string = null) {
-
-    // const owned = (this.verifyAppleSubscription("monthly") || this.verifyAppleSubscription("yearly"));   
-    
-   if (!email) {
-     this.profile = await this.storage.GetCurrentUserProfile();
-     email = this.profile && this.profile !== null ? this.profile.email : null;
-   }
-
-   const isSubscribedOrTrial = this.IsSubscribedOrTrial(email);
-    if (!isSubscribedOrTrial) {
-      this.router.navigate(['/subscribe']);
-    }
+  async IsSubscribedOrTrial (sub: string): Promise<boolean> {
+    const isTrial = await this.trialService.GetTrialDaysLeft(sub) > 0;   
+    return isTrial || this.isSubscribed.getValue();
   }
 
-  // async  verifyAppleSubscription(productId: string){
-
-  //   // const profile = await this.storage.GetCurrentUserProfile();
-  //   // if (!profile || profile === null) {
-  //   //   this.router.navigate(['/login']);
-  //   // }
-
-  //   // const subscription = await this.storage.GetSubscription(profile.email);
-  //   // let subscriptionEndDate: Date = new Date();
-  //   // if (subscription) {
-  //   //   subscriptionEndDate = subscription.endDate;
-  //   // }
-
-  //   console.log('Starting Configurations');
-
-  //   try {
-  //     // Register Product
-  //     console.log('Registering Product ' + JSON.stringify(productId));
-  //     this.store.verbosity = this.store.DEBUG;
-
-
-  //     //Handler
-  //     this.store.when("my_subcription").updated((product: IAPProduct) => {
-  //       if (product.owned) { return true}
-  //       // serve the app with subscription
-  //       else {return false }
-  //       // serve the app without subscription
-  //     });
-
-  //     this.store.register({
-  //       id: productId,
-  //       alias: productId,
-  //       type: this.store.PAID_SUBSCRIPTION
-  //     });    
-
-  //   } catch (err) {
-  //     console.log('Error On Store Issues' + JSON.stringify(err));
-  //   }
-  // }
-
-  async IsSubscribedOrTrial (email: string): Promise<boolean> {
-    const isTrial = await this.trialService.GetTrialDaysLeft(email) > 0;
-    const isSubscribed = await this.GetSubscriptionDaysLeft(email) > 0;
-
-    const isSubscribedOrTrial = isTrial || isSubscribed;
-    if(isSubscribed)
-
-
-   return isSubscribed;
+  async registerProducts(){
+    this.store.when('product').registered((product: IAPProduct) => {
+      this.sentry.sentryMessage('Registered: ' + JSON.stringify(product));
+      this.checkSubscription();
+    });   
+              
+    this.store.register({
+      id: "12345678",        
+      type: this.store.PAID_SUBSCRIPTION
+    });             
   }
 
-  saveSubscriptionDB(){
-      
-  }
+  async checkSubscription(){  
+    
+    var jwt = await this.storage.GetJWTToken();      
+    const profile = await this.storage.GetCurrentUserProfile();  
 
-  registerProducts(){
-    debugger;
-        this.store.when('product').registered((product: IAPProduct) => {
-          console.log('Registered: ' + JSON.stringify(product));
-          this.sentry.sentryMessage('Registered: ' + JSON.stringify(product));
-        });
-    
-        // Register Product
-        console.log('Registering Product ' + JSON.stringify("12345678"));
-        //this.sentry.sentryMessage('Registering Product ' + JSON.stringify("12345678"));
-    
-        //this.store.refresh();
-        this.store.register({
-          id: "12345678",        
-          type: this.store.PAID_SUBSCRIPTION
-        });
-    
-        
-  }
-
-  // async GetIAPSubscription (){
-  //   debugger;
-  //   this.sentry.sentryMessage(this.store.products);
-  //   console.log(this.store.products);
-  // }
+    if(jwt && profile){         
+      this.httpService.IsUsersSubscribeRequest(jwt, profile, false).subscribe((response) => {           
+        this.subscriptionType = response.Type;         
+        if(!response.IsSubscribed){
+          this.store.products.forEach((product) => {                
+            if(product.owned) {
+              response.IsSubscribed = true;
+              this.subscriptionType = response.Type;
+              var transaction = product.transaction as any;
+              this.httpService.UserLinkRequest(jwt, profile.sub, transaction.purchaseToken);  
+            }              
+          })            
+        }
+        this.isSubscribed.next(response.IsSubscribed);
+      })
+    }          
+  }  
 
   restore() {
-    //this.store.refresh();
+    this.store.refresh();
   }
 
-  subscribe(email: string, endDate: Date) {
-    this.sentry.sentryMessage('Saving Sub');     
-    this.storage.SaveSubscription(
-      email,
-      endDate,
-      false
-    );
-    this.sentry.sentryMessage('Saved Sub');     
+  subscribe(email: string, endDate: Date) {    
+    this.storage.SaveSubscription(email,endDate,false);    
   }
 
   getProducts():IAPProduct[] {
@@ -216,115 +124,53 @@ export class AndroidSubscriptionService {
     console.log(result);  
   }  
 
-  configurePurchasing(productId: string) {    
-    debugger;
-    // const profile = await this.storage.GetCurrentUserProfile();
-    // if (!profile || profile === null) {
-    //   this.router.navigate(['/login']);
-    // }
-
-    // const subscription = await this.storage.GetSubscription(profile.email);
-    // let subscriptionEndDate: Date = new Date();
-    // if (subscription) {
-    //   subscriptionEndDate = subscription.endDate;
-    // }
-
+  async configurePurchasing(productId: string) {    
     console.log('Starting Configurations');
     this.sentry.sentryMessage("Starting Configuration");
 
-    try {            
-      
-      
-      //this.sentry.sentryMessage('Registered');
+    try {               
       // Handlers
-      this.store.when('product').approved((product: IAPProduct) => {
-        console.log(product.transaction);
-        this.sentry.sentryMessage(product.transaction);
-        debugger;
-        var transaction = product.transaction as any;
-        this.http.get(`https://androidpublisher.googleapis.com/androidpublisher/v3/applications/pro.jonathanduncan.swsignwriter/purchases/subscriptions/${transaction.id}/tokens/${transaction.purchaseToken}`).subscribe(response => { debugger; console.log('response', response);});
-
-        // Purchase was approved
-        console.log('purchase_approved', /*{programId: this.program._id}*/);
-        this.sentry.sentryMessage('purchase_approved');
-        //product.finish();       
+      this.store.when('product').approved(async (product: IAPProduct) => {             
         return product.verify();
-        //this.subscribe(this.profile.email, subscriptionEndDate);        
-      }).verified((p: IAPProduct) => { 
+      }).verified(async (p) => { 
         p.finish()
-        this.sentry.sentryMessage('finished pa');
         this.showAlert();
-        console.log(this.profile);
-        debugger;
-        //this.subscribe(this.profile.email, moment().add(1, "month").toDate());
-        
+
+        this.isSubscribed.next(true); 
+        this.subscriptionType = 'Android';
+        var jwt = await this.storage.GetJWTToken();
+        var user = await this.storage.GetCurrentUserProfile();
+        this.httpService.VerifyUserSubscriptionAndroidRequest(user, p.id, p.transaction.purchaseToken, jwt);        
       });
 
-      this.store.when("12345678").owned((p: IAPProduct) => {
-        debugger;
+      this.store.when("product").owned(async (p: IAPProduct) => {
         console.log('Owned' + JSON.stringify(p));
-        this.sentry.sentryMessage('Owned' + JSON.stringify(p));
-      });
+        this.sentry.sentryMessage('Owned' + JSON.stringify(p));    
+      });   
 
-      // this.store.when(productId).updated((product: IAPProduct) => {
-      //   console.log('Loaded' + JSON.stringify(product));
-      //   this.sentry.sentryMessage('Loaded' + JSON.stringify(product));
+      // this.store.when(productId).cancelled((product) => {      
       // });
 
-      this.store.when(productId).cancelled((product) => {
-        console.log('purchase_cancelled', {});
-        this.sentry.sentryMessage('purchase_cancelled');
-      });
-
-      this.store.error((err) => {
-        debugger;
-        console.log('store_error', {});
+      this.store.error((err) => {       
+        console.log('store_error', err);
         this.sentry.sentryMessage('store_error');
         this.sentry.sentryMessage(JSON.stringify(err));
       });      
 
       // Errors
       this.store.when(productId).error((error) => {
-        debugger;
         console.log('An Error Occured' + JSON.stringify(error));
         this.sentry.sentryMessage('An Error Occured' + JSON.stringify(error));
       });
 
-      // Refresh Always     
-      //this.store.refresh();      
     } catch (err) {
       console.log('Error On Store Issues' + JSON.stringify(err));
       this.sentry.sentryMessage('Error On Store Issues' + JSON.stringify(err));
     }
-    this.store.refresh();      
+    this.store.refresh();       
   }
   
   async purchase(productId: string) {  
-     debugger;
-
-     this.store.order(productId);
-  //   var product = this.store.products.find(x => x.id == productId);
-  //   this.sentry.sentryMessage("Purchase");     
-    
-  //   try {     
-      
-  //     console.log('Product Info: ' + JSON.stringify(product));
-  //     this.sentry.sentryMessage('Product Info: ' + JSON.stringify(product));
-
-  //     this.store.order(productId).then( () => {     
-  //       debugger  
-        
-  //       console.log('Purchase Initiated');  
-  //       this.sentry.sentryMessage('Purchase Initiated');    
-  //     }, e => {
-  //       debugger;
-  //       console.log('Error Ordering ', e);  
-  //       this.sentry.sentryMessage('Error Ordering ' + JSON.stringify(e));    
-  //     })
-  //   } catch (err) {
-  //     debugger;
-  //     console.log('Error Ordering ' + JSON.stringify(err)); 
-  //     this.sentry.sentryMessage('Error Ordering ' + JSON.stringify(err));           
-  //   }  
+    this.store.order(productId).then(()=> this.checkSubscription());
   }
 }

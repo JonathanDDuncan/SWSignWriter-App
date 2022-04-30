@@ -1,32 +1,42 @@
 // src/app/services/auth.service.ts
 
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Browser } from '@capacitor/browser';
 import { mergeMap, tap } from 'rxjs/operators';
 import { StorageService } from './../storage.service';
 import { SentryService } from './../sentry.service';
 import { UserProfile } from '../user/user-profile';
-import { IdToken } from '@auth0/auth0-spa-js';
+import { IdToken} from '@auth0/auth0-spa-js';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthServiceModel } from '../core/models/authService.model';
+import { Router } from '@angular/router';
 
 const returnTo = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
 @Injectable()
-export class AuthServiceMobile {
+export class AuthServiceMobile implements AuthServiceModel {
+  public isLoggedIn = new BehaviorSubject(false);
+  public user = new BehaviorSubject<IdToken>(null);
+
   constructor(public auth: AuthService, 
     public storage: StorageService,
-    public sentry: SentryService
-    ) {}
+    public sentry: SentryService,
+    public router: Router    
+    ) {  
+      this.auth.isAuthenticated$.subscribe((loggedIn) => this.isLoggedIn.next(loggedIn));       
+      this.auth.idTokenClaims$.subscribe((user) => this.user.next(user));   
+    }
 
-  login() {
+  login() {   
     this.auth
       .buildAuthorizeUrl()
       .pipe(mergeMap((url) => Browser.open({ url, windowName: '_self' })))
       .subscribe();
 
-      const tokenClaim = this.auth.idTokenClaims$.subscribe(async token => {      
-        await this.setupProfile(token);                      
-      });       
+      // this.auth.idTokenClaims$.subscribe(async token => {          
+      //   await this.setupProfile(token);                      
+      // });       
   }   
 
   logout() {
@@ -36,18 +46,22 @@ export class AuthServiceMobile {
       .pipe(
         tap((url) => {
           // Call the logout fuction, but only log out locally
-          this.auth.logout({ localOnly: true });
+          this.auth.logout({localOnly: true});
           // Redirect to Auth0 using the Browser plugin, to clear the user's session
           Browser.open({ url });
         })
-      )
-      .subscribe();
+      ).subscribe();          
   }
+
+  getUser() {   
+   return this.user.getValue();                
+}
 
   private async setupProfile(token: IdToken) {
     if (token && token !== null) {
       const profile = this.saveProfile(token);
-      await this.setupTrial(profile);
+      this.storage.SaveJWTToken(token.__raw); 
+      //await this.setupTrial(profile);
     }
   }
 
@@ -57,16 +71,9 @@ export class AuthServiceMobile {
     const profile = this.convertTokenToUserProfile(token);
     this.storage.SaveCurrentUserProfile(token);
     return profile;
-  }
-
-  private async setupTrial(profile: UserProfile) {
-    const trialDate = await this.storage.GetTrialStartDate(profile.email);
-    if (!trialDate) {
-      this.storage.SaveTrialStartDate(profile.email, new Date());
-    }
   }  
 
-  convertTokenToUserProfile (token : IdToken): UserProfile {
+  public convertTokenToUserProfile (token : IdToken): UserProfile {
     return {
       email: token.email,
       email_verified: token.email_verified,

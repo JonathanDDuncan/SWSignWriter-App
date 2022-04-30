@@ -11,9 +11,9 @@ import { SettingsService } from '../settings.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Capacitor } from '@capacitor/core';
 import { AndroidSubscriptionService } from '../services/androidSubscription.service';
+import { HttpService } from '../services/httpService.service';
 
 @Component({
   selector: 'app-settings',
@@ -26,8 +26,7 @@ export class SettingsPage implements OnInit {
   public spmldropExpanded: boolean;
   public loading: HTMLIonLoadingElement;
   public installedPuddles: Array<string>;
-  public files: NgxFileDropEntry[] = [];
-  private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
+  public files: NgxFileDropEntry[] = [];  
   public subscriptionService
 
   constructor(private settingsService: SettingsService,
@@ -39,7 +38,7 @@ export class SettingsPage implements OnInit {
     private subscriptionServiceAndroid: AndroidSubscriptionService,
     public loadingController: LoadingController,
     private router: Router,
-    private http: HttpClient) {
+    private httpService: HttpService) {
     this.spmldropExpanded = false;
 
     if (Capacitor.isNativePlatform()) {    
@@ -63,7 +62,7 @@ export class SettingsPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.subscriptionService.CanUse();
+    //this.subscriptionService.CanUse();
     this.UILanguage = await this.currentUILanguage();
     this.settingsService.setFirstTime();
     this.installedPuddlesNames();
@@ -138,17 +137,12 @@ export class SettingsPage implements OnInit {
   private xhrDownloadPuddle() {
     try {
       let puddle = 0;
-    puddle = parseInt(this.puddleID, 10);
-    if (isNaN(puddle)) {
-      puddle = 4;
-    }
-      const options = {        
-        params: new HttpParams().append('UI', "1").append("sign", puddle.toString())
-      }        
-
-    this.http.post(this.serverUrl + 'api/Puddle/GetPuddle', { }, options)
-    .subscribe(async response => { 
-      console.log('response', response);
+      puddle = parseInt(this.puddleID, 10);
+      if (isNaN(puddle)) {
+        puddle = 4;
+      }
+     
+      this.httpService.GetPuddle(puddle.toString()).subscribe(async response => {       
       try {
         await this.settingsService.loadPuddle(response.toString());
         await this.signsLoaded();
@@ -156,9 +150,9 @@ export class SettingsPage implements OnInit {
         console.log(error);
       }
     });     
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async signsLoaded() {

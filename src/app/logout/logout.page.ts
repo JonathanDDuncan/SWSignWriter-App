@@ -5,6 +5,10 @@ import { AuthServiceMobile } from '../services/auth.service';
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { AuthAngularService } from '../services/authAngular.service';
+import { AuthServiceModel } from '../core/models/authService.model';
+import { takeUntil, takeWhile } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -12,17 +16,17 @@ import { AuthAngularService } from '../services/authAngular.service';
   styleUrls: ['./logout.page.scss'],
 })
 export class LogoutPage implements OnInit {
-  authService;
+  private authService: AuthServiceModel;
+  private unsubscribe = new Subject();
 
   constructor(
     private storage: StorageService,
     private sentry: SentryService,
     private authMobile: AuthServiceMobile,
     public platform: Platform,
-    public authAngular: AuthAngularService
-  ) {    
-      //this.authService = authAngular;    
-      //Detected Circular Dependency in AuthMobile
+    public authAngular: AuthAngularService,
+    private router: Router
+  ) {   
       if (Capacitor.isNativePlatform()) {    
         this.authService = authMobile;
       }
@@ -31,8 +35,13 @@ export class LogoutPage implements OnInit {
    }
 
   ngOnInit() {
-    const userProfile = this.storage.GetCurrentUserProfile();
-    this.sentry.sentryMessage('Logged out: ' + JSON.stringify(userProfile));
+    this.authService.isLoggedIn.pipe(takeUntil(this.unsubscribe)).subscribe((loggedIn) => {
+      if(!loggedIn) {
+        this.unsubscribe.complete();
+        this.router.navigate(['/home']);        
+      }
+    });
+    
     this.authService.logout();
   }
 

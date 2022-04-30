@@ -14,6 +14,7 @@ import { Browser } from '@capacitor/browser';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Router } from '@angular/router';
 import { StorageService } from './storage.service';
+import { AuthServiceMobile } from './services/auth.service';
 
 const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
@@ -23,7 +24,8 @@ const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.co
 })
 
 export class AppComponent implements OnInit {
-
+  public isLoggedIn = false;
+  private logoutTitle;
   public appPages: {
     title: string;
     url: string;
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private storage: StorageService,
+    private authService: AuthServiceMobile
   ) {
     this.translate.setDefaultLang('en');
 
@@ -55,10 +58,9 @@ export class AppComponent implements OnInit {
 
 
   }
-  ngOnInit(): void {
-
+  ngOnInit(): void {      
      // Use Capacitor's App plugin to subscribe to the `appUrlOpen` event
-     App.addListener('appUrlOpen', ({ url }) => {     
+     App.addListener('appUrlOpen', ({ url }) => {  
       // Must run inside an NgZone for Angular to pick up the changes
       // https://capacitorjs.com/docs/guides/angular
       this.ngZone.run(() => { 
@@ -72,7 +74,9 @@ export class AppComponent implements OnInit {
             this.auth
               .handleRedirectCallback(url)
               .pipe()
-              .subscribe();           
+              .subscribe(() => {
+                this.router.navigate(['/callback']);
+              });           
           } else {
             //Browser.close();
           }
@@ -91,6 +95,7 @@ export class AppComponent implements OnInit {
       this.translate.get('Settings').subscribe((settings) => {
         this.translate.get('About').subscribe((about) => {
           this.translate.get('Logout').subscribe((logout) => {
+            this.logoutTitle = logout;
             this.translate.get('Home').subscribe((home) => {
             this.translate.get('Subscription').subscribe(async (subscription) => {
               this.appPages = [
@@ -119,22 +124,24 @@ export class AppComponent implements OnInit {
                   url: '/about',
                   icon: 'information-circle-outline'
                 }                 
-              ];
-
-              const profile = await this.storage.GetCurrentUserProfile();
-              if (profile || profile !== null) {
-                this.appPages.push({
-                  title: logout,
-                  url: '/logout',
-                  icon: 'exit'
-                });
-              }
+              ]; 
+              
+              this.authService.isLoggedIn.subscribe((isLoggedIn) => { 
+                if(isLoggedIn)
+                  this.appPages.push({
+                    title: logout,
+                    url: '/logout',
+                    icon: 'exit'
+                  });
+                else 
+                  this.appPages = this.appPages.filter(p => p.url !== '/logout');      
+              });
             });
           });
         });
       });
     });
-  });
+  });  
   }
 
   initializeApp() {

@@ -1,10 +1,12 @@
-import { TrialService } from './../services/trial.service';
 import { AuthServiceMobile } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '../storage.service';
 import { Capacitor } from '@capacitor/core';
 import { AuthAngularService } from '../services/authAngular.service';
+import { SubscriptionService } from '../services/subscription.service';
+import { AndroidSubscriptionService } from '../services/androidSubscription.service';
+import { AuthService } from '@auth0/auth0-angular';
+import { AuthServiceModel } from '../core/models/authService.model';
 
 @Component({
   selector: 'app-login',
@@ -12,44 +14,35 @@ import { AuthAngularService } from '../services/authAngular.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public authService;
+  public authService: AuthServiceModel;
   public daysleft: number;
+  public subService;
   public subscribed: boolean;
   constructor(
-    private router: Router,
-    private trial: TrialService,
-    private storage: StorageService,
+    private router: Router,    
     public authMobile: AuthServiceMobile,
     public authAngular: AuthAngularService,
+    public subscriptionServiceNG: SubscriptionService,
+    public subscriptionServiceAndroid: AndroidSubscriptionService,
+    public authServiceMain : AuthService
   ) 
   {    
     if (Capacitor.isNativePlatform()) {    
       this.authService = authMobile;
+      this.subService = subscriptionServiceAndroid
     }
     else
+    {
       this.authService = authAngular;    
+      this.subService = subscriptionServiceNG;
+    }
   }
 
   async ngOnInit() { 
-    const currentUserProfile = await this.storage.GetCurrentUserProfile();
-
-    if (!currentUserProfile || currentUserProfile == null) {
-      await this.authService.login();
-    }
-    
-    try {    
-      this.daysleft = await this.trial.GetTrialDaysLeft(currentUserProfile.email);
-    } catch { }
-    
-    let subscription;
-    try {
-      subscription = await this.storage.GetSubscription(currentUserProfile.email);
-    } catch { }
-
-    this.subscribed = false;
-    if (subscription && new Date(subscription.endDate) >= new Date()) {
-      this.subscribed = true;
-    }
+    var loggedIn = this.authService.isLoggedIn.getValue(); 
+    if (!loggedIn) {
+      this.authService.login();
+    }   
   }
 
   goSettings() {

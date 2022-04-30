@@ -11,12 +11,12 @@ export class StripeService {
     private storage: StorageService
   ) { }
 
-  private serverUrl =
-    (window.location
-      && window.location.hostname
-      && window.location.hostname.includes('localhost'))
-      ? 'https://localhost:44309/'
-      : 'https://swsignwriterapi.azurewebsites.net/';
+  private serverUrl = 'https://swsignwriterapi.azurewebsites.net/';
+    // (window.location
+    //   && window.location.hostname
+    //   && window.location.hostname.includes('localhost'))
+    //   ? 'https://localhost:44309/'
+    //   : 'https://swsignwriterapi.azurewebsites.net/';
 
   public async  GetandSaveStripeSubscriptionData(
     email: string,

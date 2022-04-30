@@ -1,18 +1,16 @@
 import { createVerify } from 'crypto-browserify';
 import base64 from 'base64url';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JWKS } from '../jwk/jwk';
 import * as jwkToPem from 'jwk-to-pem';
 import { Injectable } from '@angular/core';
+import { HttpService } from './httpService.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class JWTService {
-  private _jwtToken = new BehaviorSubject<string>(null);
+export class JWTService { 
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpService: HttpService) { }
 
   async getSignatureVerifyResult(JWT: string) {   
    
@@ -47,12 +45,7 @@ export class JWTService {
 
   fetchKeys(): Promise<JWKS> {
     return new Promise(resolve => {
-      this.http.get("https://swsignwriter-dev.auth0.com/.well-known/jwks.json" , {
-        headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        })
-      }).subscribe(response => resolve(response as JWKS));    
+     this.httpService.JWK().subscribe(response => resolve(response as JWKS));    
     });  
   } 
 }

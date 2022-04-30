@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Puddle } from './spml.service';
 import { JWTService } from './services/jwt.service';
-import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
 import { IdToken } from '@auth0/auth0-spa-js';
 import { Capacitor } from '@capacitor/core';
+import { HttpService } from './services/httpService.service';
 
 
 @Injectable({
@@ -19,11 +19,10 @@ export class StorageService {
   private uiLanguagekey = 'uiLanguage';
   private userCurrentProfilekey = 'userCurrentProfile';
   private firstTimekey = 'firstTime';
-  private serverUrl = "https://swsignwriterapi.azurewebsites.net/";
 
   constructor(private storage: Storage, 
     private jwtService: JWTService,
-    private http: HttpClient) { }
+    private httpService: HttpService) { }
 
   async puddlesExists(): Promise<boolean> {
     const puddles = await this.storage.get(this.puddleskey);
@@ -110,22 +109,14 @@ export class StorageService {
     return token as string;
   }
 
-  async SaveUserSubscription(isSubscribed: Boolean){
+  async SaveUserSubscription(isSubscribed: boolean){
     isSubscribed = true;
     var token = await this.GetJWTToken();
     var verifiedJWT = this.jwtService.getSignatureVerifyResult(token);
     
-    if(verifiedJWT){           
-
-      var type = Capacitor.isNativePlatform ? "android" : "stripe";
-      
-        const options = {
-          headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json'),
-          params: new HttpParams().append('token', token).append('isSubscribed', isSubscribed.toString()).append('subscriptionType', type)
-        }        
-
-      this.http.post(this.serverUrl + 'api/Users/SaveUserSubscription', { }, options)
-      .subscribe(response => console.log('response', response));    
+    if(verifiedJWT){  
+      var type = Capacitor.isNativePlatform() ? "android" : "stripe";     
+      this.httpService.SaveUserSubscription(token, isSubscribed, type).subscribe(response => console.log('response', response));    
     }   
   }
 
@@ -138,13 +129,8 @@ export class StorageService {
     
     if(verifiedJWT){           
       
-        const options = {
-          headers: new HttpHeaders().append('Accept', 'application/json').append('Content-Type', 'application/json'),
-          params: new HttpParams().append('token', token.__raw)
-        }        
-
-      this.http.post(this.serverUrl + 'api/Users/SaveUser', { }, options)
-      .subscribe(response => console.log('response', response));    
+        
+      this.httpService.SaveUser(token.__raw).subscribe(response => console.log('response', response));    
     }   
   }
 

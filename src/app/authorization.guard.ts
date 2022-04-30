@@ -10,14 +10,25 @@ import { Observable } from 'rxjs';
 export class AuthorizationGuard implements CanActivate, CanActivateChild {
   constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const allowedRoles = next.data.allowedRoles;
-    const isAuthorized = this.authorizationService.isAuthorized(allowedRoles);
-
-    if (!isAuthorized) {
-      this.router.navigate(['/login']);
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const allowedRoles = next.data.allowedRoles as string[];
+    //Refactor. Make different actions according to role, loggedIn, SubscribedTrial.
+    var message: string;
+    var redirect: string;
+    if(allowedRoles.some((role) => role === 'loggedIn')){
+      message = 'Please Login';    
+      redirect = 'login';
     }
-
+    else if(allowedRoles.some((role) => (role === 'subscribe' || role === 'trial'))){
+      message = 'Please Subscribe or Start Trial';
+      redirect = 'subscribe'
+    }
+        
+    const isAuthorized = await this.authorizationService.isAuthorized(allowedRoles);    
+    if (!isAuthorized) {
+      this.router.navigate([`/${redirect}`]);
+      window.alert(message); 
+    }  
     return isAuthorized;
   }
 
@@ -26,9 +37,8 @@ export class AuthorizationGuard implements CanActivate, CanActivateChild {
     const isAuthorized = this.authorizationService.isAuthorized(allowedRoles);
 
     if (!isAuthorized) {
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/login']);
     }
-
     return isAuthorized;
   }
 }
