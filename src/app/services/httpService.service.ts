@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { delay, retry } from "rxjs/operators";
 import { IsUserSubscribedResponse } from "../core/models/isUserSubscribedResponse.model";
 import { TrialResponse } from "../core/models/trialResponse.models";
 import { UserProfile } from "../user/user-profile";
@@ -30,7 +31,7 @@ import { UserProfile } from "../user/user-profile";
         params: new HttpParams().append('sub', user.sub).append('checkAndroid', String(checkAndroid))
       }         
         
-      return this.http.post<IsUserSubscribedResponse>(this.serverUrl + 'api/Users/IsUserSubscribed', { }, options);
+      return this.http.post<IsUserSubscribedResponse>(this.serverUrl + 'api/Users/IsUserSubscribed', { }, options).pipe(delay(2000),retry());
     }
 
     GetPuddle(puddle: string): Observable<object>{

@@ -73,13 +73,13 @@ const native = Capacitor.isNativePlatform();
     AuthModule.forRoot(
       {
       domain: "swsignwriter-dev.auth0.com",
-      clientId: window.origin.includes('http://localhost:8100') || window.origin.includes('https://swsignwriter.jonathanduncan.pro/') ? "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK" : "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-      //clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
-       redirectUri: window.origin.includes('http://localhost:8100') || window.origin.includes('https://swsignwriter.jonathanduncan.pro/') ? `${window.location.origin}/callback` : redirectUri,
+      //clientId: window.origin.includes('http://localhost:8100') || window.origin.includes('https://swsignwriter.jonathanduncan.pro/') ? "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK" : "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
+      clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
+      //redirectUri: window.origin.includes('http://localhost:8100') || window.origin.includes('https://swsignwriter.jonathanduncan.pro/') ? `${window.location.origin}/callback` : redirectUri,
       //redirectUri,
       useRefreshTokens: true,
       cacheLocation : 'localstorage',
-      //redirectUri: `${window.location.origin}/callback`,
+      redirectUri: `${window.location.origin}/callback`,
       //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
       //redirectUri
     }
