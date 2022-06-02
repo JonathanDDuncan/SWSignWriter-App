@@ -1,4 +1,4 @@
-npm i g ionic capacitor
+npm i --global ionic capacitor
 cd "W:\SWSignWriter-App"
 ionic build
 
