@@ -57,6 +57,7 @@ describe('AppComponent', () => {
     expect(menuItems[0].textContent).toContain('Document');
     expect(menuItems[1].textContent).toContain('Settings');
     expect(menuItems[2].textContent).toContain('About');
+    expect(menuItems[2].textContent).toContain('Policy');
   });
 
   it('should have urls', async () => {
@@ -68,6 +69,7 @@ describe('AppComponent', () => {
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/view');
     expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/settings');
     expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/about');
+    expect(menuItems[3].getAttribute('ng-reflect-router-link')).toEqual('/policy');
   });
 
 });

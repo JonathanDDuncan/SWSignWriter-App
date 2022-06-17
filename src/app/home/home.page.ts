@@ -66,6 +66,10 @@ private authServiceLocal: AuthServiceModel;
     this.router.navigate(['/about']);
   }
 
+  goPolicy() {
+    this.router.navigate(['/policy']);
+  }
+
   goContinue() {
     this.router.navigate(['/edit']);
   }

@@ -53,6 +53,14 @@ const routes: Routes = [
     //   allowedRoles: ['subscribed', 'trial']
     // }
   },
+  {
+    path: 'policy',
+    loadChildren: () => import('./policy/policy.module').then(m => m.PolicyPageModule),
+    //canActivate: [AuthorizationGuard],
+    // data: {
+    //   allowedRoles: ['subscribed', 'trial']
+    // }
+  },
 
   {
     path: 'profile',

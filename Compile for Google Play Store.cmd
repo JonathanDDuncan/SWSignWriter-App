@@ -1,25 +1,25 @@
-npm i --global ionic capacitor
+REM npm i --global ionic capacitor
+w:
 cd "W:\SWSignWriter-App"
-ionic build
+start "Ionic" ionic build
 
-notepad "W:\SWSignWriter-App\android\app\build.gradle"
+REM increment value of versionName in Notepad then save and close file
+start "Notepad" notepad "W:\SWSignWriter-App\android\app\build.gradle"
 
-REM increment value of versionName
+
 pause
 
-REM ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
-REM SETX JAVA_HOME "C:\Program Files\Java\jre1.8.0_333"
 
 cd W:\SWSignWriter-App\android
-gradlew bundleRelease
+start gradlew bundleRelease
 
 REM You should have an aab file in /android/app/build/outputs/bundle/release
-explorer "W:/SWSignWriter-App/android/app/build/outputs/bundle/release"
 
-REM log into the Google Play Consle Portal. https://play.google.com/console/u/0/developers/5490476019009349213/app-list?pli=1
-REM Signwriter Admin. 
-REM Go to section Pruebas>Prueba interna https://play.google.com/console/u/0/developers/5490476019009349213/app/4974055831550911166/tracks/internal-testing
+start chrome "https://play.google.com/console/u/0/developers/5490476019009349213/app/4974055831550911166/tracks/4698643009548496955/releases/9/preparehttps://play.google.com/console/u/0/developers/5490476019009349213/app/4974055831550911166/tracks/internal-testing"
+
+REM log into the Google Play Consle Portal. Signwriter Admin. Go to section Pruebas>Prueba interna  
 REM Click on the top right button labeled "Edit release"
 REM Upload the aab file
 REM click on Review Version
+pause
 
