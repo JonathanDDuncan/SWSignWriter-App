@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="pro.jonathanduncan.swsignwriter" version="v1.0.15" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Quick Sign Document</name>
+    <name>SignWriter</name>
     <description>Quickly write SignWriting documents</description>
     <author email="duncanjonathan@yahoo.ca" href="https://www.upwork.com/o/profiles/users/_~015c11075498b5d53e/">Jonathan Duncan</author>
     <content original-src="index.html" src="http://localhost:8100" />

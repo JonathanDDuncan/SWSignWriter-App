@@ -1,6 +1,6 @@
 {
 	"appId": "pro.jonathanduncan.swsignwriter",
-	"appName": "Quick Sign Document",
+	"appName": "SignWriter",
 	"bundledWebRuntime": false,
 	"npmClient": "npm",
 	"webDir": "www",

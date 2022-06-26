@@ -1,6 +1,6 @@
 {
   "name": "pro.jonathanduncan.swsignwriter",
-  "version": "v1.0.16",
+  "version": "v1.1.1",
   "author": "Jonathan Duncan",
   "homepage": "https://swsignwriter.jonathanduncan.pro/",
   "scripts": {
@@ -108,6 +108,7 @@
     "cordova-plugin-customurlscheme": "^5.0.2",
     "cordova-plugin-purchase": "^10.6.1",
     "cordova-plugin-safariviewcontroller": "^2.0.0",
+    "cordova-res": "0.15.4",
     "cpx": "^1.5.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

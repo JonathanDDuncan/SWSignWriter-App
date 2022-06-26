@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Quick Sign Document</string>
-    <string name="title_activity_main">Quick Sign Document</string>
+    <string name="app_name">SignWriter</string>
+    <string name="title_activity_main">SignWriter</string>
     <string name="package_name">pro.jonathanduncan.swsignwriter</string>
     <string name="custom_url_scheme">pro.jonathanduncan.swsignwriter</string>
 </resources>
