@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[24],{qluZ:function(n,e,t){"use strict";t.r(e),t.d(e,"SplashScreenWeb",function(){return s});var c=t("HaE+"),r=t("FUe0");class s extends r.b{show(n){return Object(c.a)(function*(){})()}hide(n){return Object(c.a)(function*(){})()}}}}]);
