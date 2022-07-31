@@ -7,7 +7,7 @@
   "plugins": {
     "SplashScreen": {
       "launchAutoHide": false,
-      "showSpinner": true
+      "showSpinner": false
     }
   },
   "android": {
