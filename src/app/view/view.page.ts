@@ -3,24 +3,20 @@
 import { BrowserTypeService } from './../browser-type.service';
 import { ShareDesktopPage } from './../share-desktop/share-desktop.page';
 import { ShareAndroidPage } from './../share-android/share-android.page';
-import { SubscriptionService } from './../services/subscription.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { DocumentService } from '../document.service';
-import { ShowImagePage } from '../show-image/show-image.page';
 import { ShareIOSPage } from '../share-ios/share-ios.page';
-import { Capacitor } from '@capacitor/core';
-import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 
 @Component({
   selector: 'app-view',
   templateUrl: './view.page.html',
   styleUrls: ['./view.page.scss']
 })
-export class ViewPage implements OnInit {
+export class ViewPage {
   public imageheight = 900;
   public document: string;
   public preloadFonts: string;
@@ -30,11 +26,10 @@ export class ViewPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private documentService: DocumentService,
-    private subscriptionServiceNG: SubscriptionService,
-    private subscriptionServiceAndroid: AndroidSubscriptionService,
     public translate: TranslateService,
     public btUtil: BrowserTypeService,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) {
     // Force fonts to load before anything is shown
     this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
@@ -50,16 +45,6 @@ export class ViewPage implements OnInit {
         // Hide loading indicator
       }
     });
-
-    if (Capacitor.isNativePlatform()) {    
-      this.subscriptionService = subscriptionServiceAndroid;
-    }
-    else
-      this.subscriptionService = subscriptionServiceNG;   
-  }
-
-  ngOnInit() {
-    //this.subscriptionService.CanUse();
   }
 
   ionViewWillEnter() {
@@ -78,9 +63,9 @@ export class ViewPage implements OnInit {
     const fsw = this.documentService.getFSW();
     const btUtils = this.btUtil.utils();
     if (fsw && fsw !== null) {
-      if (btUtils.Android()) {
+      if (this.platform.is('android')) {
         await this.ShareAndroid(fsw);
-      } else if (btUtils.iOS() || btUtils.iPad() || btUtils.iPhone() || btUtils.iPod()) {
+      } else if (this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone')) {
         await this.ShareIOS(fsw);
       } else {
         await this.ShareDesktop(fsw);

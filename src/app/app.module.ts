@@ -21,7 +21,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { ShowImagePageModule } from './show-image/show-image.module';
 import { ShareIOSPageModule } from './share-ios/share-ios.module';
@@ -117,7 +116,6 @@ const native = Capacitor.isNativePlatform();
     SignsLookupService,
     DocumentService,
     SocialSharingService,
-    SocialSharing,
     AuthorizationService,
     UserService,
     InAppPurchase2,
