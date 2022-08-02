@@ -1,9 +1,10 @@
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { uuid } from 'uuidv4';
+import { SocialSharingService } from '../social-sharing.service';
 declare class ClipboardItem {
   constructor(data: { [mimeType: string]: Blob });
 }
@@ -26,8 +27,10 @@ export class ShareAndroidPage implements OnInit {
     public toastController: ToastController,
     private sanitizer: DomSanitizer,
     private translateService: TranslateService,
-    private http: HttpClient) { }
-  private serverUrl =
+    private http: HttpClient,
+    private socialSharing: SocialSharingService,
+    private cdRef: ChangeDetectorRef  ) { }
+  private serverUrl = 
     (window.location
       && window.location.hostname
       && window.location.hostname.includes('localhost'))
@@ -37,6 +40,7 @@ export class ShareAndroidPage implements OnInit {
   ngOnInit() {
     this.swCanvas = this.canvas;
     this.saveToRemote(this.imagebase64);
+    this.cdRef.detectChanges();
   }
 
   async saveToRemote(imagebase64: string) {
@@ -63,10 +67,11 @@ export class ShareAndroidPage implements OnInit {
     });
   }
 
-  getimage() {
+  getimage() { 
     this.contentHeight = this.swCanvas.height / 4;
     this.contentWidth = this.swCanvas.width / 4;
     return this.sanitizer.bypassSecurityTrustResourceUrl('' + this.imagebase64);
+    
   }
 
   sleep(milliseconds) {
@@ -84,30 +89,7 @@ export class ShareAndroidPage implements OnInit {
   }
 
   async socialShare() {
-    const self = this;
-    const navShare = (window.navigator as any);
-    if (navShare.share) {
-      this.canvas.toBlob(
-        function (blob) {
-          const filename = 'signWriting.png';
-          const fd = new FormData();
-          const files = [];
-          fd.append('SignWriting', blob, filename);
-          for (const newfile of fd.getAll('file')) {
-            files.push(newfile);
-          }
-          navShare.share({
-            files: files
-          }).then(async () => {
-            await self.presentToast(this.translateService.instant('Thanks for sharing!'));
-            console.log('Thanks for sharing!');
-          })
-            .catch(console.error);
-        });
-
-    } else {
-      await self.presentToast(this.translateService.instant('Share is not available.'));
-    }
+    this.socialSharing.share('image.png', this.imagebase64);
   }
 
   async copyToClipboard(event) {

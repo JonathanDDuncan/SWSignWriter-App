@@ -378,9 +378,8 @@ export class SubscribePage implements OnInit {
 
   async showAlert() {  
     const alert = await this.alertController.create({  
-      header: 'Alert',  
-      subHeader: 'SubTitle',  
-      message: 'This is an alert message',  
+      header: 'Congrats!',        
+      message: 'You have succesfully started a free trial',  
       buttons: ['OK']  
     });  
     await alert.present();  
