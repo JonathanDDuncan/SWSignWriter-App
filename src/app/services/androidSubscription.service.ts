@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { InAppPurchase2, IAPProduct } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { SentryService } from '../sentry.service';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 import { AuthServiceMobile } from './auth.service';
 import { HttpService } from './httpService.service';
@@ -15,8 +15,13 @@ import { HttpService } from './httpService.service';
 })
 //Fix auth url
 export class AndroidSubscriptionService {
+
   public isSubscribed = new BehaviorSubject(false);
+
   public subscriptionType: string;
+
+  public subscriptionCkecked: Observable<boolean>;
+
   constructor(
     private storage: StorageService,
     private trialService: TrialService,
@@ -37,7 +42,11 @@ export class AndroidSubscriptionService {
 
       this.authServiceAndroid.isLoggedIn.subscribe((loggedIn) => {
         if(loggedIn)
-        this.checkSubscription();
+        this.checkSubscription().then(() => {
+          this.subscriptionCkecked = new Observable((observer) => {
+            observer.next(true);
+          }); 
+        });
       });     
     }
   }  

@@ -21,6 +21,7 @@ public loggedin: boolean = false;
 public isSubscribedTrial: boolean = false;
 private subscriptionService;
 private authServiceLocal: AuthServiceModel;
+private dataLoaded = false;
 
   constructor(
     public router: Router,
@@ -45,17 +46,25 @@ private authServiceLocal: AuthServiceModel;
 
   }
 
-  async ngOnInit() {   
+  async ngOnInit() {  
+    SplashScreen.hide(); 
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading User Data...'        
+    });
+    loading.present();  
+
     this.authServiceLocal.isLoggedIn.subscribe((loggedin) => this.loggedin = loggedin);
         
     var user = await this.storage.GetCurrentUserProfile();
-    if(user && user !== null)
-    setTimeout(async () => {
-      this.isSubscribedTrial = await this.subscriptionService.IsSubscribedOrTrial(user.sub);    
-    }, 5000);
-      
-
-    SplashScreen.hide();
+    if(user) {
+      this.subscriptionService.subscriptionCkecked.subscribe(async () => {
+        this.isSubscribedTrial = await this.subscriptionService.IsSubscribedOrTrial(user.sub);    
+        loading.dismiss();   
+      });      
+    }
+    else {
+      loading.dismiss();  
+    }
   }
 
   goLogin() {
