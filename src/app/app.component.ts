@@ -103,7 +103,7 @@ export class AppComponent implements OnInit {
                     {
                       title: home,
                       url: '/home',
-                      icon: 'home-outline'
+                      icon: 'home'
                     },
                     {
                       title: edit,
@@ -123,12 +123,12 @@ export class AppComponent implements OnInit {
                     {
                       title: about,
                       url: '/about',
-                      icon: 'information-circle-outline'
+                      icon: 'information-circle'
                     },
                     {
                       title: policy,
                       url: '/policy',
-                      icon: 'information-circle-outline'
+                      icon: 'reader'
                     }
                   ];
 

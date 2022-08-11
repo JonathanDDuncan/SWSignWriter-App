@@ -3,6 +3,39 @@
 
 /** Ionic CSS Variables **/
 :root {
+
+  /** navy **/
+  --ion-color-navy: #003865;
+	--ion-color-navy-rgb: 0,56,101;
+	--ion-color-navy-contrast: #ffffff;
+	--ion-color-navy-contrast-rgb: 255,255,255;
+	--ion-color-navy-shade: #003159;
+	--ion-color-navy-tint: #1a4c74;
+
+  /** orange **/
+  --ion-color-orange: #EF5B0C;
+	--ion-color-orange-rgb: 239,91,12;
+	--ion-color-orange-contrast: #ffffff;
+	--ion-color-orange-contrast-rgb: 255,255,255;
+	--ion-color-orange-shade: #d2500b;
+	--ion-color-orange-tint: #f16b24;
+
+  /** green **/
+  --ion-color-green: #3CCF4E;
+	--ion-color-green-rgb: 60,207,78;
+	--ion-color-green-contrast: #ffffff;
+	--ion-color-green-contrast-rgb: 255,255,255;
+	--ion-color-green-shade: #35b645;
+	--ion-color-green-tint: #50d460;
+
+  /** retro **/
+  --ion-color-retro: #D4F6CC;
+	--ion-color-retro-rgb: 212,246,204;
+	--ion-color-retro-contrast: #000000;
+	--ion-color-retro-contrast-rgb: 0,0,0;
+	--ion-color-retro-shade: #bbd8b4;
+	--ion-color-retro-tint: #d8f7d1;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -74,4 +107,69 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+}
+
+.ion-color-navy {
+	--ion-color-base: var(--ion-color-navy);
+	--ion-color-base-rgb: var(--ion-color-navy-rgb);
+	--ion-color-contrast: var(--ion-color-navy-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-navy-contrast-rgb);
+	--ion-color-shade: var(--ion-color-navy-shade);
+	--ion-color-tint: var(--ion-color-navy-tint);
+}
+
+.ion-color-orange {
+	--ion-color-base: var(--ion-color-orange);
+	--ion-color-base-rgb: var(--ion-color-orange-rgb);
+	--ion-color-contrast: var(--ion-color-orange-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-orange-contrast-rgb);
+	--ion-color-shade: var(--ion-color-orange-shade);
+	--ion-color-tint: var(--ion-color-orange-tint);
+}
+
+.ion-color-green {
+	--ion-color-base: var(--ion-color-green);
+	--ion-color-base-rgb: var(--ion-color-green-rgb);
+	--ion-color-contrast: var(--ion-color-green-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-green-contrast-rgb);
+	--ion-color-shade: var(--ion-color-green-shade);
+	--ion-color-tint: var(--ion-color-green-tint);
+}
+
+.ion-color-retro {
+	--ion-color-base: var(--ion-color-retro);
+	--ion-color-base-rgb: var(--ion-color-retro-rgb);
+	--ion-color-contrast: var(--ion-color-retro-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-retro-contrast-rgb);
+	--ion-color-shade: var(--ion-color-retro-shade);
+	--ion-color-tint: var(--ion-color-retro-tint);
+}
+
+
+@font-face {
+  font-family: 'LobsterTwo';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/LobsterTwo/LobsterTwo-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'LobsterTwo';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/LobsterTwo/LobsterTwo-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'LobsterTwo';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../assets/fonts/LobsterTwo/LobsterTwo-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'LobsterTwo';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../assets/fonts/LobsterTwo/LobsterTwo-BoldItalic.ttf');
 }
