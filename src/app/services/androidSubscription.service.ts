@@ -20,34 +20,22 @@ export class AndroidSubscriptionService {
 
   public subscriptionType: string;
 
-  public subscriptionCkecked: Observable<boolean>;
-
   constructor(
     private storage: StorageService,
     private trialService: TrialService,
     private store: InAppPurchase2,
     private sentry : SentryService,
     private alertController: AlertController,
-    public platform: Platform,   
+    private platform: Platform,   
     private authServiceAndroid: AuthServiceMobile,  
     private httpService: HttpService  
   ) { 
 
     this.store.verbosity = this.store.DEBUG;
     
-    if(Capacitor.isNativePlatform()){
-      
+    if(Capacitor.isNativePlatform()){      
       this.registerProducts();
       this.configurePurchasing("12345678");  
-
-      this.authServiceAndroid.isLoggedIn.subscribe((loggedIn) => {
-        if(loggedIn)
-        this.checkSubscription().then(() => {
-          this.subscriptionCkecked = new Observable((observer) => {
-            observer.next(true);
-          }); 
-        });
-      });     
     }
   }  
   
