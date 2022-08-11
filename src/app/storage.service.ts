@@ -1,6 +1,6 @@
 import { UserProfile } from './user/user-profile';
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 import { Puddle } from './spml.service';
 import { JWTService } from './services/jwt.service';
 import { IdToken } from '@auth0/auth0-spa-js';
@@ -22,7 +22,9 @@ export class StorageService {
 
   constructor(private storage: Storage, 
     private jwtService: JWTService,
-    private httpService: HttpService) { }
+    private httpService: HttpService) { 
+      this.storage.create();
+    }
 
   async puddlesExists(): Promise<boolean> {
     const puddles = await this.storage.get(this.puddleskey);
@@ -112,7 +114,7 @@ export class StorageService {
   async SaveUserSubscription(isSubscribed: boolean){
     isSubscribed = true;
     var token = await this.GetJWTToken();
-    var verifiedJWT = this.jwtService.getSignatureVerifyResult(token);
+    var verifiedJWT = await this.jwtService.getSignatureVerifyResult(token);
     
     if(verifiedJWT){  
       var type = Capacitor.isNativePlatform() ? "android" : "stripe";     
@@ -124,12 +126,10 @@ export class StorageService {
     this.storage.remove(this.userCurrentProfilekey);
   }
 
-  SaveUserDB(token: IdToken){
-    var verifiedJWT = this.jwtService.getSignatureVerifyResult(token.__raw);
+  async SaveUserDB(token: IdToken){
+    var verifiedJWT = await this.jwtService.getSignatureVerifyResult(token.__raw);
     
-    if(verifiedJWT){           
-      
-        
+    if(verifiedJWT){                 
       this.httpService.SaveUser(token.__raw).subscribe(response => console.log('response', response));    
     }   
   }

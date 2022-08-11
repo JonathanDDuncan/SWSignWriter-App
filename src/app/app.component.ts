@@ -1,8 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-// import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './settings.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import Auth0Cordova from '@auth0/cordova';
@@ -33,8 +31,6 @@ export class AppComponent implements OnInit {
   }[];
   constructor(
     private platform: Platform,
-    // private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private settingsService: SettingsService,
     public translate: TranslateService,
     public auth: AuthService,
@@ -152,10 +148,9 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      setTimeout(() => {
-        SplashScreen.hide();
+    this.platform.ready().then(() => {      
+      setTimeout(async () => {
+        await SplashScreen.hide();
       }, 2000);
     });
 

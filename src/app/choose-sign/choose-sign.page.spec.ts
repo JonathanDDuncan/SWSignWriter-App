@@ -1,4 +1,4 @@
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { ModalController, AngularDelegate } from '@ionic/angular';
 import { PipesModule } from './../pipes/pipes.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';

@@ -75,14 +75,17 @@ export class AndroidSubscriptionService {
   }
 
   async checkSubscription(){  
-    
-    var jwt = await this.storage.GetJWTToken();      
+    console.log("start check");
+    var jwt = await this.storage.GetJWTToken(); 
+    console.log("get profile");     
     const profile = await this.storage.GetCurrentUserProfile();  
 
-    if(jwt && profile){         
-      this.httpService.IsUsersSubscribeRequest(jwt, profile, false).subscribe((response) => {           
+    if(jwt && profile){     
+      console.log("issub req");    
+      this.httpService.IsUsersSubscribeRequest(jwt, profile, false).subscribe((response) => { 
+        console.log("res");          
         this.subscriptionType = response.Type;         
-        if(!response.IsSubscribed){
+        if(!response.IsSubscribed && this.store.products){
           this.store.products.forEach((product) => {                
             if(product.owned) {
               response.IsSubscribed = true;
@@ -94,7 +97,8 @@ export class AndroidSubscriptionService {
         }
         this.isSubscribed.next(response.IsSubscribed);
       })
-    }          
+    }   
+    console.log("no jwt");       
   }  
 
   restore() {

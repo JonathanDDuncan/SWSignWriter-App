@@ -18,9 +18,7 @@ import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { ShowImagePageModule } from './show-image/show-image.module';
 import { ShareIOSPageModule } from './share-ios/share-ios.module';
@@ -109,8 +107,6 @@ const native = Capacitor.isNativePlatform();
     JWTService,
     AuthServiceMobile,
     SafariViewController,
-    StatusBar,
-    SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     SignsLookupService,

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DocumentService } from './document.service';
-import { Storage, IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { SignsLookupService } from './signs-lookup.service';
 describe('DocumentService', () => {
   beforeEach(() => TestBed.configureTestingModule({

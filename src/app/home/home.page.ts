@@ -54,10 +54,13 @@ private dataLoaded = false;
     loading.present();  
 
     this.authServiceLocal.isLoggedIn.subscribe((loggedin) => this.loggedin = loggedin);
-        
-    if(this.loggedin) {
+    let user = await this.storage.GetCurrentUserProfile();
+    console.log("init home");
+    if(this.loggedin && user) {
+      console.log("loggedIn - check sub");
       this.subscriptionService.checkSubscription().then(async () => {
-        this.isSubscribedTrial = await this.subscriptionService.IsSubscribedOrTrial((await this.storage.GetCurrentUserProfile()).sub);    
+        console.log("checked - is sub or trial");
+        this.isSubscribedTrial = await this.subscriptionService.IsSubscribedOrTrial(user.sub);    
         loading.dismiss();   
       });    
     }
