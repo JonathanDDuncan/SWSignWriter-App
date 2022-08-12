@@ -3,7 +3,6 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import Auth0Cordova from '@auth0/cordova';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 import { AuthService } from '@auth0/auth0-angular';
@@ -153,11 +152,6 @@ export class AppComponent implements OnInit {
         await SplashScreen.hide();
       }, 2000);
     });
-
-    // Redirect back to app after authenticating
-    (window as any).handleOpenURL = (url: string) => {
-      Auth0Cordova.onRedirectUri(url);
-    }
   }
 }
 
