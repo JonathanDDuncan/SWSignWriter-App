@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { InAppPurchase2, IAPProduct } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
 import { SentryService } from '../sentry.service';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 import { AuthServiceMobile } from './auth.service';
 import { HttpService } from './httpService.service';
@@ -15,30 +15,27 @@ import { HttpService } from './httpService.service';
 })
 //Fix auth url
 export class AndroidSubscriptionService {
+
   public isSubscribed = new BehaviorSubject(false);
+
   public subscriptionType: string;
+
   constructor(
     private storage: StorageService,
     private trialService: TrialService,
     private store: InAppPurchase2,
     private sentry : SentryService,
     private alertController: AlertController,
-    public platform: Platform,   
+    private platform: Platform,   
     private authServiceAndroid: AuthServiceMobile,  
     private httpService: HttpService  
   ) { 
 
     this.store.verbosity = this.store.DEBUG;
     
-    if(Capacitor.isNativePlatform()){
-      
+    if(Capacitor.isNativePlatform()){      
       this.registerProducts();
       this.configurePurchasing("12345678");  
-
-      this.authServiceAndroid.isLoggedIn.subscribe((loggedIn) => {
-        if(loggedIn)
-        this.checkSubscription();
-      });     
     }
   }  
   
@@ -78,14 +75,17 @@ export class AndroidSubscriptionService {
   }
 
   async checkSubscription(){  
-    
-    var jwt = await this.storage.GetJWTToken();      
+    console.log("start check");
+    var jwt = await this.storage.GetJWTToken(); 
+    console.log("get profile");     
     const profile = await this.storage.GetCurrentUserProfile();  
 
-    if(jwt && profile){         
-      this.httpService.IsUsersSubscribeRequest(jwt, profile, false).subscribe((response) => {           
+    if(jwt && profile){     
+      console.log("issub req");    
+      this.httpService.IsUsersSubscribeRequest(jwt, profile, false).subscribe((response) => { 
+        console.log("res");          
         this.subscriptionType = response.Type;         
-        if(!response.IsSubscribed){
+        if(!response.IsSubscribed && this.store.products){
           this.store.products.forEach((product) => {                
             if(product.owned) {
               response.IsSubscribed = true;
@@ -97,7 +97,8 @@ export class AndroidSubscriptionService {
         }
         this.isSubscribed.next(response.IsSubscribed);
       })
-    }          
+    }   
+    console.log("no jwt");       
   }  
 
   restore() {

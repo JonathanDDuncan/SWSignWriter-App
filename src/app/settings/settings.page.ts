@@ -173,7 +173,8 @@ export class SettingsPage implements OnInit {
   }
 
   expandItem() {
-    this.spmldropExpanded = !this.spmldropExpanded;
+    if(Capacitor.isNativePlatform())
+      this.spmldropExpanded = !this.spmldropExpanded;
   }
 
   async presentLoading() {
@@ -182,8 +183,6 @@ export class SettingsPage implements OnInit {
       backdropDismiss: false
     });
     this.loading.present();
-    // const { role, data } = await this.loading.onDidDismiss();
-    // console.log('Loading dismissed!');
   }
 
   async presentLoadingWithOptions() {

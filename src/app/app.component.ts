@@ -1,11 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-// import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './settings.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import Auth0Cordova from '@auth0/cordova';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 import { AuthService } from '@auth0/auth0-angular';
@@ -33,8 +30,6 @@ export class AppComponent implements OnInit {
   }[];
   constructor(
     private platform: Platform,
-    // private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private settingsService: SettingsService,
     public translate: TranslateService,
     public auth: AuthService,
@@ -103,7 +98,7 @@ export class AppComponent implements OnInit {
                     {
                       title: home,
                       url: '/home',
-                      icon: 'home-outline'
+                      icon: 'home'
                     },
                     {
                       title: edit,
@@ -123,12 +118,12 @@ export class AppComponent implements OnInit {
                     {
                       title: about,
                       url: '/about',
-                      icon: 'information-circle-outline'
+                      icon: 'information-circle'
                     },
                     {
                       title: policy,
                       url: '/policy',
-                      icon: 'information-circle-outline'
+                      icon: 'reader'
                     }
                   ];
 
@@ -152,17 +147,11 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      setTimeout(() => {
-        SplashScreen.hide();
+    this.platform.ready().then(() => {      
+      setTimeout(async () => {
+        await SplashScreen.hide();
       }, 2000);
     });
-
-    // Redirect back to app after authenticating
-    (window as any).handleOpenURL = (url: string) => {
-      Auth0Cordova.onRedirectUri(url);
-    }
   }
 }
 

@@ -1,8 +1,8 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="navy">
     <ion-title>{{'Share SignWriting'| translate}}</ion-title>
     <ion-buttons slot="end">         
-      <ion-button color="primary" (click)="close()">
+      <ion-button color="orange" (click)="close()">
         <ion-icon name="close-circle" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,6 +12,6 @@
 <ion-content>
   <img [src]="getimage()" [style.height.px]="contentHeight" [style.width.px]="contentWidth" />
   <ion-fab slot="fixed">
-    <ion-fab-button (click)="socialShare()"><ion-icon name="share-social" size="large" ></ion-icon></ion-fab-button>
+    <ion-fab-button color="green" (click)="socialShare()"><ion-icon name="share-social" size="large" ></ion-icon></ion-fab-button>
   </ion-fab>  
 </ion-content>

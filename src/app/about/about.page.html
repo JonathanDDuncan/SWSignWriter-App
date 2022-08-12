@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="navy">
       <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
@@ -7,7 +7,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  {{'app social media' | translate }}
-  {{'version' | translate }} v1.0.16
+<ion-content  class="ion-text-justify">
+  <ion-row>
+    <ion-col class="ion-padding">
+      <p>SignWriter is a tool to transliterate text in several languages to signwriting notation and share them through social media. </p>
+      <p>To make use of it, first in settings you need to select a Puddle. There should be a Puddle corresponding to every SignLanguage. </p>
+      <p>Next, you can go the Edit and start writing what you want to transliterate to SignWriting. If you are not used to speak in sign language,
+        note that the structure of sentences is different from spoken languages. You should structure sentences and words on your own.
+        SignWriter will transliterate your text by each word.</p>
+      <p>After that you can edit the length of your SignWriting text.</p>  
+      <p>Finally, you can share an image of the text through the medium of your choice.</p>  
+      <p>This app is in continuosly development. Translations of UI text will be completely added further.</p>
+      <p>{{'Version' | translate }} v1.1.3</p>
+        
+    </ion-col>
+  </ion-row>
+  
+  
 </ion-content>

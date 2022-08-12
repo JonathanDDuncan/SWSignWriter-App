@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { NormalizationService } from './normalization.service';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 
 export interface Sign {
   sign: string;

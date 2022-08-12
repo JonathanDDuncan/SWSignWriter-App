@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="navy">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -23,11 +23,11 @@
   <div>
     <ion-fab class="ion-text-center" horizontal="end" slot="fixed" vertical="bottom">
         <ion-label>Edit</ion-label>
-        <ion-fab-button class="mb-10">
+        <ion-fab-button color="green" class="mb-10">
             <ion-icon (click)="edit()" name="create" style="zoom:1.5;"></ion-icon>
         </ion-fab-button>
         <ion-label>{{'Export' | translate}}</ion-label>
-        <ion-fab-button (click)="share()">       
+        <ion-fab-button color="green" (click)="share()">       
           <ion-icon name="share" style="zoom: 1.5;"></ion-icon>
         </ion-fab-button>
     </ion-fab>
