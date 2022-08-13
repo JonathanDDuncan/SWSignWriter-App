@@ -38,5 +38,9 @@
         text-align: center;
         z-index: -1;
         font-size: 25px;
-      }
+    }
     
+    // for setting popover to scroll
+    ion-select-popover {
+        overflow: auto !important;
+    }
