@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { Puddle } from './spml.service';
-import { HttpService } from './services/httpService.service';
+import { Puddle } from '../spml.service';
+import { HttpService } from './httpService.service';
 
 
 @Injectable({
@@ -99,6 +99,22 @@ export class StorageService {
 
   async saveFirstTime() {
     await this.storage.set(this.firstTimekey, false);
+  }
+
+  async saveUserName(name: string) {
+    await this.storage.set('name', name);
+  }
+
+  async getUserName(): Promise<string> {
+    return await this.storage.get('name');
+  }
+
+  async saveEmail(email: string) {
+    await this.storage.set('email', email);
+  }
+
+  async getEmail(): Promise<string> {
+    return await this.storage.get('email');
   }
 
   Clean(value: string): string {

@@ -8,7 +8,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { AuthService } from '@auth0/auth0-angular';
 import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
-import { StorageService } from './storage.service';
+import { StorageService } from './services/storage.service';
 
 
 @Component({

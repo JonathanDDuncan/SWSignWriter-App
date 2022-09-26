@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Log } from "../core/models/log.models";
 
 @Injectable({
     providedIn: 'root'
@@ -20,4 +21,8 @@ import { Observable } from "rxjs";
 
         return this.http.post(this.serverUrl + 'api/Puddle/GetPuddle', { }, options);    
     }
-}
+
+    AddLog(body: Log): Observable<object>{     
+      return this.http.post(this.serverUrl + 'api/log', body);    
+    }
+  }

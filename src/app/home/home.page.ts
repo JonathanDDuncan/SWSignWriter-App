@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../services/storage.service';
 import { LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 
@@ -10,21 +10,14 @@ import { SplashScreen } from '@capacitor/splash-screen';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-public loggedin: boolean = false;
-public isSubscribedTrial: boolean = false;
 
   constructor(
     public router: Router,
-    private storage: StorageService,   
     public loadingCtrl: LoadingController 
   ) {}
 
   async ngOnInit() {  
     SplashScreen.hide(); 
-  }
-
-  goLogin() {
-    this.router.navigate(['/login']);
   }
 
   goAbout() {
@@ -37,9 +30,5 @@ public isSubscribedTrial: boolean = false;
 
   goContinue() {
     this.router.navigate(['/edit']);
-  }
-
-  goSubscribe() {
-    this.router.navigate(['/subscribe']);
   }
 }
