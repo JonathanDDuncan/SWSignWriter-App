@@ -2,11 +2,6 @@ import { ShareDesktopPageModule } from './share-desktop/share-desktop.module';
 import { ShareAndroidPageModule } from './share-android/share-android.module';
 import { SentryErrorHandler } from './sentry-error-handler';
 import { ErrorHandler } from '@angular/core';
-import { UserService } from './services/user.service';
-import { AuthorizationService } from './services/authorization.service';
-import { ProfileComponent } from './profile/profile.component';
-import { CallbackComponent } from './callback/callback.component';
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -15,11 +10,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
-
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
-
 import { ShowImagePageModule } from './show-image/show-image.module';
 import { ShareIOSPageModule } from './share-ios/share-ios.module';
 import { AppComponent } from './app.component';
@@ -30,28 +22,13 @@ import { SignsLookupService } from './signs-lookup.service';
 import { DocumentService } from './document.service';
 import { SocialSharingService } from './social-sharing.service';
 import { environment } from '../environments/environment';
-import { InAppPurchase2 } from '@awesome-cordova-plugins/in-app-purchase-2/ngx';
-
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
-import { AuthServiceMobile } from './services/auth.service';
-import { JWTService } from './services/jwt.service';
-import { AuthModule, AuthService, LocalStorageCache } from '@auth0/auth0-angular';
-import { AuthAngularService } from './services/authAngular.service';
-import { StripeService } from './stripe.service';
-import { AndroidSubscriptionService } from './services/androidSubscription.service';
-import { Capacitor } from '@capacitor/core';
 import { HttpService } from './services/httpService.service';
-
-const redirectUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
-const redirectUri2 = "http://localhost:4200/callback";
-const native = Capacitor.isNativePlatform();
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    CallbackComponent,
-    ProfileComponent],
+    ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -67,29 +44,6 @@ const native = Capacitor.isNativePlatform();
     IonicStorageModule.forRoot({
       name: '__swsignwriterdb'
     }),
-    AuthModule.forRoot(
-      {
-      domain: "swsignwriter-dev.auth0.com",
-      //clientId: window.origin.includes('http://localhost:8100') || window.origin.includes('https://swsignwriter.jonathanduncan.pro/') ? "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK" : "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-      // clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
-      //redirectUri: window.origin.includes('http://localhost:8100') || window.origin.includes('https://swsignwriter.jonathanduncan.pro/') ? `${window.location.origin}/callback` : redirectUri,
-      //redirectUri,
-      useRefreshTokens: true,
-      cacheLocation : 'localstorage',
-      //redirectUri: `${window.location.origin}/callback`,
-      clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-      redirectUri
-    }
-    //  : {
-    //   domain: "swsignwriter-dev.auth0.com",
-    //   clientId: "ZwbFfCpbcn8LDr5ubKYieMuL0MoNcnzK",
-    //    redirectUri: `${window.location.origin}/callback`,
-    //    useRefreshTokens: true,
-    //    cacheLocation : 'localstorage'
-    // //   //clientId: "IOGjjHabe8LFJRu5sKBuQ2LFJT2mwDLx",
-    // //   //redirectUri
-    // }
-    ),
     AppRoutingModule,
     ChooseSignPageModule,
     ShowImagePageModule,
@@ -102,20 +56,12 @@ const native = Capacitor.isNativePlatform();
   ],
   exports: [TranslateModule],
   providers: [
-    AndroidSubscriptionService,
-    AuthAngularService,
-    JWTService,
-    AuthServiceMobile,
     SafariViewController,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     SignsLookupService,
     DocumentService,
     SocialSharingService,
-    AuthorizationService,
-    UserService,
-    InAppPurchase2,
-    StripeService,
     HTTP,
     HttpService
   ],

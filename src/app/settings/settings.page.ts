@@ -1,4 +1,3 @@
-import { SubscriptionService } from './../services/subscription.service';
 import { Component, OnInit } from '@angular/core';
 import {
   NgxFileDropEntry, 
@@ -12,7 +11,6 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
-import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 import { HttpService } from '../services/httpService.service';
 
 @Component({
@@ -34,18 +32,10 @@ export class SettingsPage implements OnInit {
     private translate: TranslateService,
     public toastController: ToastController,
     private translateService: TranslateService,
-    private subscriptionServiceNG: SubscriptionService,
-    private subscriptionServiceAndroid: AndroidSubscriptionService,
     public loadingController: LoadingController,
     private router: Router,
     private httpService: HttpService) {
     this.spmldropExpanded = false;
-
-    if (Capacitor.isNativePlatform()) {    
-      this.subscriptionService = subscriptionServiceAndroid;
-    }
-    else
-      this.subscriptionService = subscriptionServiceNG;   
   }
 
   installedPuddlesNames() {

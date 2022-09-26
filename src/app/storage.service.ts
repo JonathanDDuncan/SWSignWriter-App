@@ -1,10 +1,6 @@
-import { UserProfile } from './user/user-profile';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { Puddle } from './spml.service';
-import { JWTService } from './services/jwt.service';
-import { IdToken } from '@auth0/auth0-spa-js';
-import { Capacitor } from '@capacitor/core';
 import { HttpService } from './services/httpService.service';
 
 
@@ -21,7 +17,6 @@ export class StorageService {
   private firstTimekey = 'firstTime';
 
   constructor(private storage: Storage, 
-    private jwtService: JWTService,
     private httpService: HttpService) { 
       this.storage.create();
     }
@@ -94,51 +89,6 @@ export class StorageService {
     return await this.storage.get(this.uiLanguagekey);
   }
 
-  SaveCurrentUserProfile(token: IdToken) {
-    // Save locally  
-    this.storage.set(this.userCurrentProfilekey, this.convertTokenToUserProfile(token));
-
-    // Save in DB
-    this.SaveUserDB(token);   
-  }
-
-  SaveJWTToken(token:string){
-    this.storage.set("JWTToken", token);
-  }
-
-  async GetJWTToken(): Promise<string> {
-    var token = await this.storage.get("JWTToken");
-    return token as string;
-  }
-
-  async SaveUserSubscription(isSubscribed: boolean){
-    isSubscribed = true;
-    var token = await this.GetJWTToken();
-    var verifiedJWT = await this.jwtService.getSignatureVerifyResult(token);
-    
-    if(verifiedJWT){  
-      var type = Capacitor.isNativePlatform() ? "android" : "stripe";     
-      this.httpService.SaveUserSubscription(token, isSubscribed, type).subscribe(response => console.log('response', response));    
-    }   
-  }
-
-  RemoveCurrentUserProfile() {  
-    this.storage.remove(this.userCurrentProfilekey);
-  }
-
-  async SaveUserDB(token: IdToken){
-    var verifiedJWT = await this.jwtService.getSignatureVerifyResult(token.__raw);
-    
-    if(verifiedJWT){                 
-      this.httpService.SaveUser(token.__raw).subscribe(response => console.log('response', response));    
-    }   
-  }
-
-  async GetCurrentUserProfile(): Promise<UserProfile> {
-    console.log(this.userCurrentProfilekey);
-    return await this.storage.get(this.userCurrentProfilekey);
-  }
-
   async getFirstTime(): Promise<boolean> {
     try {
       return await this.storage.get(this.firstTimekey);
@@ -149,25 +99,6 @@ export class StorageService {
 
   async saveFirstTime() {
     await this.storage.set(this.firstTimekey, false);
-  }
-
-  SaveSubscription(email: string, endDate: Date, cancelatperiodend: boolean): void {
-    const key = this.Obfuscate(email + 'subscriptionEndDate');
-    const subscription = this.Obfuscate( JSON.stringify({ endDate: endDate, cancelatperiodend: cancelatperiodend}) );
-    this.storage.set(key, subscription);
-    //change in the future
-    this.SaveUserSubscription(true);
-  }
-
-  async GetSubscription(email: string): Promise<{endDate: Date, cancelatperiodend: boolean }> {
-    const key = this.Obfuscate(email + 'subscriptionEndDate');
-    const value = await this.storage.get(key);
-    let subscription: {endDate: Date, cancelatperiodend: boolean };
-    if (value) {
-      const cleaned = this.Clean(value);
-      subscription  = JSON.parse(atob(cleaned));
-    }
-    return subscription;
   }
 
   Clean(value: string): string {
@@ -196,37 +127,4 @@ export class StorageService {
     return a.substr(0, index) + b + a.substr(index);
   }
 
-  async GetTrialStartDate(email: string) {
-    const key = this.Obfuscate(email + 'trialStartDate');
-    const value = await this.storage.get(key);
-    const cleaned = atob(this.Clean(value));
-
-    if (cleaned && cleaned !== 'ée') {
-      const endDate = new Date(cleaned);
-      return endDate;
-    } else {
-      return null;
-    }
-  }
-
-  SaveTrialStartDate(email: string, startDate: Date): void {
-    const key = this.Obfuscate(email + 'trialStartDate');
-    const date = this.Obfuscate(startDate.toString());
-    this.storage.set(key, date);
-  }
-
-  convertTokenToUserProfile (token : IdToken): UserProfile {
-    return {
-      email: token.email,
-      email_verified: token.email_verified,
-      family_name: token.family_name,
-      given_name: token.given_name,
-      locale: token.locale,
-      name: token.name,
-      nickname: token.nickname,
-      picture: token.picture,
-      sub: token.sub,
-      updated_at: token.updated_at
-    }
-  }
 }

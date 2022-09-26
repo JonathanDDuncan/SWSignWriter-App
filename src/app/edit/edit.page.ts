@@ -1,5 +1,4 @@
 import { SentryService } from './../sentry.service';
-import { SubscriptionService } from './../services/subscription.service';
 import { SettingsService } from './../settings.service';
 import { Router } from '@angular/router';
 import {
@@ -18,7 +17,6 @@ import { FoundSign, Lane } from '../signs-lookup.service';
 
 import { DocumentService, Document } from '../document.service';
 import { Capacitor } from '@capacitor/core';
-import { AndroidSubscriptionService } from '../services/androidSubscription.service';
 
 interface EdittedDocument {
   editedsigns: FoundSign[];
@@ -42,17 +40,9 @@ export class EditPage implements OnInit, AfterViewInit {
     public modalController: ModalController,
     private documentService: DocumentService,
     private settingsService: SettingsService,
-    private subscriptionServiceNG: SubscriptionService,
     private sentry: SentryService,
     private router: Router,
-    private subscriptionServiceAndroid : AndroidSubscriptionService
-  ) {
-      if (Capacitor.isNativePlatform()) {    
-      this.subscriptionService = subscriptionServiceAndroid;
-    }
-    else
-      this.subscriptionService = subscriptionServiceNG;   
-   } 
+  ) {} 
 
   async ngOnInit() {
     //this.subscriptionService.CanUse();

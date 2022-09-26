@@ -6,14 +6,10 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 import { AuthService } from '@auth0/auth0-angular';
-import { mergeMap } from 'rxjs/operators';
-import { Browser } from '@capacitor/browser';
-import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
 import { StorageService } from './storage.service';
-import { AuthServiceMobile } from './services/auth.service';
 
-const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.com/capacitor/pro.jonathanduncan.swsignwriter/callback`;
 
 @Component({
   selector: 'app-root',
@@ -22,7 +18,6 @@ const callbackUri = `pro.jonathanduncan.swsignwriter://swsignwriter-dev.auth0.co
 
 export class AppComponent implements OnInit {
   public isLoggedIn = false;
-  private logoutTitle;
   public appPages: {
     title: string;
     url: string;
@@ -32,11 +27,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private settingsService: SettingsService,
     public translate: TranslateService,
-    public auth: AuthService,
     private ngZone: NgZone,
     private router: Router,
-    private storage: StorageService,
-    private authService: AuthServiceMobile
   ) {
     this.translate.setDefaultLang('en');
 
@@ -54,31 +46,6 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    // Use Capacitor's App plugin to subscribe to the `appUrlOpen` event
-    App.addListener('appUrlOpen', ({ url }) => {
-      // Must run inside an NgZone for Angular to pick up the changes
-      // https://capacitorjs.com/docs/guides/angular
-      this.ngZone.run(() => {
-        if (url?.startsWith(callbackUri)) {
-          // If the URL is an authentication callback URL..
-          if (
-            url.includes('state=') &&
-            (url.includes('error=') || url.includes('code='))
-          ) {
-            // Call handleRedirectCallback and close the browser
-            this.auth
-              .handleRedirectCallback(url)
-              .pipe()
-              .subscribe(() => {
-                this.router.navigate(['/callback']);
-              });
-          } else {
-            //Browser.close();
-          }
-        }
-      });
-    });
-
     this.translate.onLangChange.subscribe((params: LangChangeEvent) => {
       this.translateMenu();
     });
@@ -88,12 +55,9 @@ export class AppComponent implements OnInit {
   public translateMenu() {
     this.translate.get('Edit').subscribe((edit) => {
       this.translate.get('Settings').subscribe((settings) => {
-        this.translate.get('About').subscribe((about) => {
-          this.translate.get('Logout').subscribe((logout) => {
-            this.logoutTitle = logout;
+        this.translate.get('About').subscribe((about) => {         
             this.translate.get('Home').subscribe((home) => {
-              this.translate.get('Subscription').subscribe(async (subscription) => {
-                this.translate.get('Policy').subscribe(async (policy) => {
+              this.translate.get('Policy').subscribe(async (policy) => {
                   this.appPages = [
                     {
                       title: home,
@@ -109,12 +73,7 @@ export class AppComponent implements OnInit {
                       title: settings,
                       url: '/settings',
                       icon: 'settings'
-                    },
-                    {
-                      title: subscription,
-                      url: '/subscribe',
-                      icon: 'card'
-                    },
+                    },                    
                     {
                       title: about,
                       url: '/about',
@@ -125,20 +84,9 @@ export class AppComponent implements OnInit {
                       url: '/policy',
                       icon: 'reader'
                     }
-                  ];
-
-                  this.authService.isLoggedIn.subscribe((isLoggedIn) => {
-                    if (isLoggedIn)
-                      this.appPages.push({
-                        title: logout,
-                        url: '/logout',
-                        icon: 'exit'
-                      });
-                    else
-                      this.appPages = this.appPages.filter(p => p.url !== '/logout');
-                  });
-                });
-              });
+                  ];                 
+               
+             
             });
           });
         });
