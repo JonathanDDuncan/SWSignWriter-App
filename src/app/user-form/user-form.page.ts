@@ -17,6 +17,8 @@ export class UserFormPage implements OnInit {
     private storage: StorageService) { }
 
   ngOnInit() {
+    this.userName = this.storage.userName;
+    this.email = this.storage.email;
   }
 
   public cancel() {
@@ -26,8 +28,7 @@ export class UserFormPage implements OnInit {
   }
 
   public async saveUserData(){
-    await this.storage.saveUserName(this.userName);
-    await this.storage.saveEmail(this.email);
+    await this.storage.saveUserName(this.userName);       
+    await this.storage.saveEmail(this.email);   
   }
-
 }

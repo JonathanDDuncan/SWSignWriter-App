@@ -9,6 +9,10 @@ import { HttpService } from './httpService.service';
 })
 export class StorageService {
 
+  userName: string;
+
+  email: string;
+
   private puddleskey = 'puddles';
   private defaultkey = 'default';
   private uiLanguagekey = 'uiLanguage';

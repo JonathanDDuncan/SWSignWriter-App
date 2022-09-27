@@ -5,12 +5,13 @@
     <h4> We use this data only for analytic purposes.</h4>
     <ion-item>
       <ion-label position="stacked">Enter Your First Name and Last Name</ion-label>
-      <ion-input [(ngModel)]="userName" placeholder="First Name and Last Name"></ion-input>
+      <ion-input required [(ngModel)]="userName" placeholder="First Name and Last Name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label [(ngModel)]="email" position="stacked">Enter Your Email</ion-label>
-      <ion-input placeholder="Email"></ion-input>
+      <ion-label position="stacked">Enter Your Email</ion-label>
+      <ion-input required name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="email" email="true" #emailRef="ngModel" placeholder="Email" required></ion-input>     
     </ion-item>
-    <ion-button class="save-button" (click)="saveUserData()">Save</ion-button>
+    <div class="email-error-messsage" *ngIf="emailRef.errors?.email">Email address is not valid.</div>
+    <ion-button [disabled]="(emailRef.errors?.email || !email) || !userName " type="submit" class="save-button" (click)="saveUserData()">Save</ion-button>
   </div>  
 </ion-content>

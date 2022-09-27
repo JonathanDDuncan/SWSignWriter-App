@@ -26,6 +26,7 @@ import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { HttpService } from './services/httpService.service';
 import { LogService } from './services/log.service';
 import { UserFormPageModule } from './user-form/user-form.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UserFormPageModule } from './user-form/user-form.module';
       name: '__swsignwriterdb'
     }),
     AppRoutingModule,
+    FormsModule,
     ChooseSignPageModule,
     ShowImagePageModule,
     ShareIOSPageModule,

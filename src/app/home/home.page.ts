@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UserFormPage } from '../user-form/user-form.page';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -16,15 +17,21 @@ export class HomePage implements OnInit {
   constructor(
     public router: Router,
     public loadingCtrl: LoadingController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private storage: StorageService
   ) {}
 
   async ngOnInit() {  
     SplashScreen.hide(); 
-  
-      this.openModal();  
 
-    
+    var userName = await this.storage.getUserName();
+    var email = await this.storage.getEmail();
+
+    if(!userName || !email) {
+      this.storage.userName = userName;
+      this.storage.email = email;
+      this.openModal();      
+    }  
   }
 
   goAbout() {
@@ -40,18 +47,15 @@ export class HomePage implements OnInit {
   }
 
   async openModal() {
-    console.log('hi');   
       const modal = await this.modalCtrl.create({
         component: UserFormPage,
         cssClass: 'small-modal',
       });
       this.showBackdrop = true;
-      modal.present();  
-  
+      modal.present();    
 
         // Remove backdrop when dismissed
         const { data } = await modal.onWillDismiss();
-        this.showBackdrop = !data.dismissed;
-    
+        this.showBackdrop = !data.dismissed;    
   }
 }
