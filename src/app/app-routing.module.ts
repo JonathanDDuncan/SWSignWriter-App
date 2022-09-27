@@ -40,9 +40,6 @@ const routes: Routes = [
   { path: 'share-ios', loadChildren: () => import('./share-ios/share-ios.module').then(m => m.ShareIOSPageModule) },
   { path: 'share-desktop', loadChildren: () => import('./share-desktop/share-desktop.module').then(m => m.ShareDesktopPageModule) },
   { path: 'share-android', loadChildren: () => import('./share-android/share-android.module').then(m => m.ShareAndroidPageModule) },
-
-
-
 ];
 
 @NgModule({

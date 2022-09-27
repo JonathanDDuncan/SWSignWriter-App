@@ -44,3 +44,22 @@
     ion-select-popover {
         overflow: auto !important;
     }
+
+/* For User form Modal, only works on global */
+.small-modal {
+
+    .modal-wrapper {
+        border-radius: 10px;       
+    }
+    
+    @media only screen and (max-width: 767px) {        
+        margin: auto 36px;      
+        height: 70%; 
+        border-radius: 10px;  
+
+        .modal-wrapper {
+            border-radius: 0px;       
+        }
+    }       
+  }
+

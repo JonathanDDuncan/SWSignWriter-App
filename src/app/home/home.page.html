@@ -12,6 +12,8 @@
 </ion-header>
 
 <ion-content class="ion-text-center">
+  <ion-backdrop *ngIf="showBackdrop" [tappable]="false" [visible]="true">
+  </ion-backdrop>
   <div class="mb-30">
     <h1 class="home-title">Welcome!</h1>
   </div>  

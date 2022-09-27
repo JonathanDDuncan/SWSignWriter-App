@@ -25,6 +25,7 @@ import { environment } from '../environments/environment';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { HttpService } from './services/httpService.service';
 import { LogService } from './services/log.service';
+import { UserFormPageModule } from './user-form/user-form.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { LogService } from './services/log.service';
     ShareIOSPageModule,
     ShareAndroidPageModule,
     ShareDesktopPageModule,
+    UserFormPageModule,
     PipesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),   
     
