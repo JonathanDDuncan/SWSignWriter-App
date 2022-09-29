@@ -4,6 +4,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UserFormPage } from '../user-form/user-form.page';
 import { StorageService } from '../services/storage.service';
+import { LogService } from '../services/log.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomePage implements OnInit {
     public router: Router,
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private storage: StorageService
+    private storage: StorageService,
+    private logService: LogService
   ) {}
 
   async ngOnInit() {  
@@ -32,6 +34,9 @@ export class HomePage implements OnInit {
       this.storage.email = email;
       this.openModal();      
     }  
+    else {
+      this.logService.AddLog('App Started');
+    }
   }
 
   goAbout() {

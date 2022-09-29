@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { HttpService } from '../services/httpService.service';
+import { LogService } from '../services/log.service';
 
 @Component({
   selector: 'app-settings',
@@ -34,7 +35,8 @@ export class SettingsPage implements OnInit {
     private translateService: TranslateService,
     public loadingController: LoadingController,
     private router: Router,
-    private httpService: HttpService) {
+    private httpService: HttpService,
+    private logService: LogService) {
     this.spmldropExpanded = false;
   }
 
@@ -99,6 +101,7 @@ export class SettingsPage implements OnInit {
           text: this.translate.instant('Yes'),
           handler: () => {
             this.settingsService.removeAllSigns();
+            this.logService.AddLog('Removed all Signs');
           }
         }
       ]
@@ -135,6 +138,7 @@ export class SettingsPage implements OnInit {
       this.httpService.GetPuddle(puddle.toString()).subscribe(async response => {       
       try {
         await this.settingsService.loadPuddle(response.toString());
+        this.logService.AddLog(`Loaded Puddle ${this.puddleID}`);
         await this.signsLoaded();
       } catch (error) {
         console.log(error);

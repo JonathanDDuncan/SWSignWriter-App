@@ -16,7 +16,7 @@ import { ChooseSignPage } from '../choose-sign/choose-sign.page';
 import { FoundSign, Lane } from '../signs-lookup.service';
 
 import { DocumentService, Document } from '../document.service';
-import { Capacitor } from '@capacitor/core';
+import { LogService } from '../services/log.service';
 
 interface EdittedDocument {
   editedsigns: FoundSign[];
@@ -42,6 +42,7 @@ export class EditPage implements OnInit, AfterViewInit {
     private settingsService: SettingsService,
     private sentry: SentryService,
     private router: Router,
+    private logService: LogService
   ) {} 
 
   async ngOnInit() {
@@ -110,6 +111,7 @@ export class EditPage implements OnInit, AfterViewInit {
 
   accept() {
     this.sentry.sentryMessage('Entered text : ' + this.documentService.getSearchSentence());
+    this.logService.AddLog('Entered text : ' + this.documentService.getSearchSentence());
     return this.router.navigateByUrl('/view');
   }
 

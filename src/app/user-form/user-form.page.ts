@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { LogService } from '../services/log.service';
 import { StorageService } from '../services/storage.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class UserFormPage implements OnInit {
   email: string;
 
   constructor(private modalCtrl: ModalController, 
-    private storage: StorageService) { }
+    private storage: StorageService,
+    private logService: LogService) { }
 
   ngOnInit() {
     this.userName = this.storage.userName;
@@ -22,6 +24,7 @@ export class UserFormPage implements OnInit {
   }
 
   public cancel() {
+    this.logService.AddLog('App Started');
     this.modalCtrl.dismiss({
       dismissed: true,
     });
@@ -29,6 +32,7 @@ export class UserFormPage implements OnInit {
 
   public async saveUserData(){
     await this.storage.saveUserName(this.userName);       
-    await this.storage.saveEmail(this.email);   
+    await this.storage.saveEmail(this.email);  
+    this.cancel();
   }
 }

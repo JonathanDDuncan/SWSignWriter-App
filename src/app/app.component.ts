@@ -5,10 +5,7 @@ import { SettingsService } from './settings.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 
-import { AuthService } from '@auth0/auth0-angular';
-import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
-import { StorageService } from './services/storage.service';
 
 
 @Component({
@@ -17,7 +14,6 @@ import { StorageService } from './services/storage.service';
 })
 
 export class AppComponent implements OnInit {
-  public isLoggedIn = false;
   public appPages: {
     title: string;
     url: string;
