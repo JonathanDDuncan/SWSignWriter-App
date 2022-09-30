@@ -9,7 +9,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Enter Your Email</ion-label>
-      <ion-input required name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="email" email="true" #emailRef="ngModel" placeholder="Email" required></ion-input>     
+      <ion-input required name="email" pattern="[a-z0-9A-Z._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" [(ngModel)]="email" email="true" #emailRef="ngModel" placeholder="Email" required></ion-input>     
     </ion-item>
     <div class="email-error-messsage" *ngIf="emailRef.errors">Email address is not valid.</div>
     <ion-button [disabled]="(emailRef.errors || !email) || !userName " type="submit" class="save-button" (click)="saveUserData()">Save</ion-button>

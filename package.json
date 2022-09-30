@@ -1,6 +1,6 @@
 {
   "name": "pro.jonathanduncan.swsignwriter",
-  "version": "v1.1.1",
+  "version": "v1.2.0",
   "author": "Jonathan Duncan",
   "homepage": "https://swsignwriter.jonathanduncan.pro/",
   "scripts": {
@@ -34,7 +34,7 @@
     "@capacitor/browser": "^1.0.7",
     "@capacitor/cli": "^3.2.4",
     "@capacitor/clipboard": "^1.0.8",
-    "@capacitor/core": "^3.5.1",
+    "@capacitor/core": "^3.8.0",
     "@capacitor/filesystem": "^1.1.0",
     "@capacitor/keyboard": "^1.2.3",
     "@capacitor/share": "^1.1.2",
