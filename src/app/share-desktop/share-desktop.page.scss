@@ -1,0 +1,14 @@
+div.title {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+
+    ion-button {
+        margin-right: 10px;
+    }
+}
+
+ion-toolbar {
+    padding: 5px;
+}
