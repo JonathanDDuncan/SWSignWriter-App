@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { DocumentService } from '../document.service';
 import { ShareIOSPage } from '../share-ios/share-ios.page';
+import { LogService } from '../services/log.service';
 
 @Component({
   selector: 'app-view',
@@ -29,7 +30,8 @@ export class ViewPage {
     public translate: TranslateService,
     public btUtil: BrowserTypeService,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private logService: LogService
   ) {
     // Force fonts to load before anything is shown
     this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
@@ -63,7 +65,8 @@ export class ViewPage {
     const fsw = this.documentService.getFSW();
     const btUtils = this.btUtil.utils();
     if (fsw && fsw !== null) {
-      if (this.platform.is('android')) {
+      await this.logService.AddLog('User Shared SW');
+      if (this.platform.is('android')) {        
         await this.ShareAndroid(fsw);
       } else if (this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone')) {
         await this.ShareIOS(fsw);

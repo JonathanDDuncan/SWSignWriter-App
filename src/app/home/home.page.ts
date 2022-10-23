@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '../storage.service';
-import { AuthAngularService } from '../services/authAngular.service';
-import { AuthServiceMobile } from '../services/auth.service';
-import { Capacitor } from '@capacitor/core';
-import { AndroidSubscriptionService } from '../services/androidSubscription.service';
-import { SubscriptionService } from '../services/subscription.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AuthServiceModel } from '../core/models/authService.model';
-
+import { UserFormPage } from '../user-form/user-form.page';
+import { StorageService } from '../services/storage.service';
+import { LogService } from '../services/log.service';
 
 @Component({
   selector: 'app-home',
@@ -17,60 +12,31 @@ import { AuthServiceModel } from '../core/models/authService.model';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-public loggedin: boolean = false;
-public isSubscribedTrial: boolean = false;
-private subscriptionService;
-private authServiceLocal: AuthServiceModel;
-private dataLoaded = false;
+
+  public showBackdrop = false;
 
   constructor(
     public router: Router,
-    private storage: StorageService,   
-    private subscriptionServiceAndroid: AndroidSubscriptionService,
-    private subscriptionServiceNG: SubscriptionService,
-    private authServiceAndroid : AuthServiceMobile,
-    private authServiceNG : AuthAngularService,
-    public loadingCtrl: LoadingController 
-  ) { 
-
-
-    //this.subService.GetIAPSubscription();
-    if(Capacitor.isNativePlatform()){
-      this.subscriptionService = subscriptionServiceAndroid;
-      this.authServiceLocal = authServiceAndroid;
-    }
-    else {
-    this.subscriptionService = subscriptionServiceNG;
-    this.authServiceLocal = authServiceNG;
-    }
-
-  }
+    public loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private storage: StorageService,
+    private logService: LogService
+  ) {}
 
   async ngOnInit() {  
     SplashScreen.hide(); 
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading User Data...'        
-    });
-    loading.present();  
 
-    this.authServiceLocal.isLoggedIn.subscribe((loggedin) => this.loggedin = loggedin);
-    let user = await this.storage.GetCurrentUserProfile();
-    console.log("init home");
-    if(this.loggedin && user) {
-      console.log("loggedIn - check sub");
-      this.subscriptionService.checkSubscription().then(async () => {
-        console.log("checked - is sub or trial");
-        this.isSubscribedTrial = await this.subscriptionService.IsSubscribedOrTrial(user.sub);    
-        loading.dismiss();   
-      });    
-    }
+    var userName = await this.storage.getUserName();
+    var email = await this.storage.getEmail();
+
+    if(!userName || !email) {
+      this.storage.userName = userName;
+      this.storage.email = email;
+      this.openModal();      
+    }  
     else {
-      loading.dismiss();  
+      this.logService.AddLog('App Started');
     }
-  }
-
-  goLogin() {
-    this.router.navigate(['/login']);
   }
 
   goAbout() {
@@ -85,7 +51,16 @@ private dataLoaded = false;
     this.router.navigate(['/edit']);
   }
 
-  goSubscribe() {
-    this.router.navigate(['/subscribe']);
+  async openModal() {
+      const modal = await this.modalCtrl.create({
+        component: UserFormPage,
+        cssClass: 'small-modal',
+      });
+      this.showBackdrop = true;
+      modal.present();    
+
+        // Remove backdrop when dismissed
+        const { data } = await modal.onWillDismiss();
+        this.showBackdrop = !data.dismissed;    
   }
 }

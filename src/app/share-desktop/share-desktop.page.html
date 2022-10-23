@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="navy">
-    <ion-title>{{'Share Desktop'| translate}} <ion-button (click)="copyToClipboard(this)">{{'Copy'| translate}} </ion-button>{{'Right-click on image to share'| translate}}</ion-title>
+    <div class="title"><ion-button size="small" (click)="copyToClipboard(this)">{{'Copy To Clipboard'| translate}}</ion-button><span>{{' or Right-click on image to save'| translate}}</span> </div>
     <ion-buttons slot="end">
       <ion-button color="primary"   (click)="close()">
         <ion-icon name="close-circle"></ion-icon>

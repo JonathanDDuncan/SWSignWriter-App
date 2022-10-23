@@ -12,20 +12,14 @@
 </ion-header>
 
 <ion-content class="ion-text-center">
+  <ion-backdrop *ngIf="showBackdrop" [tappable]="false" [visible]="true">
+  </ion-backdrop>
   <div class="mb-30">
     <h1 class="home-title">Welcome!</h1>
   </div>  
-  <div class="mb-25" *ngIf="!loggedin">
-    <h4>Before using SignWriter, please login</h4>
-    <ion-button color="green" (click)="goLogin()">{{'Lets Login' | translate}}</ion-button>
-  </div>
-  <div class="mb-25" *ngIf="isSubscribedTrial && loggedin">
+  <div class="mb-25">
     <h4>Hit this button to start signwriting</h4>
     <ion-button color="green" (click)="goContinue()">{{'Lets start' | translate}}</ion-button>
-  </div>
-  <div class="mb-25" *ngIf="!isSubscribedTrial && loggedin">
-    <h4>Looks like you dont have an active subscription</h4>
-    <ion-button color="green" (click)="goSubscribe()">{{'Show Me Plans' | translate}}</ion-button>
   </div> 
   <div class="mb-25">
     <h4>Get to know a bit about us</h4>

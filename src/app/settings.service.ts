@@ -1,5 +1,5 @@
 import { SignsLookupService } from './signs-lookup.service';
-import { StorageService } from './storage.service';
+import { StorageService } from './services/storage.service';
 import { Injectable } from '@angular/core';
 
 import { NgxFileDropEntry } from 'ngx-file-drop';
