@@ -1,7 +1,5 @@
 // webpack.config.js
 
 module.exports = {
-    node: {
-      crypto: true
-    }
+   resolve: { fallback: { crypto: "./node_modules/crypto-browserify" } } 
   };

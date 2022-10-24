@@ -29,49 +29,47 @@ import { UserFormPageModule } from './user-form/user-form.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
+    declarations: [
+        AppComponent,
     ],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    IonicModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }),
-    IonicStorageModule.forRoot({
-      name: '__swsignwriterdb'
-    }),
-    AppRoutingModule,
-    FormsModule,
-    ChooseSignPageModule,
-    ShowImagePageModule,
-    ShareIOSPageModule,
-    ShareAndroidPageModule,
-    ShareDesktopPageModule,
-    UserFormPageModule,
-    PipesModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),   
-    
-  ],
-  exports: [TranslateModule],
-  providers: [
-    SafariViewController,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
-    SignsLookupService,
-    DocumentService,
-    SocialSharingService,
-    HTTP,
-    HttpService,
-    LogService
-  ],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        IonicModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
+        IonicStorageModule.forRoot({
+            name: '__swsignwriterdb'
+        }),
+        AppRoutingModule,
+        FormsModule,
+        ChooseSignPageModule,
+        ShowImagePageModule,
+        ShareIOSPageModule,
+        ShareAndroidPageModule,
+        ShareDesktopPageModule,
+        UserFormPageModule,
+        PipesModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ],
+    exports: [TranslateModule],
+    providers: [
+        SafariViewController,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: ErrorHandler, useClass: SentryErrorHandler },
+        SignsLookupService,
+        DocumentService,
+        SocialSharingService,
+        HTTP,
+        HttpService,
+        LogService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
 export function createTranslateLoader(http: HttpClient) {

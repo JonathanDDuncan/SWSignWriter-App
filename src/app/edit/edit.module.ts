@@ -17,15 +17,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    PipesModule,
-    SharedModule
-  ],
-  entryComponents: [],
-  declarations: [EditPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        PipesModule,
+        SharedModule
+    ],
+    declarations: [EditPage]
 })
 export class EditPageModule {}
