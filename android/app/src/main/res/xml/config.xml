@@ -15,10 +15,6 @@
     <param name="android-package" value="com.ionicframework.common.IonicCordovaCommon" onload="true"/>
   </feature>
 
-  <feature name="InAppBillingPlugin">
-    <param name="android-package" value="cc.fovea.PurchasePlugin"/>
-  </feature>
-
   
   <preference name="ScrollEnabled" value="false" />
   <preference name="android-minSdkVersion" value="30" />
