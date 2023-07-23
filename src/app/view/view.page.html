@@ -20,39 +20,41 @@
   <span class="preloadFonts ion-hide" [innerHTML]="preloadFonts | safeHtml"></span>
 </ion-content>
 <ion-footer>
-  <div>
-    <ion-fab class="ion-text-center" horizontal="end" slot="fixed" vertical="bottom">
-        <ion-label>Edit</ion-label>
-        <ion-fab-button color="green" class="mb-10">
-            <ion-icon (click)="edit()" name="create" style="zoom:1.5;"></ion-icon>
-        </ion-fab-button>
-        <ion-label>{{'Export' | translate}}</ion-label>
-        <ion-fab-button color="green" (click)="share()">       
-          <ion-icon name="share" style="zoom: 1.5;"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
-  </div>
-  <ion-toolbar>
-    <ion-item class="mt-10">
-      <ion-grid>
-        <ion-row class="ion-justify-content-center">
-          <ion-label>{{'Image height' | translate}}</ion-label>
-        </ion-row>
-        <ion-row>
-          <ion-range
-            min="50"
-            max="900"
-            step="10"
-            [(ngModel)]="imageheight"
-            pin="true"
-            (ionChange)="heightChange($event)"
-          >
-            <ion-icon size="small" slot="start" name="resize"></ion-icon>
-            <ion-icon slot="end" name="resize"></ion-icon>
-          </ion-range>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-toolbar>
+     <div>
+        <ion-fab class="ion-text-center" horizontal="end" slot="fixed" vertical="bottom">
+            <ion-label>{{'Subtitles' | translate}}</ion-label>
+            <ion-fab-button color="yellow" (click)="subtitles()">
+                <ion-icon name="subtitles-outline" style="zoom: 1.5;"></ion-icon>
+            </ion-fab-button>
+            <ion-label>Edit</ion-label>
+            <ion-fab-button color="green" class="mb-10">
+                <ion-icon (click)="edit()" name="create" style="zoom:1.5;"></ion-icon>
+            </ion-fab-button>
+            <ion-label>{{'Export' | translate}}</ion-label>
+            <ion-fab-button color="green" (click)="share()">
+                <ion-icon name="share" style="zoom: 1.5;"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+    </div>
+    <ion-toolbar>
+        <ion-item class="mt-10">
+            <ion-grid>
+                <ion-row class="ion-justify-content-center">
+                    <ion-label>{{'Image height' | translate}}</ion-label>
+                </ion-row>
+                <ion-row>
+                    <ion-range min="50"
+                               max="900"
+                               step="10"
+                               [(ngModel)]="imageheight"
+                               pin="true"
+                               (ionChange)="heightChange($event)">
+                        <ion-icon size="small" slot="start" name="resize"></ion-icon>
+                        <ion-icon slot="end" name="resize"></ion-icon>
+                    </ion-range>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-toolbar>
 </ion-footer>
 
