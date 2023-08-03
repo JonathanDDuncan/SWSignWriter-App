@@ -7,6 +7,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Component } from '@angular/core';
 import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { saveAs } from 'file-saver';
 
 import { DocumentService } from '../document.service';
 import { ShareIOSPage } from '../share-ios/share-ios.page';
@@ -80,6 +81,12 @@ export class ViewPage {
     public async subtitles() {
         const document = this.documentService.getFSW();
         const parsed = ssw.parse(document, "fsw", true)
+
+        if(!parsed) {
+            this.presentToast('No content to process');
+            return;
+        }
+
         const subtitles = this.CreateSubtitles(parsed.all);
         if (subtitles && subtitles !== null) {
             await this.logService.AddLog('User Subtitles SW');
@@ -87,8 +94,9 @@ export class ViewPage {
                 await this.ShareAndroid(subtitles);
             } else if (this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone')) {
                 await this.ShareIOS(subtitles);
-            } else {
-                await this.ShareDesktop(subtitles);
+            } else {              
+                var blob = new Blob([subtitles], {type: "text/plain;charset=utf-8"});
+                saveAs(blob, "subtitles.vtt");              
             }
         }
     }
@@ -117,6 +125,7 @@ export class ViewPage {
         toast.present();
 
     }
+
     private async ShareIOS(fsw: string) {
         const canvas1 = getSignTextCanvas(fsw, 20.0, this.imageheight) as HTMLCanvasElement;
         this.AddLink(canvas1);
