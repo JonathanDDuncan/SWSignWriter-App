@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 import { DocumentService } from '../document.service';
 import { ShareIOSPage } from '../share-ios/share-ios.page';
 import { LogService } from '../services/log.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-view',
@@ -33,7 +34,8 @@ export class ViewPage {
         public btUtil: BrowserTypeService,
         private router: Router,
         private platform: Platform,
-        private logService: LogService
+        private logService: LogService,
+        private datePipe: DatePipe
     ) {
         // Force fonts to load before anything is shown
         this.preloadFonts = ssw.paragraph('M547x518S2ff00482x483S11911518x488S26600531x451');
@@ -103,14 +105,17 @@ export class ViewPage {
 
     private CreateSubtitles(fswArray) {
         let subtitles = 'WEBVTT\n\n';
-
+        var dateObj = new Date(new Date().setHours(0, 0, 0, 0));
+        
         // For each FSW string in the array
         for (let i = 0; i < fswArray.length; i++) {
             // Convert the FSW string to SWU
             const swu = ssw.fsw2swu(fswArray[i]);
 
             // Append the new subtitle to the subtitles string
-            subtitles += '00:00.000 --> 00:00.000\n';
+            subtitles += `${this.datePipe.transform(dateObj, 'mm:ss.SSS')} --> `;
+            dateObj.setMilliseconds(dateObj.getMilliseconds() + 500);
+            subtitles += `${this.datePipe.transform(dateObj, 'mm:ss.SSS')}\n`;
             subtitles += `<c.Sgnw>${swu}</c>\n\n`;
         }
 

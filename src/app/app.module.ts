@@ -27,6 +27,7 @@ import { HttpService } from './services/httpService.service';
 import { LogService } from './services/log.service';
 import { UserFormPageModule } from './user-form/user-form.module';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import { FormsModule } from '@angular/forms';
         SocialSharingService,
         HTTP,
         HttpService,
-        LogService
+        LogService,
+        DatePipe 
     ],
     bootstrap: [AppComponent]
 })
